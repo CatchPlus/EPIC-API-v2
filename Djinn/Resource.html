@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module Djinn::Resource - EPIC</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>djinn_restserver.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">Rack::Utils</span>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-new">::new</a>
+    
+    <li><a href="#method-i-allowed_methods">#allowed_methods</a>
+    
+    <li><a href="#method-i-empty-3F">#empty?</a>
+    
+    <li><a href="#method-i-http_GET">#http_GET</a>
+    
+    <li><a href="#method-i-http_HEAD">#http_HEAD</a>
+    
+    <li><a href="#method-i-http_OPTIONS">#http_OPTIONS</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../public/docs/rhino/package-list.html">package-list</a>
+  
+    <li class="file"><a href="../public/inc/bootstrap/LICENSE.html">LICENSE</a>
+  
+    <li class="file"><a href="../public/inc/bootstrap/Makefile.html">Makefile</a>
+  
+    <li class="file"><a href="../public/inc/jquery-ui-1_8_17/development-bundle/AUTHORS_txt.html">AUTHORS</a>
+  
+    <li class="file"><a href="../public/inc/jquery-ui-1_8_17/development-bundle/GPL-LICENSE_txt.html">GPL-LICENSE</a>
+  
+    <li class="file"><a href="../public/inc/jquery-ui-1_8_17/development-bundle/MIT-LICENSE_txt.html">MIT-LICENSE</a>
+  
+    <li class="file"><a href="../public/inc/jquery-ui-1_8_17/development-bundle/version_txt.html">version</a>
+  
+    <li class="file"><a href="../public/inc/jquery-ui/development-bundle/AUTHORS_txt.html">AUTHORS</a>
+  
+    <li class="file"><a href="../public/inc/jquery-ui/development-bundle/GPL-LICENSE_txt.html">GPL-LICENSE</a>
+  
+    <li class="file"><a href="../public/inc/jquery-ui/development-bundle/MIT-LICENSE_txt.html">MIT-LICENSE</a>
+  
+    <li class="file"><a href="../public/inc/jquery-ui/development-bundle/version_txt.html">version</a>
+  
+    <li class="file"><a href="../rhino/LICENSE_txt.html">LICENSE</a>
+  
+    <li class="file"><a href="../rhino/build-date.html">build-date</a>
+  
+    <li class="file"><a href="../rhino/javadoc/package-list.html">package-list</a>
+  
+    <li class="file"><a href="../rhino/src/manifest.html">manifest</a>
+  
+    <li class="file"><a href="../rhino1_7R3/LICENSE_txt.html">LICENSE</a>
+  
+    <li class="file"><a href="../rhino1_7R3/build-date.html">build-date</a>
+  
+    <li class="file"><a href="../rhino1_7R3/javadoc/package-list.html">package-list</a>
+  
+    <li class="file"><a href="../rhino1_7R3/src/manifest.html">manifest</a>
+  
+    <li class="file"><a href="../src_java/MANIFEST_txt.html">MANIFEST</a>
+  
+    <li class="file"><a href="../src_java/admintoolMANIFEST_txt.html">admintoolMANIFEST</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../EPIC.html">EPIC</a>
+  
+    <li><a href="../EPIC/ActiveHandleValue.html">EPIC::ActiveHandleValue</a>
+  
+    <li><a href="../EPIC/ActiveNA.html">EPIC::ActiveNA</a>
+  
+    <li><a href="../EPIC/Collection.html">EPIC::Collection</a>
+  
+    <li><a href="../EPIC/Collection/JSON.html">EPIC::Collection::JSON</a>
+  
+    <li><a href="../EPIC/Collection/TXT.html">EPIC::Collection::TXT</a>
+  
+    <li><a href="../EPIC/Collection/XHTML.html">EPIC::Collection::XHTML</a>
+  
+    <li><a href="../EPIC/CurrentUser.html">EPIC::CurrentUser</a>
+  
+    <li><a href="../EPIC/Filters.html">EPIC::Filters</a>
+  
+    <li><a href="../EPIC/Handle.html">EPIC::Handle</a>
+  
+    <li><a href="../EPIC/HandleValue.html">EPIC::HandleValue</a>
+  
+    <li><a href="../EPIC/HandleValue/BIN.html">EPIC::HandleValue::BIN</a>
+  
+    <li><a href="../EPIC/HandleValue/JSON.html">EPIC::HandleValue::JSON</a>
+  
+    <li><a href="../EPIC/Handles.html">EPIC::Handles</a>
+  
+    <li><a href="../EPIC/Hooks.html">EPIC::Hooks</a>
+  
+    <li><a href="../EPIC/NAs.html">EPIC::NAs</a>
+  
+    <li><a href="../EPIC/Resource.html">EPIC::Resource</a>
+  
+    <li><a href="../EPIC/ResourceFactory.html">EPIC::ResourceFactory</a>
+  
+    <li><a href="../EPIC/Serializer.html">EPIC::Serializer</a>
+  
+    <li><a href="../EPIC/Serializer/BIN.html">EPIC::Serializer::BIN</a>
+  
+    <li><a href="../EPIC/Serializer/Base.html">EPIC::Serializer::Base</a>
+  
+    <li><a href="../EPIC/Serializer/JSON.html">EPIC::Serializer::JSON</a>
+  
+    <li><a href="../EPIC/Serializer/TXT.html">EPIC::Serializer::TXT</a>
+  
+    <li><a href="../EPIC/Serializer/XHTML.html">EPIC::Serializer::XHTML</a>
+  
+    <li><a href="../EPIC/Static.html">EPIC::Static</a>
+  
+    <li><a href="../EPIC/StaticCollection.html">EPIC::StaticCollection</a>
+  
+    <li><a href="../Djinn.html">Djinn</a>
+  
+    <li><a href="../Djinn/HTTPStatus.html">Djinn::HTTPStatus</a>
+  
+    <li><a href="../Djinn/RESTServer.html">Djinn::RESTServer</a>
+  
+    <li><a href="../Djinn/RelativeLocation.html">Djinn::RelativeLocation</a>
+  
+    <li><a href="../Djinn/Request.html">Djinn::Request</a>
+  
+    <li><a href="../Djinn/Resource.html">Djinn::Resource</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module Djinn::Resource</h1>
+
+  <div id="description" class="description">
+    
+<p>Mixin for resource objects.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-path" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">path</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(path)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File djinn_restserver.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">path</span>
+  <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">path</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-allowed_methods" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">allowed_methods</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="allowed_methods-source">
+            <pre><span class="ruby-comment"># File djinn_restserver.rb, line 103</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">allowed_methods</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@allowed_methods</span>
+    <span class="ruby-ivar">@allowed_methods</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">public_methods</span>.<span class="ruby-identifier">reduce</span>([<span class="ruby-string">'OPTIONS'</span>]) <span class="ruby-keyword">do</span>
+      <span class="ruby-operator">|</span><span class="ruby-identifier">result</span>, <span class="ruby-identifier">method_name</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> ( <span class="ruby-identifier">match</span> = <span class="ruby-regexp">%r\Ado_([A-Z]+)\z/</span>.<span class="ruby-identifier">match</span>( <span class="ruby-identifier">method_name</span> ) )
+        <span class="ruby-identifier">result</span>.<span class="ruby-identifier">push</span>( <span class="ruby-identifier">match</span>[<span class="ruby-value">1</span>] )
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">result</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-ivar">@allowed_methods</span>.<span class="ruby-identifier">push</span> <span class="ruby-string">'HEAD'</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@allowed_methods</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">'GET'</span>
+    <span class="ruby-ivar">@allowed_methods</span>.<span class="ruby-identifier">uniq!</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@allowed_methods</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- allowed_methods-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- allowed_methods-method -->
+
+    
+      <div id="method-i-empty-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">empty?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="empty-3F-source">
+            <pre><span class="ruby-comment"># File djinn_restserver.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- empty-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- empty-3F-method -->
+
+    
+      <div id="method-i-http_GET" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">http_GET</span><span
+            class="method-args">(request, response)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Classes that include this module may implement method
+<code>#content_types</code> to for content negotiation. This method must
+return a hash of +mime-type =&gt; quality+ pairs.</p>
+          
+
+          
+          <div class="method-source-code" id="http_GET-source">
+            <pre><span class="ruby-comment"># File djinn_restserver.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">http_GET</span> <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Djinn</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPStatus</span>, <span class="ruby-string">'404'</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Djinn</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPStatus</span>, <span class="ruby-string">'405'</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:do_GET</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:content_types</span>) <span class="ruby-operator">&amp;&amp;</span>
+     ( <span class="ruby-identifier">bct</span> = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">best_content_type</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">content_types</span> )
+    <span class="ruby-identifier">response</span>.<span class="ruby-identifier">header</span>[<span class="ruby-string">'Content-Type'</span>] = <span class="ruby-identifier">bct</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">do_GET</span> <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- http_GET-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- http_GET-method -->
+
+    
+      <div id="method-i-http_HEAD" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">http_HEAD</span><span
+            class="method-args">(request, response)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="http_HEAD-source">
+            <pre><span class="ruby-comment"># File djinn_restserver.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">http_HEAD</span> <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Djinn</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPStatus</span>, <span class="ruby-string">'404'</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:do_HEAD</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">do_HEAD</span> <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">http_GET</span> <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span> = []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- http_HEAD-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- http_HEAD-method -->
+
+    
+      <div id="method-i-http_OPTIONS" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">http_OPTIONS</span><span
+            class="method-args">(request, response)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Handles an OPTIONS request.</p>
+
+<p>An <code>Allow:</code> header is created, listing all implemented HTTP
+methods for this resource.</p>
+
+<p>By default, an *HTTP/1.1 204 No Content* is returned (without an entity
+body). Users may override what’s returned by implementing a method
+user_OPTIONS which takes two parameters:</p>
+<ol><li>
+<p>a Rack::Request object</p>
+</li><li>
+<p>a Rack::Response object, to be modified at will.</p>
+</li></ol>
+          
+
+          
+          <div class="method-source-code" id="http_OPTIONS-source">
+            <pre><span class="ruby-comment"># File djinn_restserver.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">http_OPTIONS</span> <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Djinn</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPStatus</span>, <span class="ruby-string">'404'</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">response</span>.<span class="ruby-identifier">status</span> = <span class="ruby-identifier">status_code</span> <span class="ruby-value">:no_content</span>
+  <span class="ruby-identifier">http_method_regexp</span> = <span class="ruby-regexp">%r\Ahttp_([A-Z]+)\z/</span>
+  <span class="ruby-identifier">response</span>.<span class="ruby-identifier">header</span>[<span class="ruby-string">'Allow'</span>] = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">allowed_methods</span>.<span class="ruby-identifier">join</span> <span class="ruby-string">', '</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">do_OPTIONS</span>( <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span> ) <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:do_OPTIONS</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- http_OPTIONS-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- http_OPTIONS-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
