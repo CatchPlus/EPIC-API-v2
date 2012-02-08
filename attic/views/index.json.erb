@@ -1,0 +1,3 @@
+<%
+# [resources] [ { :uri = <some_uri>, :some_column = <some_value>, ... }, ... ]
+%><%= resources.each{|value| value[:uri] = path + value[:uri] }.index_by{ |resource| resource[:uri] }.to_json %>

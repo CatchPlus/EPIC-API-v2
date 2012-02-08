@@ -1,0 +1,32 @@
+<%
+# This template requires the following variables:
+# [path] the path to this document
+require 'cgi'
+%><?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<%
+unless '/' == path
+%><link rel="contents" href="<%= File::dirname(path).slashify %>"/>
+<%
+end
+%><link rel="stylesheet" href="/inc/bootstrap/bootstrap.min.css"/>
+<script type="text/javascript" src="/inc/jquery.js"></script> 
+<script type="text/javascript" src="/inc/jquery-tablesorter.js"></script> 
+<script type="text/javascript">
+
+$(document).ready(function() 
+    {
+        $('.tablesorter').tablesorter();
+//        each(function(index, element) {
+//		    element.tablesorter();
+//		});
+    } 
+);
+
+</script>
+<title><%= 'Index of ' + CGI::escapeHTML(path) %></title>
+</head>
+<body>
+<%= breadcrumbs path %>

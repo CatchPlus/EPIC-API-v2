@@ -1,0 +1,38 @@
+<%
+# This template requires the following variables:
+# [path]
+# [resources] a hash of resources, indexed by URI. Each resource must respond to #keys and #[].
+%><%=
+	ERB.new(File.read('views/header.xhtml.erb'), nil, nil, :header_xhtml).result(binding)
+%><%
+require 'cgi'
+columns = resources.collect do |value|
+  value.keys.collect{ |k| k.to_sym }
+end.flatten.uniq
+columns.delete :uri
+columns.delete :name
+# +columns+ is now an Array of Symbols
+resources.each { |value| value[:name] ||= CGI::unescape(value[:uri], 'UTF-8').unslashify }
+%><table class="tablesorter condensed-table bordered-table zebra-striped">
+<thead>
+<tr><th>Name</th>
+<%
+columns.each do |column|
+  %><th><%= CGI.escapeHTML( column.to_s.split('_').collect{|word| word.capitalize}.join(' ') ) %></th><%
+end
+%></tr>
+</thead>
+<tbody>
+<%
+resources.each do |resource|
+  %><tr class="epic_resource"><td class="epic_name"><a href="<%= resource[:uri] %>"><%= resource[:name] %></a></td><%
+  columns.each do |column|
+    %><td class="epic_<%= column %>"><%= resource[column] || '' %></td><%
+  end
+  %></tr><%
+end
+%>
+</tbody>
+</table><%=
+	ERB.new(File.read('views/footer.xhtml.erb'), nil, nil, :footer_xhtml).result(binding)
+%>

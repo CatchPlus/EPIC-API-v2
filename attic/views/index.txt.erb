@@ -1,0 +1,3 @@
+<%
+# [resources] [ { :uri = <some_uri>, :some_column = <some_value>, ... }, ... ]
+%><%= resources.collect{ |resource| resource[:uri] + "\r\n" }.join '' %>

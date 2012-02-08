@@ -1,0 +1,30 @@
+<%
+# This template requires the following variables:
+# [acceptable_types] the Content-Types this resource can be represented as.
+require 'cgi'
+%><?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css"/>
+<!--<script type="text/javascript" src="/inc/jquery-latest.js"></script> 
+<script type="text/javascript" src="/inc/jquery-tablesorter.js"></script> 
+<script>//<![CDATA[
+$(document).ready(function() 
+    { 
+        $("#myTable").tablesorter(); 
+    } 
+);
+//]]></script>-->
+<title>HTTP/1.1 406 Not Acceptable</title>
+</head>
+<body>
+  <ul class="content_types"><%
+Epic::Application::INDEX_TYPES.keys.each do |content_type|
+%>
+    <li class="content_type"><%= CGI.escape_html content_type %></li><%
+end
+%>
+  </ul>
+</body>
+</html>

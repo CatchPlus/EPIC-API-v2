@@ -1,7 +1,8 @@
-This is the central **development portal** of *BeeHub*, [SARA](http://www.sara.nl/)'s new file sharing service. BeeHub's **user portal** can be found at http://www.beehub.nl/.
+This is the central development site of the **EPIC API v2**,
+[EPIC](http://www.pidconsortium.eu/)'s new Web Service for PID management.
 
-This repository contains a number of different code-bases, that are so closely coupled that I didn't think they should live in separate git repositories.
+Currently, this web service is mainly developed by
+[SARA](http://www.sara.nl/).
 
-*   **WebDAV:** the (BeeHub independent) custom WebDAV protocol implementation, as well as the BeeHub-specific XFS backend implementation.
-*   **WebSite**: the [BeeHub user portal](http://www.beehub.nl/), built on [WordPress](http://www.wordpress.org/).
-*   **WebClient**: the [BeeHub web client](http://beehub.nl/), built on [ExtJS](http://www.sencha.com/).
+The API documentation is available as
+[GitHub pages](http://pieterb.github.com/EPIC-API-v2/).

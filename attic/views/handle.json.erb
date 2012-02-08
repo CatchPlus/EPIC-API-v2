@@ -1,0 +1,13 @@
+<%
+# [resources] [ { :uri = <some_uri>, :some_column = <some_value>, ... }, ... ]
+%><%=
+{
+	:handle => handle.handle,
+	:values => handle.values.reduce({}) {
+		|hash, value|
+		hash[value[0]] = value[1].serializable_hash
+		#hash[0] = value.inspect
+		hash
+	}
+}.to_json
+%>
