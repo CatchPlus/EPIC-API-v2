@@ -1,6 +1,8 @@
 #!/bin/bash
 
 cd "$(dirname "$0")"
+export JRUBY_OPTS=--1.8
+
 rdoc \
   --main epic.rb \
   --charset=UTF-8 \
@@ -14,7 +16,7 @@ rdoc \
   --exclude=attic \
   --output=public/docs/epic \
   --force-output \
-  djinn*.rb epic*.rb
+  epic*.rb djinn*.rb $GEM_HOME/gems/rack*/lib/
 
 exit
 rdoc \

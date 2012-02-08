@@ -182,7 +182,7 @@ class Collection::XHTML < Serializer::XHTML
             word[0..0].upcase + word[1..-1]
           }.join(' ').escape_html + '</th>'
         }.join )
-        yield '<th>Value</th>' if recurse
+        yield '<th>Contents</th>' if recurse
         yield '</tr></thead><tbody>'
       end
       item[:name] = item[:uri].unslashify.unescape_path if
@@ -201,7 +201,7 @@ class Collection::XHTML < Serializer::XHTML
       if recurse
         child = ResourceFactory.instance[self.resource.path.slashify + item[:uri].to_s]
         if child
-          yield '<td class="epic_value">' +
+          yield '<td class="epic_contents">' +
             Collection::XHTML.new(child, request).join +
             '</td>'
         else

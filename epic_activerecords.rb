@@ -23,8 +23,10 @@ ActiveRecord::Base.establish_connection(
   :username => 'epic',
   :password => 'epic'
 )
-#ActiveRecord::Base.include_root_in_json = false
-#ActiveRecord::Base.primary_key_prefix_type = :table_name_with_underscore
+=begin
+ActiveRecord::Base.include_root_in_json = false
+ActiveRecord::Base.primary_key_prefix_type = :table_name_with_underscore
+=end
 
 module EPIC  
   
