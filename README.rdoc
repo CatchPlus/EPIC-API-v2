@@ -1,0 +1,8 @@
+This is EPIC API v2, EPIC[http://www.pidconsortium.eu/]'s new Web Service
+for PID management. Currently, this web service is mainly developed by
+SARA[http://www.sara.nl/], together with GWDG[http://www.gwdg.de/].
+
+The source code documentation is available as
+{GitHub pages}[http://pieterb.github.com/EPIC-API-v2/].
+
+The API definition can be found at http://purl.net/sara/epic_api
