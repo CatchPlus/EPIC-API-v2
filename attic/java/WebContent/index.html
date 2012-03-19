@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>EPIC Home</title>
+</head>
+<body>
+	<h1>EPIC Home</h1>
+	<h2>Resolve form</h2>
+	<form action="handle">
+		handle/<input type="text" size="7" name="prfx" value="10916" />/<input
+			type="text" size="30" name="lid" value="mvd-test" /> <input
+			type="submit" value="Resolve" />
+	</form>
+	<h2>Links</h2>
+	<p>
+		Resolve handle, output follows browser's
+		<code>Accept</code>
+		header:
+	</p>
+	<ul>
+		<li><a href="handle/0.NA/10574">handle/0.NA/10574</a></li>
+		<li><a href="handle/10574/pieterb_testhandle">handle/10574/pieterb_testhandle</a></li>
+		<li><a href="handle/0.NA/10574">handle/0.NA/10916</a></li>
+		<li><a href="handle/10916/mvd-test">handle/10916/mvd-test</a></li>
+	</ul>
+	<p>Resolve handle, output forced by prefix:</p>
+	<p>XML:</p>
+	<ul>
+		<li><a href="XML/handle/10574/pieterb_testhandle">XML/handle/10574/pieterb_testhandle</a></li>
+		<li><a href="XML/handle/10916/mvd-test">XML/handle/10916/mvd-test</a></li>
+	</ul>
+	<p>JSON:</p>
+	<ul>
+		<li><a href="JSON/handle/10574/pieterb_testhandle">JSON/handle/10574/pieterb_testhandle</a></li>
+		<li><a href="JSON/handle/10916/mvd-test">JSON/handle/10916/mvd-test</a></li>
+	</ul>
+
+	<h2>Not yet Implemented</h2>
+	<ul>
+		<li><a href="discovery">discovery</a></li>
+		<li><a href="profiles">profiles</a></li>
+		<li><a href="status">status</a></li>
+		<li><a href="templator">templator</a></li>
+	</ul>
+	
+	<h2>Documentation</h2>
+	<ul>
+	<li><a href="javadoc">EPIC Javadoc</a></li>
+	<li><a href="http://www.handle.net">Handle system</a></li>
+	</ul>
+</body>
+</html>

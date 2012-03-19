@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+h1,h2,h3,h4 {
+	font-family: sans-serif;
+}
+
+.url,.handle {
+	font-family: monospace;
+}
+
+table.handle-values {
+	border-collapse: collapse;
+	text-align: left;
+}
+
+table.handle-values tbody tr td {
+	vertical-align: baseline;
+}
+
+.handle-value-index {
+	padding-right: 8px;
+	text-align: right;
+}
+
+pre.handle-data {
+	margin: 0px;
+	margin-right: auto;
+	border: 1px solid #C0C0C0;
+	width: auto;
+}

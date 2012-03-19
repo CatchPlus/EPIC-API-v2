@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+	<!-- ========================================================== -->
+	<!-- General - -->
+	<!-- ========================================================== -->
+
+	<display-name>epic</display-name>
+	<description>EPIC test</description>
+
+	<!-- <session-config> <session-timeout>120</session-timeout> </session-config> -->
+
+	<!-- ========================================================== -->
+	<!-- Custom Tag Libraries - -->
+	<!-- ========================================================== -->
+
+	<!-- none -->
+
+	<!-- ========================================================== -->
+	<!-- Context Parameters - -->
+	<!-- ========================================================== -->
+
+	<!-- Context initialization parameters that define shared String constants 
+		used within your application, which can be customized by the system administrator 
+		who is installing your application. The values actually assigned to these 
+		parameters can be retrieved in a servlet or JSP page by calling: String value 
+		= getServletContext().getInitParameter("name"); where "name" matches the 
+		<param-name> element of one of these initialization parameters. You can define 
+		any number of context initialization parameters, including zero. -->
+	<context-param>
+		<param-name>webmaster</param-name>
+		<param-value>epic-daemon@sara.nl</param-value>
+	</context-param>
+
+	<!-- ========================================================== -->
+	<!-- JNDI Environment Variables - -->
+	<!-- ========================================================== -->
+
+	<!-- none -->
+
+	<!-- ========================================================== -->
+	<!-- Servlets - -->
+	<!-- ========================================================== -->
+
+
+	<servlet>
+		<servlet-name>NYI</servlet-name>
+		<servlet-class>org.sara.epic.servlets.NotYetImplemented</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>NYI</servlet-name>
+		<url-pattern>/discovery/*</url-pattern>
+		<url-pattern>/profiles/*</url-pattern>
+		<url-pattern>/status/*</url-pattern>
+		<url-pattern>/templator/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description>A servlet to resolve a handle.</description>
+		<display-name>Handle Resolver</display-name>
+		<servlet-name>handle</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<!-- this causes pretty-printing of the XML -->
+			<param-name>com.sun.jersey.config.feature.Formatted</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>handle</servlet-name>
+		<url-pattern>/handle/*</url-pattern>
+		<url-pattern>/XML/handle/*</url-pattern>
+		<url-pattern>/xml/handle/*</url-pattern>
+		<url-pattern>/JSON/handle/*</url-pattern>
+		<url-pattern>/json/handle/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- ========================================================== -->
+	<!-- Filters - -->
+	<!-- ========================================================== -->
+
+	<filter>
+		<filter-name>OutputSwitchToXML</filter-name>
+		<filter-class>org.sara.epic.servlets.OutputSwitcherFilter</filter-class>
+		<init-param>
+			<param-name>Accept</param-name>
+			<param-value>application/xml</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>OutputSwitchToXML</filter-name>
+		<url-pattern>/XML/handle/*</url-pattern>
+		<url-pattern>/xml/handle/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>OutputSwitchToJSON</filter-name>
+		<filter-class>org.sara.epic.servlets.OutputSwitcherFilter</filter-class>
+		<init-param>
+			<param-name>Accept</param-name>
+			<param-value>application/json</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>OutputSwitchToJSON</filter-name>
+		<url-pattern>/JSON/handle/*</url-pattern>
+		<url-pattern>/json/handle/*</url-pattern>
+	</filter-mapping>
+
+	<!-- ========================================================== -->
+	<!-- Listeners - -->
+	<!-- ========================================================== -->
+
+	<!-- none -->
+
+	<!-- ========================================================== -->
+	<!-- Security - -->
+	<!-- ========================================================== -->
+
+	<!-- none -->
+
+	<!-- ========================================================== -->
+	<!-- Error Handler - -->
+	<!-- ========================================================== -->
+
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/MappableContainerException.jsp</location>
+	</error-page>
+
+	<!-- ========================================================== -->
+	<!-- Extra MIME types - -->
+	<!-- ========================================================== -->
+
+	<!-- none -->
+
+	<!-- ========================================================== -->
+	<!-- Welcome Files - -->
+	<!-- ========================================================== -->
+
+	<!-- Define, in order of preference, which file to show when no filename 
+		is defined in the path eg: when user goes to http://yoursite.com/ or http://yoursite.com/somefolder 
+		Defaults are provided in the server-wide web.xml file, such as index.jsp, 
+		index.htm Note: using this tag overrides the defaults, so don't forget to 
+		add them here -->
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+</web-app>

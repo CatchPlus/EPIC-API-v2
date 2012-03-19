@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- No DTD for Ant, instead: -->
+<!DOCTYPE project>
+
+<project name="javadoc" default="javadoc" basedir="..">
+	
+	<property name="destDir" location="WebContent/javadoc" />
+
+	<property name="docTitle" location="EPIC implementation" />
+
+	<property name="packageNames" value="org.sara.epic.servlets,org.sara.epic.xml,org.sara.epic.utility" />
+	<property name="classPath" value="/home/markusd/tomcat/lib/jsp-api.jar:/home/markusd/tomcat/lib/tomcat-coyote.jar:/home/markusd/tomcat/lib/ecj-3.3.1.jar:/home/markusd/tomcat/lib/annotations-api.jar:/home/markusd/tomcat/lib/catalina-ha.jar:/home/markusd/tomcat/lib/el-api.jar:WebContent/WEB-INF/lib/asm-3.1.jar:WebContent/WEB-INF/lib/jersey-core-1.10.jar:WebContent/WEB-INF/lib/handle.jar:/home/markusd/tomcat/lib/tomcat-i18n-fr.jar:WebContent/WEB-INF/lib/jackson-core-asl-1.8.3.jar:/home/markusd/tomcat/lib/tomcat-dbcp.jar:WebContent/WEB-INF/lib/jersey-json-1.10.jar:/home/markusd/tomcat/lib/tomcat-i18n-ja.jar:/home/markusd/tomcat/lib/catalina-ant.jar:WebContent/WEB-INF/lib/jsr311-api-1.1.1.jar:WebContent/WEB-INF/lib/jersey-client-1.10.jar:WebContent/WEB-INF/lib/jettison-1.1.jar:WebContent/WEB-INF/lib/jersey-servlet-1.10.jar:WebContent/WEB-INF/lib/jackson-xc-1.8.3.jar:/home/markusd/tomcat/lib/catalina.jar:WebContent/WEB-INF/lib/jackson-mapper-asl-1.8.3.jar:/home/markusd/tomcat/lib/tomcat-i18n-es.jar:/home/markusd/tomcat/lib/servlet-api.jar:/home/markusd/tomcat/lib/jasper-el.jar:WebContent/WEB-INF/lib/jersey-server-1.10.jar:WebContent/WEB-INF/lib/jackson-jaxrs-1.8.3.jar:/home/markusd/tomcat/lib/catalina-tribes.jar:/home/markusd/tomcat/lib/jasper.jar" />
+
+	<target name="javadoc">
+		<javadoc access="public" author="true" classpath="${classPath}" destdir="${destDir}" doctitle="${docTitle}" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="${packageNames}" source="1.6" sourcepath="src" splitindex="true" use="true" version="true">
+			<!-- <link href="file:/home/markusd/Handle/hsj-7.0/doc/apidoc/" /> -->
+		</javadoc>
+	</target>
+
+</project>

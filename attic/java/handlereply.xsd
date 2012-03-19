@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="handleReply" type="handleReply" />
+
+	<xs:complexType name="handleReply">
+		<xs:sequence>
+			<xs:element name="request" type="xs:anyURI" minOccurs="0" />
+			<xs:element name="handle" type="xs:string" minOccurs="0" />
+			<xs:element name="values" type="value" nillable="true"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="value">
+		<xs:sequence>
+			<xs:element name="index" type="xs:int" />
+			<xs:element name="type" type="xs:string" minOccurs="0" />
+			<xs:element name="permission" type="xs:string" minOccurs="0" />
+			<xs:element name="dataString" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
+

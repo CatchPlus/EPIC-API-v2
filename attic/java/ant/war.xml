@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- No DTD for Ant, instead: -->
+<!DOCTYPE project>
+
+<project name="war" default="deploy" basedir="..">
+	<!-- basedir: remember, this file lives in subdirectory "ant" -->
+
+	<property name="warfile" value="epic" />
+
+	<property name="remoteServer" value="staging" />
+	<property name="remoteDeployDir" value="/usr/share/tomcat6/webapps/" />
+
+	<target name="help" description="Help">
+		<echo level="info" taskname="help">
+	Available targets:
+		buildwar    -- build war file ${warfile}.war
+		installwar -- copies war file to the server
+		deploy      -- is "buildwar" then "insrtallwar"
+        </echo>
+	</target>
+
+	<target name="buildwar" description="builds war file ${warfile}.war">
+		<war destfile="${warfile}.war" webxml="WebContent/WEB-INF/web.xml" update="false">
+			<classes dir="build\classes" />
+			<fileset dir="WebContent">
+				<exclude name="WEB-INF/web.xml" />
+			</fileset>
+		</war>
+	</target>
+
+	<property name="serverDeployDir" value="${remoteServer}:${remoteDeployDir}" />
+	<target name="installwar" description="copies war file to the server">
+		<echo level="info" taskname="exec">scp ${warfile}.war ${serverDeployDir}</echo>
+		<exec executable="scp" taskname="scp">
+			<arg file="${warfile}.war" />
+			<arg value="${serverDeployDir}" />
+		</exec>
+	</target>
+
+	<target name="deploy" description="'buildwar' then 'intallwar'" depends="buildwar,installwar" />
+</project>
