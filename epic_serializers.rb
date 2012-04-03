@@ -74,27 +74,23 @@ class XHTML < Base
 '<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>'
-    unless '/' == request.path[-1, 1]
-      retval << '
-<base href="' << request.path.slashify << '"/>'
+<head>
+<link rel="stylesheet" href="/inc/bootstrap/bootstrap.min.css"/>'
+# <script type="text/javascript" src="/inc/jquery-1.7.1.min.js"></script> 
+# <script type="text/javascript" src="/inc/jquery-tablesorter.js"></script> 
+# <script type="text/javascript">//<![CDATA[
+# $(document).ready(
+  # function() { $(".tablesorter").tablesorter(); } 
+# );
+# //]]></script>'
+    unless '/' == request.path[-1, 1] # unless request.path ends with a slash
+      retval << '<base href="' << request.path.slashify << '"/>'
     end
-    retval << '
-<link rel="stylesheet" href="/inc/bootstrap/bootstrap.min.css"/>
-<script type="text/javascript" src="/inc/jquery-1.7.1.min.js"></script> 
-<script type="text/javascript" src="/inc/jquery-tablesorter.js"></script> 
-<script type="text/javascript">//<![CDATA[
-$(document).ready(
-  function() { $(".tablesorter").tablesorter(); } 
-);
-//]]></script>'
     unless '/' == request.path
-      retval << '
-<link rel="contents" href="' << File::dirname(request.path).slashify << '"/>'
+      retval << '<link rel="contents" href="' << File::dirname(request.path).slashify << '"/>'
     end
-    retval << '
-<title>Index of ' << request.path.unescape_path.escape_html << '</title>
-</head><body>' << breadcrumbs
+    retval << '<title>Index of ' << request.path.unescape_path.escape_html <<
+      '</title></head><body>' << breadcrumbs
     retval
   end # header
   

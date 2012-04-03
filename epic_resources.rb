@@ -40,10 +40,10 @@ class Collection < Resource
   
   def content_types
     {
-      #'application/xhtml+xml; charset=UTF-8' => 1,
-      'text/html; charset=UTF-8' => 0.9,
-      'text/xml; charset=UTF-8' => 0.9,
-      'application/xml; charset=UTF-8' => 0.9,
+      'application/xhtml+xml; charset=UTF-8' => 1,
+      'text/html; charset=UTF-8' => 1,
+      'text/xml; charset=UTF-8' => 1,
+      'application/xml; charset=UTF-8' => 1,
       'application/json; charset=UTF-8' => 0.5,
       'application/x-json; charset=UTF-8' => 0.5,
       'text/plain; charset=UTF-8' => 0.1
@@ -343,7 +343,7 @@ class NAs < Collection
       } )
     end
   end
-  
+
 end # class NAs
 
 
@@ -354,8 +354,8 @@ class StaticCollection < Collection
     case path
     when '/'
       @collection = [
-        { :uri => 'handles/', :description => 'all handles, indexed by prefix' },
-        { :uri => 'profiles/', :description => 'all profiles, indexed by prefix' },
+        { :uri => 'handles/',   :description => 'all handles, indexed by prefix' },
+        { :uri => 'profiles/',  :description => 'all profiles, indexed by prefix' },
         { :uri => 'templates/', :description => 'all templates, indexed by prefix' },
       ]
     else

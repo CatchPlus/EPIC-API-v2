@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 export JRUBY_OPTS=--1.8
 
 rdoc \
-  --main README.rdoc \
+  --main epic.rb \
   --charset=UTF-8 \
   --encoding=UTF-8 \
   --title=EPIC \
@@ -16,7 +16,7 @@ rdoc \
   --exclude=attic \
   --output=public/docs/epic \
   --force-output \
-  README.rdoc epic*.rb djinn*.rb $GEM_HOME/gems/rack*/lib/
+  epic*.rb djinn*.rb $GEM_HOME/gems/rack*/lib/
 
 exit
 rdoc \

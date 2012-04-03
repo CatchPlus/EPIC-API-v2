@@ -36,9 +36,10 @@ module EPIC
 class CurrentUser
   
   HANDLE = '0.NA/10916'
-  IDX = 200
+  IDX = 300
 
   @resolvers = {}
+  @authInfo = {}
 
   def self.resolver(p_handle = HANDLE, p_idx = IDX)
     id = "#{p_idx}:#{p_handle}"
@@ -46,19 +47,27 @@ class CurrentUser
      
     @resolvers[id] = hdllib.HandleResolver.new
     sessionTracker = hdllib.ClientSessionTracker.new
-    authInfo = hdllib.PublicKeyAuthenticationInfo.new(
-      p_handle,
+    @authInfo[id] = hdllib.PublicKeyAuthenticationInfo.new(
+      p_handle.to_java_bytes,
       p_idx,
       hdllib.Util.getPrivateKeyFromBytes(
-        File.read('secrets/' + id.gsub(/\W+/, '_')),
+        hdllib.Util.decrypt(
+          hdllib.Util.getBytesFromFile('secrets/' + id.gsub(/\W+/, '_')),
+          nil
+        ),
         0
       )
     )
-    sessionInfo = hdllib.SessionSetupInfo.new(authInfo)
+    sessionInfo = hdllib.SessionSetupInfo.new(@authInfo[id])
     #sessionInfo.encrypted = true
     sessionTracker.setSessionSetupInfo(sessionInfo)
     @resolvers[id].setSessionTracker(sessionTracker)
     @resolvers[id]
+  end
+  
+  def self.authInfo(p_handle = HANDLE, p_idx = IDX)
+    id = "#{p_idx}:#{p_handle}"
+    return @authInfo[id]
   end
   
 end # class CurrentUser
