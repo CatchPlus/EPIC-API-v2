@@ -1,3 +1,4 @@
+#\ -p 8080
 #--
 # Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
 # 
@@ -34,6 +35,7 @@ use EPIC::Static,
   :urls => ['/inc', '/favicon.ico', '/docs'],
   :root => 'public'
 use Djinn::RelativeLocation
+
 run Djinn::RESTServer.new(EPIC::ResourceFactory.instance)
 
 #require './epic.rb'
