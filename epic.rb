@@ -22,7 +22,7 @@ require 'epic_monkeypatches.rb'
 require 'epic_activerecords.rb'
 require 'epic_resources.rb'
 require 'epic_serializers.rb'
-require 'epic_middlewares.rb'
+#require 'epic_middlewares.rb'
 require 'singleton'
 
 

@@ -61,8 +61,11 @@ header(s) and the available representations in the server.
 [content_types]
   Hash of <tt>media type => quality</tt> pairs, indicating what kind of media types
   can be provided, and what their relative qualities are.
+[fail]
+  Boolean, indicating if this method should throw an HTTPStatus object with
+  status +406 Not Acceptable+ if there's no match.
 =end
-  def best_content_type content_types
+  def best_content_type content_types, require_match = true
     return content_types.sort_by(&:last).last[0] if self.accept.empty?
     matches = []
     self.accept.each {
@@ -76,6 +79,7 @@ header(s) and the available representations in the server.
       }
     }
     if matches.empty?
+      raise HTTPStatus, '406' if require_match
       nil
     else
       matches.sort_by(&:last).last[0]
@@ -88,10 +92,12 @@ Given the current request #path, determines the URL that browsers would consider
 the default base URL for the response body.
 
 In practice, this means everything after the last slash gets chopped of.
+
+:category: Deprecated
 =end
   def html_base_url
     # TODO It seems this regexp can be simplified to <tt>\A(.*/)([^/]*)\z</tt>?
-    @html_base ||= if matches = %r{\A(.*)(/[^/]+)\z}.match( self.path )
+    @env['djinn.htmlbase'] ||= if matches = %r{\A(.*)(/[^/]+)\z}.match( self.path )
       matches[1] + '/'
     else
       self.path.dup
@@ -102,9 +108,13 @@ In practice, this means everything after the last slash gets chopped of.
 =begin rdoc
 Given an absolute path, this method checks if the path can be shortened in HTML
 response body, making use of the default document base URL.
+
+:category: Deprecated
 =end
-  def htmlify path
-    if i = path.index( self.html_base_url )
+  def htmlify path, base = nil
+    # This method seems to be broken!!!
+    base ||= html_base_url
+    if i = path.index( base )
       path[ Range.new i, -1 ]
     else
       path.dup
@@ -151,7 +161,7 @@ yield a <tt>404 Not Found</tt>.
 
   def allowed_methods
     unless @allowed_methods
-      @allowed_methods ||= self.public_methods.reduce(['OPTIONS']) do
+      @allowed_methods = self.public_methods.reduce(['OPTIONS']) do
         |result, method_name|
         if ( match = /\Ado_([A-Z]+)\z/.match( method_name ) )
           result.push( match[1] )
@@ -173,15 +183,10 @@ will be set in the response object passed to +do_GET+.
 =end
   def http_GET request, response
     raise Djinn::HTTPStatus, '404' if self.empty?
-    if self.respond_to?(:content_types) &&
-       !( response.header['Content-Type'] =
-          request.best_content_type( self.content_types ) )
-      raise Djinn::HTTPStatus, '406' # Not Acceptable
-    end
     if self.respond_to? :do_GET
       self.do_GET request, response
     else
-      raise Djinn::HTTPStatus, '405'
+      raise Djinn::HTTPStatus, '405 ' +  self.allowed_methods.join( ' ' )
     end
   end
 
@@ -194,18 +199,13 @@ will be set in the response object passed to +do_GET+.
 =end
   def http_HEAD request, response
     raise Djinn::HTTPStatus, '404' if self.empty?
-    if self.respond_to?( :content_types ) &&
-       !( response.header['Content-Type'] =
-          request.best_content_type( self.content_types ) )
-      raise Djinn::HTTPStatus, '406' # Not Acceptable
-    end
     if self.respond_to? :do_HEAD
       self.do_HEAD request, response
     elsif self.respond_to? :do_GET
       self.do_GET request, response
       response.body = []
     else
-      raise Djinn::HTTPStatus, '405'
+      raise Djinn::HTTPStatus, '405 ' +  self.allowed_methods.join( ' ' )
     end
   end
 
@@ -372,25 +372,10 @@ class RESTServer
   
  
 =begin rdoc
-In theory, our resources could operate in a multi-threaded environment.
-Using global variables must be avoided at all times. This method provides
-access to a Hash private to the current thread, which can be used at liberty
-as a container for "globals".
-
-At the beginning of each request, the Hash is emptied and populated with one
-entry +:server+ pointing to the current instance of RESTServer.
-
-See also the source code of #call.
-=end
-  def self.global
-    @@globals[Thread.current.object_id]
-  end
-  
-  
-=begin rdoc
-Prototype constructor. The supplied +resource_factory+ must respond to
-method #[]. This method will be called with a path string, and must return
-a Resource object.
+Prototype constructor.
+[resource_factory]
+  An object responding to thread safe method #[].
+  This method will be called with a path string, and must return a Djinn::Resource.
 =end
   def initialize(resource_factory = nil)
     super
@@ -403,19 +388,13 @@ a Resource object.
   +self+, which handles the request in #call!.
 =end
   def call(p_env)
-    server = dup
-    @@globals[Thread.current.object_id] = { :server => server }
-    begin
-      server.call! p_env # This is what is returned.
-    ensure
-      @@globals.delete Thread.current.object_id
-    end
+    dup.call! p_env
   end
   
   
   def call!(p_env)
-    self.global[:request]  = request  = Djinn::Request.new( p_env )
-    self.global[:response] = response = Rack::Response.new
+    request  = Djinn::Request.new( p_env )
+    response = Rack::Response.new
     begin
       raise HTTPStatus, '404' unless resource = self.resource_factory[request.path]
       if resource.respond_to? :"http_#{request.request_method}"
@@ -423,7 +402,7 @@ a Resource object.
       elsif resource.respond_to? :"do_#{request.request_method}"
         resource.__send__( :"do_#{request.request_method}", request, response )
       else
-        raise( HTTPStatus, '405 ' + resource.allowed_methods.join( ' ' ) )
+        raise HTTPStatus, '405 ' + resource.allowed_methods.join( ' ' )
       end
       unless resource.path == request.path
         response.header['Content-Location'] = request.base_url + resource.path

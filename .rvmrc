@@ -9,7 +9,7 @@ environment_id="jruby-1.6.5.1@epic3"
 #
 # Uncomment following line if you want options to be set only for given project.
 #
-PROJECT_JRUBY_OPTS=( --1.9 )
+PROJECT_JRUBY_OPTS=( --1.9 -J-Djruby.thread.pool.enabled=true )
 #
 # The variable PROJECT_JRUBY_OPTS requires the following to be run in shell:
 #
