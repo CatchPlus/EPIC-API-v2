@@ -17,6 +17,7 @@
 # This is the configuration file for the +rackup+ command.
 
 require './epic.rb'
+require './secrets/users.rb'
 require 'rack/chunked'
 require 'rack/reloader'
 
@@ -31,10 +32,19 @@ end
 use Rack::Chunked
 use Rack::Reloader, 1
 use Rack::Sendfile
-use EPIC::Static,
-  :urls => ['/inc', '/favicon.ico', '/docs'],
-  :root => 'public'
+use Rack::Directory, 'public'
+use Rack::Static,
+  :urls  => ['/inc', '/favicon.ico', '/docs'],
+  :root  => 'public',
+  :index => nil
 use Djinn::RelativeLocation
+use( Rack::Auth::Digest::MD5,
+     { :realm => $EPIC_REALM, :opaque => $EPIC_OPAQUE, :passwords_hashed => true }
+   ) do
+  |username|
+  username = username.to_str
+  $EPIC_USERS[username] ? $EPIC_USERS[username][:password] : nil
+end
 
 run Djinn::RESTServer.new(EPIC::ResourceFactory.instance)
 

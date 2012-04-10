@@ -27,7 +27,14 @@ module Djinn
 
 class Request < Rack::Request
   
-  # Returns an array of acceptable media types for the response
+  
+=begin rdoc
+Returns a Hash of <tt>media type => quality</tt> pairs, with acceptable media types
+for the response. This information is also stored in environment variable
++djinn.accept+ for caching.
+
+If no acceptable media types are provided, an empty Hash is returned.
+=end
   def accept
     @env['djinn.accept'] ||= begin
       Hash[
@@ -46,6 +53,15 @@ class Request < Rack::Request
     end
   end # def accept
   
+  
+=begin rdoc
+Returns the best media type for the response body, given the client's +Accept:+
+header(s) and the available representations in the server.
+  
+[content_types]
+  Hash of <tt>media type => quality</tt> pairs, indicating what kind of media types
+  can be provided, and what their relative qualities are.
+=end
   def best_content_type content_types
     return content_types.sort_by(&:last).last[0] if self.accept.empty?
     matches = []
@@ -66,7 +82,15 @@ class Request < Rack::Request
     end
   end
   
+
+=begin rdoc
+Given the current request #path, determines the URL that browsers would consider
+the default base URL for the response body.
+
+In practice, this means everything after the last slash gets chopped of.
+=end
   def html_base_url
+    # TODO It seems this regexp can be simplified to <tt>\A(.*/)([^/]*)\z</tt>?
     @html_base ||= if matches = %r{\A(.*)(/[^/]+)\z}.match( self.path )
       matches[1] + '/'
     else
@@ -74,30 +98,56 @@ class Request < Rack::Request
     end
   end
   
+  
+=begin rdoc
+Given an absolute path, this method checks if the path can be shortened in HTML
+response body, making use of the default document base URL.
+=end
   def htmlify path
-    if i = path.index( html_base_url )
+    if i = path.index( self.html_base_url )
       path[ Range.new i, -1 ]
     else
       path.dup
     end
   end
 
+
 end # class Request
 
+=begin rdoc
+Mixin for resource objects.
 
-# Mixin for resource objects.
+Classes that include this module may implement a method +content_types+
+for content negotiation. This method must return a hash of
+<tt>mime-type => quality</tt> pairs. If such a method is provided, then the
+the app will determine the best content type for the response body on +GET+
+requests, and set this in
+  response.header['Content-Type']
+when calling
+  do_GET( request, response )
+=end
 module Resource
+  
   
   include Rack::Utils
   attr_reader :path
+  
   
   def initialize path
     @path = path
   end
   
+
+=begin rdoc
+Flags if the resource _exists_. For example, a client can +PUT+ to a URL that
+doesn't refer to a resource yet. In that case, an _empty_ resource can be
+provided to handle the +PUT+ request. +HEAD+ and +GET+ requests will still
+yield a <tt>404 Not Found</tt>.
+=end
   def empty?
     false
   end
+
 
   def allowed_methods
     unless @allowed_methods
@@ -114,39 +164,64 @@ module Resource
     @allowed_methods
   end
 
-  # Classes that include this module may implement method +#content_types+
-  # to for content negotiation. This method must return a hash of
-  # +mime-type => quality+ pairs.
+
+=begin rdoc
+Handles a +GET+ request.
+
+If a subclass implements method +content_types+, then the +Content-Type+ header
+will be set in the response object passed to +do_GET+.
+=end
   def http_GET request, response
     raise Djinn::HTTPStatus, '404' if self.empty?
-    raise Djinn::HTTPStatus, '405' unless self.respond_to? :do_GET
     if self.respond_to?(:content_types) &&
-       ( bct = request.best_content_type self.content_types )
-      response.header['Content-Type'] = bct
+       !( response.header['Content-Type'] =
+          request.best_content_type( self.content_types ) )
+      raise Djinn::HTTPStatus, '406' # Not Acceptable
     end
-    self.do_GET request, response
+    if self.respond_to? :do_GET
+      self.do_GET request, response
+    else
+      raise Djinn::HTTPStatus, '405'
+    end
   end
 
+
+=begin rdoc
+Handles a HEAD request.
+
+If a subclass implements method +content_types+, then the +Content-Type+ header
+will be set in the response object passed to +do_GET+.
+=end
   def http_HEAD request, response
     raise Djinn::HTTPStatus, '404' if self.empty?
+    if self.respond_to?( :content_types ) &&
+       !( response.header['Content-Type'] =
+          request.best_content_type( self.content_types ) )
+      raise Djinn::HTTPStatus, '406' # Not Acceptable
+    end
     if self.respond_to? :do_HEAD
       self.do_HEAD request, response
+    elsif self.respond_to? :do_GET
+      self.do_GET request, response
+      response.body = []
     else
-      self.http_GET request, response
+      raise Djinn::HTTPStatus, '405'
     end
-    response.body = []
   end
 
-  # Handles an OPTIONS request.
-  # 
-  # An +Allow:+ header is created, listing all implemented HTTP methods
-  # for this resource.
-  #
-  # By default, an *HTTP/1.1 204 No Content* is returned (without an entity
-  # body). Users may override what's returned by implementing a method
-  # #user_OPTIONS which takes two parameters:
-  # 1. a Rack::Request object
-  # 2. a Rack::Response object, to be modified at will.
+
+=begin rdoc
+Handles an OPTIONS request.
+
+An +Allow:+ header is created, listing all implemented HTTP methods
+for this resource.
+
+By default, an *HTTP/1.1 204 No Content* is returned (without an entity
+body). Users may override what's returned by implementing a method
+#user_OPTIONS which takes two parameters:
+1. a Rack::Request object
+2. a Rack::Response object, to be modified at will.
+=end
   def http_OPTIONS request, response
     raise Djinn::HTTPStatus, '404' if self.empty?
     response.status = status_code :no_content
@@ -155,15 +230,20 @@ module Resource
     self.do_OPTIONS( request, response ) if self.respond_to? :do_OPTIONS
   end
   
+  
 end
 
 
 # This class has a dual nature. It inherits from RuntimeError, so that it may
 # be used together with #raise.
 class HTTPStatus < RuntimeError
+
+
   include Rack::Utils
+ 
   
   attr_reader :response
+
 
   # The general format of +message+ is: +<status> [ <space> <message> ]+
   def initialize( message )
@@ -215,6 +295,7 @@ class HTTPStatus < RuntimeError
     @response.write self.class.template.call( status, self.message )
   end
   
+  
   DEFAULT_TEMPLATE = lambda do
     | status_code, xhtml_message |
     status_code = status_code.to_i
@@ -228,6 +309,7 @@ class HTTPStatus < RuntimeError
     '</h1>' + xhtml_message + '</body></html>'
   end
   
+  
   # The passed block must accept two arguments:
   # 1. *int* a status code
   # 2. *string* an xhtml fragment
@@ -235,6 +317,7 @@ class HTTPStatus < RuntimeError
   def self.template(&block)
     @template ||= block || DEFAULT_TEMPLATE
   end
+  
   
 end
 
@@ -245,6 +328,7 @@ end
 #   HTTP status code.
 class RelativeLocation
   
+  
   # Initialize a new RelativeRedirect object with the given arguments.  Arguments:
   # * app : The next middleware in the chain.  This is always called.
   # * &block : If provided, it is called with the environment and the response
@@ -253,6 +337,7 @@ class RelativeLocation
   def initialize(app)
     @app = app
   end
+
 
   # Call the next middleware with the environment.  If the request was a
   # redirect (response status 301, 302, or 303), and the location header does
@@ -274,61 +359,83 @@ class RelativeLocation
     res
   end
 
+
 end # RelativeLocation
 
 
 # The server class.
 class RESTServer
-  attr_accessor :resource_factory
-  @@instances = {}
   
-  # This may not actually be necessary. See also #call, which populates class
-  # variable @@instances.
-  def self.current
-    @@instances[Thread.current.object_id]
+  
+  attr_accessor :resource_factory
+  @@globals = {}
+  
+ 
+=begin rdoc
+In theory, our resources could operate in a multi-threaded environment.
+Using global variables must be avoided at all times. This method provides
+access to a Hash private to the current thread, which can be used at liberty
+as a container for "globals".
+
+At the beginning of each request, the Hash is emptied and populated with one
+entry +:server+ pointing to the current instance of RESTServer.
+
+See also the source code of #call.
+=end
+  def self.global
+    @@globals[Thread.current.object_id]
   end
   
-  # Prototype constructor. The supplied +resource_factory+ must respond to
-  # method #[]. This method will be called with a path string, and must return
-  # a Resource object.
+  
+=begin rdoc
+Prototype constructor. The supplied +resource_factory+ must respond to
+method #[]. This method will be called with a path string, and must return
+a Resource object.
+=end
   def initialize(resource_factory = nil)
     super
     @resource_factory = resource_factory
   end
   
+  
+=begin rdoc
+  As required by the Rack specification. For thread safety, this method clones
+  +self+, which handles the request in #call!.
+=end
   def call(p_env)
     server = dup
-    @@instances[Thread.current.object_id] = server
+    @@globals[Thread.current.object_id] = { :server => server }
     begin
       server.call! p_env # This is what is returned.
     ensure
-      @@instances.delete Thread.current.object_id
+      @@globals.delete Thread.current.object_id
     end
   end
   
+  
   def call!(p_env)
-    @request = Djinn::Request.new p_env
-    response = Rack::Response.new
+    self.global[:request]  = request  = Djinn::Request.new( p_env )
+    self.global[:response] = response = Rack::Response.new
     begin
-      raise HTTPStatus, '404' unless resource = self.resource_factory[@request.path]
-      if resource.respond_to? :"http_#{@request.request_method}"
-        resource.__send__( :"http_#{@request.request_method}", @request, response )
-      elsif resource.respond_to? :"do_#{@request.request_method}"
-        resource.__send__( :"do_#{@request.request_method}", @request, response )
+      raise HTTPStatus, '404' unless resource = self.resource_factory[request.path]
+      if resource.respond_to? :"http_#{request.request_method}"
+        resource.__send__( :"http_#{request.request_method}", request, response )
+      elsif resource.respond_to? :"do_#{request.request_method}"
+        resource.__send__( :"do_#{request.request_method}", request, response )
       else
         raise( HTTPStatus, '405 ' + resource.allowed_methods.join( ' ' ) )
       end
-      unless resource.path == @request.path
-        response.header['Content-Location'] =
-        @request.base_url + resource.path
+      unless resource.path == request.path
+        response.header['Content-Location'] = request.base_url + resource.path
       end
       response.finish
     rescue HTTPStatus => s
       raise if 500 == s.response.status
-      s.response.body = [] if @request.head?
+      s.response.body = [] if request.head?
       s.response.finish
     end
   end
+  
   
 end # class RESTServer
   
@@ -416,5 +523,4 @@ end # module Djinn
       Gem::SystemExitException
     SystemStackError
     fatal
- 
 =end
