@@ -24,20 +24,20 @@ class Collection < Resource
 
   include Enumerable
 
-  def content_types
-    {
-      'application/xhtml+xml; charset=UTF-8' => 1,
-      'text/html; charset=UTF-8' => 1,
-      'text/xml; charset=UTF-8' => 1,
-      'application/xml; charset=UTF-8' => 1,
-      'application/json; charset=UTF-8' => 0.5,
-      'application/x-json; charset=UTF-8' => 0.5,
-      'text/plain; charset=UTF-8' => 0.1
-    }
-  end
+  CONTENT_TYPES = {
+    'application/xhtml+xml; charset=UTF-8' => 1,
+    'text/html; charset=UTF-8' => 1,
+    'text/xml; charset=UTF-8' => 1,
+    'application/xml; charset=UTF-8' => 1,
+    'application/json; charset=UTF-8' => 0.5,
+    'application/x-json; charset=UTF-8' => 0.5,
+    'text/plain; charset=UTF-8' => 0.1
+  }
 
   def do_GET request, response
-    response.body = case response.header['Content-Type'].to_s.split( ';' ).first.strip
+    bct = request.best_content_type CONTENT_TYPES
+    response.header['Content-Type'] = bct
+    response.body = case bct.split( ';' ).first
     when 'text/plain'
       TXT.new self, request
     when 'application/json', 'application/x-json'
@@ -51,6 +51,7 @@ end # class Collection
 
 
 class Collection::XHTML < Serializer::XHTML
+
   def each
     yield header
     columns = nil
@@ -104,6 +105,7 @@ class Collection::XHTML < Serializer::XHTML
     yield '</tbody></table>'
     yield footer
   end
+
 end # class Collection::XHTML
 
 

@@ -122,6 +122,18 @@ response body, making use of the default document base URL.
   end
 
 
+  def truthy? parameter
+    value = self.GET[parameter] || ''
+    %r{\A(1|t(rue)?|y(es)?|on)\z}i === value
+  end
+
+
+  def falsy? parameter
+    value = self.GET[parameter] || ''
+    %r{\A(0|f(alse)?|n(o)?|off)\z}i === value
+  end
+
+
 end # class Request
 
 =begin rdoc
@@ -159,18 +171,18 @@ yield a <tt>404 Not Found</tt>.
   end
 
 
-  def allowed_methods
-    unless @allowed_methods
-      @allowed_methods = []
+  def http_methods
+    unless @restserver_http_methods
+      @restserver_http_methods = []
       self.public_methods.each do
         |method_name|
         if ( match = /\Ado_([A-Z]+)\z/.match( method_name ) )
-          @allowed_methods << match[1]
+          @restserver_http_methods << match[1]
         end
       end
-      @allowed_methods.delete 'HEAD' unless @allowed_methods.include? 'GET'
+      @restserver_http_methods.delete 'HEAD' unless @restserver_http_methods.include? 'GET'
     end
-    @allowed_methods
+    @restserver_http_methods
   end
 
 
@@ -185,7 +197,7 @@ will be set in the response object passed to +do_GET+.
       self.do_GET request, response
       response.body = []
     else
-      raise Djinn::HTTPStatus, '405 ' +  self.allowed_methods.join( ' ' )
+      raise Djinn::HTTPStatus, '405 ' +  self.http_methods.join( ' ' )
     end
   end
 
@@ -205,7 +217,7 @@ body). Users may override what's returned by implementing a method
   def do_OPTIONS request, response
     raise Djinn::HTTPStatus, '404' if self.empty?
     response.status = status_code :no_content
-    response.header['Allow'] = self.allowed_methods.join ', '
+    response.header['Allow'] = self.http_methods.join ', '
   end
 
 
@@ -378,7 +390,7 @@ Prototype constructor.
       elsif resource.respond_to? :"do_#{request.request_method}"
         resource.__send__( :"do_#{request.request_method}", request, response )
       else
-        raise HTTPStatus, '405 ' + resource.allowed_methods.join( ' ' )
+        raise HTTPStatus, '405 ' + resource.http_methods.join( ' ' )
       end
       unless resource.path == request.path
         response.header['Content-Location'] = request.base_url + resource.path

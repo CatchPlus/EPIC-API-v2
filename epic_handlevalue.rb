@@ -14,7 +14,8 @@
 # limitations under the License.
 #++
 
-require 'epic_resource.rb'
+require './epic_resource.rb'
+require './epic_hs.rb'
 require 'base64'
 
 module EPIC

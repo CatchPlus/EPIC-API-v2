@@ -32,15 +32,24 @@ class Serializer
 
   attr_reader :resource, :request
 
-  def initialize resource, request
-    @resource = resource
-    @request = request
+  def initialize p_resource, p_request
+    @resource, @request = p_resource, p_request
   end
 
+=begin rdoc
+This method, as well as #recurse?, only makes sense in the context of a
+@Collection EPIC::Serializer. But this is the only common base class for all
+those serializers, so I put it here.
+=end
   def requested?
-    self.resource.path.slashify == request.path.slashify
+    self.resource.path.slashify == self.request.path.slashify
   end
 
+=begin rdoc
+This method, as well as #requested?, only makes sense in the context of a
+@Collection EPIC::Serializer. But this is the only common base class for all
+those serializers, so I put it here.
+=end
   def recurse?
     depth = ( self.resource.class.constants.include? :DEFAULT_DEPTH ) ?
       self.resource.class::DEFAULT_DEPTH.to_s : '0'
@@ -52,6 +61,8 @@ end # class Serializer
 
 
 class Serializer::TXT < Serializer; end
+
+class Serializer::BIN < Serializer; end
 
 class Serializer::JSON < Serializer; end
 
@@ -121,11 +132,11 @@ class Serializer::XHTML < Serializer
       }.join + '</table>'
     when p.kind_of?( Enumerable )
       begin
-        raise 'dah' unless p.first.kind_of?( Hash )
+        raise Djinn::HTTPStatus, '500' unless p.first.kind_of?( Hash )
         keys = p.first.keys
         p.each {
           |value|
-          raise 'dah' unless value.keys == keys
+          raise Djinn::HTTPStatus, '500' unless value.keys == keys
         }
         '<table class="tablesorter condensed-table bordered-table zebra-striped"><thead><tr>' +
         keys.collect {

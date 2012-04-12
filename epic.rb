@@ -18,17 +18,15 @@
 # The project is hosted at GitHub, as
 # EPIC-API-v2[http://github.com/CatchPlus/EPIC-API-v2]
 
-require 'config.rb'
-require 'secrets/users.rb'
+require './config.rb'
+require './secrets/users.rb'
 
-require 'epic_monkeypatches.rb'
-require 'epic_activerecords.rb'
+require './epic_monkeypatches.rb'
 
-require 'epic_resource.rb'
-require 'epic_handle.rb'
-require 'epic_handles.rb'
-require 'epic_handlevalue.rb'
-require 'epic_nas.rb'
+require './epic_handle.rb'
+require './epic_handles.rb'
+require './epic_handlevalue.rb'
+require './epic_nas.rb'
 
 require 'singleton'
 

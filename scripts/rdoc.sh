@@ -1,22 +1,26 @@
 #!/bin/bash
 
-cd "$(dirname "$0")"
-export JRUBY_OPTS=--1.8
+if ! [ -f epic.rb ]; then
+	echo "Run this script from the top level directory." >&2
+	exit 1
+fi
+export JRUBY_OPTS=$(
+	for i in $JRUBY_OPTS; do echo $i; done | grep -v -- --1.9
+)
 
-rdoc \
+rdoc --debug \
   --main epic.rb \
   --charset=UTF-8 \
   --encoding=UTF-8 \
   --title=EPIC \
   --tab-width=2 \
-  --format=darkfish \
+  --format=hanna \
   --all \
-  --exclude=public/docs/epic \
-  --exclude=some_gems \
-  --exclude=attic \
   --output=public/docs/epic \
   --force-output \
-  epic*.rb djinn*.rb $GEM_HOME/gems/rack*/lib/
+  epic*.rb djinn*.rb $GEM_HOME/gems/rack*/lib
+#  --exclude=public/docs/epic \
+#  --exclude=attic \
 
 exit
 rdoc \
