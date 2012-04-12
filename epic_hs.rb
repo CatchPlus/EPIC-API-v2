@@ -23,15 +23,15 @@ def hdllib; Java.NetHandleHdllib; end
 
 # The namespace for everything related to the EPIC Web Service.
 module EPIC
-  
-  
+
+
 module HS
-  
+
 
 AUTHINFO = {}
 MUTEX = Mutex.new
-  
-  
+
+
 def self.resolver
   unless @@resolver
     MUTEX.lock
@@ -69,21 +69,21 @@ def self.authenticationInfo
   end
   AUTHINFO[userName]
 end
-  
+
 
 end # module HS
 
 
 # :category: Deprecated
 class CurrentUser
-  
+
   @@resolvers = {}
   @@authInfo  = {}
 
   def self.resolver(p_handle = HANDLE, p_idx = IDX)
     id = "#{p_idx}:#{p_handle}"
     return @@resolvers[id] if @@resolvers[id]
-     
+
     @@resolvers[id] = hdllib.HandleResolver.new
     sessionTracker  = hdllib.ClientSessionTracker.new
     @@authInfo[id]  = hdllib.PublicKeyAuthenticationInfo.new(
@@ -103,12 +103,12 @@ class CurrentUser
     @@resolvers[id].setSessionTracker(sessionTracker)
     @@resolvers[id]
   end
-  
+
   def self.authInfo(p_handle = HANDLE, p_idx = IDX)
     id = "#{p_idx}:#{p_handle}"
     return @@authInfo[id]
   end
-  
+
 end # class Administrator
 
 

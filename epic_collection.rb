@@ -13,15 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #++
-   
+
+require 'epic_resource.rb'
+
 module EPIC
-  
-  
+
+
 # Abstract base class for all collection-style resources in this web service.
 class Collection < Resource
-  
+
   include Enumerable
-  
+
   def content_types
     {
       'application/xhtml+xml; charset=UTF-8' => 1,
@@ -33,7 +35,7 @@ class Collection < Resource
       'text/plain; charset=UTF-8' => 0.1
     }
   end
-  
+
   def do_GET request, response
     response.body = case response.header['Content-Type'].to_s.split( ';' ).first.strip
     when 'text/plain'
@@ -44,7 +46,7 @@ class Collection < Resource
       XHTML.new self, request
     end
   end
-  
+
 end # class Collection
 
 
@@ -133,7 +135,7 @@ end # class Collection::TXT
 
 
 class StaticCollection < Collection
-  
+
   def initialize path
     super path
     case path
@@ -148,11 +150,11 @@ class StaticCollection < Collection
         "500 No static collection at #{path.unescape_path}"
     end
   end
-  
+
   def each &block
     @collection.each &block
   end
-  
+
 end # class StaticCollection
 
 

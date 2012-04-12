@@ -15,13 +15,13 @@
 #++
 
 require 'singleton'
-   
+
 module EPIC
-  
+
 class Filters
-  
+
   include Singleton
-  
+
   def initialize
     super
     @filters = {}
@@ -40,7 +40,7 @@ class Filters
       :block    => block
     } )
   end
-  
+
   def call name, input, *args
     name = name.to_sym
     return input unless @filters[name]
@@ -53,14 +53,14 @@ class Filters
     end
     input
   end
-  
+
 end # class Filters
-  
-  
+
+
 class Hooks
-  
+
   include Singleton
-  
+
   def initialize
     super
     @hooks = {}
@@ -78,7 +78,7 @@ class Hooks
       :block    => block
     } )
   end
-  
+
   def call name, *args
     name = name.to_s
     return input unless @hooks[name]
@@ -90,8 +90,8 @@ class Hooks
       end
     end
   end
-  
+
 end # class Hooks
-  
-  
+
+
 end # module EPIC

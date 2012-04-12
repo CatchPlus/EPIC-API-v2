@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #++
-   
+
+require 'epic_collection.rb'
 
 module EPIC
-  
-  
+
 class NAs < Collection
 
   def self.all
@@ -38,6 +38,5 @@ class NAs < Collection
   end
 
 end # class NAs
-
 
 end # module EPIC

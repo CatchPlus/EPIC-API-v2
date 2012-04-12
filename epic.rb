@@ -23,20 +23,25 @@ require 'secrets/users.rb'
 
 require 'epic_monkeypatches.rb'
 require 'epic_activerecords.rb'
-require 'epic_resources.rb'
+
+require 'epic_resource.rb'
+require 'epic_handle.rb'
+require 'epic_handles.rb'
+require 'epic_handlevalue.rb'
+require 'epic_nas.rb'
 
 require 'singleton'
 
 
 # The namespace for everything related to the EPIC Web Service.
 module EPIC
-  
-  
+
+
 # Like every Singleton, this class must be thread safe!
 class ResourceFactory
-  
+
   include Singleton
-  
+
   def [] path
     case path.to_s.unslashify
     when ''
@@ -51,7 +56,7 @@ class ResourceFactory
       nil
     end
   end
-  
+
 end # class ResourceFactory
 
 

@@ -13,22 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #++
-   
+
+require 'epic_resource.rb'
 require 'base64'
 
-
 module EPIC
-  
-  
+
+
 class HandleValue < Resource
-  
+
   def content_types
     { 
       'application/octet-stream' => 0.9,
       'application/json; charset=UTF-8' => 1
     }
   end
-  
+
   def do_GET request, response
     response.body = case response.header['Content-Type'].to_s.split( ';' ).first.strip
     when 'application/json'
@@ -37,7 +37,7 @@ class HandleValue < Resource
       BIN.new self
     end
   end
-  
+
   PERMS_BY_S = {
     :add_handle    => 0,
     :delete_handle => 1,
@@ -53,9 +53,9 @@ class HandleValue < Resource
     :list_handles  => 11
   }
   PERMS_BY_I = PERMS_BY_S.invert
-  
+
   EMPTY_HANDLE_VALUE = hdllib.HandleValue.new
-  
+
   attr_accessor :handle, :idx, :type, :data, :ttl_type, :ttl, :timestamp,
     :refs, :admin_read, :admin_write, :pub_read, :pub_write
   # Some metaprogramming to delegate data access to the appropriate
@@ -65,7 +65,7 @@ class HandleValue < Resource
 #    def_delegator :@active_handle_value, symbol
 #    def_delegator :@active_handle_value, :"#{symbol}="
 #  end
-  
+
   # Can be called with either an ActiveHandleValue object, or with a hash of
   # key => value pairs.
   def initialize path, ahv = nil # :params: String path, ActiveHandleValue ahv
@@ -111,7 +111,7 @@ class HandleValue < Resource
       @pub_write   = EMPTY_HANDLE_VALUE.getAnyoneCanWrite
     end
   end
-  
+
   def parsed_data
     case type
     when 'HS_ADMIN'
@@ -138,7 +138,7 @@ class HandleValue < Resource
       end
     end
   end
-  
+
   def parsed_data= (p_data)
     case type
     when 'HS_ADMIN'
@@ -161,7 +161,7 @@ class HandleValue < Resource
     end
     p_data
   end
-  
+
   def serializable_hash
     retval = {
       :type => self.type,
@@ -173,7 +173,7 @@ class HandleValue < Resource
     end
     retval
   end
-  
+
 end # class HandleValue
 
 

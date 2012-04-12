@@ -1,4 +1,4 @@
-# Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
+# Copyright ï¿½2011-2012 Pieter van Beek <pieterb@sara.nl>
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-   
+
 require 'cgi'
 require 'base64'
 
@@ -22,7 +22,7 @@ attr_writer :encoder
 def encoder
   @encoder ||= ::EPIC::Encoder
 end
-  
+
 
 # This is a mixin, to be included in resources that need to be serialized.
 module Serialization
@@ -35,11 +35,11 @@ module Serialization
     'application/x-json' => :json,
     'text/plain' => :txt
   }
-  
+
   def preferred_type
     @preferred_type ||= request.preferred_type CONTENT_TYPES.keys
   end
-  
+
   def preferred_serializer
     @preferred_serializer ||= CONTENT_TYPES[preferred_type]
   end
@@ -59,7 +59,7 @@ module Serialization
         ) + '</a><span class="divider">/</span></li>'
       end.join + '</ul>'
   end
-    
+
   def xhtml_header(p_path)
     retval = <<-EOS
       <?xml version="1.0" encoding="UTF-8"?>
@@ -85,11 +85,11 @@ module Serialization
     EOS
     retval
   end # xhtml_header
-  
+
   def xhtml_footer(p_path = nil)
     '</body></html>'
   end # xhtml_footer
-  
+
   def serialize_collection(p_how, p_path, p_columns, p_collection)
     case p_how
     when :xml
@@ -144,7 +144,7 @@ module Serialization
       erb 
     end
   end
-    
+
   def as_json(p)
     case
     when p.kind_of?(Handle)
@@ -165,9 +165,9 @@ module Serialization
     else
       raise ArgumentError, "Unsupported class: #{p.class}"  
     end
-    
+
   end # as_json
-    
+
 end # module Encoder
-  
+
 end # module EPIC

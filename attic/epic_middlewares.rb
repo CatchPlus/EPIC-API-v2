@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--
-   
+
 require 'rack'
 
 module EPIC
-  
-  
+
+
 # Rack::Static always maps path '/' to some index document (+index.html+ by
 # default). We don't want this, and this unwanted behavior is modified in this
 # subclass of Rack::Static.

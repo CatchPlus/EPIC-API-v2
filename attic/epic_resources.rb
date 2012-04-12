@@ -1,4 +1,4 @@
-# Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
+# Copyright ï¿½2011-2012 Pieter van Beek <pieterb@sara.nl>
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -90,15 +90,15 @@ end
 
 
 class Handle
-  
+
   attr_reader :prefix, :suffix, :handle
-  
+
   def initialize(prefix, suffix, from_db = true)
     @prefix = prefix
     @suffix = suffix
     @handle = prefix + '/' + suffix
   end
-  
+
   def self.suffixes(prefix)
     ActiveHandleValue.find_by_sql(
       "SELECT DISTINCT `handle` FROM `handles` WHERE `handle` LIKE '#{prefix}/%'"
@@ -106,7 +106,7 @@ class Handle
       Regexp.new("^#{prefix}/(.*)").match(h.handle.to_s)[1]
     end
   end
-  
+
   def values
     return @values if @values
     @values = ActiveHandleValue.where(:handle => handle).all.reduce({}) do
@@ -154,7 +154,7 @@ end
 
 
 class Suffixes
-  
+
   include Enumerable
 
   def initialize(prefix)
@@ -174,15 +174,15 @@ class Suffixes
   end
 
   def to_xml
-    
+
   end
 
   def to_json
-    
+
   end
 
   def to_txt
-    
+
   end
 
 end

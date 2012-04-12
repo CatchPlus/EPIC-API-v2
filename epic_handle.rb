@@ -13,19 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #++
-   
+
+require 'epic_collection.rb'
+require 'epic_activerecords.rb'
 require 'base64'
 
-
 module EPIC
-  
-  
+
+
 class Handle < Collection
-  
+
   DEFAULT_DEPTH = 'infiniy'
-  
+
   attr_reader :prefix, :suffix, :handle, :handle_encoded
-  
+
   def initialize path, activeHandleValues = nil
     super path
     raise "Invalid path #{path}" unless
@@ -41,7 +42,7 @@ class Handle < Collection
       [ v.idx.to_i, HandleValue.new( @handle_encoded + '/' + v.idx.to_s, v ) ]
     } ]
   end
-  
+
   def enforce_admin_record
     unless @values.detect { |k, v| 'HS_ADMIN' === v.type }
       idx = 100
@@ -85,7 +86,7 @@ class Handle < Collection
       }
     end
   end
-  
+
   def each
     @values.values.sort { |a,b| a.idx <=> b.idx }.each do |v|
       yield( {
@@ -98,11 +99,11 @@ class Handle < Collection
       } )
     end
   end
-  
+
   def empty?
     @values.empty?
   end
-  
+
 end # class Handle
 
 

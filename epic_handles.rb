@@ -13,17 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #++
-   
+
+require 'epic_collection.rb'
+require 'epic_activerecords.rb'
 
 module EPIC
-  
-  
+
 class Handles < Collection
-  
+
   def prefix
     @prefix ||= File::basename(path.unslashify).unescape_path
   end
-  
+
   def each
     ActiveHandleValue.select(:handle).uniq.
       where('`handle` LIKE ?', self.prefix + '/%').
@@ -32,8 +33,7 @@ class Handles < Collection
         yield( { :uri => suffix.escape_path, :name => "#{prefix}/#{suffix}" } )
       end
   end
-  
-end # class Handles
 
+end # class Handles
 
 end # module EPIC

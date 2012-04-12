@@ -12,12 +12,12 @@ ActiveRecord::Base.primary_key_prefix_type = :table_name_with_underscore
 
 
 module Epic
-  
-  
+
+
   class Na < ActiveRecord::Base
   end
-  
-  
+
+
   # This is a low level class that builds on ActiveRecord.
   class HandleRecord < ActiveRecord::Base
     set_table_name :epic_handles
@@ -38,8 +38,8 @@ module Epic
       retval
     end
   end
-  
-  
+
+
   # This is a low level class that builds on ActiveRecord.
   class ValueRecord < ActiveRecord::Base
     set_table_name :epic_values

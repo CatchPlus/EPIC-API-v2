@@ -1,4 +1,4 @@
-# Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
+# Copyright ï¿½2011-2012 Pieter van Beek <pieterb@sara.nl>
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,18 +18,18 @@ module EPIC
 
 
 class HTTPStatus
-  
+
   include Rack::Utils
 
   attr_reader :status, :info
-  
+
   # @param p_status HTTP/1.1 status code
   # @param p_message Depends on the status code.
   def initialize(p_status, *p_info)
     @status = p_status.to_i
     @info = p_info
   end
-  
+
   def response(p_request)
     headers = { 'Content-Type' => 'text/xhtml; charset="UTF-8"' }
     retval = EPIC::Utils::xhtml_header p_request.path
@@ -51,7 +51,7 @@ class HTTPStatus
       end
     end
   end
-  
+
 end # class HTTPStatus
 
 

@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #++
-   
+
 require 'active_record'
 
 ActiveRecord::Base.establish_connection(
@@ -29,7 +29,7 @@ ActiveRecord::Base.primary_key_prefix_type = :table_name_with_underscore
 =end
 
 module EPIC  
-  
+
 class ActiveNA < ActiveRecord::Base
   self.table_name = :nas
 end # class ActiveNA < ActiveRecord::Base

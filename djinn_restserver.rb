@@ -24,11 +24,10 @@ require 'thread'
 
 
 module Djinn
-  
-  
+
+
 class Request < Rack::Request
-  
-  
+
 =begin rdoc
 Returns a Hash of <tt>media type => quality</tt> pairs, with acceptable media types
 for the response. This information is also stored in environment variable
@@ -53,12 +52,12 @@ If no acceptable media types are provided, an empty Hash is returned.
       {}
     end
   end # def accept
-  
-  
+
+
 =begin rdoc
 Returns the best media type for the response body, given the client's +Accept:+
 header(s) and the available representations in the server.
-  
+
 [content_types]
   Hash of <tt>media type => quality</tt> pairs, indicating what kind of media types
   can be provided, and what their relative qualities are.
@@ -86,7 +85,7 @@ header(s) and the available representations in the server.
       matches.sort_by(&:last).last[0]
     end
   end
-  
+
 
 =begin rdoc
 Given the current request #path, determines the URL that browsers would consider
@@ -104,8 +103,8 @@ In practice, this means everything after the last slash gets chopped of.
       self.path.dup
     end
   end
-  
-  
+
+
 =begin rdoc
 Given an absolute path, this method checks if the path can be shortened in HTML
 response body, making use of the default document base URL.
@@ -138,16 +137,16 @@ when calling
   do_GET( request, response )
 =end
 module Resource
-  
-  
+
+
   include Rack::Utils
   attr_reader :path
-  
-  
+
+
   def initialize path
     @path = path
   end
-  
+
 
 =begin rdoc
 Flags if the resource _exists_. For example, a client can +PUT+ to a URL that
@@ -208,8 +207,8 @@ body). Users may override what's returned by implementing a method
     response.status = status_code :no_content
     response.header['Allow'] = self.allowed_methods.join ', '
   end
-  
-  
+
+
 end
 
 
@@ -219,8 +218,8 @@ class HTTPStatus < RuntimeError
 
 
   include Rack::Utils
- 
-  
+
+
   attr_reader :response
 
 
@@ -273,8 +272,8 @@ class HTTPStatus < RuntimeError
     @response.header['Content-Type'] = 'text/html; charset="UTF-8"'
     @response.write self.class.template.call( status, self.message )
   end
-  
-  
+
+
   DEFAULT_TEMPLATE = lambda do
     | status_code, xhtml_message |
     status_code = status_code.to_i
@@ -287,8 +286,8 @@ class HTTPStatus < RuntimeError
     status_code.to_s + ' ' + HTTP_STATUS_CODES[status_code] +
     '</h1>' + xhtml_message + '</body></html>'
   end
-  
-  
+
+
   # The passed block must accept two arguments:
   # 1. *int* a status code
   # 2. *string* an xhtml fragment
@@ -296,8 +295,8 @@ class HTTPStatus < RuntimeError
   def self.template(&block)
     @template ||= block || DEFAULT_TEMPLATE
   end
-  
-  
+
+
 end
 
 
@@ -306,8 +305,8 @@ end
 # - the +Location:+ header, if present, is always rectified, independent of the
 #   HTTP status code.
 class RelativeLocation
-  
-  
+
+
   # Initialize a new RelativeRedirect object with the given arguments.  Arguments:
   # * app : The next middleware in the chain.  This is always called.
   # * &block : If provided, it is called with the environment and the response
@@ -344,10 +343,10 @@ end # RelativeLocation
 
 # The server class.
 class RESTServer
-  
-  
+
+
   attr_accessor :resource_factory
-  
+
 =begin rdoc
 Prototype constructor.
 [resource_factory]
@@ -358,8 +357,8 @@ Prototype constructor.
     super
     @resource_factory = resource_factory
   end
-  
-  
+
+
 =begin rdoc
   As required by the Rack specification. For thread safety, this method clones
   +self+, which handles the request in #call!.
@@ -367,8 +366,8 @@ Prototype constructor.
   def call(p_env)
     dup.call! p_env
   end
-  
-  
+
+
   def call!(p_env)
     Thread.current[:request]  = request  = Djinn::Request.new( p_env )
     Thread.current[:response] = response = Rack::Response.new
@@ -391,10 +390,10 @@ Prototype constructor.
       s.response.finish
     end
   end
-  
-  
+
+
 end # class RESTServer
-  
+
 
 end # module Djinn
 

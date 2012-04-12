@@ -13,11 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #++
-   
+
+require 'djinn_restserver.rb'
 
 module EPIC
-  
-  
+
+
 # Base class of all resources in this web service.
 class Resource
   include Djinn::Resource
@@ -26,20 +27,20 @@ end
 
 # Base class for all serializers. 
 class Serializer
-  
+
   include Enumerable
-  
+
   attr_reader :resource, :request
-  
+
   def initialize resource, request
     @resource = resource
     @request = request
   end
-  
+
   def requested?
     self.resource.path.slashify == request.path.slashify
   end
-  
+
   def recurse?
     depth = ( self.resource.class.constants.include? :DEFAULT_DEPTH ) ?
       self.resource.class::DEFAULT_DEPTH.to_s : '0'
@@ -55,7 +56,7 @@ class Serializer::TXT < Serializer; end
 class Serializer::JSON < Serializer; end
 
 class Serializer::XHTML < Serializer
-  
+
   def breadcrumbs
     segments = request.path.split('/')
     segments.pop
@@ -71,7 +72,7 @@ class Serializer::XHTML < Serializer
       ) + '</a><span class="divider">/</span></li>'
     end.join + '</ul>'
   end # def breadcrumbs
-    
+
   def header
     return '' if !requested? || request.xhr?
     retval =
@@ -97,7 +98,7 @@ class Serializer::XHTML < Serializer
       '</title></head><body>' << breadcrumbs
     retval
   end # header
-  
+
   def footer
     if !requested? || request.xhr?
       ''
@@ -105,7 +106,7 @@ class Serializer::XHTML < Serializer
       '<p align="right"><em>Developed for <a href="http://www.catchplus.nl/">CATCH+</a><br/>by <a href="http://www.sara.nl/">SARA</a></em></p></body></html>'
     end
   end # footer
-  
+
   def serialize p
     case
     when p.kind_of?( Hash )
@@ -153,7 +154,7 @@ class Serializer::XHTML < Serializer
       p.to_s.escape_html
     end
   end
-  
+
 end # class Serializer::XHTML
 
 
