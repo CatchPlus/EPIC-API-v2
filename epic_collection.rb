@@ -132,4 +132,28 @@ class Collection::TXT < Serializer::TXT
 end # class Collection::TXT
 
 
+class StaticCollection < Collection
+  
+  def initialize path
+    super path
+    case path
+    when '/'
+      @collection = [
+        { :uri => 'handles/',   :description => 'all handles, indexed by prefix' },
+        { :uri => 'profiles/',  :description => 'all profiles, indexed by prefix' },
+        { :uri => 'templates/', :description => 'all templates, indexed by prefix' },
+      ]
+    else
+      raise Djinn::HTTPStatus,
+        "500 No static collection at #{path.unescape_path}"
+    end
+  end
+  
+  def each &block
+    @collection.each &block
+  end
+  
+end # class StaticCollection
+
+
 end # module EPIC

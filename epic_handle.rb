@@ -13,100 +13,97 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #++
+   
+require 'base64'
 
 
-def hdllib; Java.NetHandleHdllib; end
-
-
-# The namespace for everything related to the EPIC Web Service.
 module EPIC
   
   
-module HS
+class Handle < Collection
   
-
-AUTHINFO = {}
-MUTEX = Mutex.new
+  DEFAULT_DEPTH = 'infiniy'
   
+  attr_reader :prefix, :suffix, :handle, :handle_encoded
   
-def self.resolver
-  unless @@resolver
-    MUTEX.lock
-    begin
-      unless @@resolver
-        @@resolver = hdllib.HandleResolver.new
-        sessionSetupInfo = hdllib.SessionSetupInfo.new nil
-        clientSessionTracker = hdllib.ClientSessionTracker.new sessionSetupInfo
-        @@resolver.setSessionTracker clientSessionTracker
-      end
-    ensure
-      MUTEX.unlock
+  def initialize path, activeHandleValues = nil
+    super path
+    raise "Invalid path #{path}" unless
+      matches = %r{([^/]+)/([^/]+)\z}.match(path)
+    @suffix = matches[2].unescape_path
+    @prefix = matches[1].unescape_path
+    @handle = @prefix + '/' + @suffix
+    @handle_encoded = matches[0]
+    if ! activeHandleValues
+      activeHandleValues = ActiveHandleValue.where(:handle => @handle).all
+    end
+    @values = Hash[ activeHandleValues.collect { |v|
+      [ v.idx.to_i, HandleValue.new( @handle_encoded + '/' + v.idx.to_s, v ) ]
+    } ]
+  end
+  
+  def enforce_admin_record
+    unless @values.detect { |k, v| 'HS_ADMIN' === v.type }
+      idx = 100
+      idx += 1 while @values[idx]
+      # In the JAVA code for the standard CNRI adminTool, the following code can
+      # be found in private method +MainWindow::getDefaultAdminRecord()+:
+      # 
+      #   adminInfo.perms[AdminRecord.DELETE_HANDLE] = true;
+      #   adminInfo.perms[AdminRecord.ADD_VALUE] = true;
+      #   adminInfo.perms[AdminRecord.REMOVE_VALUE] = true;
+      #   adminInfo.perms[AdminRecord.MODIFY_VALUE] = true;
+      #   adminInfo.perms[AdminRecord.READ_VALUE] = true;
+      #   adminInfo.perms[AdminRecord.ADD_ADMIN] = true;
+      #   adminInfo.perms[AdminRecord.REMOVE_ADMIN] = true;
+      #   adminInfo.perms[AdminRecord.MODIFY_ADMIN] = true;
+      #   adminInfo.perms[AdminRecord.ADD_HANDLE] = true;
+      #   adminInfo.perms[AdminRecord.LIST_HANDLES] = false;
+      #   adminInfo.perms[AdminRecord.ADD_NAMING_AUTH] = false;
+      #   adminInfo.perms[AdminRecord.DELETE_NAMING_AUTH] = false;
+      #   return makeValueWithParams(100, Common.STD_TYPE_HSADMIN,
+      #                              Encoder.encodeAdminRecord(adminInfo));
+      @values[idx] = HandleValue.new @handle_encoded + '/' + idx.to_s
+      @values[idx].type = 'HS_ADMIN'
+      @values[idx].parsed_data = {
+        :adminId => CurrentUser::HANDLE,
+        :adminIdIndex => CurrentUser::IDX,
+        :perms => [
+          :add_handle    => true,
+          :delete_handle => true,
+          :add_NA        => false,
+          :delete_NA     => false,
+          :modify_value  => true,
+          :remove_value  => true,
+          :add_value     => true,
+          :read_value    => true,
+          :modify_admin  => true,
+          :remove_admin  => true,
+          :add_admin     => true,
+          :list_handles  => false
+        ]
+      }
     end
   end
-end
-
-
-def self.authenticationInfo
-  userName = Thread.current[:request].env['REMOTE_USER']
-  unless AUTHINFO[userName]
-    userInfo = EPIC::USER[userName]
-    raise Djinn::HTTPStatus, '500' unless userInfo
-    MUTEX.lock
-    begin
-      unless AUTHINFO[userName]
-        AUTHINFO[userName] = hdllib.SecretKeyAuthenticationInfo.new(
-          userInfo[:handle].to_java_bytes,
-          userInfo[:index],
-          userInfo[:secret].to_java_bytes
-        )
-      end
-    ensure
-      MUTEX.unlock
+  
+  def each
+    @values.values.sort { |a,b| a.idx <=> b.idx }.each do |v|
+      yield( {
+        :uri => v.idx.to_s,
+        :name => @handle + ':' + v.idx.to_s,
+        :idx => v.idx.to_s,
+        :type => v.type,
+        :data => Base64.encode64( v.data ),
+        :parsed_data => v.parsed_data
+      } )
     end
   end
-  AUTHINFO[userName]
-end
   
-
-end # module HS
-
-
-# :category: Deprecated
-class CurrentUser
-  
-  @@resolvers = {}
-  @@authInfo  = {}
-
-  def self.resolver(p_handle = HANDLE, p_idx = IDX)
-    id = "#{p_idx}:#{p_handle}"
-    return @@resolvers[id] if @@resolvers[id]
-     
-    @@resolvers[id] = hdllib.HandleResolver.new
-    sessionTracker  = hdllib.ClientSessionTracker.new
-    @@authInfo[id]  = hdllib.PublicKeyAuthenticationInfo.new(
-      p_handle.to_java_bytes,
-      p_idx,
-      hdllib.Util.getPrivateKeyFromBytes(
-        hdllib.Util.decrypt(
-          hdllib.Util.getBytesFromFile('secrets/' + id.gsub(/\W+/, '_')),
-          nil
-        ),
-        0
-      )
-    )
-    sessionInfo = hdllib.SessionSetupInfo.new(@@authInfo[id])
-    #sessionInfo.encrypted = true
-    sessionTracker.setSessionSetupInfo(sessionInfo)
-    @@resolvers[id].setSessionTracker(sessionTracker)
-    @@resolvers[id]
+  def empty?
+    @values.empty?
   end
   
-  def self.authInfo(p_handle = HANDLE, p_idx = IDX)
-    id = "#{p_idx}:#{p_handle}"
-    return @@authInfo[id]
-  end
-  
-end # class Administrator
+end # class Handle
 
 
 end # module EPIC

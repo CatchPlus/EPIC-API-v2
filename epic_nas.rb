@@ -18,28 +18,26 @@
 module EPIC
   
   
-class StaticCollection < Collection
-  
-  def initialize path
-    super path
-    case path
-    when '/'
-      @collection = [
-        { :uri => 'handles/',   :description => 'all handles, indexed by prefix' },
-        { :uri => 'profiles/',  :description => 'all profiles, indexed by prefix' },
-        { :uri => 'templates/', :description => 'all templates, indexed by prefix' },
-      ]
-    else
-      raise Djinn::HTTPStatus,
-        "500 No static collection at #{path.unescape_path}"
+class NAs < Collection
+
+  def self.all
+    @all ||= ActiveNA.all.collect { |na| na.na }
+  end
+  def all; self.class.all; end
+
+  def each
+    all_what = File.basename(path).unescape_path
+    all.each do |na|
+      matches = %r{\A0.NA/(.*)}i.match(na)
+      na = matches[1] if matches
+      yield( {
+        :uri => na.escape_path + '/',
+        :description => "All #{all_what} for prefix 0.NA/#{na.escape_html}"
+      } )
     end
   end
-  
-  def each &block
-    @collection.each &block
-  end
-  
-end # class StaticCollection
+
+end # class NAs
 
 
-end # EPIC
+end # module EPIC

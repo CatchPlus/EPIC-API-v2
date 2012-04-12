@@ -20,14 +20,12 @@
 
 require 'config.rb'
 require 'secrets/users.rb'
+
 require 'epic_monkeypatches.rb'
 require 'epic_activerecords.rb'
 require 'epic_resources.rb'
-#require 'epic_middlewares.rb'
+
 require 'singleton'
-
-
-def hdllib; Java.NetHandleHdllib; end
 
 
 # The namespace for everything related to the EPIC Web Service.
