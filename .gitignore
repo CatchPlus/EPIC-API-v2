@@ -3,7 +3,7 @@ rhino1_7R3
 *~
 hsj
 secrets/[0-9]*
-secrets/users.rb
+*.cfg
 .project
 src.java
 public/docs/epic

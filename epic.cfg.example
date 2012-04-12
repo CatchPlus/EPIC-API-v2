@@ -1,0 +1,9 @@
+module EPIC
+
+  # Enter your own realm name (used in DIGEST and BASIC authentication):
+  REALM = 'YOUR_REALM_NAME'
+
+  # For DIGEST authentication a random hex- or base64-encoded string is needed:
+  OPAQUE = '1234567890abcdef1234567890abcdef'
+
+end

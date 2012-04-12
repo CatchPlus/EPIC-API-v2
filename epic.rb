@@ -18,10 +18,11 @@
 # The project is hosted at GitHub, as
 # EPIC-API-v2[http://github.com/CatchPlus/EPIC-API-v2]
 
+require 'config.rb'
+require 'secrets/users.rb'
 require 'epic_monkeypatches.rb'
 require 'epic_activerecords.rb'
 require 'epic_resources.rb'
-require 'epic_serializers.rb'
 #require 'epic_middlewares.rb'
 require 'singleton'
 
@@ -33,46 +34,7 @@ def hdllib; Java.NetHandleHdllib; end
 module EPIC
   
   
-class CurrentUser
-  
-  HANDLE = '0.NA/10916'
-  IDX = 300
-
-  @resolvers = {}
-  @authInfo = {}
-
-  def self.resolver(p_handle = HANDLE, p_idx = IDX)
-    id = "#{p_idx}:#{p_handle}"
-    return @resolvers[id] if @resolvers[id]
-     
-    @resolvers[id] = hdllib.HandleResolver.new
-    sessionTracker = hdllib.ClientSessionTracker.new
-    @authInfo[id] = hdllib.PublicKeyAuthenticationInfo.new(
-      p_handle.to_java_bytes,
-      p_idx,
-      hdllib.Util.getPrivateKeyFromBytes(
-        hdllib.Util.decrypt(
-          hdllib.Util.getBytesFromFile('secrets/' + id.gsub(/\W+/, '_')),
-          nil
-        ),
-        0
-      )
-    )
-    sessionInfo = hdllib.SessionSetupInfo.new(@authInfo[id])
-    #sessionInfo.encrypted = true
-    sessionTracker.setSessionSetupInfo(sessionInfo)
-    @resolvers[id].setSessionTracker(sessionTracker)
-    @resolvers[id]
-  end
-  
-  def self.authInfo(p_handle = HANDLE, p_idx = IDX)
-    id = "#{p_idx}:#{p_handle}"
-    return @authInfo[id]
-  end
-  
-end # class CurrentUser
-
-
+# Like every Singleton, this class must be thread safe!
 class ResourceFactory
   
   include Singleton

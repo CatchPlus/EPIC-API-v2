@@ -17,13 +17,12 @@
 # This is the configuration file for the +rackup+ command.
 
 require './epic.rb'
-require './secrets/users.rb'
 require 'rack/chunked'
 require 'rack/reloader'
 
 # Perform header spoofing:
 use Rack::Config do |env|
-  raise 'Multithreaded web servers are not supported' if env['rack.multithread']
+  raise 'Multithreaded web servers are not supported' if env['rack.multiprocess']
   req = Rack::Request.new env
   req.GET.each do |k, v|
     if %r{\A_http_(\w+)\z}i.match(k)
@@ -34,18 +33,17 @@ end
 use Rack::Chunked
 use Rack::Reloader, 1
 use Rack::Sendfile
-use Rack::Directory, 'public'
 use Rack::Static,
   :urls  => ['/inc', '/favicon.ico', '/docs'],
   :root  => 'public',
   :index => nil
 use Djinn::RelativeLocation
 use Rack::Auth::Digest::MD5, {
-    :realm => $EPIC_REALM, :opaque => $EPIC_OPAQUE, :passwords_hashed => true
+    :realm => EPIC::REALM, :opaque => EPIC::OPAQUE, :passwords_hashed => true
   } do
   |username|
   username = username.to_str
-  $EPIC_USERS[username] ? $EPIC_USERS[username][:password] : nil
+  EPIC::USERS[username] ? EPIC::USERS[username][:digest] : nil
 end
 
 run Djinn::RESTServer.new( EPIC::ResourceFactory.instance )

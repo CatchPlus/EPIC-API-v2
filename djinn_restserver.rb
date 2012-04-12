@@ -20,11 +20,12 @@
 # Used by HTTPStatus
 require 'rexml/document'
 require 'rack'
+require 'thread'
 
 
 module Djinn
   
-
+  
 class Request < Rack::Request
   
   
@@ -161,33 +162,16 @@ yield a <tt>404 Not Found</tt>.
 
   def allowed_methods
     unless @allowed_methods
-      @allowed_methods = self.public_methods.reduce(['OPTIONS']) do
-        |result, method_name|
+      @allowed_methods = []
+      self.public_methods.each do
+        |method_name|
         if ( match = /\Ado_([A-Z]+)\z/.match( method_name ) )
-          result.push( match[1] )
+          @allowed_methods << match[1]
         end
-        result
       end
-      @allowed_methods.push 'HEAD' if @allowed_methods.include? 'GET'
-      @allowed_methods.uniq!
+      @allowed_methods.delete 'HEAD' unless @allowed_methods.include? 'GET'
     end
     @allowed_methods
-  end
-
-
-=begin rdoc
-Handles a +GET+ request.
-
-If a subclass implements method +content_types+, then the +Content-Type+ header
-will be set in the response object passed to +do_GET+.
-=end
-  def http_GET request, response
-    raise Djinn::HTTPStatus, '404' if self.empty?
-    if self.respond_to? :do_GET
-      self.do_GET request, response
-    else
-      raise Djinn::HTTPStatus, '405 ' +  self.allowed_methods.join( ' ' )
-    end
   end
 
 
@@ -197,11 +181,8 @@ Handles a HEAD request.
 If a subclass implements method +content_types+, then the +Content-Type+ header
 will be set in the response object passed to +do_GET+.
 =end
-  def http_HEAD request, response
-    raise Djinn::HTTPStatus, '404' if self.empty?
-    if self.respond_to? :do_HEAD
-      self.do_HEAD request, response
-    elsif self.respond_to? :do_GET
+  def do_HEAD request, response
+    if self.respond_to? :do_GET
       self.do_GET request, response
       response.body = []
     else
@@ -222,12 +203,10 @@ body). Users may override what's returned by implementing a method
 1. a Rack::Request object
 2. a Rack::Response object, to be modified at will.
 =end
-  def http_OPTIONS request, response
+  def do_OPTIONS request, response
     raise Djinn::HTTPStatus, '404' if self.empty?
     response.status = status_code :no_content
-    http_method_regexp = /\Ahttp_([A-Z]+)\z/
     response.header['Allow'] = self.allowed_methods.join ', '
-    self.do_OPTIONS( request, response ) if self.respond_to? :do_OPTIONS
   end
   
   
@@ -368,9 +347,7 @@ class RESTServer
   
   
   attr_accessor :resource_factory
-  @@globals = {}
   
- 
 =begin rdoc
 Prototype constructor.
 [resource_factory]
@@ -393,8 +370,8 @@ Prototype constructor.
   
   
   def call!(p_env)
-    request  = Djinn::Request.new( p_env )
-    response = Rack::Response.new
+    Thread.current[:request]  = request  = Djinn::Request.new( p_env )
+    Thread.current[:response] = response = Rack::Response.new
     begin
       raise HTTPStatus, '404' unless resource = self.resource_factory[request.path]
       if resource.respond_to? :"http_#{request.request_method}"

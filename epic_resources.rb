@@ -21,9 +21,6 @@ require 'hsj/handle.jar'
 require 'hsj/cnriutil.jar'
 
 
-def hdllib; Java.NetHandleHdllib; end
-
-
 module EPIC
   
   
@@ -33,36 +30,137 @@ class Resource
 end
 
 
-# Abstract base class for all collection-style resources in this web service.
-class Collection < Resource
+# Base class for all serializers. 
+class Serializer
   
   include Enumerable
   
-  def content_types
-    {
-      'application/xhtml+xml; charset=UTF-8' => 1,
-      'text/html; charset=UTF-8' => 1,
-      'text/xml; charset=UTF-8' => 1,
-      'application/xml; charset=UTF-8' => 1,
-      'application/json; charset=UTF-8' => 0.5,
-      'application/x-json; charset=UTF-8' => 0.5,
-      'text/plain; charset=UTF-8' => 0.1
-    }
+  attr_reader :resource, :request
+  
+  def initialize resource, request
+    @resource = resource
+    @request = request
   end
   
-  def do_GET request, response
-    response.body = case response.header['Content-Type'].to_s.split( ';' ).first.strip
-    when 'text/plain'
-      TXT.new self, request
-    when 'application/json', 'application/x-json'
-      JSON.new self, request
+  def requested?
+    self.resource.path.slashify == request.path.slashify
+  end
+  
+  def recurse?
+    depth = ( self.resource.class.constants.include? :DEFAULT_DEPTH ) ?
+      self.resource.class::DEFAULT_DEPTH.to_s : '0'
+    depth = request.env['HTTP_DEPTH'] || depth
+    requested? && '0' != depth || 'infinity' == depth
+  end
+
+end # class Serializer
+
+
+class Serializer::TXT < Serializer; end
+
+class Serializer::JSON < Serializer; end
+
+class Serializer::XHTML < Serializer
+  
+  def breadcrumbs
+    segments = request.path.split('/')
+    segments.pop
+    return '' if segments.empty?
+    bc_path = ''
+    '<ul class="breadcrumb">' + segments.collect do
+      |segment|
+      bc_path += segment + '/'
+      '<li><a href="' + bc_path + '" rel="' + (
+        segment.empty? && 'home' || 'contents'
+      ) + '">' + (
+        segment.empty? && 'home' || segment.unescape_path
+      ) + '</a><span class="divider">/</span></li>'
+    end.join + '</ul>'
+  end # def breadcrumbs
+    
+  def header
+    return '' if !requested? || request.xhr?
+    retval =
+'<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" href="/inc/bootstrap/bootstrap.min.css"/>'
+# <script type="text/javascript" src="/inc/jquery-1.7.1.min.js"></script> 
+# <script type="text/javascript" src="/inc/jquery-tablesorter.js"></script> 
+# <script type="text/javascript">//<![CDATA[
+# $(document).ready(
+  # function() { $(".tablesorter").tablesorter(); } 
+# );
+# //]]></script>'
+    unless '/' == request.path[-1, 1] # unless request.path ends with a slash
+      retval << '<base href="' << request.path.slashify << '"/>'
+    end
+    unless '/' == request.path
+      retval << '<link rel="contents" href="' << File::dirname(request.path).slashify << '"/>'
+    end
+    retval << '<title>Index of ' << request.path.unescape_path.escape_html <<
+      '</title></head><body>' << breadcrumbs
+    retval
+  end # header
+  
+  def footer
+    if !requested? || request.xhr?
+      ''
     else
-      XHTML.new self, request
+      '<p align="right"><em>Developed for <a href="http://www.catchplus.nl/">CATCH+</a><br/>by <a href="http://www.sara.nl/">SARA</a></em></p></body></html>'
+    end
+  end # footer
+  
+  def serialize p
+    case
+    when p.kind_of?( Hash )
+      '<table class="condensed-table bordered-table zebra-striped">' +
+      p.collect {
+        |key, value|
+        '<tr><th>' + key.to_s.split('_').collect{
+          |word|
+          word[0..0].upcase + word[1..-1]
+        }.join(' ').escape_html +
+        '</th><td class="epic_' + key.to_s.escape_html + '">' + self.serialize( value ) + "</td></tr>\n"
+      }.join + '</table>'
+    when p.kind_of?( Enumerable )
+      begin
+        raise 'dah' unless p.first.kind_of?( Hash )
+        keys = p.first.keys
+        p.each {
+          |value|
+          raise 'dah' unless value.keys == keys
+        }
+        '<table class="tablesorter condensed-table bordered-table zebra-striped"><thead><tr>' +
+        keys.collect {
+          |column|
+          '<th>' +
+          column.to_s.split('_').collect{
+            |word|
+            word[0..0].upcase + word[1..-1]
+          }.join(' ').escape_html +
+          "</th>\n"
+        }.join + '</tr></thead><tbody>' + p.collect {
+          |h|
+          '<tr>' + h.collect {
+            |key, value|
+            '<td class="epic_' + key.to_s.escape_html + '">' +
+            item[column].to_s.escape_html + "</td>\n"
+          }.join + '</tr>'
+        }.join + "</tbody></table>"
+      rescue
+        '<ul class="unstyled">' + p.collect {
+          |value|
+          '<li>' + self.serialize(value) + "</li>\n"
+        }.join + "</ul>\n"
+      end
+    else
+      p.to_s.escape_html
     end
   end
   
-end # Collection
-
+end # class Serializer::XHTML
 
 class HandleValue < Resource
   
@@ -345,30 +443,6 @@ class NAs < Collection
   end
 
 end # class NAs
-
-
-class StaticCollection < Collection
-  
-  def initialize path
-    super path
-    case path
-    when '/'
-      @collection = [
-        { :uri => 'handles/',   :description => 'all handles, indexed by prefix' },
-        { :uri => 'profiles/',  :description => 'all profiles, indexed by prefix' },
-        { :uri => 'templates/', :description => 'all templates, indexed by prefix' },
-      ]
-    else
-      raise Djinn::HTTPStatus,
-        "500 No static collection at #{path.unescape_path}"
-    end
-  end
-  
-  def each &block
-    @collection.each &block
-  end
-  
-end # class StaticCollection
 
 
 end # module EPIC
