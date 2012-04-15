@@ -26,6 +26,11 @@ require 'thread'
 module Djinn
 
 
+def self.globals
+  Thread.current[:djinn]
+end
+
+
 class Request < Rack::Request
 
 =begin rdoc
@@ -87,41 +92,6 @@ header(s) and the available representations in the server.
   end
 
 
-=begin rdoc
-Given the current request #path, determines the URL that browsers would consider
-the default base URL for the response body.
-
-In practice, this means everything after the last slash gets chopped of.
-
-:category: Deprecated
-=end
-  def html_base_url
-    # TODO It seems this regexp can be simplified to <tt>\A(.*/)([^/]*)\z</tt>?
-    @env['djinn.htmlbase'] ||= if matches = %r{\A(.*)(/[^/]+)\z}.match( self.path )
-      matches[1] + '/'
-    else
-      self.path.dup
-    end
-  end
-
-
-=begin rdoc
-Given an absolute path, this method checks if the path can be shortened in HTML
-response body, making use of the default document base URL.
-
-:category: Deprecated
-=end
-  def htmlify path, base = nil
-    # This method seems to be broken!!!
-    base ||= html_base_url
-    if i = path.index( base )
-      path[ Range.new i, -1 ]
-    else
-      path.dup
-    end
-  end
-
-
   def truthy? parameter
     value = self.GET[parameter] || ''
     %r{\A(1|t(rue)?|y(es)?|on)\z}i === value
@@ -150,15 +120,16 @@ when calling
 =end
 module Resource
 
-
   include Rack::Utils
-  attr_reader :path
-
+  def path; @djinn_resource_path; end
 
   def initialize path
-    @path = path
+    @djinn_resource_path = path
   end
 
+  def globals
+    Djinn::globals
+  end
 
 =begin rdoc
 Flags if the resource _exists_. For example, a client can +PUT+ to a URL that
@@ -169,7 +140,6 @@ yield a <tt>404 Not Found</tt>.
   def empty?
     false
   end
-
 
   def http_methods
     unless @restserver_http_methods
@@ -185,7 +155,6 @@ yield a <tt>404 Not Found</tt>.
     @restserver_http_methods
   end
 
-
 =begin rdoc
 Handles a HEAD request.
 
@@ -200,7 +169,6 @@ will be set in the response object passed to +do_GET+.
       raise Djinn::HTTPStatus, '405 ' +  self.http_methods.join( ' ' )
     end
   end
-
 
 =begin rdoc
 Handles an OPTIONS request.
@@ -219,7 +187,6 @@ body). Users may override what's returned by implementing a method
     response.status = status_code :no_content
     response.header['Allow'] = self.http_methods.join ', '
   end
-
 
 end
 
@@ -381,8 +348,12 @@ Prototype constructor.
 
 
   def call!(p_env)
-    Thread.current[:request]  = request  = Djinn::Request.new( p_env )
-    Thread.current[:response] = response = Rack::Response.new
+    request  = Djinn::Request.new( p_env )
+    response = Rack::Response.new
+    Thread.current[:djinn] = {
+      :request  => request,
+      :response => response
+    }
     begin
       raise HTTPStatus, '404' unless resource = self.resource_factory[request.path]
       if resource.respond_to? :"http_#{request.request_method}"
@@ -395,6 +366,7 @@ Prototype constructor.
       unless resource.path == request.path
         response.header['Content-Location'] = request.base_url + resource.path
       end
+      #[200, {'Content-Type'=>'text/plain'},[response.header['Content-Type']]]
       response.finish
     rescue HTTPStatus => s
       raise if 500 == s.response.status

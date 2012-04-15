@@ -1,8 +1,11 @@
 #!/bin/bash
 PIDFILE=/tmp/ng-server.pid
 
+if [ $SHLVL -ne 1 ]; then
+	echo "WARNING: This script is supposed to be sourced, not executed." >&2
+fi
 if ! [ -f epic.rb ]; then
-	echo "Run this script from the top level directory." >&2
+	echo "ERROR: Run this script from the top level directory." >&2
 	exit 1
 fi
 if [ -f "$PIDFILE" ]; then

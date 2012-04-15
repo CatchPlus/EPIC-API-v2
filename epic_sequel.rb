@@ -14,20 +14,44 @@
 # limitations under the License.
 #++
 
-require './epic_sequel.rb'
-require './epic_collection.rb'
+#require 'rubygems'
+require 'sequel'
+require 'singleton'
 
 module EPIC
 
-class NAs < Collection
+class DB
 
-  def each
-    DB.instance.all_nas.each do
-      |na|
-      yield na[5..-1].escape_path + '/'
+  include Singleton
+
+  POOL = Sequel.connect(
+    'jdbc:mysql://localhost/epic?user=epic&password=epic',
+    :single_threaded => false
+  )
+
+  def initialize
+    @all_nas = nil
+  end
+
+  def all_nas
+    @all_nas ||= POOL[:nas].select(:na).collect do
+      |row|
+      row[:na]
     end
   end
 
-end # class NAs
+  def all_handles prefix = nil
+    ds = POOL[:handles].select(:handle).distinct
+    if prefix
+      ds = ds.filter( '`handle` LIKE ?', prefix + '/%' )
+    end
+    ds.collect { |row| row[:handle] }
+  end
 
-end # module EPIC
+  def all_handle_values handle
+    ds = POOL[:handles].where( :handle => handle ).all
+  end
+
+end
+
+end

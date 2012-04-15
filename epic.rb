@@ -40,10 +40,26 @@ class ResourceFactory
 
   include Singleton
 
+  def delete path
+    path = path.to_s.unslashify
+    Djinn::globals[:resource_cache].delete path
+  end
+
+  def << resource
+    Djinn::globals[:resource_cache][resource.path] = resource
+    self
+  end
+
   def [] path
+    path = path.to_s.unslashify
+    Djinn::globals[:resource_cache] ||= {}
+    retval = Djinn::globals[:resource_cache][path]
+    if ! retval.nil?
+      return retval || nil
+    end
     case path.to_s.unslashify
     when ''
-      StaticCollection.new '/'
+      StaticCollection.new '/', [ 'handles/', 'profiles/', 'templates/' ]
     when '/handles', '/profiles', '/templates'
       NAs.new path.slashify
     when %r{\A/handles/\d+\z}
@@ -51,7 +67,7 @@ class ResourceFactory
     when %r{\A/handles/\d+/[^/]+\z}
       Handle.new path #.unslashify
     else
-      nil
+      false
     end
   end
 

@@ -14,24 +14,39 @@
 # limitations under the License.
 #++
 
-require 'epic_collection.rb'
-require 'epic_activerecords.rb'
+require './epic_collection.rb'
+require './epic_sequel.rb'
 
 module EPIC
 
 class Handles < Collection
 
   def prefix
-    @prefix ||= File::basename(path.unslashify).unescape_path
+    @epic_handles_prefix ||= File::basename(path.unslashify).unescape_path
   end
 
-  def each
-    ActiveHandleValue.select(:handle).uniq.
-      where('`handle` LIKE ?', self.prefix + '/%').
-      find_each do |ahv|
-        suffix = %r{\A[^/]+/(.*)}.match(ahv.handle)[1]
-        yield( { :uri => suffix.escape_path, :name => "#{prefix}/#{suffix}" } )
-      end
+=begin rdoc
+TODO: better implementation (server-side data retention) for streaming responses.
+=end
+  def each &block
+    start_position = self.prefix.size + 1
+    # ActiveHandleValue.select([:handle, :id]).
+      # where('`handle` LIKE ?', self.prefix + '/%').
+      # group_by(:handle).
+      # find_each do |ahv|
+        # yield ahv.handle[start_position .. -1]
+      # end
+    # if self.recurse?
+      # DB.instance.all_handles.collect {
+        # |handle|
+        # handle[start_position .. -1].escape_path
+      # }.each &block
+    # else
+    DB.instance.all_handles.each do
+      |handle|
+      yield handle[start_position .. -1].escape_path
+    end
+    # end
   end
 
 end # class Handles

@@ -14,14 +14,23 @@
 # limitations under the License.
 #++
 
-require 'djinn_restserver.rb'
+require './djinn_restserver.rb'
 
 module EPIC
 
 
 # Base class of all resources in this web service.
 class Resource
+
   include Djinn::Resource
+
+  def initialize path
+    super
+    ResourceFactory::instance << self
+  end
+
+  def userName; globals[:request].env['REMOTE_USER']; end
+
 end
 
 
@@ -36,27 +45,6 @@ class Serializer
     @resource, @request = p_resource, p_request
   end
 
-=begin rdoc
-This method, as well as #recurse?, only makes sense in the context of a
-@Collection EPIC::Serializer. But this is the only common base class for all
-those serializers, so I put it here.
-=end
-  def requested?
-    self.resource.path.slashify == self.request.path.slashify
-  end
-
-=begin rdoc
-This method, as well as #requested?, only makes sense in the context of a
-@Collection EPIC::Serializer. But this is the only common base class for all
-those serializers, so I put it here.
-=end
-  def recurse?
-    depth = ( self.resource.class.constants.include? :DEFAULT_DEPTH ) ?
-      self.resource.class::DEFAULT_DEPTH.to_s : '0'
-    depth = request.env['HTTP_DEPTH'] || depth
-    requested? && '0' != depth || 'infinity' == depth
-  end
-
 end # class Serializer
 
 
@@ -67,6 +55,21 @@ class Serializer::BIN < Serializer; end
 class Serializer::JSON < Serializer; end
 
 class Serializer::XHTML < Serializer
+
+  def each &block
+    yield header + '<div id="epic_content">'
+    each_nested &block
+    yield '</div>' + footer
+  end
+
+  def htmlify path
+    base = self.request.path.slashify
+    if base = path[0, base.size]
+      path[ base.size .. -1 ]
+    else
+      path.dup
+    end
+  end
 
   def breadcrumbs
     segments = request.path.split('/')
@@ -85,13 +88,13 @@ class Serializer::XHTML < Serializer
   end # def breadcrumbs
 
   def header
-    return '' if !requested? || request.xhr?
     retval =
 '<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<link rel="stylesheet" href="/inc/bootstrap/bootstrap.min.css"/>'
+<link rel="stylesheet" href="/inc/bootstrap/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/inc/bootstrap/css/bootstrap-responsive.min.css"/>'
 # <script type="text/javascript" src="/inc/jquery-1.7.1.min.js"></script> 
 # <script type="text/javascript" src="/inc/jquery-tablesorter.js"></script> 
 # <script type="text/javascript">//<![CDATA[
@@ -111,17 +114,13 @@ class Serializer::XHTML < Serializer
   end # header
 
   def footer
-    if !requested? || request.xhr?
-      ''
-    else
-      '<p align="right"><em>Developed for <a href="http://www.catchplus.nl/">CATCH+</a><br/>by <a href="http://www.sara.nl/">SARA</a></em></p></body></html>'
-    end
+    '<p align="right"><em>Developed for <a href="http://www.catchplus.nl/">CATCH+</a><br/>by <a href="http://www.sara.nl/">SARA</a></em></p></body></html>'
   end # footer
 
   def serialize p
     case
     when p.kind_of?( Hash )
-      '<table class="condensed-table bordered-table zebra-striped">' +
+      '<table class="epic_object table table-striped table-bordered table-condensed">' +
       p.collect {
         |key, value|
         '<tr><th>' + key.to_s.split('_').collect{
@@ -138,7 +137,7 @@ class Serializer::XHTML < Serializer
           |value|
           raise Djinn::HTTPStatus, '500' unless value.keys == keys
         }
-        '<table class="tablesorter condensed-table bordered-table zebra-striped"><thead><tr>' +
+        '<table class="epic_objects table table-striped table-bordered table-condensed"><thead><tr>' +
         keys.collect {
           |column|
           '<th>' +

@@ -14,7 +14,7 @@
 # limitations under the License.
 #++
 
-require 'epic_resource.rb'
+require './epic_resource.rb'
 
 module EPIC
 
@@ -47,46 +47,84 @@ class Collection < Resource
     end
   end
 
+  def requested?
+    path.slashify == globals[:request].path.slashify
+  end
+
+  def recurse?
+    depth = ( self.class.constants.include? :DEFAULT_DEPTH ) ?
+      DEFAULT_DEPTH.to_s : '0'
+    depth = globals[:request].env['HTTP_DEPTH'] || depth
+    requested? && '0' != depth || 'infinity' == depth
+  end
+
 end # class Collection
 
 
 class Collection::XHTML < Serializer::XHTML
 
-  def each
-    yield header
+  def each_nested &block # :yields: strings
+    recurse = self.resource.recurse?
+    html = '
+<table class="epic_collection table table-striped table-bordered table-condensed">
+<thead><tr><th class="epic_uri">URI</th>'
+    html << '<th class="epic_resource">Resource</th>' if recurse
+    html << '</tr></thead><tbody>'
+    yield html
+    self.resource.each do |uri|
+      uri = uri.to_s
+      html = '<tr class="epic_resource"><td class="epic_uri"><a href="' +
+        uri + '">' +
+        uri.split('?', 2).first.unescape_path.escape_html +
+        "</a></td>\n"
+      if recurse
+        html << '<td class="epic_resource">'
+        yield html
+        child = ResourceFactory.instance[ self.resource.path + uri.split('?', 2).first ]
+        child.class::XHTML.new(child, request).each_nested(&block) if child
+        html = '</td>'
+      end
+      html << '</tr>'
+      yield html
+    end
+    yield '</tbody></table>'
+  end
+
+=begin
+  def every_bak
     columns = nil
     self.resource.each do |item|
+      # First time around, we're gonna see what columns we need.
       unless columns
-        recurse = (
-          self.recurse? &&
-          ( child = ResourceFactory.instance[self.resource.path.slashify + item[:uri].to_s] ) &&
-          ! child.empty? && child.kind_of?(Collection)
-        )
+        recurse = self.resource.recurse?
+        # recurse = (
+          # self.resource.recurse? &&
+          # ( child = ResourceFactory.instance[self.resource.path.slashify + item[:uri].to_s] ) &&
+          # ! child.empty? && child.kind_of?(Collection)
+        # )
         columns = item.keys
         columns.delete :uri
-        columns.unshift(:name) if item[:uri] && ! item[:name]
-        yield '
-<table class="tablesorter condensed-table bordered-table zebra-striped">
+        columns.unshift :uri
+        html = '<table class="epic_collection condensed-table bordered-table zebra-striped">
 <thead><tr>'
-        yield( columns.collect { |column|
+        html << columns.collect { |column|
           '<th>' + column.to_s.split('_').collect{
             |word|
             word[0..0].upcase + word[1..-1]
           }.join(' ').escape_html + '</th>'
-        }.join )
-        yield '<th>Contents</th>' if recurse
-        yield '</tr></thead><tbody>'
+        }.join
+        html << '<th>Contents</th>' if recurse
+        html << '</tr></thead><tbody>'
+        yield html
       end
-      item[:name] = item[:uri].unslashify.unescape_path if
-        item[:uri] && ! item[:name]
-      yield '<tr class="epic_resource">'
+      html = '<tr class="epic_resource">'
       columns.each do |column|
-        if :name == column && item[:uri]
-          yield '<td class="epic_name"><a href="' +
+        if :uri == column
+          html << '<td class="epic_uri"><a href="' +
             item[:uri].to_s + '">' +
-            item[:name].to_s.escape_html + "</a></td>\n"
+            item[:uri].to_s.unescape_path.escape_html + "</a></td>\n"
         else
-          yield '<td class="epic_' + column.to_s + '">' +
+          html << '<td class="epic_' + column.to_s + '">' +
             self.serialize(item[column]) + "</td>\n"
         end
       end
@@ -103,8 +141,8 @@ class Collection::XHTML < Serializer::XHTML
       yield '</tr>'
     end
     yield '</tbody></table>'
-    yield footer
   end
+=end
 
 end # class Collection::XHTML
 
@@ -138,24 +176,14 @@ end # class Collection::TXT
 
 class StaticCollection < Collection
 
-  def initialize path
+  def initialize path, uris
     super path
-    case path
-    when '/'
-      @collection = [
-        { :uri => 'handles/',   :description => 'all handles, indexed by prefix' },
-        { :uri => 'profiles/',  :description => 'all profiles, indexed by prefix' },
-        { :uri => 'templates/', :description => 'all templates, indexed by prefix' },
-      ]
-    else
-      raise Djinn::HTTPStatus,
-        "500 No static collection at #{path.unescape_path}"
-    end
+    @uris = uris
   end
 
-  def each &block
-    @collection.each &block
-  end
+  def each &block; @uris.each &block; end
+
+  #def recurse?; false; end
 
 end # class StaticCollection
 
