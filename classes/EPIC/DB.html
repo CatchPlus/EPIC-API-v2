@@ -71,12 +71,7 @@
                   <tr class='top-aligned-row context-row'>
                     <td class='context-item-name'>POOL</td>
                     <td>=</td>
-                    <td class='context-item-value'>
-                      Sequel.connect(
-                      'jdbc:mysql://localhost/epic?user=epic&password=epic',
-                      :single_threaded => false
-                      )
-                    </td>
+                    <td class='context-item-value'>Sequel.connect *SEQUEL_CONNECTION_ARGS</td>
                     <td>&nbsp;</td>
                     <td class='context-item-desc'></td>
                   </tr>
@@ -98,7 +93,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-c-new-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-c-new-source'><span class="ruby-comment"># File epic_sequel.rb, line 32</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>&#x000A;  <span class="ruby-ivar">@all_nas</span> = <span class="ruby-keyword">nil</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-c-new-source'><span class="ruby-comment"># File epic_sequel.rb, line 29</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>&#x000A;  <span class="ruby-ivar">@all_nas</span> = <span class="ruby-keyword">nil</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <h2>Public Instance methods</h2>
@@ -115,7 +110,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-all_handle_values-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-all_handle_values-source'><span class="ruby-comment"># File epic_sequel.rb, line 51</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">all_handle_values</span> <span class="ruby-identifier">handle</span>&#x000A;  <span class="ruby-identifier">ds</span> = <span class="ruby-constant">POOL</span>[<span class="ruby-value">:handles</span>].<span class="ruby-identifier">where</span>( <span class="ruby-value">:handle</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">handle</span> ).<span class="ruby-identifier">all</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-all_handle_values-source'><span class="ruby-comment"># File epic_sequel.rb, line 48</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">all_handle_values</span> <span class="ruby-identifier">handle</span>&#x000A;  <span class="ruby-identifier">ds</span> = <span class="ruby-constant">POOL</span>[<span class="ruby-value">:handles</span>].<span class="ruby-identifier">where</span>( <span class="ruby-value">:handle</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">handle</span> ).<span class="ruby-identifier">all</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-all_handles'>
@@ -131,7 +126,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-all_handles-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-all_handles-source'><span class="ruby-comment"># File epic_sequel.rb, line 43</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">all_handles</span> <span class="ruby-identifier">prefix</span> = <span class="ruby-keyword">nil</span>&#x000A;  <span class="ruby-identifier">ds</span> = <span class="ruby-constant">POOL</span>[<span class="ruby-value">:handles</span>].<span class="ruby-identifier">select</span>(<span class="ruby-value">:handle</span>).<span class="ruby-identifier">distinct</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span>&#x000A;    <span class="ruby-identifier">ds</span> = <span class="ruby-identifier">ds</span>.<span class="ruby-identifier">filter</span>( <span class="ruby-string">'`handle` LIKE ?'</span>, <span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-string">'/%'</span> )&#x000A;  <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-identifier">ds</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span> <span class="ruby-identifier">row</span>[<span class="ruby-value">:handle</span>] }&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-all_handles-source'><span class="ruby-comment"># File epic_sequel.rb, line 40</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">all_handles</span> <span class="ruby-identifier">prefix</span> = <span class="ruby-keyword">nil</span>&#x000A;  <span class="ruby-identifier">ds</span> = <span class="ruby-constant">POOL</span>[<span class="ruby-value">:handles</span>].<span class="ruby-identifier">select</span>(<span class="ruby-value">:handle</span>).<span class="ruby-identifier">distinct</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span>&#x000A;    <span class="ruby-identifier">ds</span> = <span class="ruby-identifier">ds</span>.<span class="ruby-identifier">filter</span>( <span class="ruby-string">'`handle` LIKE ?'</span>, <span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-string">'/%'</span> )&#x000A;  <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-identifier">ds</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span> <span class="ruby-identifier">row</span>[<span class="ruby-value">:handle</span>] }&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-all_nas'>
@@ -147,7 +142,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-all_nas-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-all_nas-source'><span class="ruby-comment"># File epic_sequel.rb, line 36</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">all_nas</span>&#x000A;  <span class="ruby-ivar">@all_nas</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">POOL</span>[<span class="ruby-value">:nas</span>].<span class="ruby-identifier">select</span>(<span class="ruby-value">:na</span>).<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span>&#x000A;    <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">row</span>[<span class="ruby-value">:na</span>]&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-all_nas-source'><span class="ruby-comment"># File epic_sequel.rb, line 33</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">all_nas</span>&#x000A;  <span class="ruby-ivar">@all_nas</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">POOL</span>[<span class="ruby-value">:nas</span>].<span class="ruby-identifier">select</span>(<span class="ruby-value">:na</span>).<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span>&#x000A;    <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">row</span>[<span class="ruby-value">:na</span>]&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
             </div>
