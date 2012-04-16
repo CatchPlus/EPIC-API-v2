@@ -1,26 +1,4 @@
-=begin License
-Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-=end
 =begin rdoc
-  
-This is the source code documentation of the EPIC API version 2.
-
-The project is hosted at GitHub, as
-EPIC-API-v2[http://github.com/CatchPlus/EPIC-API-v2]
-
-= License
   Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
   
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +13,12 @@ EPIC-API-v2[http://github.com/CatchPlus/EPIC-API-v2]
   See the License for the specific language governing permissions and
   limitations under the License.
 
-= Links
+This is the source code documentation of the EPIC API version 2.
+
+The project is hosted at GitHub, as
+EPIC-API-v2[http://github.com/CatchPlus/EPIC-API-v2]
+
+=== Links
 * {Installation guide}[rdoc-ref:INSTALL.rdoc]
 =end
 
@@ -49,6 +32,7 @@ require './epic_handle.rb'
 require './epic_handles.rb'
 require './epic_handlevalue.rb'
 require './epic_nas.rb'
+require './epic_directory.rb'
 
 require 'singleton'
 
@@ -79,15 +63,19 @@ class ResourceFactory
     if ! retval.nil?
       return retval || nil
     end
-    case path.to_s.unslashify
+    case path # already unslashified!
     when ''
-      StaticCollection.new '/', [ 'handles/', 'profiles/', 'templates/' ]
-    when '/handles', '/profiles', '/templates'
+      StaticCollection.new '/', [ 'handles/', 'profiles/', 'templates/', 'batches/' ]
+    when '/handles', '/profiles', '/templates', '/batches'
       NAs.new path.slashify
+    when %r{\A/(handles|batches)/\d+\z}
+      StaticCollection.new path.to_s.slashify, []
     when %r{\A/handles/\d+\z}
       Handles.new path.slashify
     when %r{\A/handles/\d+/[^/]+\z}
-      Handle.new path #.unslashify
+      Handle.new path
+    when %r{\A/(templates|profiles)/\d+\z}
+      Directory.new path.slashify
     else
       false
     end

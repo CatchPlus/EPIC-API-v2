@@ -67,7 +67,7 @@ use Rack::Sendfile
 # but just served statically from the filesystem.
 # This includes stuff like CSS files, the favicon etc.
 use Rack::Static,
-  :urls  => ['/inc', '/favicon.ico', '/docs'],
+  :urls  => ['/inc/', '/favicon.ico', '/docs/', %r{/(templates|profiles)/\d+/.+}],
   :root  => 'public',
   :index => nil
 
