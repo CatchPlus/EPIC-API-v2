@@ -12,6 +12,10 @@ if [ -f "$PIDFILE" ]; then
 	kill $(<"$PIDFILE")
 	rm "$PIDFILE"
 fi
-export JRUBY_OPTS=$( echo -n $(
-	for i in $JRUBY_OPTS; do echo $i; done | grep -v -- --1.9
-) )
+export JRUBY_OPTS=$(
+	echo -n $(
+		for i in $JRUBY_OPTS; do
+			echo $i;
+		done | grep -v -- --ng
+	)
+)

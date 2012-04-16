@@ -36,7 +36,7 @@ class String
     end
   end
   # An alias for Rack::Utils.escape_html
-  def escape_html; Rack::Utils.escape_html self; end
+  def escape_html; Rack::Utils.escape_html(self); end
   # An alias for Rack::Utils.escape_path
   def escape_path; Rack::Utils.escape_path self; end
   # An alias for Rack::Utils.unescape

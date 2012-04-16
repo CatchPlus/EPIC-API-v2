@@ -1,23 +1,24 @@
-#--
-# Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# 
-#     http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#++
+=begin License
+Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+=end
 
 require './epic_collection.rb'
-require './epic_activerecords.rb'
+require './epic_sequel.rb'
 require './epic_hs.rb'
 require 'base64'
+require 'time'
 
 module EPIC
 
@@ -53,7 +54,7 @@ class Handle < Resource
     unless handleValues
       handleValues = DB.instance.all_handle_values(self.handle).collect do
         |row|
-        HandleValue.new path + '/' + row[:idx].to_s, row
+        HandleValue.new self.path + '/' + row[:idx].to_s, row
       end
     end
     @values = Hash[ handleValues.collect { |v| [ v.idx, v ] } ]
@@ -65,11 +66,11 @@ class Handle < Resource
     response.body =
       case bct.split( ';' ).first
       when 'application/json', 'application/x-json'
-        JSON.new self
+        JSON.new self, request
       when 'text/plain'
-        TXT.new self
+        TXT.new self, request
       else
-        XHTML.new self
+        XHTML.new self, request
       end
   end
 
@@ -124,9 +125,9 @@ class Handle < Resource
       {
         :IDX => v.idx.to_s,
         :type => v.type.to_s,
-        :'Data (Base64 encoded)' => Base64.strict_encode64(v.data),
         :'Data (Parsed)' => v.parsed_data,
-        :timestamp => Time.at(v.timestamp).to_rfc2822,
+        :'Data (Base64 encoded)' => Base64.encode64(v.data),
+        :timestamp => Time.at(v.timestamp).utc.rfc2822, #rfc2822(Time.at(v.timestamp)),
         :TTL => v.ttl.to_s + ( 0 == v.ttl_type ? ' (rel)' : ' (abs)' ),
         :refs => v.refs.collect {
                    |ref|

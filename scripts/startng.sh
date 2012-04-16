@@ -13,9 +13,13 @@ if [ -f "$PIDFILE" ]; then
 	rm "$PIDFILE"
 fi
 
-EPIC_JRUBY_OPTS="$JRUBY_OPTS"
-unset JRUBY_OPTS
+export JRUBY_OPTS=$(
+	echo -n $(
+		for i in $JRUBY_OPTS; do
+			echo $i;
+		done | grep -v -P -- '^--(1\.9|ng)$'
+	)
+)
 jruby --ng-server >/tmp/ng-server.log 2>&1 &
 echo -n $! > /tmp/ng-server.pid
-export JRUBY_OPTS="$EPIC_JRUBY_OPTS --ng"
-unset EPIC_JRUBY_OPTS
+export JRUBY_OPTS="$JRUBY_OPTS --ng"

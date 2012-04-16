@@ -1,0 +1,16 @@
+module EPIC
+
+  # Enter your own realm name (used in DIGEST and BASIC authentication):
+  REALM = 'YOUR_REALM_NAME'
+
+  # For DIGEST authentication a random hex- or base64-encoded string is needed:
+  OPAQUE = '1234567890abcdef1234567890abcdef'
+
+  # These argements are passed to Sequel::connect.
+  # Documentation can be found at http://sequel.rubyforge.org/documentation.html
+  SEQUEL_CONNECTION_ARGS = [
+    'jdbc:mysql://localhost/YOUR_DATABASE?user=YOUR_USER&password=YOUR_PASSWD',
+    :single_threaded => false
+  ]
+
+end

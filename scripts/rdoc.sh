@@ -4,6 +4,7 @@ if ! [ -f epic.rb ]; then
 	echo "Run this script from the top level directory." >&2
 	exit 1
 fi
+EPIC_JRUBY_OPTS="$JRUBY_OPTS"
 export JRUBY_OPTS=$( echo -n $(
 	for i in $JRUBY_OPTS; do echo $i; done | grep -v -- --1.9
 ) )
@@ -18,20 +19,23 @@ rdoc --debug \
   --all \
   --output=public/docs/epic \
   --force-output \
-  epic*.rb djinn*.rb $GEM_HOME/gems/rack*/lib $GEM_HOME/gems/json*/lib \
-  $GEM_HOME/gems/sequel*/lib
+  epic*.rb djinn*.rb *.rdoc
+#  $GEM_HOME/gems/rack*/lib $GEM_HOME/gems/json*/lib \
+#  $GEM_HOME/gems/sequel*/lib
 #  --exclude=public/docs/epic \
 #  --exclude=attic \
 
-exit
-rdoc \
-  --main dav.rb \
-  --encoding=UTF-8 \
-  --title=EPIC \
-  --format=darkfish \
-  --output=rdoc \
-  --exclude=rdoc \
-  --all \
-  --line-numbers \
-  --exclude='some_gems' \
-  . $GEM_HOME/gems/*/lib
+export JRUBY_OPTS="$EPIC_JRUBY_OPTS"
+unset EPIC_JRUBY_OPTS
+
+# rdoc \
+  # --main dav.rb \
+  # --encoding=UTF-8 \
+  # --title=EPIC \
+  # --format=darkfish \
+  # --output=rdoc \
+  # --exclude=rdoc \
+  # --all \
+  # --line-numbers \
+  # --exclude='some_gems' \
+  # . $GEM_HOME/gems/*/lib
