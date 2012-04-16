@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>String</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>class</span>
+          String
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a target="docwin" href="../files/epic_monkeypatches_rb.html">epic_monkeypatches.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong><a target="docwin" href="../files/epic_monkeypatches_rb.html">epic_monkeypatches.rb</a></strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'></div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>Public Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-escape_html">escape_html</a></li>
+              <li><a target="docwin" href="#method-i-escape_path">escape_path</a></li>
+              <li><a target="docwin" href="#method-i-slashify">slashify</a></li>
+              <li><a target="docwin" href="#method-i-unescape_path">unescape_path</a></li>
+              <li><a target="docwin" href="#method-i-unslashify">unslashify</a></li>
+            </ol>
+          </div>
+          <div id='context'>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-escape_html'>
+                <a name='method-i-escape_html'></a>
+                <div class='synopsis'>
+                  <span class='name'>escape_html</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>An alias for Rack::Utils.escape_html</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-escape_html-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-escape_html-source'><span class="ruby-comment"># File epic_monkeypatches.rb, line 39</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">escape_html</span>; <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span>.<span class="ruby-identifier">escape_html</span>(<span class="ruby-keyword">self</span>); <span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-escape_path'>
+                <a name='method-i-escape_path'></a>
+                <div class='synopsis'>
+                  <span class='name'>escape_path</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>An alias for Rack::Utils.escape_path</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-escape_path-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-escape_path-source'><span class="ruby-comment"># File epic_monkeypatches.rb, line 41</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">escape_path</span>; <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span>.<span class="ruby-identifier">escape_path</span> <span class="ruby-keyword">self</span>; <span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-slashify'>
+                <a name='method-i-slashify'></a>
+                <div class='synopsis'>
+                  <span class='name'>slashify</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-slashify-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-slashify-source'><span class="ruby-comment"># File epic_monkeypatches.rb, line 24</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">slashify</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-string">'/'</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>[<span class="ruby-value">-1</span>,<span class="ruby-value">1</span>]&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">dup</span>&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-keyword">self</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;/&quot;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-unescape_path'>
+                <a name='method-i-unescape_path'></a>
+                <div class='synopsis'>
+                  <span class='name'>unescape_path</span>
+                  <span class='arguments'>( encoding = Encoding::UTF_8 )</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>An alias for Rack::Utils.unescape</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-unescape_path-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-unescape_path-source'><span class="ruby-comment"># File epic_monkeypatches.rb, line 43</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">unescape_path</span>( <span class="ruby-identifier">encoding</span> = <span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">UTF_8</span> ); <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span>.<span class="ruby-identifier">unescape</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">encoding</span>; <span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-unslashify'>
+                <a name='method-i-unslashify'></a>
+                <div class='synopsis'>
+                  <span class='name'>unslashify</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-unslashify-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-unslashify-source'><span class="ruby-comment"># File epic_monkeypatches.rb, line 31</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">unslashify</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-string">'/'</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>[<span class="ruby-value">-1</span>,<span class="ruby-value">1</span>]&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">chomp</span> <span class="ruby-string">'/'</span>&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">dup</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

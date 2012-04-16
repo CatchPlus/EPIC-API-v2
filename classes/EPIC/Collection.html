@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>EPIC::Collection</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>class</span>
+          EPIC::Collection
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a target="docwin" href="../../files/epic_collection_rb.html">epic_collection.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong><a target="docwin" href="../EPIC.html">EPIC</a></strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            
+            <p>Abstract base class for all collection-style resources in this web service.</p>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>Public Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-do_GET">do_GET</a></li>
+              <li><a target="docwin" href="#method-i-recurse-3F">recurse?</a></li>
+              <li><a target="docwin" href="#method-i-requested-3F">requested?</a></li>
+            </ol>
+          </div>
+          <div id='context'>
+            <div id='includes'>
+              <h2>Included modules</h2>
+              <ol>
+                <li>Enumerable</li>
+              </ol>
+            </div>
+          </div>
+          <div id='class-list'>
+            <h2>Classes and Modules</h2>
+            <ol>
+              <li><a target="docwin" href="Collection/JSON.html">EPIC::Collection::JSON</a></li>
+              <li><a target="docwin" href="Collection/TXT.html">EPIC::Collection::TXT</a></li>
+              <li><a target="docwin" href="Collection/XHTML.html">EPIC::Collection::XHTML</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='constants-list'>
+              <h2>Constants</h2>
+              <div class='name-list'>
+                <table summary='Constants'>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>CONTENT_TYPES</td>
+                    <td>=</td>
+                    <td class='context-item-value'>
+                      {
+                      'application/xhtml+xml; charset=UTF-8' => 1,
+                      'text/html; charset=UTF-8' => 1,
+                      'text/xml; charset=UTF-8' => 1,
+                      'application/xml; charset=UTF-8' => 1,
+                      'application/json; charset=UTF-8' => 0.5,
+                      'application/x-json; charset=UTF-8' => 0.5,
+                      'text/plain; charset=UTF-8' => 0.1
+                      }
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class='context-item-desc'></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='methods'>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-do_GET'>
+                <a name='method-i-do_GET'></a>
+                <div class='synopsis'>
+                  <span class='name'>do_GET</span>
+                  <span class='arguments'>(request, response)</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-do_GET-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-do_GET-source'><span class="ruby-comment"># File epic_collection.rb, line 37</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">do_GET</span> <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span>&#x000A;  <span class="ruby-identifier">bct</span> = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">best_content_type</span> <span class="ruby-constant">CONTENT_TYPES</span>&#x000A;  <span class="ruby-identifier">response</span>.<span class="ruby-identifier">header</span>[<span class="ruby-string">'Content-Type'</span>] = <span class="ruby-identifier">bct</span>&#x000A;  <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span> = <span class="ruby-keyword">case</span> <span class="ruby-identifier">bct</span>.<span class="ruby-identifier">split</span>( <span class="ruby-string">';'</span> ).<span class="ruby-identifier">first</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">'text/plain'</span>&#x000A;    <span class="ruby-constant">TXT</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">request</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">'application/json'</span>, <span class="ruby-string">'application/x-json'</span>&#x000A;    <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">request</span>&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-constant">XHTML</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">request</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-recurse-3F'>
+                <a name='method-i-recurse-3F'></a>
+                <div class='synopsis'>
+                  <span class='name'>recurse?</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-recurse-3F-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-recurse-3F-source'><span class="ruby-comment"># File epic_collection.rb, line 54</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">recurse?</span>&#x000A;  <span class="ruby-identifier">depth</span> = ( <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">include?</span> <span class="ruby-value">:DEFAULT_DEPTH</span> ) <span class="ruby-operator">?</span>&#x000A;    <span class="ruby-constant">DEFAULT_DEPTH</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">:</span> <span class="ruby-string">'0'</span>&#x000A;  <span class="ruby-identifier">depth</span> = <span class="ruby-identifier">globals</span>[<span class="ruby-value">:request</span>].<span class="ruby-identifier">env</span>[<span class="ruby-string">'HTTP_DEPTH'</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">depth</span>&#x000A;  <span class="ruby-identifier">requested?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-string">'0'</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">||</span> <span class="ruby-string">'infinity'</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">depth</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-requested-3F'>
+                <a name='method-i-requested-3F'></a>
+                <div class='synopsis'>
+                  <span class='name'>requested?</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-requested-3F-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-requested-3F-source'><span class="ruby-comment"># File epic_collection.rb, line 50</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">requested?</span>&#x000A;  <span class="ruby-identifier">path</span>.<span class="ruby-identifier">slashify</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">globals</span>[<span class="ruby-value">:request</span>].<span class="ruby-identifier">path</span>.<span class="ruby-identifier">slashify</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>EPIC::Serializer::XHTML</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>class</span>
+          EPIC::Serializer::XHTML
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a target="docwin" href="../../../files/epic_resource_rb.html">epic_resource.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong><a target="docwin" href="../Serializer.html">Serializer</a></strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'></div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>Public Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-breadcrumbs">breadcrumbs</a></li>
+              <li><a target="docwin" href="#method-i-each">each</a></li>
+              <li><a target="docwin" href="#method-i-footer">footer</a></li>
+              <li><a target="docwin" href="#method-i-header">header</a></li>
+              <li><a target="docwin" href="#method-i-htmlify">htmlify</a></li>
+              <li><a target="docwin" href="#method-i-serialize">serialize</a></li>
+            </ol>
+          </div>
+          <div id='context'>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-breadcrumbs'>
+                <a name='method-i-breadcrumbs'></a>
+                <div class='synopsis'>
+                  <span class='name'>breadcrumbs</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-breadcrumbs-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-breadcrumbs-source'><span class="ruby-comment"># File epic_resource.rb, line 74</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">breadcrumbs</span>&#x000A;  <span class="ruby-identifier">segments</span> = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'/'</span>)&#x000A;  <span class="ruby-identifier">segments</span>.<span class="ruby-identifier">pop</span>&#x000A;  <span class="ruby-keyword">return</span> <span class="ruby-string">''</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">segments</span>.<span class="ruby-identifier">empty?</span>&#x000A;  <span class="ruby-identifier">bc_path</span> = <span class="ruby-string">''</span>&#x000A;  <span class="ruby-string">'&lt;ul class=&quot;breadcrumb&quot;&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">segments</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span>&#x000A;    <span class="ruby-operator">|</span><span class="ruby-identifier">segment</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">bc_path</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">segment</span> <span class="ruby-operator">+</span> <span class="ruby-string">'/'</span>&#x000A;    <span class="ruby-string">'&lt;li&gt;&lt;a href=&quot;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">bc_path</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot; rel=&quot;'</span> <span class="ruby-operator">+</span> (&#x000A;      <span class="ruby-identifier">segment</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-string">'home'</span> <span class="ruby-operator">||</span> <span class="ruby-string">'contents'</span>&#x000A;    ) <span class="ruby-operator">+</span> <span class="ruby-string">'&quot;&gt;'</span> <span class="ruby-operator">+</span> (&#x000A;      <span class="ruby-identifier">segment</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-string">'home'</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">segment</span>.<span class="ruby-identifier">unescape_path</span>&#x000A;    ) <span class="ruby-operator">+</span> <span class="ruby-string">'&lt;/a&gt;&lt;span class=&quot;divider&quot;&gt;/&lt;/span&gt;&lt;/li&gt;'</span>&#x000A;  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">join</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&lt;/ul&gt;'</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-each'>
+                <a name='method-i-each'></a>
+                <div class='synopsis'>
+                  <span class='name'>each</span>
+                  <span class='arguments'>(&block)</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-each-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-each-source'><span class="ruby-comment"># File epic_resource.rb, line 59</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">each</span> &amp;<span class="ruby-identifier">block</span>&#x000A;  <span class="ruby-keyword">yield</span> <span class="ruby-identifier">header</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&lt;div id=&quot;epic_content&quot;&gt;'</span>&#x000A;  <span class="ruby-identifier">each_nested</span> &amp;<span class="ruby-identifier">block</span>&#x000A;  <span class="ruby-keyword">yield</span> <span class="ruby-string">'&lt;/div&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">footer</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-footer'>
+                <a name='method-i-footer'></a>
+                <div class='synopsis'>
+                  <span class='name'>footer</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-footer-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-footer-source'><span class="ruby-comment"># File epic_resource.rb, line 116</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">footer</span>&#x000A;  <span class="ruby-string">'&lt;p align=&quot;right&quot;&gt;&lt;em&gt;Developed for &lt;a href=&quot;http://www.catchplus.nl/&quot;&gt;CATCH+&lt;/a&gt;&lt;br/&gt;by &lt;a href=&quot;http://www.sara.nl/&quot;&gt;SARA&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;'</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-header'>
+                <a name='method-i-header'></a>
+                <div class='synopsis'>
+                  <span class='name'>header</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-header-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-header-source'><span class="ruby-comment"># File epic_resource.rb, line 90</span>&#x000A;  <span class="ruby-keyword">def</span> <span class="ruby-identifier">header</span>&#x000A;    <span class="ruby-identifier">retval</span> =&#x000A;<span class="ruby-string">'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x000A;&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;&#x000A;&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;&#x000A;&lt;head&gt;&#x000A;&lt;link rel=&quot;stylesheet&quot; href=&quot;/inc/bootstrap/css/bootstrap.min.css&quot;/&gt;&#x000A;&lt;link rel=&quot;stylesheet&quot; href=&quot;/inc/bootstrap/css/bootstrap-responsive.min.css&quot;/&gt;'</span>&#x000A;<span class="ruby-comment"># &lt;script type=&quot;text/javascript&quot; src=&quot;/inc/jquery-1.7.1.min.js&quot;&gt;&lt;/script&gt; </span>&#x000A;<span class="ruby-comment"># &lt;script type=&quot;text/javascript&quot; src=&quot;/inc/jquery-tablesorter.js&quot;&gt;&lt;/script&gt; </span>&#x000A;<span class="ruby-comment"># &lt;script type=&quot;text/javascript&quot;&gt;//&lt;![CDATA[</span>&#x000A;<span class="ruby-comment"># $(document).ready(</span>&#x000A;  <span class="ruby-comment"># function() { $(&quot;.tablesorter&quot;).tablesorter(); } </span>&#x000A;<span class="ruby-comment"># );</span>&#x000A;<span class="ruby-comment"># //]]&gt;&lt;/script&gt;'</span>&#x000A;    <span class="ruby-keyword">unless</span> <span class="ruby-string">'/'</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">path</span>[<span class="ruby-value">-1</span>, <span class="ruby-value">1</span>] <span class="ruby-comment"># unless request.path ends with a slash</span>&#x000A;      <span class="ruby-identifier">retval</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'&lt;base href=&quot;'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">slashify</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'&quot;/&gt;'</span>&#x000A;    <span class="ruby-keyword">end</span>&#x000A;    <span class="ruby-keyword">unless</span> <span class="ruby-string">'/'</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">path</span>&#x000A;      <span class="ruby-identifier">retval</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'&lt;link rel=&quot;contents&quot; href=&quot;'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">request</span>.<span class="ruby-identifier">path</span>).<span class="ruby-identifier">slashify</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'&quot;/&gt;'</span>&#x000A;    <span class="ruby-keyword">end</span>&#x000A;    <span class="ruby-identifier">retval</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'&lt;title&gt;Index of '</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">unescape_path</span>.<span class="ruby-identifier">escape_html</span> <span class="ruby-operator">&lt;&lt;</span>&#x000A;      <span class="ruby-string">'&lt;/title&gt;&lt;/head&gt;&lt;body&gt;'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">breadcrumbs</span>&#x000A;    <span class="ruby-identifier">retval</span>&#x000A;  <span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-htmlify'>
+                <a name='method-i-htmlify'></a>
+                <div class='synopsis'>
+                  <span class='name'>htmlify</span>
+                  <span class='arguments'>(path)</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-htmlify-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-htmlify-source'><span class="ruby-comment"># File epic_resource.rb, line 65</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">htmlify</span> <span class="ruby-identifier">path</span>&#x000A;  <span class="ruby-identifier">base</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">slashify</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">base</span> = <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>, <span class="ruby-identifier">base</span>.<span class="ruby-identifier">size</span>]&#x000A;    <span class="ruby-identifier">path</span>[ <span class="ruby-identifier">base</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">..</span> <span class="ruby-value">-1</span> ]&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-identifier">path</span>.<span class="ruby-identifier">dup</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-serialize'>
+                <a name='method-i-serialize'></a>
+                <div class='synopsis'>
+                  <span class='name'>serialize</span>
+                  <span class='arguments'>(p)</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-serialize-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-serialize-source'><span class="ruby-comment"># File epic_resource.rb, line 120</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">serialize</span> <span class="ruby-identifier">p</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">kind_of?</span>( <span class="ruby-constant">Hash</span> )&#x000A;    <span class="ruby-string">'&lt;table class=&quot;epic_object table table-striped table-bordered table-condensed&quot;&gt;'</span> <span class="ruby-operator">+</span>&#x000A;    <span class="ruby-identifier">p</span>.<span class="ruby-identifier">collect</span> {&#x000A;      <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>&#x000A;      <span class="ruby-string">'&lt;tr&gt;&lt;th&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'_'</span>).<span class="ruby-identifier">collect</span>{&#x000A;        <span class="ruby-operator">|</span><span class="ruby-identifier">word</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">word</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">0</span>].<span class="ruby-identifier">upcase</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">word</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]&#x000A;      }.<span class="ruby-identifier">join</span>(<span class="ruby-string">' '</span>).<span class="ruby-identifier">escape_html</span> <span class="ruby-operator">+</span>&#x000A;      <span class="ruby-string">'&lt;/th&gt;&lt;td class=&quot;epic_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">escape_html</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot;&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">serialize</span>( <span class="ruby-identifier">value</span> ) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;&lt;/td&gt;&lt;/tr&gt;\n&quot;</span>&#x000A;    }.<span class="ruby-identifier">join</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&lt;/table&gt;'</span>&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">kind_of?</span>( <span class="ruby-constant">Enumerable</span> )&#x000A;    <span class="ruby-keyword">begin</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">Djinn</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPStatus</span>, <span class="ruby-string">'500'</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">kind_of?</span>( <span class="ruby-constant">Hash</span> )&#x000A;      <span class="ruby-identifier">keys</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">keys</span>&#x000A;      <span class="ruby-identifier">p</span>.<span class="ruby-identifier">each</span> {&#x000A;        <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">Djinn</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPStatus</span>, <span class="ruby-string">'500'</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">keys</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">keys</span>&#x000A;      }&#x000A;      <span class="ruby-string">'&lt;table class=&quot;epic_objects table table-striped table-bordered table-condensed&quot;&gt;&lt;thead&gt;&lt;tr&gt;'</span> <span class="ruby-operator">+</span>&#x000A;      <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">collect</span> {&#x000A;        <span class="ruby-operator">|</span><span class="ruby-identifier">column</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-string">'&lt;th&gt;'</span> <span class="ruby-operator">+</span>&#x000A;        <span class="ruby-identifier">column</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'_'</span>).<span class="ruby-identifier">collect</span>{&#x000A;          <span class="ruby-operator">|</span><span class="ruby-identifier">word</span><span class="ruby-operator">|</span>&#x000A;          <span class="ruby-identifier">word</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">0</span>].<span class="ruby-identifier">upcase</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">word</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]&#x000A;        }.<span class="ruby-identifier">join</span>(<span class="ruby-string">' '</span>).<span class="ruby-identifier">escape_html</span> <span class="ruby-operator">+</span>&#x000A;        <span class="ruby-string">&quot;&lt;/th&gt;\n&quot;</span>&#x000A;      }.<span class="ruby-identifier">join</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">collect</span> {&#x000A;        <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-string">'&lt;tr&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">collect</span> {&#x000A;          <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>&#x000A;          <span class="ruby-string">'&lt;td class=&quot;epic_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">escape_html</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot;&gt;'</span> <span class="ruby-operator">+</span>&#x000A;          <span class="ruby-keyword">self</span>.<span class="ruby-identifier">serialize</span>(<span class="ruby-identifier">value</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;&lt;/td&gt;\n&quot;</span>&#x000A;        }.<span class="ruby-identifier">join</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&lt;/tr&gt;'</span>&#x000A;      }.<span class="ruby-identifier">join</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;&lt;/tbody&gt;&lt;/table&gt;&quot;</span>&#x000A;    <span class="ruby-keyword">rescue</span>&#x000A;      <span class="ruby-string">'&lt;ul class=&quot;unstyled&quot;&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">collect</span> {&#x000A;        <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-string">'&lt;li&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">serialize</span>(<span class="ruby-identifier">value</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;&lt;/li&gt;\n&quot;</span>&#x000A;      }.<span class="ruby-identifier">join</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;&lt;/ul&gt;\n&quot;</span>&#x000A;    <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-identifier">p</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">escape_html</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>
