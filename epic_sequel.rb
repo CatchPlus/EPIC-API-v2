@@ -24,29 +24,42 @@ class DB
 
   include Singleton
 
-  POOL = Sequel.connect *SEQUEL_CONNECTION_ARGS
+  def pool
+    @pool[self.sql_depth] ||= Sequel.connect *SEQUEL_CONNECTION_ARGS
+  end
+
+  def sql_depth
+    Thread.current[:epic_sql_depth] ||= 0
+  end
+
+  def sql_depth= n
+    Thread.current[:epic_sql_depth] = n.to_i
+  end
 
   def initialize
     @all_nas = nil
+    @pool = []
   end
 
   def all_nas
-    @all_nas ||= POOL[:nas].select(:na).collect do
-      |row|
-      row[:na]
-    end
+    @all_nas ||= self.pool[:nas].select(:na).collect { |row| row[:na] }
   end
 
-  def all_handles prefix = nil
-    ds = POOL[:handles].select(:handle).distinct
+  def each_handle prefix = nil
+    ds = self.pool[:handles].select(:handle).distinct
     if prefix
       ds = ds.filter( '`handle` LIKE ?', prefix + '/%' )
     end
-    ds.collect { |row| row[:handle] }
+    self.sql_depth = self.sql_depth + 1
+    begin
+      ds.each { |row| yield row[:handle] }
+    ensure
+      self.sql_depth = self.sql_depth - 1
+    end
   end
 
   def all_handle_values handle
-    ds = POOL[:handles].where( :handle => handle ).all
+    ds = self.pool[:handles].where( :handle => handle ).all
   end
 
 end

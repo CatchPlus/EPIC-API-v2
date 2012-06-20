@@ -26,11 +26,6 @@ require 'thread'
 module Djinn
 
 
-def self.globals
-  Thread.current[:djinn]
-end
-
-
 class Request < Rack::Request
 
 =begin rdoc
@@ -106,6 +101,7 @@ header(s) and the available representations in the server.
 
 end # class Request
 
+
 =begin rdoc
 Mixin for resource objects.
 
@@ -127,9 +123,6 @@ module Resource
     @djinn_resource_path = path
   end
 
-  def globals
-    Djinn::globals
-  end
 
 =begin rdoc
 Flags if the resource _exists_. For example, a client can +PUT+ to a URL that
@@ -155,6 +148,7 @@ yield a <tt>404 Not Found</tt>.
     @restserver_http_methods
   end
 
+
 =begin rdoc
 Handles a HEAD request.
 
@@ -169,6 +163,7 @@ will be set in the response object passed to +do_GET+.
       raise Djinn::HTTPStatus, '405 ' +  self.http_methods.join( ' ' )
     end
   end
+
 
 =begin rdoc
 Handles an OPTIONS request.
@@ -187,6 +182,20 @@ body). Users may override what's returned by implementing a method
     response.status = status_code :no_content
     response.header['Allow'] = self.http_methods.join ', '
   end
+
+
+  # This is an instance method with good reason. The +globals+ Hash is only
+  # defined during a particular request, in a particular server thread. It's
+  # not possible to access this Hash outside of the context of some resource.
+  def globals
+    Thread.current[:djinn]
+  end
+
+
+  def self.cache
+    Thread.current[:djinn][:cache] ||= {}
+  end
+
 
 end
 
@@ -238,6 +247,10 @@ class HTTPStatus < RuntimeError
       message = message.split /\s+/
       message = '<h2>Available representations:</h2><ul><li>' +
         message.join('</li><li>') + '</li></ul>'
+    when 415 # Unsupported Media Type
+      message = message.split /\s+/
+      message = '<h2>Supported Media Types:</h2><ul><li>' +
+        message.join('</li><li>') + '</li></ul>'
     end
     super message
     begin
@@ -248,6 +261,7 @@ class HTTPStatus < RuntimeError
       message = escape_html message
     end
     message = "<p>#{message}</p>" unless '<' == message[0, 1]
+    message = message.gsub( %r{\n}, "<br/>\n" )
     @response.header['Content-Type'] = 'text/html; charset="UTF-8"'
     @response.write self.class.template.call( status, self.message )
   end
@@ -354,11 +368,15 @@ Prototype constructor.
       :request  => request,
       :response => response
     }
+    self.resource_factory.reset if self.resource_factory.respond_to? :reset
     begin
       raise HTTPStatus, '404' unless resource = self.resource_factory[request.path]
-      if resource.respond_to? :"http_#{request.request_method}"
-        resource.__send__( :"http_#{request.request_method}", request, response )
-      elsif resource.respond_to? :"do_#{request.request_method}"
+      # Why are we looking for both "http_*" and "do_*" methods?
+      # Why not just one of these?
+      # if resource.respond_to? :"http_#{request.request_method}"
+        # resource.__send__( :"http_#{request.request_method}", request, response )
+      # els
+      if resource.respond_to? :"do_#{request.request_method}"
         resource.__send__( :"do_#{request.request_method}", request, response )
       else
         raise HTTPStatus, '405 ' + resource.http_methods.join( ' ' )

@@ -1,13 +1,19 @@
 #!/bin/bash
 
-if ! [ -f epic.rb ]; then
-	echo "Run this script from the top level directory." >&2
-	exit 1
-fi
-EPIC_JRUBY_OPTS="$JRUBY_OPTS"
-export JRUBY_OPTS=$( echo -n $(
-	for i in $JRUBY_OPTS; do echo $i; done | grep -v -- --1.9
-) )
+cd "`dirname "$0"`"/../
+#if ! [ -f epic.rb ]; then
+#	echo "Run this script from the top level directory." >&2
+#	exit 1
+#fi
+
+export JRUBY_OPTS=$(
+  echo -n $(
+    for i in $JRUBY_OPTS; do
+      echo $i;
+    done |
+    grep -v -- --1.9
+  )
+)
 
 rdoc --debug \
   --main epic.rb \
@@ -24,9 +30,6 @@ rdoc --debug \
 #  $GEM_HOME/gems/sequel*/lib
 #  --exclude=public/docs/epic \
 #  --exclude=attic \
-
-export JRUBY_OPTS="$EPIC_JRUBY_OPTS"
-unset EPIC_JRUBY_OPTS
 
 # rdoc \
   # --main dav.rb \

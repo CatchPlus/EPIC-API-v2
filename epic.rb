@@ -13,10 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-This is the source code documentation of the EPIC API version 2.
-
-The project is hosted at GitHub, as
-EPIC-API-v2[http://github.com/CatchPlus/EPIC-API-v2]
+The project is hosted at GitHub, as EPIC-API-v2[http://github.com/CatchPlus/EPIC-API-v2]
 
 === Links
 * {Installation guide}[rdoc-ref:INSTALL.rdoc]
@@ -46,31 +43,39 @@ class ResourceFactory
 
   include Singleton
 
-  def delete path
-    path = path.to_s.unslashify
-    Djinn::globals[:resource_cache].delete path
+  def reset
+    Thread.current[:resource_cache] = Hash.new
   end
 
-  def << resource
-    Djinn::globals[:resource_cache][resource.path] = resource
-    self
+  def resource_cache
+    Thread.current[:resource_cache] ||= Hash.new
+  end
+
+  def uncache path
+    path = path.to_s.unslashify
+    self.resource_cache.delete path
   end
 
   def [] path
     path = path.to_s.unslashify
-    Djinn::globals[:resource_cache] ||= {}
-    retval = Djinn::globals[:resource_cache][path]
-    if ! retval.nil?
-      return retval || nil
+    cached = self.resource_cache[path]
+    # Legal values for +cached+ are:
+    # - Nil: the resource is not in cache
+    # - False: resource was requested earlier, without success
+    # - Djinn::Resource
+    if ! cached.nil?
+      # if +cached+ is +false+, we want to return +Nil+.
+      return cached || nil
     end
-    case path # already unslashified!
+    self.resource_cache[path] = case path # already unslashified!
     when ''
       StaticCollection.new '/', [ 'handles/', 'profiles/', 'templates/', 'batches/' ]
     when '/handles', '/profiles', '/templates', '/batches'
       NAs.new path.slashify
-    when %r{\A/(handles|batches)/\d+\z}
+    when %r{\A/(batches)/\d+\z}
       StaticCollection.new path.to_s.slashify, []
     when %r{\A/handles/\d+\z}
+      #StaticCollection.new path.to_s.slashify, ['hello/']
       Handles.new path.slashify
     when %r{\A/handles/\d+/[^/]+\z}
       Handle.new path

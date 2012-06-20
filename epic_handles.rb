@@ -28,7 +28,7 @@ class Handles < Collection
 =begin rdoc
 TODO: better implementation (server-side data retention) for streaming responses.
 =end
-  def each &block
+  def each
     start_position = self.prefix.size + 1
     # ActiveHandleValue.select([:handle, :id]).
       # where('`handle` LIKE ?', self.prefix + '/%').
@@ -42,7 +42,7 @@ TODO: better implementation (server-side data retention) for streaming responses
         # handle[start_position .. -1].escape_path
       # }.each &block
     # else
-    DB.instance.all_handles.each do
+    DB.instance.each_handle do
       |handle|
       yield handle[start_position .. -1].escape_path
     end

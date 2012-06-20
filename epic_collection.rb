@@ -22,6 +22,7 @@ module EPIC
 # Abstract base class for all collection-style resources in this web service.
 class Collection < Resource
 
+  # Subclasses must implement #each
   include Enumerable
 
   CONTENT_TYPES = {
@@ -47,24 +48,24 @@ class Collection < Resource
     end
   end
 
-  def requested?
-    path.slashify == globals[:request].path.slashify
-  end
-
-  def recurse?
-    depth = ( self.class.constants.include? :DEFAULT_DEPTH ) ?
-      DEFAULT_DEPTH.to_s : '0'
-    depth = globals[:request].env['HTTP_DEPTH'] || depth
-    requested? && '0' != depth || 'infinity' == depth
-  end
-
 end # class Collection
 
 
 class Collection::XHTML < Serializer::XHTML
 
+  def requested?
+    self.resource.path.slashify == self.resource.globals[:request].path.slashify
+  end
+
+  def recurse?
+    depth = self.class.const_defined?( :DEFAULT_DEPTH ) ?
+      DEFAULT_DEPTH.to_s : '0'
+    depth = self.resource.globals[:request].env['HTTP_DEPTH'] || depth
+    self.requested? && '0' != depth || 'infinity' == depth
+  end
+
   def each_nested &block # :yields: strings
-    recurse = self.resource.recurse?
+    recurse = self.recurse?
     html = '
 <table class="epic_collection table table-striped table-bordered table-condensed">
 <thead><tr><th class="epic_uri">URI</th>'
@@ -74,14 +75,14 @@ class Collection::XHTML < Serializer::XHTML
     self.resource.each do |uri|
       uri = uri.to_s
       html = '<tr class="epic_resource"><td class="epic_uri"><a href="' +
-        uri + '">' +
+        ( self.requested? ? '' : self.resource.path + '/' ) + uri + '">' +
         uri.split('?', 2).first.unescape_path.escape_html +
         "</a></td>\n"
       if recurse
         html << '<td class="epic_resource">'
         yield html
         child = ResourceFactory.instance[ self.resource.path + uri.split('?', 2).first ]
-        child.class::XHTML.new(child, request).each_nested(&block) if child
+        child.class::XHTML.new(child, request).each_nested(&block) if child && child.class.const_defined?( :XHTML )
         html = '</td>'
       end
       html << '</tr>'

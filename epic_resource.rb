@@ -24,12 +24,9 @@ class Resource
 
   include Djinn::Resource
 
-  def initialize path
-    super
-    ResourceFactory::instance << self
+  def user_name
+    self.globals[:request].env['REMOTE_USER']
   end
-
-  def userName; globals[:request].env['REMOTE_USER']; end
 
 end
 

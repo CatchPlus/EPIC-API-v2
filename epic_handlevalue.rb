@@ -21,8 +21,10 @@ require 'base64'
 module EPIC
 
 
-class HandleValue < Resource
+class HandleValue # < Resource
 
+
+=begin Maybe, in the future, we'll make HandleValue a Resource again?
   CONTENT_TYPES = {
     'application/xhtml+xml; charset=UTF-8' => 1,
     'text/html; charset=UTF-8' => 1,
@@ -32,6 +34,7 @@ class HandleValue < Resource
     'application/x-json; charset=UTF-8' => 0.5,
     'application/octet-stream' => 0.9,
   }
+
 
   def do_GET request, response
     bct = request.best_content_type CONTENT_TYPES
@@ -46,8 +49,10 @@ class HandleValue < Resource
         XHTML.new self
       end
   end
+=end
 
-  attr_accessor :handle, :idx, :type, :data, :ttl_type, :ttl, :timestamp,
+
+  attr_accessor :idx, :type, :data, :ttl_type, :ttl, :timestamp,
     :refs, :admin_read, :admin_write, :pub_read, :pub_write
   # Some metaprogramming to delegate data access to the appropriate
   # ActiveHandleValue instance property @active_handle_value. 
@@ -57,15 +62,17 @@ class HandleValue < Resource
 #    def_delegator :@active_handle_value, :"#{symbol}="
 #  end
 
+
   # Can be called with either an ActiveHandleValue object, or with a hash of
   # key => value pairs.
-  def initialize path, dbrow = nil # :params: String path, Hash dbrow
-    super path
-    matches = %r{/([^/]+/[^/]+)/(\d+)\z}.match path
-    raise Djinn::HTTPStatus, '500' unless matches
-    @handle = matches[1].unescape_path
-    @idx = matches[2].to_i
+  def initialize dbrow = nil # :params: String path, Hash dbrow
+    # super path
+    # matches = %r{/([^/]+/[^/]+)/(\d+)\z}.match path
+    # raise Djinn::HTTPStatus, '500' unless matches
+    # @handle = matches[1].unescape_path
+    # @idx = matches[2].to_i
     if dbrow
+      @idx       = dbrow[:idx].to_i
       @type      = dbrow[:type].to_s
       @data      = dbrow[:data].to_s
       @ttl_type  = dbrow[:ttl_type].to_i
@@ -84,6 +91,7 @@ class HandleValue < Resource
       @pub_read    = dbrow[:pub_read]    && 0 != dbrow[:pub_read]
       @pub_write   = dbrow[:pub_write]   && 0 != dbrow[:pub_write]
     else
+      @idx       = HS::EMPTY_HANDLE_VALUE.getIndex
       @type      = String.from_java_bytes HS::EMPTY_HANDLE_VALUE.getType
       @data      = String.from_java_bytes HS::EMPTY_HANDLE_VALUE.getData
       @ttl_type  = HS::EMPTY_HANDLE_VALUE.getTTLType
@@ -103,6 +111,7 @@ class HandleValue < Resource
     end
   end
 
+
   def parsed_data
     case type
     when 'HS_ADMIN'
@@ -116,6 +125,7 @@ class HandleValue < Resource
       end
     end
   end
+
 
   def parsed_data= (p_data)
     case type
@@ -140,6 +150,8 @@ class HandleValue < Resource
     p_data
   end
 
+
+  # Unused!
   def serializable_hash
     retval = {
       :type => self.type,
@@ -153,20 +165,6 @@ class HandleValue < Resource
   end
 
 end # class HandleValue
-
-
-class HandleValue::BIN < Serializer::BIN
-  def each
-    yield 'binary respresentation'
-  end
-end # class HandleValue::XHTML
-
-
-class HandleValue::JSON < Serializer::JSON
-  def each
-    yield '"hello"'
-  end
-end # class HandleValue::TXT
 
 
 end # module EPIC

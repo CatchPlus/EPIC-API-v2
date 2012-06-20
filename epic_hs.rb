@@ -99,14 +99,14 @@ module HS
   end
 
   def self.authenticationInfo
-    userName = Djinn.globals[:request].env['REMOTE_USER']
-    unless AUTHINFO[userName]
-      userInfo = EPIC::USERS[userName]
+    user_name = ::EPIC::Resource.user_name
+    unless AUTHINFO[user_name]
+      userInfo = EPIC::USERS[user_name]
       raise Djinn::HTTPStatus, '500' unless userInfo
       MUTEX.lock
       begin
-        unless AUTHINFO[userName]
-          AUTHINFO[userName] = hdllib.SecretKeyAuthenticationInfo.new(
+        unless AUTHINFO[user_name]
+          AUTHINFO[user_name] = hdllib.SecretKeyAuthenticationInfo.new(
             userInfo[:handle].to_java_bytes,
             userInfo[:index],
             userInfo[:secret].to_java_bytes
@@ -116,7 +116,7 @@ module HS
         MUTEX.unlock
       end
     end
-    AUTHINFO[userName]
+    AUTHINFO[user_name]
   end
 
 end # module HS

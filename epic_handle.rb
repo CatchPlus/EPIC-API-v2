@@ -19,11 +19,18 @@ require './epic_sequel.rb'
 require './epic_hs.rb'
 require 'base64'
 require 'time'
+require 'json'
+# By default, the json gem uses the +Ext+ parser and generator, which uses a
+# fast Java implementation. We use the +Pure+ parser and generator, because it
+# seems Unicode characters better. This is strange, as these two implementations
+# should behave identically.
+require 'json/pure'
 
 module EPIC
 
 
 class Handle < Resource
+
 
   CONTENT_TYPES = {
     'application/xhtml+xml; charset=UTF-8' => 1,
@@ -31,11 +38,12 @@ class Handle < Resource
     'text/xml; charset=UTF-8' => 1,
     'application/xml; charset=UTF-8' => 1,
     'application/json; charset=UTF-8' => 0.5,
-    'application/x-json; charset=UTF-8' => 0.5,
-    'text/plain; charset=UTF-8' => 0.1
+    'application/x-json; charset=UTF-8' => 0.5
   }
 
+
   attr_reader :prefix, :suffix, :handle, :handle_encoded, :values
+
 
 =begin rdoc
 [handleValues]
@@ -51,14 +59,13 @@ class Handle < Resource
     @prefix = matches[1].unescape_path
     @handle = @prefix + '/' + @suffix
     @handle_encoded = matches[0]
-    unless handleValues
-      handleValues = DB.instance.all_handle_values(self.handle).collect do
-        |row|
-        HandleValue.new self.path + '/' + row[:idx].to_s, row
-      end
+    handleValues ||= DB.instance.all_handle_values(self.handle)
+    @values = handleValues.collect do
+      |row|
+      HandleValue.new row
     end
-    @values = Hash[ handleValues.collect { |v| [ v.idx, v ] } ]
   end
+
 
   def do_GET request, response
     bct = request.best_content_type CONTENT_TYPES
@@ -67,17 +74,67 @@ class Handle < Resource
       case bct.split( ';' ).first
       when 'application/json', 'application/x-json'
         JSON.new self, request
-      when 'text/plain'
-        TXT.new self, request
       else
         XHTML.new self, request
       end
   end
 
+
+  def do_PUT request, response
+    case request.media_type
+    when 'application/json', 'application/x-json'
+      begin
+        handle_values_in = JSON.parse( body.read )
+      rescue
+        raise Djinn::HTTPStatus, '400 ' + $!.message
+      end
+    else
+      raise Djinn::HTTPStatus, '415 application/json'
+    end
+    raise Djinn::HTTPStatus, '400 Array expected' \
+      unless handle_values_in.kind_of? Array
+    begin
+      handle_values_in.collect do
+        |handle_value_in|
+        handle_value = HandleValue.new
+        handle_value.idx = handle_value_in[:idx].to_i \
+          if handle_value_in.key? :idx
+        handle_value.type = handle_value_in[:type].to_s \
+          if handle_value_in.key? :type
+        handle_value.data = Base64.decode64( handle_value_in[:data].to_s ) \
+          if handle_value_in.key? :data
+        if handle_value_in.key?( :data ) &&
+           handle_value_in.key?( :parsed_data )
+          data = handle_value.data
+          parsed_data = handle_value.parsed_data
+          handle_value.parsed_data = handle_value_in[:parsed_data]
+          unless data == handle_value.data ||
+                 parsed_data == handle_value.parsed_data
+            raise Djinn::HTTP_Status, 'bad_request Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
+          end
+        elsif handle_value_in.key?( :parsed_data )
+          handle_value.parsed_data = handle_value_in[:parsed_data]
+        end
+        handle_value.ttl_type = handle_value_in[:ttl_type].to_i \
+          if handle_value_in.key? :ttl_type
+        handle_value.ttl = handle_value_in[:ttl].to_i \
+          if handle_value_in.key? :ttl
+        handle_value.timestamp = handle_value_in[:timestamp].to_i \
+          if handle_value_in.key? :timestamp
+        # TODO: refs, admin/pub/read/write
+      end
+    rescue Djinn::HTTPStatus
+      raise
+    rescue
+      raise Djinn::HTTPStatus, 'bad_request ' + $!.to_s + $@.to_s
+    end
+  end
+
+
   def enforce_admin_record
-    unless @values.detect { |k, v| 'HS_ADMIN' === v.type }
+    unless @values.detect { |v| 'HS_ADMIN' === v.type }
       idx = 100
-      idx += 1 while @values[idx]
+      idx += 1 while @values.detect { |v| idx === v.idx }
       # In the JAVA code for the standard CNRI adminTool, the following code can
       # be found in private method +MainWindow::getDefaultAdminRecord()+:
       # 
@@ -95,12 +152,13 @@ class Handle < Resource
       #   adminInfo.perms[AdminRecord.DELETE_NAMING_AUTH] = false;
       #   return makeValueWithParams(100, Common.STD_TYPE_HSADMIN,
       #                              Encoder.encodeAdminRecord(adminInfo));
-      userInfo = EPIC::USERS[self.userName]
-      @values[idx] = HandleValue.new @handle_encoded + '/' + idx.to_s
-      @values[idx].type = 'HS_ADMIN'
-      @values[idx].parsed_data = {
-        :adminId => userInfo[:handle],
-        :adminIdIndex => userInfo[:index],
+      user_info = EPIC::USERS[self.user_name]
+      admin_record = HandleValue.new
+      admin_record.idx = idx
+      admin_record.type = 'HS_ADMIN'
+      admin_record.parsed_data = {
+        :adminId => user_info[:handle],
+        :adminIdIndex => user_info[:index],
         :perms => [
           :add_handle    => true,
           :delete_handle => true,
@@ -116,42 +174,32 @@ class Handle < Resource
           :list_handles  => false
         ]
       }
+      @values << admin_record
     end
+    self
   end
 
+
   def to_a
-    @values.values.sort { |a,b| a.idx <=> b.idx }.collect {
+    @values.sort { |a,b| a.idx <=> b.idx }.collect {
       |v|
       {
-        :IDX => v.idx.to_s,
+        :idx => v.idx.to_i,
         :type => v.type.to_s,
-        :'Data (Parsed)' => v.parsed_data,
-        :'Data (Base64 encoded)' => Base64.encode64(v.data),
-        :timestamp => Time.at(v.timestamp).utc.rfc2822, #rfc2822(Time.at(v.timestamp)),
-        :TTL => v.ttl.to_s + ( 0 == v.ttl_type ? ' (rel)' : ' (abs)' ),
-        :refs => v.refs.collect {
-                   |ref|
-                   ref[:idx].to_s + ':' + ref[:handle]
-                 }.join('<br/>'),
-        :perms => (
-          (v.admin_read  ? 'r' : '-') +
-          (v.admin_write ? 'w' : '-') +
-          (v.pub_read  ? 'r' : '-') +
-          (v.pub_write ? 'w' : '-')
-        )
+        :parsed_data => v.parsed_data,
+        :data => Base64.encode64(v.data).chomp,
+        :timestamp => v.timestamp.to_i, #rfc2822(Time.at(v.timestamp)),
+        :ttl_type => v.ttl_type.to_i,
+        :ttl => v.ttl.to_i,
+        :refs => v.refs.collect { |ref| ref[:idx].to_s + ':' + ref[:handle] },
+        :admin_read  => !!v.admin_read,
+        :admin_write => !!v.admin_write,
+        :pub_read    => !!v.pub_read,
+        :pub_write   => !!v.pub_write
       }
     }
-    # do |v|
-      # yield( {
-        # :uri => v.idx.to_s,
-        # :name => @handle + ':' + v.idx.to_s,
-        # :idx => v.idx.to_s,
-        # :type => v.type,
-        # :data => Base64.encode64( v.data ),
-        # :parsed_data => v.parsed_data
-      # } )
-    # end
   end
+
 
   def empty?
     @values.empty?
@@ -162,37 +210,42 @@ end # class Handle
 
 class Handle::XHTML < Serializer::XHTML
 
+
   def each_nested # :yields: strings
-    yield self.serialize self.resource.to_a
-    # yield '
-# <table class="epic_handle table table-striped table-bordered table-condensed">
-# <caption>' + resource.handle.escape_html + '</caption>
-# <thead><tr>
-# <th class="epic_idx">IDX</th>
-# <th class="epic_type">Type</th>
-# <th class="epic_data">Data (base64)</th>
-# <th class="epic_parsed">Data (parsed)</th>
-# <th class="epic_timestamp">Timestamp</th>
-# <th class="epic_ttl">TTL</th>
-# <th class="epic_refs">Refs</th>
-# <th class="epic_perms">Perms</th></tr></thead><tbody>'
-    # self.resource.each do
-      # |hv|
-      # html = '
-# <tr class="epic_handle_value">
-# <td class="epic_idx">' + hv.idx.to_s + '</td>
-# <td class="epic_type">' + hv + '</td>
-# <td class="epic_data">' + hv + '</td>
-# <td class="epic_parsed">' + hv + '</td>
-# <td class="epic_">' + hv + '</td>
-# <td class="epic_">' + hv + '</td>
-# <td class="epic_">' + hv + '</td>
-# <td class="epic_">' + hv + '</td>
-# <td class="epic_">' + hv + '</td>
-# <td class="epic_">' + hv + '</td>'
+    values = self.resource.to_a
+    values.each do
+      |value|
+      value[:timestamp] = Time.at(value[:timestamp]).utc.xmlschema
+      value[:ttl] = ( 0 == value[:ttl_type] ) ?
+        value[:ttl].to_s + 's' :
+        Time.at(value[:ttl]).utc.xmlschema
+      value.delete :ttl_type
+      value[:perms] =
+        ( value[:admin_read]  ? 'r' : '-' ) +
+        ( value[:admin_write] ? 'w' : '-' ) +
+        ( value[:pub_read]    ? 'r' : '-' ) +
+        ( value[:pub_write]   ? 'w' : '-' )
+      value.delete :admin_read
+      value.delete :admin_write
+      value.delete :pub_read
+      value.delete :pub_write
+    end
+    yield self.serialize values
   end
 
+
 end # class Collection::XHTML
+
+
+class Handle::JSON < Serializer::JSON
+
+
+  def each
+    yield ::JSON::pretty_generate( self.resource.to_a )
+  end
+
+
+end # class Handle::JSON
 
 
 end # module EPIC
