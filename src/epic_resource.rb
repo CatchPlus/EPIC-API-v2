@@ -24,6 +24,7 @@ class Resource
 
   include Djinn::Resource
 
+  # @deprecated
   def user_name
     self.globals[:request].env['REMOTE_USER']
   end

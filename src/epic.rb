@@ -43,22 +43,18 @@ class ResourceFactory
 
   include Singleton
 
-  def reset
-    Thread.current[:resource_cache] = Hash.new
-  end
-
   def resource_cache
-    Thread.current[:resource_cache] ||= Hash.new
+    Djinn::Request.current.env[:epic_resource_cache] ||= Hash.new
   end
+  private :resource_cache
 
   def uncache path
-    path = path.to_s.unslashify
-    self.resource_cache.delete path
+    resource_cache.delete path.to_s.unslashify
   end
 
   def [] path
     path = path.to_s.unslashify
-    cached = self.resource_cache[path]
+    cached = resource_cache[path]
     # Legal values for +cached+ are:
     # - Nil: the resource is not in cache
     # - False: resource was requested earlier, without success
@@ -67,7 +63,7 @@ class ResourceFactory
       # if +cached+ is +false+, we want to return +Nil+.
       return cached || nil
     end
-    self.resource_cache[path] = case path # already unslashified!
+    resource_cache[path] = case path # already unslashified!
     when ''
       StaticCollection.new '/', [ 'handles/', 'profiles/', 'templates/', 'batches/' ]
     when '/handles', '/profiles', '/templates', '/batches'

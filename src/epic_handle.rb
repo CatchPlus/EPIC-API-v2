@@ -84,57 +84,136 @@ class Handle < Resource
     case request.media_type
     when 'application/json', 'application/x-json'
       begin
-        handle_values_in = JSON.parse( body.read )
+        handle_values_in = ::JSON.parse(
+          request.body.read,
+          :symbolize_names => true
+        )
       rescue
-        raise Djinn::HTTPStatus, '400 ' + $!.message
-      end
+        raise Djinn::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
+      end # begin
     else
-      raise Djinn::HTTPStatus, '415 application/json'
-    end
-    raise Djinn::HTTPStatus, '400 Array expected' \
+      raise Djinn::HTTPStatus, 'UNSUPPORTED_MEDIA_TYPE application/json'
+    end # case request.media_type
+    raise Djinn::HTTPStatus, 'BAD_REQUEST Array expected' \
       unless handle_values_in.kind_of? Array
-    begin
-      handle_values_in.collect do
-        |handle_value_in|
-        handle_value = HandleValue.new
-        handle_value.idx = handle_value_in[:idx].to_i \
-          if handle_value_in.key? :idx
-        handle_value.type = handle_value_in[:type].to_s \
-          if handle_value_in.key? :type
-        handle_value.data = Base64.decode64( handle_value_in[:data].to_s ) \
-          if handle_value_in.key? :data
-        if handle_value_in.key?( :data ) &&
-           handle_value_in.key?( :parsed_data )
-          data = handle_value.data
-          parsed_data = handle_value.parsed_data
-          handle_value.parsed_data = handle_value_in[:parsed_data]
-          unless data == handle_value.data ||
-                 parsed_data == handle_value.parsed_data
-            raise Djinn::HTTP_Status, 'bad_request Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
-          end
-        elsif handle_value_in.key?( :parsed_data )
-          handle_value.parsed_data = handle_value_in[:parsed_data]
+    values = handle_values_in.collect do
+      |handle_value_in|
+      handle_value = HandleValue.new
+      handle_value.idx = handle_value_in[:idx].to_i \
+        if handle_value_in.key? :idx
+      handle_value.type = handle_value_in[:type].to_s \
+        if handle_value_in.key? :type
+      handle_value.data = Base64.decode64( handle_value_in[:data].to_s ) \
+        if handle_value_in.key? :data
+      if handle_value_in.key?( :data ) &&
+         handle_value_in.key?( :parsed_data )
+        data = handle_value.data
+        parsed_data = handle_value.parsed_data
+        handle_value.parsed_data = handle_value_in[:parsed_data]
+        unless data == handle_value.data ||
+               parsed_data == handle_value.parsed_data
+          raise Djinn::HTTPStatus, 'BAD_REQUEST Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
+        end # unless
+      elsif handle_value_in.key?( :parsed_data )
+        handle_value.parsed_data = handle_value_in[:parsed_data]
+      end # if
+      handle_value.ttl_type = handle_value_in[:ttl_type].to_i \
+        if handle_value_in.key? :ttl_type
+      handle_value.ttl = handle_value_in[:ttl].to_i \
+        if handle_value_in.key? :ttl
+      handle_value.refs = handle_value_in[:refs] \
+        if handle_value_in[:refs].kind_of?( Array ) &&
+           handle_value_in[:refs].all? do
+             |ref|
+             ref.kind_of?( Hash ) &&
+             ref[:idx].kind_of?( Integer ) &&
+             ref[:handle].kind_of?( String )
+           end
+      handle_value.admin_read = !!handle_value_in[:admin_read] \
+        if handle_value_in.key? :admin_read
+      handle_value.admin_write = !!handle_value_in[:admin_write] \
+        if handle_value_in.key? :admin_write
+      handle_value.pub_read = !!handle_value_in[:pub_read] \
+        if handle_value_in.key? :pub_read
+      handle_value.pub_write = !!handle_value_in[:pub_write] \
+        if handle_value_in.key? :pub_write
+      # If the passed handle value is equal to the existing handle value in all
+      # respects, and no timestamp is passed, then the old timestamp should be
+      # used.
+      if handle_value_in.key? :timestamp
+        handle_value.timestamp = handle_value_in[:timestamp].to_i
+      else
+        current_value = @values.find do
+          |value|
+          value.idx == handle_value.idx &&
+          value.type == handle_value.type &&
+          value.data == handle_value.data &&
+          value.ttl_type == handle_value.ttl_type &&
+          value.ttl == handle_value.ttl &&
+          value.refs.all? do
+            |ref1|
+            handle_value.refs.any? do
+              |ref2|
+              ref1[:idx]    == ref2[:idx] &&
+              ref1[:handle] == ref2[:handle]
+            end # handle_value.refs.any? do
+          end && #value.refs.all? do
+          handle_value.refs.all? do
+            |ref1|
+            value.refs.any? do
+              |ref2|
+              ref1[:idx]    == ref2[:idx] &&
+              ref1[:handle] == ref2[:handle]
+            end # value.refs.any?
+          end # handle_value.refs.all? do
         end
-        handle_value.ttl_type = handle_value_in[:ttl_type].to_i \
-          if handle_value_in.key? :ttl_type
-        handle_value.ttl = handle_value_in[:ttl].to_i \
-          if handle_value_in.key? :ttl
-        handle_value.timestamp = handle_value_in[:timestamp].to_i \
-          if handle_value_in.key? :timestamp
-        # TODO: refs, admin/pub/read/write
+        if current_value
+          handle_value.timestamp = current_value.timestamp
+        end
       end
-    rescue Djinn::HTTPStatus
-      raise
-    rescue
-      raise Djinn::HTTPStatus, 'bad_request ' + $!.to_s + $@.to_s
+      $stderr.puts handle_value.inspect
+      handle_value
+    end # values = handle_values_in.collect do
+    self.class.enforce_proper_indexes values
+    self.class.enforce_admin_record values, request.env['REMOTE_USER']
+    if self.empty?
+      EPIC::HS.create(self.handle, values, request.env['REMOTE_USER'])
+      @values = values
+      raise Djinn::HTTPStatus, 'CREATED ' + self.path
+    else
+      EPIC::HS.delete(self.handle, request.env['REMOTE_USER'])
+      EPIC::HS.create(self.handle, values, request.env['REMOTE_USER'])
+      @values = values
+      response.status = status_code(:no_content)
     end
   end
 
 
-  def enforce_admin_record
-    unless @values.detect { |v| 'HS_ADMIN' === v.type }
+  def self.enforce_proper_indexes values
+    all_indexes = []
+    values.each do
+      |value|
+      next if HS::EMPTY_HANDLE_VALUE.getIndex == value.idx
+      raise( Djinn::HTTPStatus, "BAD_REQUEST Multiple values with index #{value.idx}" ) \
+        if all_indexes.member? value.idx
+      all_indexes << value.idx
+    end
+    current_index = 1
+    values.each do
+      |value|
+      next unless HS::EMPTY_HANDLE_VALUE.getIndex == value.idx
+      current_index = current_index + 1 while all_indexes.member? current_index
+      value.idx = current_index
+      all_indexes << current_index
+    end
+    values
+  end
+
+
+  def self.enforce_admin_record values, user_name
+    unless values.any? { |v| 'HS_ADMIN' === v.type }
       idx = 100
-      idx += 1 while @values.detect { |v| idx === v.idx }
+      idx += 1 while values.any? { |v| idx === v.idx }
       # In the JAVA code for the standard CNRI adminTool, the following code can
       # be found in private method +MainWindow::getDefaultAdminRecord()+:
       # 
@@ -152,14 +231,14 @@ class Handle < Resource
       #   adminInfo.perms[AdminRecord.DELETE_NAMING_AUTH] = false;
       #   return makeValueWithParams(100, Common.STD_TYPE_HSADMIN,
       #                              Encoder.encodeAdminRecord(adminInfo));
-      user_info = EPIC::USERS[self.user_name]
+      user_info = EPIC::USERS[user_name]
       admin_record = HandleValue.new
       admin_record.idx = idx
       admin_record.type = 'HS_ADMIN'
       admin_record.parsed_data = {
         :adminId => user_info[:handle],
         :adminIdIndex => user_info[:index],
-        :perms => [
+        :perms => {
           :add_handle    => true,
           :delete_handle => true,
           :add_NA        => false,
@@ -172,11 +251,11 @@ class Handle < Resource
           :remove_admin  => true,
           :add_admin     => true,
           :list_handles  => false
-        ]
+        }
       }
-      @values << admin_record
+      values << admin_record
     end
-    self
+    values
   end
 
 

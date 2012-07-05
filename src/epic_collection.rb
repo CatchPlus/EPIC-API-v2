@@ -54,13 +54,13 @@ end # class Collection
 class Collection::XHTML < Serializer::XHTML
 
   def requested?
-    self.resource.path.slashify == self.resource.globals[:request].path.slashify
+    self.resource.path.slashify == self.request.path.slashify
   end
 
   def recurse?
     depth = self.class.const_defined?( :DEFAULT_DEPTH ) ?
       DEFAULT_DEPTH.to_s : '0'
-    depth = self.resource.globals[:request].env['HTTP_DEPTH'] || depth
+    depth = self.request.env['HTTP_DEPTH'] || depth
     self.requested? && '0' != depth || 'infinity' == depth
   end
 
@@ -150,27 +150,24 @@ end # class Collection::XHTML
 
 class Collection::JSON < Serializer::JSON
   def each
-    yield '{'
+    yield '['
     first = true
     self.resource.each do
-      |item|
-      uri = item[:uri]
+      |uri|
       #if 0 == uri.index(self.resource.path)
       #  uri = uri[Range.new(self.resource.path.length, -1)]
       #end
-      item = item.dup
-      item.delete :uri
-      yield( (first && '' || ',') + uri.to_json + ':' + ::JSON.generate(item) )
+      yield( (first ? '' : ',') + uri.to_json )
       first = false
     end
-    yield '}'
+    yield ']'
   end
 end # class Collection::JSON
 
 
 class Collection::TXT < Serializer::TXT
   def each
-    self.resource.each { |item| yield( item[:uri] + "\r\n" ) }
+    self.resource.each { |uri| yield( uri + "\r\n" ) }
   end
 end # class Collection::TXT
 

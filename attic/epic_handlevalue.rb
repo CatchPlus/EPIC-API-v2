@@ -16,40 +16,11 @@ limitations under the License.
 
 require './epic_resource.rb'
 require './epic_hs.rb'
-require 'base64'
 
 module EPIC
 
 
 class HandleValue # < Resource
-
-
-=begin Maybe, in the future, we'll make HandleValue a Resource again?
-  CONTENT_TYPES = {
-    'application/xhtml+xml; charset=UTF-8' => 1,
-    'text/html; charset=UTF-8' => 1,
-    'text/xml; charset=UTF-8' => 1,
-    'application/xml; charset=UTF-8' => 1,
-    'application/json; charset=UTF-8' => 0.5,
-    'application/x-json; charset=UTF-8' => 0.5,
-    'application/octet-stream' => 0.9,
-  }
-
-
-  def do_GET request, response
-    bct = request.best_content_type CONTENT_TYPES
-    response.header['Content-Type'] = bct
-    response.body =
-      case bct.split( ';' ).first
-      when 'application/json', 'application/x-json'
-        JSON.new self
-      when 'application/octet-stream'
-        BIN.new self
-      else
-        XHTML.new self
-      end
-  end
-=end
 
 
   attr_accessor :idx, :type, :data, :ttl_type, :ttl, :timestamp,
@@ -78,14 +49,7 @@ class HandleValue # < Resource
       @ttl_type  = dbrow[:ttl_type].to_i
       @ttl       = dbrow[:ttl].to_i
       @timestamp = dbrow[:timestamp].to_i
-      @refs      = dbrow[:refs].split("\t").collect do
-        |ref|
-        ref = ref.split ':', 2
-        {
-          :idx    => ref[0].to_i,
-          :handle => ref[1]
-        }
-      end
+      @refs      = self.class.string2refs( dbrow[ :refs ] )
       @admin_read  = dbrow[:admin_read]  && 0 != dbrow[:admin_read]
       @admin_write = dbrow[:admin_write] && 0 != dbrow[:admin_write]
       @pub_read    = dbrow[:pub_read]    && 0 != dbrow[:pub_read]
@@ -96,8 +60,8 @@ class HandleValue # < Resource
       @data      = String.from_java_bytes HS::EMPTY_HANDLE_VALUE.getData
       @ttl_type  = HS::EMPTY_HANDLE_VALUE.getTTLType
       @ttl       = HS::EMPTY_HANDLE_VALUE.getTTL
-      @timestamp = HS::EMPTY_HANDLE_VALUE.getTimestamp
-      @refs      = HS::EMPTY_HANDLE_VALUE.getReferences.collect do
+      @timestamp = Time.new.to_i
+      @refs      = HS::EMPTY_HANDLE_VALUE.getReferences.to_a.collect do
         |valueReference|
         {
           :idx    => valueReference.index,
@@ -112,13 +76,33 @@ class HandleValue # < Resource
   end
 
 
+  def self.refs2string refs
+    refs.collect do
+      |ref|
+      ref[:idx].to_s + ':' + ref[:handle]
+    end.join( "\t" )
+  end
+
+
+  def self.string2refs string
+    string.split("\t").collect do
+      |ref|
+      ref = ref.split ':', 2
+      {
+        :idx    => ref[0].to_i,
+        :handle => ref[1]
+      }
+    end
+  end
+
+
   def parsed_data
     case type
     when 'HS_ADMIN'
       HS.unpack_HS_ADMIN self.data
     else
       begin
-        retval = self.data.encode( 'UTF-8' )
+        retval = self.data.encode( Encoding::UTF_8 )
         %r{[\x00-\x08\x0B\x0C\x0E-\x1F]}.match(retval) ? nil : retval
       rescue
         nil
@@ -127,42 +111,15 @@ class HandleValue # < Resource
   end
 
 
-  def parsed_data= (p_data)
-    case type
+  def parsed_data= p_data
+    self.data = case type
     when 'HS_ADMIN'
-      raise Djinn::HTTPStatus, '500 Missing one or more required values' if
-        ! p_data[:adminId] ||
-        ! p_data[:adminIdIndex] ||
-        ! p_data[:perms]
-      adminRecord = hdllib.AdminRecord.new
-      adminRecord.adminId = p_data[:adminId].to_s.to_java_bytes
-      adminRecord.adminIdIndex = p_data[:adminIdIndex].to_i
-      adminRecord.perms = p_data[:perms].collect {
-        |perm| perm && true || false
-      }.to_java Java::boolean
-      self.data = String.from_java_bytes(
-        hdllib.Encoder.encodeAdminRecord( adminRecord )
-      )
+      HS.pack_HS_ADMIN p_data
     else
-      raise Djinn::HTTPStatus,
-        "500 parsed_data=() not implemented for type #{type}"
+      p_data.to_s
     end
-    p_data
   end
 
-
-  # Unused!
-  def serializable_hash
-    retval = {
-      :type => self.type,
-      :data => Base64.strict_encode64(self.data)
-    }
-    [ :idx, :handle, :parsed_data ].each do
-      |s|
-      if t = self.send(s) then retval[s] = t end
-    end
-    retval
-  end
 
 end # class HandleValue
 

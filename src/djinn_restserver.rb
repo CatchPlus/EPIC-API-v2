@@ -28,6 +28,12 @@ module Djinn
 
 class Request < Rack::Request
 
+
+  def self.current
+    Thread.current[:djinn_request]
+  end
+
+
 =begin rdoc
 Returns a Hash of <tt>media type => quality</tt> pairs, with acceptable media types
 for the response. This information is also stored in environment variable
@@ -99,6 +105,48 @@ header(s) and the available representations in the server.
   end
 
 
+  def if_match etag, none = false
+    header = @env["HTTP_IF_#{ none ? 'NONE_' : '' }MATCH"]
+    return true unless header
+    envkey = "djinn.if_#{ none ? 'none_' : '' }match"
+    @env[envkey] ||=
+      if %r{\A\s*\*\s*\z} === header
+        ['*']
+      elsif %r{\A(\s*(W/)?"([^"\\]|\\.)*"\s*,)+\z} === ( header + ',' )
+        header.scan %r{(?:W/)?"(?:[^"\\]|\\.)*"}
+      else
+        raise HTTPStatus, "BAD_REQUEST Couldn't parse If-#{ none ? 'None-' : '' }Match: #{header}"
+      end
+    any = @env[envkey].any? do
+      |tag|
+             tag == '*'         ||
+             tag ==        etag ||
+      'W/' + tag ==        etag ||
+             tag == 'W/' + etag
+    end
+    any ^ none
+  end
+
+
+  def if_none_match etag
+    self.if_match etag, true
+  end
+
+
+  def if_modified_since time, unmodified = false
+    header = @env["HTTP_IF_#{ unmodified ? 'UN' : '' }MODIFIED_SINCE"]
+    return true unless header
+    header = Time.httpdate( header )
+    modified = time > header
+    modified ^ unmodified
+  end
+
+
+  def if_unmodified_since time
+    self.if_modified_since time, true
+  end
+
+
 end # class Request
 
 
@@ -134,18 +182,49 @@ yield a <tt>404 Not Found</tt>.
     false
   end
 
+
   def http_methods
-    unless @restserver_http_methods
-      @restserver_http_methods = []
+    unless @djinn_resource_http_methods
+      @djinn_resource_http_methods = []
       self.public_methods.each do
-        |method_name|
-        if ( match = /\Ado_([A-Z]+)\z/.match( method_name ) )
-          @restserver_http_methods << match[1]
+        |public_method|
+        if ( match = /\Ado_([A-Z]+)\z/.match( public_method ) )
+          @djinn_resource_http_methods << match[1]
         end
       end
-      @restserver_http_methods.delete 'HEAD' unless @restserver_http_methods.include? 'GET'
+      @djinn_resource_http_methods.delete 'HEAD' \
+        unless @djinn_resource_http_methods.include? 'GET'
     end
-    @restserver_http_methods
+    @djinn_resource_http_methods
+  end
+
+
+  def http_HEAD request, response
+    raise Djinn::HTTPStatus, 'NOT_FOUND' if self.empty?
+    self.do_HEAD request, response
+    self.set_default_headers response
+  end
+
+
+  def http_GET request, response
+    raise Djinn::HTTPStatus, 'NOT_FOUND' if self.empty?
+    raise Djinn::HTTPStatus, 'METHOD_NOT_ALLOWED ' +  self.http_methods.join( ' ' ) \
+      unless self.respond_to? :do_GET
+    self.do_GET request, response
+    self.set_default_headers response
+  end
+
+
+  # @private
+  def set_default_headers response
+    if ! response.include?( 'ETag' ) &&
+       ( etag = self.header_etag )
+      response['ETag'] = etag
+    end
+    if ! response.include?( 'Last-Modified' ) &&
+       ( last_modified = self.header_last_modified )
+      response['Last-Modified'] = last_modified.httpdate
+    end
   end
 
 
@@ -156,12 +235,10 @@ If a subclass implements method +content_types+, then the +Content-Type+ header
 will be set in the response object passed to +do_GET+.
 =end
   def do_HEAD request, response
-    if self.respond_to? :do_GET
-      self.do_GET request, response
-      response.body = []
-    else
-      raise Djinn::HTTPStatus, '405 ' +  self.http_methods.join( ' ' )
-    end
+    raise Djinn::HTTPStatus, 'METHOD_NOT_ALLOWED ' +  self.http_methods.join( ' ' ) \
+      unless self.respond_to? :do_GET
+    self.do_GET request, response
+    response.body = []
   end
 
 
@@ -178,22 +255,38 @@ body). Users may override what's returned by implementing a method
 2. a Rack::Response object, to be modified at will.
 =end
   def do_OPTIONS request, response
-    raise Djinn::HTTPStatus, '404' if self.empty?
+    raise Djinn::HTTPStatus, 'NOT_FOUND' if self.empty?
     response.status = status_code :no_content
     response.header['Allow'] = self.http_methods.join ', '
   end
 
 
-  # This is an instance method with good reason. The +globals+ Hash is only
-  # defined during a particular request, in a particular server thread. It's
-  # not possible to access this Hash outside of the context of some resource.
-  def globals
-    Thread.current[:djinn]
-  end
+  def header_etag; nil; end
 
 
-  def self.cache
-    Thread.current[:djinn][:cache] ||= {}
+  def header_last_modified; Time.now; end
+
+
+  # Raises 412 Precondition Failed on failure to match
+  def assert_if_headers request
+    if self.empty? && (
+         request.env.key?('HTTP_IF_MATCH')
+         ! request.if_unmodified_since( Time.now + 1 )
+       ) or
+       ! self.empty? && (
+         ! request.if_none_match( self.header_etag ) ||
+         ! request.if_match( self.header_etag ) ||
+         ! request.if_unmodified_since( self.header_last_modified )
+       )
+      raise HTTPStatus, 'PRECONDITION_FAILED'
+    end
+    if self.empty? && ! request.if_modified_since( 0 )
+      raise HTTPStatus, 'NOT_FOUND'
+    end
+    if ! self.empty? &&
+       ! request.if_modified_since( self.header_last_modified )
+      raise HTTPStatus, 'NOT_MODIFIED'
+    end
   end
 
 
@@ -214,13 +307,9 @@ class HTTPStatus < RuntimeError
   # The general format of +message+ is: +<status> [ <space> <message> ]+
   def initialize( message )
     @response = Rack::Response.new
-    matches = /\A(\S+)\s*(.*)\z/.match(message.to_s)
+    matches = %r{\A(\S+)\s*(.*)\z}.match(message.to_s)
     #raise ArgumentError, "Unexpected message format: '#{message}'"
-    status = matches[1].to_i
-    if 0 === status
-      status = SYMBOL_TO_STATUS_CODE[ match[1].to_sym ]
-      raise ArgumentError, "Unexpected message format: '#{message}'" unless status
-    end
+    status = status_code(matches[1].downcase.to_sym)
     @response.status = status
     message = matches[2]
     case status
@@ -364,11 +453,8 @@ Prototype constructor.
   def call!(p_env)
     request  = Djinn::Request.new( p_env )
     response = Rack::Response.new
-    Thread.current[:djinn] = {
-      :request  => request,
-      :response => response
-    }
-    self.resource_factory.reset if self.resource_factory.respond_to? :reset
+    request.env['djinn.response'] = response
+    Thread.current[ :djinn_request ] = request
     begin
       raise HTTPStatus, '404' unless resource = self.resource_factory[request.path]
       # Why are we looking for both "http_*" and "do_*" methods?
@@ -376,7 +462,10 @@ Prototype constructor.
       # if resource.respond_to? :"http_#{request.request_method}"
         # resource.__send__( :"http_#{request.request_method}", request, response )
       # els
-      if resource.respond_to? :"do_#{request.request_method}"
+      resource.assert_if_headers request
+      if resource.respond_to? :"http_#{request.request_method}"
+        resource.__send__( :"http_#{request.request_method}", request, response )
+      elsif resource.respond_to? :"do_#{request.request_method}"
         resource.__send__( :"do_#{request.request_method}", request, response )
       else
         raise HTTPStatus, '405 ' + resource.http_methods.join( ' ' )
@@ -387,9 +476,13 @@ Prototype constructor.
       #[200, {'Content-Type'=>'text/plain'},[response.header['Content-Type']]]
       response.finish
     rescue HTTPStatus => s
+      #DONE: comment out the following line:
+      #raise
       raise if 500 == s.response.status
       s.response.body = [] if request.head?
       s.response.finish
+    ensure
+      Thread.current[ :djinn_request ] = nil
     end
   end
 

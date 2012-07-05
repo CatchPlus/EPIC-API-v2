@@ -25,6 +25,7 @@ module EPIC
 
 module HS
 
+
   def self.hdllib; Java.NetHandleHdllib; end
 
   PERMS_BY_S = {
@@ -47,6 +48,7 @@ module HS
   MUTEX = Mutex.new
   EMPTY_HANDLE_VALUE = hdllib.HandleValue.new
 
+
   def self.unpack_HS_ADMIN data
     adminRecord = hdllib.AdminRecord.new
     hdllib.Encoder.decodeAdminRecord(
@@ -65,6 +67,7 @@ module HS
     }
   end
 
+
   def self.pack_HS_ADMIN data
     raise Djinn::HTTPStatus, '500 Missing one or more required values' if
       ! data[:adminId] ||
@@ -73,20 +76,29 @@ module HS
     adminRecord = hdllib.AdminRecord.new
     adminRecord.adminId = data[:adminId].to_s.to_java_bytes
     adminRecord.adminIdIndex = data[:adminIdIndex].to_i
-    adminRecord.perms = data[:perms].collect {
+    perms = Hash[
+      data[:perms].collect do
+        |key, value|
+        key = key.to_sym
+        [ key, value ]
+      end
+    ]
+    adminRecord.perms = PERMS_BY_I.values.collect do
       |perm|
-      !!perm
-    }.to_java Java::boolean
+      perms[perm]
+    end.to_java Java::boolean
     String.from_java_bytes(
       hdllib.Encoder.encodeAdminRecord( adminRecord )
     )
   end
 
+
+  # HandleResolver should be thread safe, so there's only one of it.
   def self.resolver
-    unless @@resolver
+    unless class_variable_defined? :@@resolver
       MUTEX.lock
       begin
-        unless @@resolver
+        unless class_variable_defined? :@@resolver
           @@resolver = hdllib.HandleResolver.new
           sessionSetupInfo = hdllib.SessionSetupInfo.new nil
           clientSessionTracker = hdllib.ClientSessionTracker.new sessionSetupInfo
@@ -96,28 +108,91 @@ module HS
         MUTEX.unlock
       end
     end
+    @@resolver
   end
 
-  def self.authenticationInfo
-    user_name = ::EPIC::Resource.user_name
+
+  def self.authenticationInfo user_name
     unless AUTHINFO[user_name]
       userInfo = EPIC::USERS[user_name]
       raise Djinn::HTTPStatus, '500' unless userInfo
       MUTEX.lock
       begin
-        unless AUTHINFO[user_name]
-          AUTHINFO[user_name] = hdllib.SecretKeyAuthenticationInfo.new(
-            userInfo[:handle].to_java_bytes,
-            userInfo[:index],
-            userInfo[:secret].to_java_bytes
-          )
-        end
+        AUTHINFO[user_name] ||= hdllib.SecretKeyAuthenticationInfo.new(
+          userInfo[:handle].to_java_bytes,
+          userInfo[:index],
+          userInfo[:secret].to_java_bytes,
+          true
+        )
       ensure
         MUTEX.unlock
       end
     end
     AUTHINFO[user_name]
   end
+
+
+  def self.delete handle, user_name
+    request = hdllib.DeleteHandleRequest.new(
+      handle.to_java_bytes,
+      authenticationInfo( user_name )
+    )
+    response = resolver.processRequest( request )
+    if response.kind_of? hdllib.ErrorResponse
+      case response.responseCode
+      when hdllib.AbstractResponse.RC_INSUFFICIENT_PERMISSIONS
+        raise Djinn::HTTPStatus, 'FORBIDDEN'
+      when hdllib.AbstractResponse.RC_HANDLE_NOT_FOUND
+        raise Djinn::HTTPStatus, 'NOT_FOUND'
+      else
+        raise response.to_string
+      end
+    end
+  end
+
+
+  def self.create handle, values, user_name
+    handleValues = values.collect do
+      |value|
+      retval = hdllib.HandleValue.new(
+        value.idx,
+        value.type.to_java_bytes,
+        value.data.to_java_bytes
+      )
+      retval.setTTL value.ttl
+      retval.setTTLType value.ttl_type
+      retval.setTimestamp value.timestamp
+      retval.setReferences(
+        value.refs.collect do
+          |ref|
+          hdllib.ValueReference.new(
+            ref[:handle].to_java_bytes,
+            ref[:idx]
+          )
+        end.to_java hdllib.ValueReference
+      )
+      retval.setAdminCanRead   value.admin_read
+      retval.setAdminCanWrite  value.admin_write
+      retval.setAnyoneCanRead  value.pub_read
+      retval.setAnyoneCanWrite value.pub_write
+      retval
+    end
+    request = hdllib.CreateHandleRequest.new(
+      handle.to_java_bytes,
+      handleValues.to_java( hdllib.HandleValue ),
+      authenticationInfo( user_name )
+    )
+    response = resolver.processRequest( request )
+    if response.kind_of? hdllib.ErrorResponse
+      case response.responseCode
+      when hdllib.AbstractResponse.RC_INSUFFICIENT_PERMISSIONS
+        raise Djinn::HTTPStatus, 'FORBIDDEN'
+      else
+        raise response.to_string
+      end
+    end
+  end
+
 
 end # module HS
 

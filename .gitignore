@@ -8,3 +8,6 @@ config.rb
 .project
 src.java
 public/docs/epic
+public/docs/yard
+.yardoc
+gems
