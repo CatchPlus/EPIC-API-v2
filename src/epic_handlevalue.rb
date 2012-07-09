@@ -14,35 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require './epic_hs.rb'
+require 'epic_hs.rb'
 
 module EPIC
 
 
+# Wrapper around Java::NetHandleHdllib::HandleValue.
+#
+# A Handle, represented in this software system by {Handle}, is a collection of
+# Handle Values, represented by this class.
+# @see Handle#values
 class HandleValue # < Resource
 
-
+  # For those unfamiliar to this exotic Ruby syntax: the line below opens a new
+  # scope, where +self+ points to {HandleValue}'s metaclass. I.e. methods
+  # defined in this scope become _class methods_ of {HandleValue}.
   class << self
 
 
     private
 
 
-    def map_java_bytes java_name, ruby_name
-      define_method ruby_name do
-        String.from_java_bytes(
-          @handle_value.send( :"get#{java_name}" )
-        )
-      end
-      define_method :"#{ruby_name}=" do
-        |value|
-        @handle_value.send( :"set#{java_name}", value.to_java_bytes )
-        value
-      end
-    end
-
-
-    def map_java java_name, ruby_name
+    # Meta programming helper method.
+    #
+    # This private class method can be called inside the class definition of
+    # {HandleValue}.
+    # @example
+    #   # Create a Ruby attribute "timestamp" which is mapped
+    #   # to Java methods getTimestamp() and setTimestamp():
+    #   map_java_bytes :timestamp, :Timestamp
+    # @param ruby_name [Symbol] name of the Ruby attribute to create
+    # @param java_name [Symbol] name of the corresponding attribute in
+    #   {Java::NetHandleHdllib::HandleValue}
+    # @see map_java_bytes
+    def map_java ruby_name, java_name
       define_method ruby_name do
         @handle_value.send( :"get#{java_name}" )
       end
@@ -54,20 +59,92 @@ class HandleValue # < Resource
     end
 
 
+    # {include:map_java}
+    #
+    # The difference between this method and {map_java} is that {map_java} works
+    # for attributes with primitive Java types, while this method wraps a Ruby
+    # {String} attribute around a Java attribute of type +byte[]+. In order to
+    # do so, we need to define how the Java octet-stream must be interpreted,
+    # i.e. which encoding to use.
+    # @example
+    #   # Create a Ruby attribute "data" which is mapped
+    #   # to Java methods getData() and setData():
+    #   map_java_bytes :data, :Data, Encoding::BINARY
+    # @param (see map_java)
+    # @param encoding [Encoding] The encoding to be used when interpreting the
+    #   Java byte array.
+    # @see map_java
+    def map_java_bytes ruby_name, java_name, encoding = Encoding::UTF_8
+      define_method ruby_name do
+        String.from_java_bytes(
+          @handle_value.send( :"get#{java_name}" )
+        ).force_encoding(encoding)
+      end
+      define_method :"#{ruby_name}=" do
+        |value|
+        @handle_value.send(
+          :"set#{java_name}",
+          value.force_encoding(Encoding::ASCII_8BIT).to_java_bytes
+        )
+        value
+      end
+    end
+
+
   end # class << self
 
-  map_java_bytes :Type, :type
-  map_java_bytes :Data, :data
-  map_java :Index, :idx
-  map_java :TTL, :ttl
-  map_java :TTLType, :ttl_type
-  map_java :Timestamp, :timestamp
-  map_java :AdminCanRead,   :admin_read
-  map_java :AdminCanWrite,  :admin_write
-  map_java :AnyoneCanRead,  :pub_read
-  map_java :AnyoneCanWrite, :pub_write
+
+  # @!attribute [rw]
+  # @return [String] the type of this handle value
+  map_java_bytes :type, :Type
+  # @!attribute [rw]
+  # @return [String with Encoding::ASCII_8BIT] the binary data in this handle value
+  map_java_bytes :data, :Data, Encoding::ASCII_8BIT
+  # @!attribute [rw]
+  # @return [Integer] the index of this handle value
+  map_java :idx, :Index
+  # @!attribute [rw]
+  # @return [Integer] the time-to-live of this handle value
+  map_java :ttl, :TTL
+  # Type of attribute {#ttl}.
+  # [0] *Relative* Interpret {#ttl} as the number of seconds a client or proxy
+  #     may/should cache the result.
+  # [1] *Absolute* Interpret {#ttl} as an absolute timestamp, expressed in
+  #     seconds since epoch, until which this handle value is current.
+  # @!attribute [rw] ttl_type
+  # @return [0 or 1]
+  map_java :ttl_type, :TTLType
+  # The timestamp of the last modification of this handle value, in seconds
+  # since epoch.
+  # @!attribute [rw]
+  # @return [Integer]
+  map_java :timestamp, :Timestamp
+  # Is the administrator allowed to read this handle value?
+  # @!attribute [rw]
+  # @return [Boolean]
+  map_java :admin_read,  :AdminCanRead
+  # Is the administrator allowed to overwrite this handle value?
+  # @!attribute [rw]
+  # @return [Boolean]
+  map_java :admin_write, :AdminCanWrite
+  # Is the world allowed to read this handle value?
+  # @!attribute [rw]
+  # @return [Boolean]
+  map_java :pub_read,    :AnyoneCanRead
+  # Is the world allowed to overwrite this handle value?
+  # @!attribute [rw]
+  # @return [Boolean]
+  map_java :pub_write,   :AnyoneCanWrite
 
 
+  # The Java Object wrapped by +self+.
+  # @return [HDLLIB::HandleValue]
+  attr_reader :handle_value
+
+
+  # References in this handle value.
+  # @!attribute [rw] refs
+  # @return [ Array< Hash{ :idx => Integer, :handle => Integer } > ]
   def refs
     @handle_value.getReferences.to_a.collect do
       |ref|
@@ -80,36 +157,25 @@ class HandleValue # < Resource
     @handle_value.setReferences(
       p_refs.collect do
         |ref|
-        HS.hdllib.ValueReference.new(
+        HS::HDLLIB::ValueReference.new(
           ref[:handle].to_java_bytes,
           ref[:idx]
         )
-      end.to_java HS.hdllib.ValueReference
+      end.to_java HS::HDLLIB::ValueReference
     )
   end
 
 
-  attr_reader :handle_value
-  # attr_accessor :idx, :type, :data, :ttl_type, :ttl, :timestamp,
-  #   :refs, :admin_read, :admin_write, :pub_read, :pub_write
-  # Some metaprogramming to delegate data access to the appropriate
-  # ActiveHandleValue instance property @active_handle_value. 
-#  [ :handle, :idx, :data, :type ].each do
-#    |symbol|
-#    def_delegator :@active_handle_value, symbol
-#    def_delegator :@active_handle_value, :"#{symbol}="
-#  end
-
-
-  # Can be called with either an ActiveHandleValue object, or with a hash of
-  # key => value pairs.
-  def initialize dbrow = nil # :params: String path, Hash dbrow
+  # @param dbrow [Hash] an optional hash of values to initialize this handle
+  #   value with.
+  # @see Handle#initialize
+  def initialize dbrow = nil
     # super path
     # matches = %r{/([^/]+/[^/]+)/(\d+)\z}.match path
-    # raise Djinn::HTTPStatus, '500' unless matches
+    # raise "Unexpected path: #{path}" unless matches
     # @handle = matches[1].unescape_path
     # @idx = matches[2].to_i
-    @handle_value = HS.hdllib.HandleValue.new
+    @handle_value = HS::HDLLIB::HandleValue.new
     if dbrow
       self.idx       = dbrow[:idx].to_i
       self.type      = dbrow[:type].to_s
@@ -121,11 +187,11 @@ class HandleValue # < Resource
         dbrow[ :refs ].split("\t").collect do
           |ref|
           ref = ref.split ':', 2
-          HS.hdllib.ValueReference.new(
+          HS::HDLLIB::ValueReference.new(
             ref[1].to_java_bytes,
             ref[0].to_i
           )
-        end.to_java hdllib.ValueReference
+        end.to_java HS::HDLLIB::ValueReference
       )
       self.admin_read  = dbrow[:admin_read]  && 0 != dbrow[:admin_read]
       self.admin_write = dbrow[:admin_write] && 0 != dbrow[:admin_write]
@@ -157,14 +223,28 @@ class HandleValue # < Resource
   # end
 
 
+  # Accesses the data in this handle value, just like {#data}.
+  # While {#data} accesses the raw octet-stream verbatim, this attribute
+  # parses the raw bytes into structured data for certain known value types.
+  #
+  # For unknown value types, it returns a UTF-8 encoded string if the data can
+  # be interpreted as such. If the binary data doesn't constitute a valid UTF-8
+  # string, this attribute is +nil+.
+  # @!attribute [rw] parsed_data
+  # @return [Array, Hash, String, nil]
   def parsed_data
     case type
     when 'HS_ADMIN'
       HS.unpack_HS_ADMIN self.data
     else
       begin
-        retval = self.data.encode( Encoding::UTF_8 )
-        %r{[\x00-\x08\x0B\x0C\x0E-\x1F]}.match(retval) ? nil : retval
+        retval = self.data.encode( Encoding::UTF_8, Encoding::UTF_8 )
+        if %r{[\x00-\x08\x0B\x0C\x0E-\x1F]}.match(retval) ||
+           self.data != retval.encode( Encoding::ASCII_8BIT, Encoding::ASCII_8BIT )
+          nil
+        else
+          retval
+        end
       rescue
         nil
       end
@@ -177,7 +257,7 @@ class HandleValue # < Resource
     when 'HS_ADMIN'
       HS.pack_HS_ADMIN p_data
     else
-      p_data.to_s
+      p_data.to_s.encode( Encoding::ASCII_8BIT, Encoding::ASCII_8BIT )
     end
   end
 

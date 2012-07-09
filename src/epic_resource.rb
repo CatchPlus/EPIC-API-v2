@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require './djinn_restserver.rb'
+require 'djinn_restserver.rb'
 
 module EPIC
 
@@ -22,12 +22,38 @@ module EPIC
 # Base class of all resources in this web service.
 class Resource
 
-  include Djinn::Resource
+  include ReST::Resource
 
-  # @deprecated
-  def user_name
-    self.globals[:request].env['REMOTE_USER']
+
+  GLOBAL_LOCK_MUTEX = Mutex.new
+  GLOBAL_LOCK_HASH = {}
+
+
+  def lock unlock = false
+    self.class.lock self.path, unlock
   end
+
+
+  def unlock
+    self.lock true
+  end
+
+
+  def self.lock path, unlock
+    GLOBAL_LOCK_MUTEX.lock
+    begin
+      if unlock
+        GLOBAL_LOCK_HASH.delete path
+      elsif GLOBAL_LOCK_HASH[path]
+        raise HTTPStatus, 'SERVICE_UNAVAILABLE Another client is modifying the resource.'
+      else
+        GLOBAL_LOCK_HASH[path] = true
+      end
+    ensure
+      GLOBAL_LOCK_MUTEX.unlock
+    end
+  end
+
 
 end
 
@@ -128,11 +154,11 @@ class Serializer::XHTML < Serializer
       }.join + '</table>'
     elsif p.kind_of?( Enumerable )
       begin
-        raise Djinn::HTTPStatus, '500' unless p.first.kind_of?( Hash )
+        raise 'Hash expected' unless p.first.kind_of?( Hash )
         keys = p.first.keys
         p.each {
           |value|
-          raise Djinn::HTTPStatus, '500' unless value.keys == keys
+          raise 'Unexpected keys' unless value.keys == keys
         }
         '<table class="epic_objects table table-striped table-bordered table-condensed"><thead><tr>' +
         keys.collect {

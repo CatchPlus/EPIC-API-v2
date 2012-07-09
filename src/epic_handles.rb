@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require './epic_collection.rb'
-require './epic_sequel.rb'
+require 'epic_collection.rb'
+require 'epic_sequel.rb'
 
 module EPIC
 

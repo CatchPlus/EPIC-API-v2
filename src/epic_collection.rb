@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require './epic_resource.rb'
+require 'epic_resource.rb'
 
 module EPIC
 
@@ -30,8 +30,8 @@ class Collection < Resource
     'text/html; charset=UTF-8' => 1,
     'text/xml; charset=UTF-8' => 1,
     'application/xml; charset=UTF-8' => 1,
-    'application/json; charset=UTF-8' => 0.5,
-    'application/x-json; charset=UTF-8' => 0.5,
+    'application/json' => 0.5,
+    'application/x-json' => 0.5,
     'text/plain; charset=UTF-8' => 0.1
   }
 

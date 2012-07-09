@@ -1,0 +1,13 @@
+--no-private
+--protected
+--main YARD.rdoc
+--output-dir public/docs/yard
+--charset UTF-8
+--title EPIC
+--exclude sequel/adapters
+src/**/*.rb
+gems/rack-1*/lib/**/*.rb
+gems/sequel*/lib/**/*.rb
+gems/json*/lib/**/*.rb
+-
+INSTALL.rdoc

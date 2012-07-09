@@ -16,9 +16,11 @@ limitations under the License.
 =end
 # This is the default configuration file for the +rackup+ command.
 
+
+$LOAD_PATH.unshift 'src'
 # +epic.rb+ is the top level include file for the EPIC web service.
 # All other necessary files are included from there.
-require './epic.rb'
+require 'epic.rb'
 
 # The default configuration uses Rack::Chunked to allow streaming of response
 # bodies. Using this middleware, we don't have to specify a +Content-Length+
@@ -44,7 +46,7 @@ require 'rack/reloader'
 # With the following middleware in place, you can also append
 # +?_http_accept=application/json+ to the URL.
 use Rack::Config do |env|
-  raise 'Multithreaded web servers are not supported' if env['rack.multiprocess']
+  #raise 'Multithreaded web servers are not supported' if env['rack.multiprocess']
   req = Rack::Request.new env
   req.GET.each do |k, v|
     if %r{\A_http_(\w+)\z}i.match(k)
@@ -77,7 +79,7 @@ use Rack::Static,
 # URI's, given the request path.
 #
 # Warning: The web service depends on this middleware being present!
-use Djinn::RelativeLocation
+use ReST::RelativeLocation
 
 # As said, the distribution comes with HTTP Digest authentication preconfigured.
 use Rack::Auth::Digest::MD5, {
@@ -89,4 +91,4 @@ use Rack::Auth::Digest::MD5, {
 end
 
 # And finally, let's start the actual web service:
-run Djinn::RESTServer.new( EPIC::ResourceFactory.instance )
+run ReST::Server.new( EPIC::ResourceFactory.instance )

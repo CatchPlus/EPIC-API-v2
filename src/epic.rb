@@ -20,16 +20,16 @@ The project is hosted at GitHub, as EPIC-API-v2[http://github.com/CatchPlus/EPIC
 =end
 
 
-require './config.rb'
-require './secrets/users.rb'
+require 'config.rb'
+require '../secrets/users.rb'
 
-require './epic_monkeypatches.rb'
+require 'epic_monkeypatches.rb'
 
-require './epic_handle.rb'
-require './epic_handles.rb'
-require './epic_handlevalue.rb'
-require './epic_nas.rb'
-require './epic_directory.rb'
+require 'epic_handle.rb'
+require 'epic_handles.rb'
+require 'epic_handlevalue.rb'
+require 'epic_nas.rb'
+require 'epic_directory.rb'
 
 require 'singleton'
 
@@ -43,8 +43,9 @@ class ResourceFactory
 
   include Singleton
 
+
   def resource_cache
-    Djinn::Request.current.env[:epic_resource_cache] ||= Hash.new
+    ReST::Request.current.env[:epic_resource_cache] ||= Hash.new
   end
   private :resource_cache
 
@@ -58,7 +59,7 @@ class ResourceFactory
     # Legal values for +cached+ are:
     # - Nil: the resource is not in cache
     # - False: resource was requested earlier, without success
-    # - Djinn::Resource
+    # - ReST::Resource
     if ! cached.nil?
       # if +cached+ is +false+, we want to return +Nil+.
       return cached || nil

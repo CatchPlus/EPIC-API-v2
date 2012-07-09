@@ -22,11 +22,10 @@ require 'hsj/cnriutil.jar'
 
 # The namespace for everything related to the EPIC Web Service.
 module EPIC
-
 module HS
 
 
-  def self.hdllib; Java.NetHandleHdllib; end
+  HDLLIB = Java::NetHandleHdllib
 
   PERMS_BY_S = {
     :add_handle    => 0,
@@ -46,12 +45,12 @@ module HS
 
   AUTHINFO = {}
   MUTEX = Mutex.new
-  EMPTY_HANDLE_VALUE = hdllib.HandleValue.new
+  EMPTY_HANDLE_VALUE = HDLLIB::HandleValue.new
 
 
   def self.unpack_HS_ADMIN data
-    adminRecord = hdllib.AdminRecord.new
-    hdllib.Encoder.decodeAdminRecord(
+    adminRecord = HDLLIB::AdminRecord.new
+    HDLLIB::Encoder.decodeAdminRecord(
       data.to_java_bytes, 0, adminRecord
     )
     perms = adminRecord.perms.to_a
@@ -69,11 +68,11 @@ module HS
 
 
   def self.pack_HS_ADMIN data
-    raise Djinn::HTTPStatus, '500 Missing one or more required values' if
-      ! data[:adminId] ||
-      ! data[:adminIdIndex] ||
-      ! data[:perms]
-    adminRecord = hdllib.AdminRecord.new
+    raise 'Missing one or more required values' \
+      if ! data[:adminId] ||
+         ! data[:adminIdIndex] ||
+         ! data[:perms]
+    adminRecord = HDLLIB::AdminRecord.new
     adminRecord.adminId = data[:adminId].to_s.to_java_bytes
     adminRecord.adminIdIndex = data[:adminIdIndex].to_i
     perms = Hash[
@@ -88,7 +87,7 @@ module HS
       perms[perm]
     end.to_java Java::boolean
     String.from_java_bytes(
-      hdllib.Encoder.encodeAdminRecord( adminRecord )
+      HDLLIB::Encoder.encodeAdminRecord( adminRecord )
     )
   end
 
@@ -99,9 +98,9 @@ module HS
       MUTEX.lock
       begin
         unless class_variable_defined? :@@resolver
-          @@resolver = hdllib.HandleResolver.new
-          sessionSetupInfo = hdllib.SessionSetupInfo.new nil
-          clientSessionTracker = hdllib.ClientSessionTracker.new sessionSetupInfo
+          @@resolver = HDLLIB::HandleResolver.new
+          sessionSetupInfo = HDLLIB::SessionSetupInfo.new nil
+          clientSessionTracker = HDLLIB::ClientSessionTracker.new sessionSetupInfo
           @@resolver.setSessionTracker clientSessionTracker
         end
       ensure
@@ -115,10 +114,10 @@ module HS
   def self.authenticationInfo user_name
     unless AUTHINFO[user_name]
       userInfo = EPIC::USERS[user_name]
-      raise Djinn::HTTPStatus, '500' unless userInfo
+      raise "No user info found for user '#{user_name}'" unless userInfo
       MUTEX.lock
       begin
-        AUTHINFO[user_name] ||= hdllib.SecretKeyAuthenticationInfo.new(
+        AUTHINFO[user_name] ||= HDLLIB::SecretKeyAuthenticationInfo.new(
           userInfo[:handle].to_java_bytes,
           userInfo[:index],
           userInfo[:secret].to_java_bytes,
@@ -133,17 +132,17 @@ module HS
 
 
   def self.delete handle, user_name
-    request = hdllib.DeleteHandleRequest.new(
+    request = HDLLIB::DeleteHandleRequest.new(
       handle.to_java_bytes,
       authenticationInfo( user_name )
     )
     response = resolver.processRequest( request )
-    if response.kind_of? hdllib.ErrorResponse
+    if response.kind_of? HDLLIB::ErrorResponse
       case response.responseCode
-      when hdllib.AbstractResponse.RC_INSUFFICIENT_PERMISSIONS
-        raise Djinn::HTTPStatus, 'FORBIDDEN'
-      when hdllib.AbstractResponse.RC_HANDLE_NOT_FOUND
-        raise Djinn::HTTPStatus, 'NOT_FOUND'
+      when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
+        raise ReST::HTTPStatus, 'FORBIDDEN'
+      when HDLLIB::ErrorResponse::RC_HANDLE_NOT_FOUND
+        raise ReST::HTTPStatus, 'NOT_FOUND'
       else
         raise response.to_string
       end
@@ -151,42 +150,124 @@ module HS
   end
 
 
-  def self.create handle, values, user_name
-    handleValues = values.collect do
+  def self.create_handle handle, values, user_name
+    values = values.collect do
       |value|
-      retval = hdllib.HandleValue.new(
-        value.idx,
-        value.type.to_java_bytes,
-        value.data.to_java_bytes
-      )
-      retval.setTTL value.ttl
-      retval.setTTLType value.ttl_type
-      retval.setTimestamp value.timestamp
-      retval.setReferences(
-        value.refs.collect do
-          |ref|
-          hdllib.ValueReference.new(
-            ref[:handle].to_java_bytes,
-            ref[:idx]
-          )
-        end.to_java hdllib.ValueReference
-      )
-      retval.setAdminCanRead   value.admin_read
-      retval.setAdminCanWrite  value.admin_write
-      retval.setAnyoneCanRead  value.pub_read
-      retval.setAnyoneCanWrite value.pub_write
-      retval
+      value.handle_value
     end
-    request = hdllib.CreateHandleRequest.new(
+    request = HDLLIB::CreateHandleRequest.new(
       handle.to_java_bytes,
-      handleValues.to_java( hdllib.HandleValue ),
+      values.to_java( HDLLIB::HandleValue ),
       authenticationInfo( user_name )
     )
     response = resolver.processRequest( request )
-    if response.kind_of? hdllib.ErrorResponse
+    if response.kind_of? HDLLIB::ErrorResponse
       case response.responseCode
-      when hdllib.AbstractResponse.RC_INSUFFICIENT_PERMISSIONS
-        raise Djinn::HTTPStatus, 'FORBIDDEN'
+      when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
+        raise ReST::HTTPStatus, 'FORBIDDEN'
+      else
+        raise response.to_string
+      end
+    end
+  end
+
+
+  def self.update_handle handle, old_values, new_values, user_name
+    authInfo = authenticationInfo( user_name )
+    values_2b_added    = []
+    values_2b_modified = []
+    values_2b_removed  = []
+    new_values.each do
+      |new_value|
+      # If the passed handle value is equal to the existing handle value in all
+      # respects, and no timestamp is passed, then the old timestamp should be
+      # used.
+      old_value = old_values.find do
+        |old_value|
+        old_value.idx == new_value.idx
+      end
+      if ! old_value
+        values_2b_added << new_value.handle_value
+      elsif old_value and
+          old_value.type != new_value.type ||
+          old_value.data != new_value.data ||
+          old_value.ttl_type != new_value.ttl_type ||
+          old_value.ttl != new_value.ttl ||
+          old_value.refs.any? do
+              |ref1|
+              new_value.refs.none? do
+                |ref2|
+                ref1[:idx]    == ref2[:idx] &&
+                ref1[:handle] == ref2[:handle]
+              end # new_value.refs.any? do
+            end || #old_value.refs.all? do
+          new_value.refs.any? do
+              |ref1|
+              old_value.refs.none? do
+                |ref2|
+                ref1[:idx]    == ref2[:idx] &&
+                ref1[:handle] == ref2[:handle]
+              end # old_value.refs.any?
+            end # new_value.refs.all? do
+        values_2b_modified << new_value.handle_value
+      end
+    end
+    old_values.each do
+      |old_value|
+      if new_values.none? { |new_value| new_value.idx == old_value.idx }
+        values_2b_removed << old_value.idx
+      end
+    end
+    requests = []
+    if ! values_2b_added.empty?
+      requests << HDLLIB::AddValueRequest.new(
+        handle.to_java_bytes,
+        values_2b_added.to_java( HDLLIB::HandleValue ),
+        authenticationInfo( user_name )
+      )
+    end
+    if ! values_2b_modified.empty?
+      requests << HDLLIB::ModifyValueRequest.new(
+        handle.to_java_bytes,
+        values_2b_modified.to_java( HDLLIB::HandleValue ),
+        authenticationInfo( user_name )
+      )
+    end
+    if ! values_2b_removed.empty?
+      requests << HDLLIB::RemoveValueRequest.new(
+        handle.to_java_bytes,
+        values_2b_removed.to_java( Java::int ),
+        authenticationInfo( user_name )
+      )
+    end
+    requests.each do
+      |request|
+      response = resolver.processRequest( request )
+      if response.kind_of? HDLLIB::ErrorResponse
+        case response.responseCode
+        when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
+          raise ReST::HTTPStatus, 'FORBIDDEN'
+        else
+          raise response.to_string
+        end
+      end
+    end
+  end
+
+
+  def self.delete_handle handle, user_name
+    authInfo = authenticationInfo( user_name )
+    request = HDLLIB::DeleteHandleRequest.new(
+      handle.to_java_bytes,
+      authInfo
+    )
+    response = resolver.processRequest( request )
+    if response.kind_of? HDLLIB::ErrorResponse
+      case response.responseCode
+      when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
+        raise ReST::HTTPStatus, 'FORBIDDEN'
+      when HDLLIB::ErrorResponse::RC_HANDLE_NOT_FOUND
+        raise ReST::HTTPStatus, 'NOT_FOUND'
       else
         raise response.to_string
       end
@@ -195,44 +276,4 @@ module HS
 
 
 end # module HS
-
-
-# :category: Deprecated
-class CurrentUser
-
-  @@resolvers = {}
-  @@authInfo  = {}
-
-  def self.resolver(p_handle = HANDLE, p_idx = IDX)
-    id = "#{p_idx}:#{p_handle}"
-    return @@resolvers[id] if @@resolvers[id]
-
-    @@resolvers[id] = hdllib.HandleResolver.new
-    sessionTracker  = hdllib.ClientSessionTracker.new
-    @@authInfo[id]  = hdllib.PublicKeyAuthenticationInfo.new(
-      p_handle.to_java_bytes,
-      p_idx,
-      hdllib.Util.getPrivateKeyFromBytes(
-        hdllib.Util.decrypt(
-          hdllib.Util.getBytesFromFile('secrets/' + id.gsub(/\W+/, '_')),
-          nil
-        ),
-        0
-      )
-    )
-    sessionInfo = hdllib.SessionSetupInfo.new(@@authInfo[id])
-    #sessionInfo.encrypted = true
-    sessionTracker.setSessionSetupInfo(sessionInfo)
-    @@resolvers[id].setSessionTracker(sessionTracker)
-    @@resolvers[id]
-  end
-
-  def self.authInfo(p_handle = HANDLE, p_idx = IDX)
-    id = "#{p_idx}:#{p_handle}"
-    return @@authInfo[id]
-  end
-
-end # class CurrentUser
-
-
 end # module EPIC

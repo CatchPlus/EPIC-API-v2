@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
-require './epic_collection.rb'
-require './epic_sequel.rb'
-require './epic_hs.rb'
+require 'epic_collection.rb'
+require 'epic_sequel.rb'
+require 'epic_hs.rb'
 require 'base64'
 require 'time'
 require 'json'
 # By default, the json gem uses the +Ext+ parser and generator, which uses a
 # fast Java implementation. We use the +Pure+ parser and generator, because it
-# seems Unicode characters better. This is strange, as these two implementations
-# should behave identically.
+# seems to handle Unicode characters better. This is strange, as these two
+# implementations should behave identically.
 require 'json/pure'
 
 module EPIC
@@ -37,36 +37,52 @@ class Handle < Resource
     'text/html; charset=UTF-8' => 1,
     'text/xml; charset=UTF-8' => 1,
     'application/xml; charset=UTF-8' => 1,
-    'application/json; charset=UTF-8' => 0.5,
-    'application/x-json; charset=UTF-8' => 0.5
+    'application/json' => 0.5,
+    'application/x-json' => 0.5
   }
 
 
-  attr_reader :prefix, :suffix, :handle, :handle_encoded, :values
+  # The prefix of this Handle
+  # @return [String]
+  attr_reader :prefix
+
+  # The suffix of this Handle
+  # @return [String]
+  attr_reader :suffix
+
+  # The entire handle, {#prefix} <tt>"/"</tt> {#suffix}
+  # @return [String]
+  attr_reader :handle
+
+  # The URI-encoded handle as it was received by the server.
+  # @return [String]
+  attr_reader :handle_encoded
 
 
-=begin rdoc
-[handleValues]
-  Defaults to +nil+ if unspecified, causing the Handle Values to be read from
-  the database. If you want to create a new Handle without any values, pass an
-  empty hash +{}+.
-=end
-  def initialize path, handleValues = nil
+  def initialize path, handle_values = nil
     super path
-    raise Djinn::HTTPStatus, '500' unless
-      matches = %r{([^/]+)/([^/]+)\z}.match(path)
+    raise "Unexpected path: #{path}" \
+      unless matches = %r{([^/]+)/([^/]+)\z}.match(path)
     @suffix = matches[2].unescape_path
     @prefix = matches[1].unescape_path
     @handle = @prefix + '/' + @suffix
     @handle_encoded = matches[0]
-    handleValues ||= DB.instance.all_handle_values(self.handle)
-    @values = handleValues.collect do
-      |row|
-      HandleValue.new row
-    end
+    self.values handle_values if handle_values
   end
 
 
+  # @!attribute values [r]
+  # @param dbrows [Array<Hash>] only used by {#initialize}. This is an
+  #   implementation detail.
+  # @return [ Array<HandleValue> ]
+  def values dbrows = nil
+    @values ||= (
+      dbrows || DB.instance.all_handle_values(self.handle)
+    ).collect { |row| HandleValue.new row }
+  end
+
+
+  # @see ReST::Resource#do_Method
   def do_GET request, response
     bct = request.best_content_type CONTENT_TYPES
     response.header['Content-Type'] = bct
@@ -80,6 +96,8 @@ class Handle < Resource
   end
 
 
+  # Handles an HTTP/1.1 PUT request.
+  # @see ReST::Resource#do_METHOD
   def do_PUT request, response
     case request.media_type
     when 'application/json', 'application/x-json'
@@ -89,14 +107,14 @@ class Handle < Resource
           :symbolize_names => true
         )
       rescue
-        raise Djinn::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
+        raise ReST::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
       end # begin
     else
-      raise Djinn::HTTPStatus, 'UNSUPPORTED_MEDIA_TYPE application/json'
+      raise ReST::HTTPStatus, 'UNSUPPORTED_MEDIA_TYPE application/json'
     end # case request.media_type
-    raise Djinn::HTTPStatus, 'BAD_REQUEST Array expected' \
+    raise ReST::HTTPStatus, 'BAD_REQUEST Array expected' \
       unless handle_values_in.kind_of? Array
-    values = handle_values_in.collect do
+    new_values = handle_values_in.collect do
       |handle_value_in|
       handle_value = HandleValue.new
       handle_value.idx = handle_value_in[:idx].to_i \
@@ -112,7 +130,7 @@ class Handle < Resource
         handle_value.parsed_data = handle_value_in[:parsed_data]
         unless data == handle_value.data ||
                parsed_data == handle_value.parsed_data
-          raise Djinn::HTTPStatus, 'BAD_REQUEST Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
+          raise ReST::HTTPStatus, 'BAD_REQUEST Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
         end # unless
       elsif handle_value_in.key?( :parsed_data )
         handle_value.parsed_data = handle_value_in[:parsed_data]
@@ -137,64 +155,49 @@ class Handle < Resource
         if handle_value_in.key? :pub_read
       handle_value.pub_write = !!handle_value_in[:pub_write] \
         if handle_value_in.key? :pub_write
-      # If the passed handle value is equal to the existing handle value in all
-      # respects, and no timestamp is passed, then the old timestamp should be
-      # used.
-      if handle_value_in.key? :timestamp
-        handle_value.timestamp = handle_value_in[:timestamp].to_i
-      else
-        current_value = @values.find do
-          |value|
-          value.idx == handle_value.idx &&
-          value.type == handle_value.type &&
-          value.data == handle_value.data &&
-          value.ttl_type == handle_value.ttl_type &&
-          value.ttl == handle_value.ttl &&
-          value.refs.all? do
-            |ref1|
-            handle_value.refs.any? do
-              |ref2|
-              ref1[:idx]    == ref2[:idx] &&
-              ref1[:handle] == ref2[:handle]
-            end # handle_value.refs.any? do
-          end && #value.refs.all? do
-          handle_value.refs.all? do
-            |ref1|
-            value.refs.any? do
-              |ref2|
-              ref1[:idx]    == ref2[:idx] &&
-              ref1[:handle] == ref2[:handle]
-            end # value.refs.any?
-          end # handle_value.refs.all? do
-        end
-        if current_value
-          handle_value.timestamp = current_value.timestamp
-        end
-      end
-      $stderr.puts handle_value.inspect
       handle_value
     end # values = handle_values_in.collect do
-    self.class.enforce_proper_indexes values
-    self.class.enforce_admin_record values, request.env['REMOTE_USER']
-    if self.empty?
-      EPIC::HS.create(self.handle, values, request.env['REMOTE_USER'])
-      @values = values
-      raise Djinn::HTTPStatus, 'CREATED ' + self.path
-    else
-      EPIC::HS.delete(self.handle, request.env['REMOTE_USER'])
-      EPIC::HS.create(self.handle, values, request.env['REMOTE_USER'])
-      @values = values
-      response.status = status_code(:no_content)
+    self.class.enforce_proper_indexes new_values
+    self.class.enforce_admin_record new_values, request.env['REMOTE_USER']
+    self.lock
+    begin
+      @values = nil
+      if self.empty?
+        HS.create_handle(self.handle, new_values, request.env['REMOTE_USER'])
+        @values = nil
+        raise ReST::HTTPStatus, 'CREATED ' + self.path
+      else
+        HS.update_handle(self.handle, self.values, new_values, request.env['REMOTE_USER'])
+        @values = nil
+        response.status = status_code(:no_content)
+      end
+    ensure
+      self.unlock
     end
   end
 
 
+  # @see ReST::Resource#do_Method
+  def do_DELETE request, response
+    HS.delete_handle self.handle, request.env['REMOTE_USER']
+    @values = nil
+    response.status = status_code(:no_content)
+  end
+
+
+  # Make sure each value has a proper, unique index.
+  #
+  # Clients may upload a set of handle values without indexes. If that happens,
+  # {#do_PUT} gives these handles the default index. This method makes sure each
+  # handle value is properly indexed.
+  # @param values [Array<HandleValue>]
+  # @return [Array<HandleValue>] values
   def self.enforce_proper_indexes values
     all_indexes = []
     values.each do
       |value|
       next if HS::EMPTY_HANDLE_VALUE.getIndex == value.idx
-      raise( Djinn::HTTPStatus, "BAD_REQUEST Multiple values with index #{value.idx}" ) \
+      raise( ReST::HTTPStatus, "BAD_REQUEST Multiple values with index #{value.idx}" ) \
         if all_indexes.member? value.idx
       all_indexes << value.idx
     end
@@ -210,6 +213,10 @@ class Handle < Resource
   end
 
 
+  # Adds an +HS_ADMIN+ value to a set of values if there isn't yet.
+  # @param values [Array<HandleValue>]
+  # @param user_name [String]
+  # @return [Array<HandleValue>] values
   def self.enforce_admin_record values, user_name
     unless values.any? { |v| 'HS_ADMIN' === v.type }
       idx = 100
@@ -259,15 +266,16 @@ class Handle < Resource
   end
 
 
+  # @return [ Array< Hash > ]
   def to_a
-    @values.sort { |a,b| a.idx <=> b.idx }.collect {
+    self.values.sort_by { |v| v.idx }.collect {
       |v|
       {
         :idx => v.idx.to_i,
         :type => v.type.to_s,
         :parsed_data => v.parsed_data,
         :data => Base64.encode64(v.data).chomp,
-        :timestamp => v.timestamp.to_i, #rfc2822(Time.at(v.timestamp)),
+        :timestamp => v.timestamp.to_i,
         :ttl_type => v.ttl_type.to_i,
         :ttl => v.ttl.to_i,
         :refs => v.refs.collect { |ref| ref[:idx].to_s + ':' + ref[:handle] },
@@ -280,9 +288,42 @@ class Handle < Resource
   end
 
 
+  # @return [Boolean]
+  # @see ReST::Resource#empty?
   def empty?
-    @values.empty?
+    self.values.empty?
   end
+
+
+  # @return [Time]
+  # @see ReST::Resource#last_modified
+  def last_modified
+    [
+      Time.at(
+        self.values.reduce(0) do
+          |memo, value|
+          value.timestamp > memo ? value.timestamp : memo
+        end
+      ),
+      false # to indicate that this is _not_ a strong validator.
+    ]
+  end
+
+
+  # @return [String]
+  # @see ReST::Resource#etag
+  def etag
+    retval = self.values.sort_by do
+      |value| value.idx
+    end.reduce(Digest::MD5.new) do
+      |digest, value|
+      digest << value.idx.inspect << value.type.inspect << value.data.inspect <<
+        value.refs.inspect
+    end.to_s
+    retval = [ retval ].pack('H*')
+    'W/"' + Base64.strict_encode64(retval) + '"'
+  end
+
 
 end # class Handle
 
