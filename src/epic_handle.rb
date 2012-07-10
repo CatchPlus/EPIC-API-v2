@@ -1,17 +1,17 @@
 =begin License
-Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+  Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+      http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 =end
 
 require 'epic_collection.rb'
@@ -25,6 +25,7 @@ require 'json'
 # seems to handle Unicode characters better. This is strange, as these two
 # implementations should behave identically.
 require 'json/pure'
+
 
 module EPIC
 
@@ -217,6 +218,8 @@ class Handle < Resource
   # @param values [Array<HandleValue>]
   # @param user_name [String]
   # @return [Array<HandleValue>] values
+  # @todo I found a method {GenericHSAdapter#createAdminValue} in Java that
+  #   does exactly what we need! Use that instead! ---PvB
   def self.enforce_admin_record values, user_name
     unless values.any? { |v| 'HS_ADMIN' === v.type }
       idx = 100
@@ -317,11 +320,20 @@ class Handle < Resource
       |value| value.idx
     end.reduce(Digest::MD5.new) do
       |digest, value|
-      digest << value.idx.inspect << value.type.inspect << value.data.inspect <<
-        value.refs.inspect
+      digest <<
+        value.idx.inspect <<
+        value.type.inspect <<
+        value.data.inspect <<
+        value.refs.inspect <<
+        value.ttl.inspect <<
+        value.ttl_type.inspect <<
+        value.admin_read.inspect <<
+        value.admin_write.inspect <<
+        value.pub_read.inspect <<
+        value.pub_write.inspect
     end.to_s
     retval = [ retval ].pack('H*')
-    'W/"' + Base64.strict_encode64(retval) + '"'
+    '"' + Base64.strict_encode64(retval)[0..-3] + '"'
   end
 
 

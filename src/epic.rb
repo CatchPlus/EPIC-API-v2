@@ -1,4 +1,4 @@
-=begin rdoc
+=begin License
   Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
   
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,11 +12,6 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-
-The project is hosted at GitHub, as EPIC-API-v2[http://github.com/CatchPlus/EPIC-API-v2]
-
-=== Links
-* {Installation guide}[rdoc-ref:INSTALL.rdoc]
 =end
 
 
@@ -34,25 +29,42 @@ require 'epic_directory.rb'
 require 'singleton'
 
 
-# The namespace for everything related to the EPIC Web Service.
+=begin rdoc
+@todo Documentation
+=end
 module EPIC
 
 
-# Like every Singleton, this class must be thread safe!
+=begin
+Resource Factory for all our ReSTful resources.
+
+{ReST::Server} requires a {ReST::Server#resource_factory resource factory}. This
+singleton class implements EPIC's resource factory.
+
+Like every Singleton in a multi-threaded environment, this class must be thread safe!
+@todo Move this class to a separate file? Not needed quite yet...
+=end
 class ResourceFactory
+
 
   include Singleton
 
 
-  def resource_cache
-    ReST::Request.current.env[:epic_resource_cache] ||= Hash.new
-  end
-  private :resource_cache
-
+=begin
+Can be called by tainted resources, to be removed from the cache.
+@return [self]
+=end
   def uncache path
     resource_cache.delete path.to_s.unslashify
+    self
   end
 
+
+=begin
+@param path [#to_s] the URI-encoded path to the resource.
+@return [Resource, nil]
+@see ReST::Server#resource_factory for details
+=end
   def [] path
     path = path.to_s.unslashify
     cached = resource_cache[path]
@@ -82,6 +94,21 @@ class ResourceFactory
       false
     end
   end
+
+
+  private
+
+
+=begin
+For performance, this {ResourceFactory} maintains a cache of
+{EPIC::Resource Resources} it has produced earlier <em>within this same
+request.</em>
+@return [Hash< unslashified_path => resource_object >]
+=end
+  def resource_cache
+    ReST::Request.current.env[:epic_resource_cache] ||= Hash.new
+  end
+
 
 end # class ResourceFactory
 

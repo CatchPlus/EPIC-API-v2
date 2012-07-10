@@ -1,17 +1,17 @@
 =begin License
-Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+  Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+      http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 =end
 
 
@@ -69,9 +69,12 @@ module HS
 
   def self.pack_HS_ADMIN data
     raise 'Missing one or more required values' \
-      if ! data[:adminId] ||
+      if ! data.kind_of?( Hash ) ||
+         ! data[:adminId] ||
          ! data[:adminIdIndex] ||
-         ! data[:perms]
+         ! data[:perms] ||
+         ! data[:perms].kind_of?( Hash ) ||
+         ! data[:perms].keys.all? { |k| PERMS_BY_S[k] }
     adminRecord = HDLLIB::AdminRecord.new
     adminRecord.adminId = data[:adminId].to_s.to_java_bytes
     adminRecord.adminIdIndex = data[:adminIdIndex].to_i
@@ -84,7 +87,7 @@ module HS
     ]
     adminRecord.perms = PERMS_BY_I.values.collect do
       |perm|
-      perms[perm]
+      !!perms[perm]
     end.to_java Java::boolean
     String.from_java_bytes(
       HDLLIB::Encoder.encodeAdminRecord( adminRecord )
@@ -92,19 +95,51 @@ module HS
   end
 
 
+  def self.unpack_HS_VLIST data
+    vlist = HDLLIB::Encoder.decodeValueReferenceList(
+      data.to_java_bytes, 0
+    )
+    vlist.to_a.collect do
+      |ref|
+      { :idx => ref.index, :handle => String.from_java_bytes( ref.handle ) }
+    end
+  end
+
+
+  def self.pack_HS_VLIST data
+    raise 'Bad HS_VLIST data.' \
+      if ! data.kind_of?( Array ) ||
+         ! data.all? {
+           |ref|
+           ref.kind_of?(Hash) &&
+           ref[:idx] &&
+           ref[:idx].respond_to?(:to_i) &&
+           ref[:handle] &&
+           ref[:handle].respond_to?(:to_s)
+         }
+    data = data.collect do
+      |ref|
+      HS::HDLLIB::ValueReference.new(
+        ref[:handle].to_s.to_java_bytes,
+        ref[:idx].to_i
+      )
+    end.to_java HS::HDLLIB::ValueReference
+    String.from_java_bytes(
+      HDLLIB::Encoder.encodeValueReferenceList( data )
+    )
+  end
+
+
   # HandleResolver should be thread safe, so there's only one of it.
   def self.resolver
     unless class_variable_defined? :@@resolver
-      MUTEX.lock
-      begin
+      MUTEX.synchronize do
         unless class_variable_defined? :@@resolver
           @@resolver = HDLLIB::HandleResolver.new
           sessionSetupInfo = HDLLIB::SessionSetupInfo.new nil
           clientSessionTracker = HDLLIB::ClientSessionTracker.new sessionSetupInfo
           @@resolver.setSessionTracker clientSessionTracker
         end
-      ensure
-        MUTEX.unlock
       end
     end
     @@resolver
@@ -115,16 +150,13 @@ module HS
     unless AUTHINFO[user_name]
       userInfo = EPIC::USERS[user_name]
       raise "No user info found for user '#{user_name}'" unless userInfo
-      MUTEX.lock
-      begin
+      MUTEX.synchronize do
         AUTHINFO[user_name] ||= HDLLIB::SecretKeyAuthenticationInfo.new(
           userInfo[:handle].to_java_bytes,
           userInfo[:index],
           userInfo[:secret].to_java_bytes,
           true
         )
-      ensure
-        MUTEX.unlock
       end
     end
     AUTHINFO[user_name]
