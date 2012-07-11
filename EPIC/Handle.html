@@ -1,0 +1,1908 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: EPIC::Handle
+  
+    &mdash; EPIC
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (H)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../EPIC.html" title="EPIC (module)">EPIC</a></span></span>
+     &raquo; 
+    <span class="title">Handle</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: EPIC::Handle
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resource</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resource</a></span></li>
+          
+            <li class="next">EPIC::Handle</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">src/epic_handle.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Handle/JSON.html" title="EPIC::Handle::JSON (class)">JSON</a></span>, <span class='object_link'><a href="Handle/XHTML.html" title="EPIC::Handle::XHTML (class)">XHTML</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="CONTENT_TYPES-constant" class="">CONTENT_TYPES =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>application/xhtml+xml; charset=UTF-8</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>text/html; charset=UTF-8</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>text/xml; charset=UTF-8</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>application/xml; charset=UTF-8</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>application/json</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='float'>0.5</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>application/x-json</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='float'>0.5</span>
+<span class='rbrace'>}</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+  
+  
+  <h3 class="inherited">Constants inherited
+     from <span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resource</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Resource.html#GLOBAL_LOCK_HASH-constant" title="EPIC::Resource::GLOBAL_LOCK_HASH (constant)">Resource::GLOBAL_LOCK_HASH</a></span>, <span class='object_link'><a href="Resource.html#GLOBAL_LOCK_MUTEX-constant" title="EPIC::Resource::GLOBAL_LOCK_MUTEX (constant)">Resource::GLOBAL_LOCK_MUTEX</a></span></p>
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#handle-instance_method" title="#handle (instance method)">- (String) <strong>handle</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The entire handle, <span class='object_link'><a href="#prefix-instance_method" title="EPIC::Handle#prefix (method)">#prefix</a></span> <tt>&quot;/&quot;</tt> <span class='object_link'><a href="#suffix-instance_method" title="EPIC::Handle#suffix (method)">#suffix</a></span>.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#handle_encoded-instance_method" title="#handle_encoded (instance method)">- (String) <strong>handle_encoded</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The URI-encoded handle as it was received by the server.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#prefix-instance_method" title="#prefix (instance method)">- (String) <strong>prefix</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The prefix of this Handle.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#suffix-instance_method" title="#suffix (instance method)">- (String) <strong>suffix</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The suffix of this Handle.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#values-instance_method" title="#values (instance method)">- (Array&lt;HandleValue&gt;) <strong>values</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes included from <span class='object_link'><a href="../ReST/Resource.html" title="ReST::Resource (module)">ReST::Resource</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../ReST/Resource.html#path-instance_method" title="ReST::Resource#path (method)">#path</a></span></p>
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enforce_admin_record-class_method" title="enforce_admin_record (class method)">+ (Array&lt;HandleValue&gt;) <strong>enforce_admin_record</strong>(values, user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Adds an <tt>HS_ADMIN</tt> value to a set of values if there isn&#8217;t
+yet.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enforce_proper_indexes-class_method" title="enforce_proper_indexes (class method)">+ (Array&lt;HandleValue&gt;) <strong>enforce_proper_indexes</strong>(values) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Make sure each value has a proper, unique index.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#do_DELETE-instance_method" title="#do_DELETE (instance method)">- (Object) <strong>do_DELETE</strong>(request, response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#do_GET-instance_method" title="#do_GET (instance method)">- (Object) <strong>do_GET</strong>(request, response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#do_PUT-instance_method" title="#do_PUT (instance method)">- (Object) <strong>do_PUT</strong>(request, response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Handles an HTTP/1.1 PUT request.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#empty%3F-instance_method" title="#empty? (instance method)">- (Boolean) <strong>empty?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#etag-instance_method" title="#etag (instance method)">- (String) <strong>etag</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Handle) <strong>initialize</strong>(path, handle_values = nil) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of Handle.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#last_modified-instance_method" title="#last_modified (instance method)">- (Time) <strong>last_modified</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_a-instance_method" title="#to_a (instance method)">- (Array&lt; Hash &gt;) <strong>to_a</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resource</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Resource.html#lock-instance_method" title="EPIC::Resource#lock (method)">#lock</a></span>, <span class='object_link'><a href="Resource.html#lock-class_method" title="EPIC::Resource.lock (method)">lock</a></span>, <span class='object_link'><a href="Resource.html#unlock-instance_method" title="EPIC::Resource#unlock (method)">#unlock</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../ReST/Resource.html" title="ReST::Resource (module)">ReST::Resource</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../ReST/Resource.html#do_HEAD-instance_method" title="ReST::Resource#do_HEAD (method)">#do_HEAD</a></span>, <span class='object_link'><a href="../ReST/Resource.html#do_METHOD-instance_method" title="ReST::Resource#do_METHOD (method)">#do_METHOD</a></span>, <span class='object_link'><a href="../ReST/Resource.html#do_OPTIONS-instance_method" title="ReST::Resource#do_OPTIONS (method)">#do_OPTIONS</a></span>, <span class='object_link'><a href="../ReST/Resource.html#http_GET-instance_method" title="ReST::Resource#http_GET (method)">#http_GET</a></span>, <span class='object_link'><a href="../ReST/Resource.html#http_HEAD-instance_method" title="ReST::Resource#http_HEAD (method)">#http_HEAD</a></span>, <span class='object_link'><a href="../ReST/Resource.html#http_PUT-instance_method" title="ReST::Resource#http_PUT (method)">#http_PUT</a></span>, <span class='object_link'><a href="../ReST/Resource.html#http_methods-instance_method" title="ReST::Resource#http_methods (method)">#http_methods</a></span></p>
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="EPIC::Handle (class)">Handle</a></span></tt>) <strong>initialize</strong>(path, handle_values = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of Handle
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 63</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_handle_values'>handle_values</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>super</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unexpected path: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> \
+    <span class='kw'>unless</span> <span class='id identifier rubyid_matches'>matches</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>([^/]+)/([^/]+)\z</span><span class='regexp_end'>}</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='ivar'>@suffix</span> <span class='op'>=</span> <span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_unescape_path'>unescape_path</span>
+  <span class='ivar'>@prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_unescape_path'>unescape_path</span>
+  <span class='ivar'>@handle</span> <span class='op'>=</span> <span class='ivar'>@prefix</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='ivar'>@suffix</span>
+  <span class='ivar'>@handle_encoded</span> <span class='op'>=</span> <span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span> <span class='id identifier rubyid_handle_values'>handle_values</span> <span class='kw'>if</span> <span class='id identifier rubyid_handle_values'>handle_values</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="handle-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>handle</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+The entire handle, <span class='object_link'><a href="#prefix-instance_method" title="EPIC::Handle#prefix (method)">#prefix</a></span> <tt>&quot;/&quot;</tt> <span class='object_link'><a href="#suffix-instance_method" title="EPIC::Handle#suffix (method)">#suffix</a></span>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_handle'>handle</span>
+  <span class='ivar'>@handle</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="handle_encoded-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>handle_encoded</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+The URI-encoded handle as it was received by the server.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_handle_encoded'>handle_encoded</span>
+  <span class='ivar'>@handle_encoded</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="prefix-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>prefix</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+The prefix of this Handle
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 48</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_prefix'>prefix</span>
+  <span class='ivar'>@prefix</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="suffix-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>suffix</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+The suffix of this Handle
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 52</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_suffix'>suffix</span>
+  <span class='ivar'>@suffix</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="values-instance_method">
+  
+    - (<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>) <strong>values</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>dbrows</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+only used by <span class='object_link'><a href="#initialize-instance_method" title="EPIC::Handle#initialize (method)">#initialize</a></span>. This is an implementation detail.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+79
+80
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 79</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_values'>values</span> <span class='id identifier rubyid_dbrows'>dbrows</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@values</span> <span class='op'>||=</span> <span class='lparen'>(</span>
+    <span class='id identifier rubyid_dbrows'>dbrows</span> <span class='op'>||</span> <span class='const'>DB</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_all_handle_values'>all_handle_values</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_handle'>handle</span><span class='rparen'>)</span>
+  <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='const'>HandleValue</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="enforce_admin_record-class_method">
+  
+    + (<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>) <strong>enforce_admin_record</strong>(values, user_name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'><p>
+I found a method GenericHSAdapter#createAdminValue in Java that does
+exactly what we need! Use that instead! --PvB
+</p>
+</div>
+  </div>
+
+<p>
+Adds an <tt>HS_ADMIN</tt> value to a set of values if there isn&#8217;t
+yet.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>values</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>user_name</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+values
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 223</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_enforce_admin_record'>enforce_admin_record</span> <span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HS_ADMIN</span><span class='tstring_end'>'</span></span> <span class='op'>===</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='int'>100</span>
+    <span class='id identifier rubyid_idx'>idx</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='kw'>while</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_idx'>idx</span> <span class='op'>===</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span> <span class='rbrace'>}</span>
+    <span class='comment'># In the JAVA code for the standard CNRI adminTool, the following code can
+</span>    <span class='comment'># be found in private method +MainWindow::getDefaultAdminRecord()+:
+</span>    <span class='comment'># 
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.DELETE_HANDLE] = true;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.ADD_VALUE] = true;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.REMOVE_VALUE] = true;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.MODIFY_VALUE] = true;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.READ_VALUE] = true;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.ADD_ADMIN] = true;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.REMOVE_ADMIN] = true;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.MODIFY_ADMIN] = true;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.ADD_HANDLE] = true;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.LIST_HANDLES] = false;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.ADD_NAMING_AUTH] = false;
+</span>    <span class='comment'>#   adminInfo.perms[AdminRecord.DELETE_NAMING_AUTH] = false;
+</span>    <span class='comment'>#   return makeValueWithParams(100, Common.STD_TYPE_HSADMIN,
+</span>    <span class='comment'>#                              Encoder.encodeAdminRecord(adminInfo));
+</span>    <span class='id identifier rubyid_user_info'>user_info</span> <span class='op'>=</span> <span class='const'>EPIC</span><span class='op'>::</span><span class='const'>USERS</span><span class='lbracket'>[</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_admin_record'>admin_record</span> <span class='op'>=</span> <span class='const'>HandleValue</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='id identifier rubyid_admin_record'>admin_record</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='id identifier rubyid_idx'>idx</span>
+    <span class='id identifier rubyid_admin_record'>admin_record</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HS_ADMIN</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_admin_record'>admin_record</span><span class='period'>.</span><span class='id identifier rubyid_parsed_data'>parsed_data</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+      <span class='symbol'>:adminId</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_user_info'>user_info</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='symbol'>:adminIdIndex</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_user_info'>user_info</span><span class='lbracket'>[</span><span class='symbol'>:index</span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='symbol'>:perms</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+        <span class='symbol'>:add_handle</span>    <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:delete_handle</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:add_NA</span>        <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
+        <span class='symbol'>:delete_NA</span>     <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
+        <span class='symbol'>:modify_value</span>  <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:remove_value</span>  <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:add_value</span>     <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:read_value</span>    <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:modify_admin</span>  <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:remove_admin</span>  <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:add_admin</span>     <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:list_handles</span>  <span class='op'>=&gt;</span> <span class='kw'>false</span>
+      <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_values'>values</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_admin_record'>admin_record</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_values'>values</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="enforce_proper_indexes-class_method">
+  
+    + (<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>) <strong>enforce_proper_indexes</strong>(values) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Make sure each value has a proper, unique index.
+</p>
+<p>
+Clients may upload a set of handle values without indexes. If that happens,
+<span class='object_link'><a href="#do_PUT-instance_method" title="EPIC::Handle#do_PUT (method)">#do_PUT</a></span> gives these handles the default index. This method makes sure
+each handle value is properly indexed.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>values</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+values
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 196</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_enforce_proper_indexes'>enforce_proper_indexes</span> <span class='id identifier rubyid_values'>values</span>
+  <span class='id identifier rubyid_all_indexes'>all_indexes</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='const'>HS</span><span class='op'>::</span><span class='const'>EMPTY_HANDLE_VALUE</span><span class='period'>.</span><span class='id identifier rubyid_getIndex'>getIndex</span> <span class='op'>==</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
+    <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BAD_REQUEST Multiple values with index </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rparen'>)</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_all_indexes'>all_indexes</span><span class='period'>.</span><span class='id identifier rubyid_member?'>member?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
+    <span class='id identifier rubyid_all_indexes'>all_indexes</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_current_index'>current_index</span> <span class='op'>=</span> <span class='int'>1</span>
+  <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'>HS</span><span class='op'>::</span><span class='const'>EMPTY_HANDLE_VALUE</span><span class='period'>.</span><span class='id identifier rubyid_getIndex'>getIndex</span> <span class='op'>==</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
+    <span class='id identifier rubyid_current_index'>current_index</span> <span class='op'>=</span> <span class='id identifier rubyid_current_index'>current_index</span> <span class='op'>+</span> <span class='int'>1</span> <span class='kw'>while</span> <span class='id identifier rubyid_all_indexes'>all_indexes</span><span class='period'>.</span><span class='id identifier rubyid_member?'>member?</span> <span class='id identifier rubyid_current_index'>current_index</span>
+    <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='id identifier rubyid_current_index'>current_index</span>
+    <span class='id identifier rubyid_all_indexes'>all_indexes</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_current_index'>current_index</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_values'>values</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="do_DELETE-instance_method">
+  
+    - (<tt>Object</tt>) <strong>do_DELETE</strong>(request, response) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>ReST::Resource#do_Method</li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+182
+183
+184
+185
+186</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 182</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_do_DELETE'>do_DELETE</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='const'>HS</span><span class='period'>.</span><span class='id identifier rubyid_delete_handle'>delete_handle</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>REMOTE_USER</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='ivar'>@values</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='id identifier rubyid_status_code'>status_code</span><span class='lparen'>(</span><span class='symbol'>:no_content</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="do_GET-instance_method">
+  
+    - (<tt>Object</tt>) <strong>do_GET</strong>(request, response) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>ReST::Resource#do_Method</li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 87</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_do_GET'>do_GET</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='id identifier rubyid_bct'>bct</span> <span class='op'>=</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_best_content_type'>best_content_type</span> <span class='const'>CONTENT_TYPES</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_bct'>bct</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_bct'>bct</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>;</span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>application/json</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>application/x-json</span><span class='tstring_end'>'</span></span>
+      <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span>
+    <span class='kw'>else</span>
+      <span class='const'>XHTML</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span>
+    <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="do_PUT-instance_method">
+  
+    - (<tt>Object</tt>) <strong>do_PUT</strong>(request, response) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Handles an HTTP/1.1 PUT request.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../ReST/HTTPStatus.html" title="ReST::HTTPStatus (class)">ReST::HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../ReST/Resource.html#do_METHOD-instance_method" title="ReST::Resource#do_METHOD (method)">ReST::Resource#do_METHOD</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_do_PUT'>do_PUT</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_media_type'>media_type</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>application/json</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>application/x-json</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_handle_values_in'>handle_values_in</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span>
+        <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='comma'>,</span>
+        <span class='symbol'>:symbolize_names</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+      <span class='rparen'>)</span>
+    <span class='kw'>rescue</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>BAD_REQUEST </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='kw'>end</span> <span class='comment'># begin
+</span>  <span class='kw'>else</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>UNSUPPORTED_MEDIA_TYPE application/json</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span> <span class='comment'># case request.media_type
+</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>BAD_REQUEST Array expected</span><span class='tstring_end'>'</span></span> \
+    <span class='kw'>unless</span> <span class='id identifier rubyid_handle_values_in'>handle_values_in</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>Array</span>
+  <span class='id identifier rubyid_new_values'>new_values</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_values_in'>handle_values_in</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='op'>|</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span> <span class='op'>=</span> <span class='const'>HandleValue</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='symbol'>:idx</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='symbol'>:type</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_decode64'>decode64</span><span class='lparen'>(</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:data</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rparen'>)</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='symbol'>:data</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span> <span class='symbol'>:data</span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+       <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span> <span class='symbol'>:parsed_data</span> <span class='rparen'>)</span>
+      <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span>
+      <span class='id identifier rubyid_parsed_data'>parsed_data</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_parsed_data'>parsed_data</span>
+      <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_parsed_data'>parsed_data</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:parsed_data</span><span class='rbracket'>]</span>
+      <span class='kw'>unless</span> <span class='id identifier rubyid_data'>data</span> <span class='op'>==</span> <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span> <span class='op'>||</span>
+             <span class='id identifier rubyid_parsed_data'>parsed_data</span> <span class='op'>==</span> <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_parsed_data'>parsed_data</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>BAD_REQUEST Handle Value contains both &lt;tt&gt;data&lt;/tt&gt; and &lt;tt&gt;parsed_data&lt;/tt&gt;, and their contents are not semantically equal.</span><span class='tstring_end'>'</span></span>
+      <span class='kw'>end</span> <span class='comment'># unless
+</span>    <span class='kw'>elsif</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span> <span class='symbol'>:parsed_data</span> <span class='rparen'>)</span>
+      <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_parsed_data'>parsed_data</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:parsed_data</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span> <span class='comment'># if
+</span>    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_ttl_type'>ttl_type</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:ttl_type</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='symbol'>:ttl_type</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_ttl'>ttl</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:ttl</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='symbol'>:ttl</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_refs'>refs</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:refs</span><span class='rbracket'>]</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:refs</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Array</span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+         <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:refs</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='kw'>do</span>
+           <span class='op'>|</span><span class='id identifier rubyid_ref'>ref</span><span class='op'>|</span>
+           <span class='id identifier rubyid_ref'>ref</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Hash</span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+           <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Integer</span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+           <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>String</span> <span class='rparen'>)</span>
+         <span class='kw'>end</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_admin_read'>admin_read</span> <span class='op'>=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:admin_read</span><span class='rbracket'>]</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='symbol'>:admin_read</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_admin_write'>admin_write</span> <span class='op'>=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:admin_write</span><span class='rbracket'>]</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='symbol'>:admin_write</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_pub_read'>pub_read</span> <span class='op'>=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:pub_read</span><span class='rbracket'>]</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='symbol'>:pub_read</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_pub_write'>pub_write</span> <span class='op'>=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:pub_write</span><span class='rbracket'>]</span> \
+      <span class='kw'>if</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='symbol'>:pub_write</span>
+    <span class='id identifier rubyid_handle_value'>handle_value</span>
+  <span class='kw'>end</span> <span class='comment'># values = handle_values_in.collect do
+</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_enforce_proper_indexes'>enforce_proper_indexes</span> <span class='id identifier rubyid_new_values'>new_values</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_enforce_admin_record'>enforce_admin_record</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>REMOTE_USER</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span>
+  <span class='kw'>begin</span>
+    <span class='ivar'>@values</span> <span class='op'>=</span> <span class='kw'>nil</span>
+    <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='const'>HS</span><span class='period'>.</span><span class='id identifier rubyid_create_handle'>create_handle</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>REMOTE_USER</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='ivar'>@values</span> <span class='op'>=</span> <span class='kw'>nil</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>CREATED </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
+    <span class='kw'>else</span>
+      <span class='const'>HS</span><span class='period'>.</span><span class='id identifier rubyid_update_handle'>update_handle</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>REMOTE_USER</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='ivar'>@values</span> <span class='op'>=</span> <span class='kw'>nil</span>
+      <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='id identifier rubyid_status_code'>status_code</span><span class='lparen'>(</span><span class='symbol'>:no_content</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>ensure</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_unlock'>unlock</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="empty?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>empty?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../ReST/Resource.html#empty%3F-instance_method" title="ReST::Resource#empty? (method)">ReST::Resource#empty?</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+296
+297
+298</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 296</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="etag-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>etag</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../ReST/Resource.html#etag-instance_method" title="ReST::Resource#etag (method)">ReST::Resource#etag</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 318</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_etag'>etag</span>
+  <span class='id identifier rubyid_retval'>retval</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_digest'>digest</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='id identifier rubyid_digest'>digest</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_refs'>refs</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ttl'>ttl</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ttl_type'>ttl_type</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_admin_read'>admin_read</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_admin_write'>admin_write</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_pub_read'>pub_read</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>&lt;&lt;</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_pub_write'>pub_write</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_retval'>retval</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='id identifier rubyid_retval'>retval</span> <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_pack'>pack</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>H*</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_strict_encode64'>strict_encode64</span><span class='lparen'>(</span><span class='id identifier rubyid_retval'>retval</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='op'>-</span><span class='int'>3</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>'</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="last_modified-instance_method">
+  
+    - (<tt>Time</tt>) <strong>last_modified</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Time</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../ReST/Resource.html#last_modified-instance_method" title="ReST::Resource#last_modified (method)">ReST::Resource#last_modified</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 303</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_last_modified'>last_modified</span>
+  <span class='lbracket'>[</span>
+    <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='kw'>do</span>
+        <span class='op'>|</span><span class='id identifier rubyid_memo'>memo</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+        <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_timestamp'>timestamp</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_memo'>memo</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_timestamp'>timestamp</span> <span class='op'>:</span> <span class='id identifier rubyid_memo'>memo</span>
+      <span class='kw'>end</span>
+    <span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='kw'>false</span> <span class='comment'># to indicate that this is _not_ a strong validator.
+</span>  <span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_a-instance_method">
+  
+    - (<tt>Array&lt; Hash &gt;</tt>) <strong>to_a</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt; Hash &gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_handle.rb', line 273</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_a'>to_a</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span>
+    <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+    <span class='lbrace'>{</span>
+      <span class='symbol'>:idx</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span>
+      <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+      <span class='symbol'>:parsed_data</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_parsed_data'>parsed_data</span><span class='comma'>,</span>
+      <span class='symbol'>:data</span> <span class='op'>=&gt;</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_encode64'>encode64</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='comma'>,</span>
+      <span class='symbol'>:timestamp</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span>
+      <span class='symbol'>:ttl_type</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_ttl_type'>ttl_type</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span>
+      <span class='symbol'>:ttl</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_ttl'>ttl</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span>
+      <span class='symbol'>:refs</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_refs'>refs</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ref'>ref</span><span class='op'>|</span> <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>:</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='symbol'>:admin_read</span>  <span class='op'>=&gt;</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_admin_read'>admin_read</span><span class='comma'>,</span>
+      <span class='symbol'>:admin_write</span> <span class='op'>=&gt;</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_admin_write'>admin_write</span><span class='comma'>,</span>
+      <span class='symbol'>:pub_read</span>    <span class='op'>=&gt;</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_pub_read'>pub_read</span><span class='comma'>,</span>
+      <span class='symbol'>:pub_write</span>   <span class='op'>=&gt;</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_pub_write'>pub_write</span>
+    <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 11 10:10:41 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

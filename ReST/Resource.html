@@ -1,0 +1,1372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: ReST::Resource
+  
+    &mdash; EPIC
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../ReST.html" title="ReST (module)">ReST</a></span></span>
+     &raquo; 
+    <span class="title">Resource</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: ReST::Resource
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1">Rack::Utils</dd>
+      
+    
+  
+  
+    <dt class="r2">Included in:</dt>
+    <dd class="r2"><span class='object_link'><a href="../EPIC/Resource.html" title="EPIC::Resource (class)">EPIC::Resource</a></span></dd>
+    
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">src/rest.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>
+Mixin for resources served by <span class='object_link'><a href="Server.html" title="ReST::Server (class)">Server</a></span>.
+</p>
+<p>
+<span class='object_link'><a href="Server.html" title="ReST::Server (class)">Server</a></span> helps you implement ReSTful resource objects quickly in a couple
+of ways. <span class='object_link'><a href="Server.html" title="ReST::Server (class)">Server</a></span> doesn&#8217;t require <em>any</em> methods on a resource
+object. You could safely provide <tt>Object.new</tt>, without causing an
+error. OK, your resource wouldn&#8217;t respond to any methods, but it
+wouldn&#8217;t be an error either. Classes that include this module may
+implement a method <tt>content_types</tt> for content negotiation. This
+method must return a hash of <tt>mime-type =&gt; quality</tt> pairs.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>ResourceFactory</li>
+    
+  </ul>
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#etag-instance_method" title="#etag (instance method)">- (String) <strong>etag</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  <span class="abstract note title">abstract</span>
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The ETag of this resource.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#last_modified-instance_method" title="#last_modified (instance method)">- (Array&lt;(Time, Boolean)&gt;) <strong>last_modified</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  <span class="abstract note title">abstract</span>
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Last modification of this resource.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#path-instance_method" title="#path (instance method)">- (String) <strong>path</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The path of this resource.
+</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#do_HEAD-instance_method" title="#do_HEAD (instance method)">- (void) <strong>do_HEAD</strong>(request, response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Handles a HEAD request.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#do_METHOD-instance_method" title="#do_METHOD (instance method)">- (void) <strong>do_METHOD</strong>(Request, Rack::Response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  <span class="abstract note title">abstract</span>
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+HTTP/1.1 method handler.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#do_OPTIONS-instance_method" title="#do_OPTIONS (instance method)">- (void) <strong>do_OPTIONS</strong>(request, response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Handles an OPTIONS request.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#empty%3F-instance_method" title="#empty? (instance method)">- (Boolean) <strong>empty?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Does this resource <em>exists</em>?.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#http_GET-instance_method" title="#http_GET (instance method)">- (void) <strong>http_GET</strong>(request, response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Wrapper around #do_GET.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#http_HEAD-instance_method" title="#http_HEAD (instance method)">- (void) <strong>http_HEAD</strong>(request, response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Wrapper around <span class='object_link'><a href="#do_HEAD-instance_method" title="ReST::Resource#do_HEAD (method)">#do_HEAD</a></span>.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#http_methods-instance_method" title="#http_methods (instance method)">- (Array&lt;Symbol&gt;) <strong>http_methods</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+List of all HTTP/1.1 methods implemented by this resource.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#http_PUT-instance_method" title="#http_PUT (instance method)">- (void) <strong>http_PUT</strong>(request, response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Wrapper around #do_PUT.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Resource) <strong>initialize</strong>(path) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of Resource.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="etag-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>etag</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note abstract">
+  <strong>This method is abstract.</strong>
+  <div class='inline'></div>
+</div>
+<p>
+The ETag of this resource.
+</p>
+<p>
+If your classes implement this method, then an <tt>ETag:</tt> response
+header is generated automatically when appropriate. This allows clients to
+perform conditional requests, by sending an <tt>If-Match:</tt> or
+<tt>If-None-Match:</tt> request header. These conditions are then asserted
+for you automatically.
+</p>
+<p>
+Make sure your entity tag is a properly formatted string. In ABNF:
+</p>
+<pre class="code ruby"><code>
+  entity-tag = [ &quot;W/&quot; ] quoted-string</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://tools.ietf.org/html/rfc2616#section-14.19" target="_parent" title="RFC2616 section 14.19">RFC2616 section 14.19</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 621</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="last_modified-instance_method">
+  
+    - (<tt>Array&lt;(Time, Boolean)&gt;</tt>) <strong>last_modified</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note abstract">
+  <strong>This method is abstract.</strong>
+  <div class='inline'></div>
+</div>
+<p>
+Last modification of this resource.
+</p>
+<p>
+If your classes implement this method, then a <tt>Last-Modified:</tt>
+response header is generated automatically when appropriate. This allows
+clients to perform conditional requests, by sending an
+<tt>If-Modified-Since:</tt> or <tt>If-Unmodified-Since:</tt> request
+header. These conditions are then asserted for you automatically.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;(Time, Boolean)&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The timestamp, and a flag indicating if the timestamp is a strong
+validator.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://tools.ietf.org/html/rfc2616#section-14.29" target="_parent" title="RFC2616 section 14.29">RFC2616 section 14.29</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 639</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="path-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>path</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+The path of this resource.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#initialize-instance_method" title="ReST::Resource#initialize (method)">#initialize</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+526
+527
+528</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 526</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='ivar'>@path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="do_HEAD-instance_method">
+  
+    - (<tt>void</tt>) <strong>do_HEAD</strong>(request, response) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>
+Handles a HEAD request.
+</p>
+<p>
+As a courtesy, this module implements a default handler for HEAD requests,
+which calls <span class='object_link'><a href="#do_METHOD-instance_method" title="ReST::Resource#do_METHOD (method)">#do_GET</a></span>, and then strips of the response body.
+</p>
+<p>
+If this resource implements method <tt>content_types</tt>, then
+<tt>response['Content-Type']</tt> will be set in the response object passed
+to <tt>do_GET</tt>.
+</p>
+<p>
+Feel free to override this method at will.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="HTTPStatus.html" title="ReST::HTTPStatus (class)">HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><dl>
+<dt><tt>405 Method Not Allowed</tt></dt><dd><p>
+if the resource doesn&#8217;t implement the <tt>GET</tt> method.
+</p>
+</dd>
+</dl>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 589</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_do_HEAD'>do_HEAD</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>METHOD_NOT_ALLOWED </span><span class='tstring_end'>'</span></span> <span class='op'>+</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_http_methods'>http_methods</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span> \
+    <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:do_GET</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_do_GET'>do_GET</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span>
+    <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='op'>|</span><span class='id identifier rubyid_memo'>memo</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_memo'>memo</span> <span class='op'>+</span> <span class='id identifier rubyid_bytesize'>bytesize</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="do_METHOD-instance_method">
+  
+    - (<tt>void</tt>) <strong>do_METHOD</strong>(Request, Rack::Response) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note abstract">
+  <strong>This method is abstract.</strong>
+  <div class='inline'></div>
+</div>
+<p class="note returns_void">This method returns an undefined value.</p><p>
+HTTP/1.1 method handler.
+</p>
+<p>
+To handle certain HTTP/1.1 request methods, resources must implement
+methods called <tt>do_&lt;HTTP_METHOD&gt;</tt>.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>
+Handling <tt>GET</tt> requests
+</p>
+</div></p>
+      
+      <pre class="example code"><span class='kw'>def</span> <span class='id identifier rubyid_do_GET'>do_GET</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>'</span></span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Hello world!</span><span class='tstring_end'>'</span></span> <span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    
+  </div>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="HTTPStatus.html" title="ReST::HTTPStatus (class)">HTTPStatus</a></span></tt>, <tt>RuntimeError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 507</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="do_OPTIONS-instance_method">
+  
+    - (<tt>void</tt>) <strong>do_OPTIONS</strong>(request, response) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>
+Handles an OPTIONS request.
+</p>
+<p>
+As a courtesy, this module implements a default handler for OPTIONS
+requests. It creates an <tt>Allow:</tt> header, listing all implemented
+HTTP/1.1 methods for this resource. By default, an <tt>HTTP/1.1 204 No
+Content</tt> is returned (without an entity body).
+</p>
+<p>
+Feel free to override this method at will.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="HTTPStatus.html" title="ReST::HTTPStatus (class)">HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><dl>
+<dt><tt>404 Not Found</tt></dt><dd><p>
+if this resource is empty.
+</p>
+</dd>
+</dl>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+613
+614
+615
+616
+617</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 613</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_do_OPTIONS'>do_OPTIONS</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_FOUND</span><span class='tstring_end'>'</span></span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='id identifier rubyid_status_code'>status_code</span> <span class='symbol'>:no_content</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Allow</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_http_methods'>http_methods</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>, </span><span class='tstring_end'>'</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="empty?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>empty?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Does this resource <em>exists</em>?
+</p>
+<p>
+For example, a client can <tt>PUT</tt> to a URL that doesn&#8217;t refer to
+a resource yet. In that case, your <span class='object_link'><a href="Server.html#resource_factory-instance_method" title="ReST::Server#resource_factory (method)">resource factory</a></span> can produce an empty resource to to handle the <tt>PUT</tt>
+request. <tt>HEAD</tt> and <tt>GET</tt> requests will still yield <tt>404
+Not Found</tt>.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The default implementation returns <tt>false</tt>.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+547
+548
+549</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 547</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="http_GET-instance_method">
+  
+    - (<tt>void</tt>) <strong>http_GET</strong>(request, response) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>
+Wrapper around #do_GET
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="HTTPStatus.html" title="ReST::HTTPStatus (class)">HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><dl>
+<dt><tt>404 Not Found</tt></dt><dd><p>
+if this resource is empty.
+</p>
+</dd>
+<dt><tt>405 Method Not Allowed</tt></dt><dd><p>
+if the resource doesn&#8217;t implement the <tt>GET</tt> method.
+</p>
+</dd>
+</dl>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+674
+675
+676
+677
+678
+679</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 674</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_http_GET'>http_GET</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_FOUND</span><span class='tstring_end'>'</span></span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>METHOD_NOT_ALLOWED </span><span class='tstring_end'>'</span></span> <span class='op'>+</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_http_methods'>http_methods</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span> \
+    <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:do_GET</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_do_GET'>do_GET</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="http_HEAD-instance_method">
+  
+    - (<tt>void</tt>) <strong>http_HEAD</strong>(request, response) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>
+Wrapper around <span class='object_link'><a href="#do_HEAD-instance_method" title="ReST::Resource#do_HEAD (method)">#do_HEAD</a></span>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="HTTPStatus.html" title="ReST::HTTPStatus (class)">HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><dl>
+<dt><tt>404 Not Found</tt></dt><dd><p>
+if this resource is empty.
+</p>
+</dd>
+</dl>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+660
+661
+662
+663</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 660</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_http_HEAD'>http_HEAD</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_FOUND</span><span class='tstring_end'>'</span></span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_do_HEAD'>do_HEAD</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="http_methods-instance_method">
+  
+    - (<tt>Array&lt;Symbol&gt;</tt>) <strong>http_methods</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+List of all HTTP/1.1 methods implemented by this resource.
+</p>
+<p>
+This works by inspecting all the <span class='object_link'><a href="#do_METHOD-instance_method" title="ReST::Resource#do_METHOD (method)">#do_METHOD</a></span> methods this object
+implements.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 558</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_http_methods'>http_methods</span>
+  <span class='kw'>unless</span> <span class='ivar'>@djinn_resource_http_methods</span>
+    <span class='ivar'>@djinn_resource_http_methods</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_public_methods'>public_methods</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
+      <span class='op'>|</span><span class='id identifier rubyid_public_method'>public_method</span><span class='op'>|</span>
+      <span class='kw'>if</span> <span class='lparen'>(</span> <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\Ado_([A-Z]+)\z</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span> <span class='id identifier rubyid_public_method'>public_method</span> <span class='rparen'>)</span> <span class='rparen'>)</span>
+        <span class='ivar'>@djinn_resource_http_methods</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='ivar'>@djinn_resource_http_methods</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='symbol'>:HEAD</span> \
+      <span class='kw'>unless</span> <span class='ivar'>@djinn_resource_http_methods</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='symbol'>:GET</span>
+  <span class='kw'>end</span>
+  <span class='ivar'>@djinn_resource_http_methods</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="http_PUT-instance_method">
+  
+    - (<tt>void</tt>) <strong>http_PUT</strong>(request, response) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>
+Wrapper around #do_PUT
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="HTTPStatus.html" title="ReST::HTTPStatus (class)">HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><dl>
+<dt><tt>405 Method Not Allowed</tt></dt><dd><p>
+if the resource doesn&#8217;t implement the <tt>PUT</tt> method.
+</p>
+</dd>
+</dl>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+689
+690
+691
+692
+693</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 689</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_http_PUT'>http_PUT</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>METHOD_NOT_ALLOWED </span><span class='tstring_end'>'</span></span> <span class='op'>+</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_http_methods'>http_methods</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span> \
+    <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:do_PUT</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_do_PUT'>do_PUT</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="ReST::Resource (module)">Resource</a></span></tt>) <strong>initialize</strong>(path) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of Resource
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The path of this resource. This is a <tt>path-absolute</tt> as defined in
+<a href="http://tools.ietf.org/html/rfc3986#section-3.3">RFC3986, section
+3.3</a>.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#path-instance_method" title="ReST::Resource#path (method)">#path</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+532
+533
+534</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 532</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='ivar'>@path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 11 10:10:39 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

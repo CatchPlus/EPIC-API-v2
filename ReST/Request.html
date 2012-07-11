@@ -1,0 +1,1493 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: ReST::Request
+  
+    &mdash; EPIC
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../ReST.html" title="ReST (module)">ReST</a></span></span>
+     &raquo; 
+    <span class="title">Request</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: ReST::Request
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Rack::Request</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Rack::Request</li>
+          
+            <li class="next">ReST::Request</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">src/rest.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>
+Subclass of Rack::Request, augmented for ReSTful requests.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resource_factory-instance_method" title="#resource_factory (instance method)">- (#[]) <strong>resource_factory</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The resource factory for the current request.
+</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current-class_method" title="current (class method)">+ (Request) <strong>current</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The request currently being processed in the current thread.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#accept-instance_method" title="#accept (instance method)">- (Hash{media_type =&gt; quality}) <strong>accept</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Hash of acceptable media types and their qualities.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#assert_if_headers-instance_method" title="#assert_if_headers (instance method)">- (void) <strong>assert_if_headers</strong>(resource) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Assert all <tt>If-*</tt> request headers.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#best_content_type-instance_method" title="#best_content_type (instance method)">- (String) <strong>best_content_type</strong>(content_types, require_match = true) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The best media type for the response body&#8230;
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#falsy%3F-instance_method" title="#falsy? (instance method)">- (Boolean) <strong>falsy?</strong>(parameter) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>
+This method seems to be unused&#8230;
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#if_match-instance_method" title="#if_match (instance method)">- (nil, Array&lt;String&gt;) <strong>if_match</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Parses the HTTP/1.1 <tt>If-Match:</tt> header.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#if_modified_since-instance_method" title="#if_modified_since (instance method)">- (nil, Time) <strong>if_modified_since</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#if_none_match-instance_method" title="#if_none_match (instance method)">- (nil, Array&lt;String&gt;) <strong>if_none_match</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Parses the HTTP/1.1 <tt>If-None-Match:</tt> header.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#if_unmodified_since-instance_method" title="#if_unmodified_since (instance method)">- (Object) <strong>if_unmodified_since</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+# @return [nil, Time] # @see <a
+href="http://tools.ietf.org/html/rfc2616#section-14.28">tools.ietf.org/html/rfc2616#section-14.28</a>
+RFC2616, section 14.28 # @see #if_modified_since.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Request) <strong>initialize</strong>(resource_factory, *args) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of Request.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#truthy%3F-instance_method" title="#truthy? (instance method)">- (Boolean) <strong>truthy?</strong>(parameter) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>
+This method seems to be unused&#8230;
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="ReST::Request (class)">Request</a></span></tt>) <strong>initialize</strong>(resource_factory, *args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of Request
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+258
+259
+260
+261</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 258</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_resource_factory'>resource_factory</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+  <span class='kw'>super</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+  <span class='ivar'>@resource_factory</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_factory'>resource_factory</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="resource_factory-instance_method">
+  
+    - (<tt>#[]</tt>) <strong>resource_factory</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+The resource factory for the current request.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>#[]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Server.html#initialize-instance_method" title="ReST::Server#initialize (method)">Server#initialize</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+255
+256
+257</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 255</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_resource_factory'>resource_factory</span>
+  <span class='ivar'>@resource_factory</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="current-class_method">
+  
+    + (<tt><span class='object_link'><a href="" title="ReST::Request (class)">Request</a></span></tt>) <strong>current</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+The request currently being processed in the current thread.
+</p>
+<p>
+In a multi-threaded server, multiple requests can be handled at one time.
+This method returns the request object, created (and registered) by
+<span class='object_link'><a href="Server.html#call%21-instance_method" title="ReST::Server#call! (method)">Server#call!</a></span>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="ReST::Request (class)">Request</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+272
+273
+274</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 272</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span>
+  <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:djinn_request</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="accept-instance_method">
+  
+    - (<tt>Hash{media_type =&gt; quality}</tt>) <strong>accept</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Hash of acceptable media types and their qualities.
+</p>
+<p>
+This method parses the HTTP/1.1 <tt>Accept:</tt> header. If no acceptable
+media types are provided, an empty Hash is returned.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash{media_type =&gt; quality}</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 347</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_accept'>accept</span>
+  <span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>djinn.accept</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='kw'>begin</span>
+    <span class='const'>Hash</span><span class='lbracket'>[</span>
+      <span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HTTP_ACCEPT</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>,</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
+        <span class='op'>|</span><span class='id identifier rubyid_entry'>entry</span><span class='op'>|</span>
+        <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_entry'>entry</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>;</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_quality'>quality</span> <span class='op'>=</span> <span class='int'>1</span>
+        <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
+          <span class='id identifier rubyid_quality'>quality</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='lbracket'>[</span><span class='int'>2</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='kw'>if</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>q=</span><span class='tstring_end'>'</span></span>
+        <span class='rbrace'>}</span>
+        <span class='lbracket'>[</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_quality'>quality</span><span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+    <span class='rbracket'>]</span>
+  <span class='kw'>rescue</span>
+    <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="assert_if_headers-instance_method">
+  
+    - (<tt>void</tt>) <strong>assert_if_headers</strong>(resource) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'><p>
+Implement support for the <tt>If-Range:</tt> header.
+</p>
+</div>
+  </div>
+
+<p class="note returns_void">This method returns an undefined value.</p><p>
+Assert all <tt>If-*</tt> request headers.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="HTTPStatus.html" title="ReST::HTTPStatus (class)">HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+with one of the following status codes:
+</p>
+<dl>
+<dt>304 Not Modified</dt><dd></dd>
+<dt>400 Bad Request</dt><dd><p>
+Couldn&#8217;t parse one or more <tt>If-*</tt> headers, or a
+</p>
+</dd>
+</dl>
+<pre class="code ruby"><code>
+  weak validator comparison was requested for methods other than +GET+ or
+  +HEAD+.
+</code></pre>
+<dl>
+<dt>404 Not Found</dt><dd></dd>
+<dt>412 Precondition Failed</dt><dd></dd>
+<dt>501 Not Implemented</dt><dd><p>
+in case of <tt>If-Range:</tt> header.
+</p>
+</dd>
+</dl>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://tools.ietf.org/html/rfc2616#section-13.3.3" target="_parent" title="RFC2616, section 13.3.3 for details about weak and strong validator comparison.">RFC2616, section 13.3.3 for details about weak and strong validator comparison.</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 291</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_assert_if_headers'>assert_if_headers</span> <span class='id identifier rubyid_resource'>resource</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_IMPLEMENTED If-Range: request header is not supported.</span><span class='tstring_end'>'</span></span> \
+    <span class='kw'>if</span> <span class='ivar'>@env</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HTTP_IF_RANGE</span><span class='tstring_end'>'</span></span>
+  <span class='id identifier rubyid_empty'>empty</span> <span class='op'>=</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_etag'>etag</span> <span class='op'>=</span>          <span class='lparen'>(</span> <span class='op'>!</span> <span class='id identifier rubyid_empty'>empty</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:etag</span><span class='rparen'>)</span>          <span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_etag'>etag</span>          <span class='op'>:</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_last_modified'>last_modified</span> <span class='op'>=</span> <span class='lparen'>(</span> <span class='op'>!</span> <span class='id identifier rubyid_empty'>empty</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:last_modified</span><span class='rparen'>)</span> <span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_last_modified'>last_modified</span> <span class='op'>:</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_cond'>cond</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='symbol'>:match</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_if_match'>if_match</span><span class='comma'>,</span>
+    <span class='symbol'>:none_match</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_if_none_match'>if_none_match</span><span class='comma'>,</span>
+    <span class='symbol'>:modified_since</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_if_modified_since'>if_modified_since</span><span class='comma'>,</span>
+    <span class='symbol'>:unmodified_since</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_if_unmodified_since'>if_unmodified_since</span>
+  <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_allow_weak'>allow_weak</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>GET</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HEAD</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_request_method'>request_method</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_empty'>empty</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:match</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PRECONDITION_FAILED If-Match: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HTTP_IF_MATCH</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:unmodified_since</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PRECONDITION_FAILED If-Unmodified-Since: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HTTP_IF_UNMODIFIED_SINCE</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:modified_since</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_FOUND</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:none_match</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:none_match</span><span class='rbracket'>]</span> <span class='op'>===</span> <span class='id identifier rubyid_etag'>etag</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PRECONDITION_FAILED If-None-Match: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HTTP_IF_NONE_MATCH</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:match</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span> <span class='lparen'>(</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:match</span><span class='rbracket'>]</span> <span class='op'>===</span> <span class='id identifier rubyid_etag'>etag</span> <span class='rparen'>)</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PRECONDITION_FAILED If-Match: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HTTP_IF_MATCH</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:unmodified_since</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_last_modified'>last_modified</span> <span class='op'>||</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:unmodified_since</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_last_modified'>last_modified</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PRECONDITION_FAILED If-Unmodified-Since: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HTTP_IF_UNMODIFIED_SINCE</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_last_modified'>last_modified</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span> <span class='id identifier rubyid_last_modified'>last_modified</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span> <span class='id identifier rubyid_allow_weak'>allow_weak</span> <span class='op'>&amp;&amp;</span>
+            <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:unmodified_since</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_last_modified'>last_modified</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PRECONDITION_FAILED If-Unmodified-Since: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HTTP_IF_UNMODIFIED_SINCE</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>&lt;br/&gt;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Modification time is a weak validator for this resource.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:modified_since</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_last_modified'>last_modified</span> <span class='op'>||</span> <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:modified_since</span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_last_modified'>last_modified</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_MODIFIED</span><span class='tstring_end'>'</span></span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_last_modified'>last_modified</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span> <span class='id identifier rubyid_last_modified'>last_modified</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_allow_weak'>allow_weak</span> <span class='op'>&amp;&amp;</span>
+            <span class='id identifier rubyid_cond'>cond</span><span class='lbracket'>[</span><span class='symbol'>:modified_since</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_last_modified'>last_modified</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PRECONDITION_FAILED If-Modified-Since: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HTTP_IF_MODIFIED_SINCE</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>&lt;br/&gt;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
+              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Modification time is a weak validator for this resource.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="best_content_type-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>best_content_type</strong>(content_types, require_match = true) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'><p>
+This method and its documentation seem to mix <b>content type</b> and
+<b>media type</b>. I think the implementation is good, only comparing
+<b>media types</b>, so all references to <b>content types</b> should be
+removed.
+</p>
+</div>
+  </div>
+
+<p>
+The best media type for the response body&#8230;
+</p>
+<p>
+&#8230;given the client&#8217;s <tt>Accept:</tt> header(s) and the
+available representations in the server.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>content_types</span>
+      
+      
+        <span class='type'>(<tt>Hash{media_type =&gt; quality}</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+indicating what media types can be provided by the server, with their
+relative qualities.
+</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>require_match</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>
+Should this method throw an <span class='object_link'><a href="HTTPStatus.html" title="ReST::HTTPStatus (class)">HTTPStatus</a></span> exception <tt>406 Not
+Acceptable</tt> if there&#8217;s no match.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="HTTPStatus.html" title="ReST::HTTPStatus (class)">HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+<tt>406 Not Acceptable</tt>
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 384</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_best_content_type'>best_content_type</span> <span class='id identifier rubyid_content_types'>content_types</span><span class='comma'>,</span> <span class='id identifier rubyid_require_match'>require_match</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_content_types'>content_types</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:last</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_accept'>accept</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_matches'>matches</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_accept'>accept</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span>
+    <span class='op'>|</span><span class='id identifier rubyid_accept_type'>accept_type</span><span class='comma'>,</span> <span class='id identifier rubyid_accept_quality'>accept_quality</span><span class='op'>|</span>
+    <span class='id identifier rubyid_content_types'>content_types</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span>
+      <span class='op'>|</span><span class='id identifier rubyid_response_type'>response_type</span><span class='comma'>,</span> <span class='id identifier rubyid_response_quality'>response_quality</span><span class='op'>|</span>
+      <span class='id identifier rubyid_mime_type'>mime_type</span> <span class='op'>=</span> <span class='id identifier rubyid_response_type'>response_type</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>;</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span>
+      <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_fnmatch'>fnmatch</span><span class='lparen'>(</span> <span class='id identifier rubyid_accept_type'>accept_type</span><span class='comma'>,</span> <span class='id identifier rubyid_mime_type'>mime_type</span> <span class='rparen'>)</span>
+        <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='lbracket'>[</span> <span class='id identifier rubyid_response_type'>response_type</span><span class='comma'>,</span> <span class='id identifier rubyid_accept_quality'>accept_quality</span> <span class='op'>*</span> <span class='id identifier rubyid_response_quality'>response_quality</span> <span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_ACCEPTABLE</span><span class='tstring_end'>'</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_require_match'>require_match</span>
+    <span class='kw'>nil</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:last</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="falsy?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>falsy?</strong>(parameter) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>
+This method seems to be unused&#8230;
+</p>
+</div></div>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+414
+415
+416
+417</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 414</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_falsy?'>falsy?</span> <span class='id identifier rubyid_parameter'>parameter</span>
+  <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='const'>GET</span><span class='lbracket'>[</span><span class='id identifier rubyid_parameter'>parameter</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
+  <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A(0|f(alse)?|n(o)?|off)\z</span><span class='regexp_end'>}i</span></span> <span class='op'>===</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="if_match-instance_method">
+  
+    - (<tt>nil</tt>, <tt>Array&lt;<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>&gt;</tt>) <strong>if_match</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Parses the HTTP/1.1 <tt>If-Match:</tt> header.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>Array&lt;<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+Actually, the returned Array is an <span class='object_link'><a href="ETagArray.html" title="ReST::ETagArray (class)">ETagArray</a></span>.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://tools.ietf.org/html/rfc2616#section-14.24" target="_parent" title="RFC2616, section 14.24">RFC2616, section 14.24</a></li>
+    
+      <li><span class='object_link'><a href="#if_none_match-instance_method" title="ReST::Request#if_none_match (method)">#if_none_match</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 427</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_if_match'>if_match</span> <span class='id identifier rubyid_none'>none</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='id identifier rubyid_header'>header</span> <span class='op'>=</span> <span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HTTP_IF_</span><span class='embexpr_beg'>#{</span> <span class='id identifier rubyid_none'>none</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NONE_</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span> <span class='rbrace'>}</span><span class='tstring_content'>MATCH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_header'>header</span>
+  <span class='id identifier rubyid_envkey'>envkey</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>djinn.if_</span><span class='embexpr_beg'>#{</span> <span class='id identifier rubyid_none'>none</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>none_</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span> <span class='rbrace'>}</span><span class='tstring_content'>match</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_retval'>retval</span> <span class='op'>=</span> <span class='const'>ETagArray</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='kw'>if</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A\s*\*\s*\z</span><span class='regexp_end'>}</span></span> <span class='op'>===</span> <span class='id identifier rubyid_header'>header</span>
+    <span class='id identifier rubyid_retval'>retval</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>*</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>elsif</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A(\s*(W/)?&quot;([^&quot;\\]|\\.)*&quot;\s*,)+\z</span><span class='regexp_end'>}m</span></span> <span class='op'>===</span> <span class='lparen'>(</span> <span class='id identifier rubyid_header'>header</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>,</span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span>
+    <span class='id identifier rubyid_header'>header</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>(?:W/)?&quot;(?:[^&quot;\\]|\\.)*&quot;</span><span class='regexp_end'>}m</span></span> <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
+      <span class='op'>|</span><span class='id identifier rubyid_etag'>etag</span><span class='op'>|</span> <span class='id identifier rubyid_retval'>retval</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_etag'>etag</span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BAD_REQUEST Couldn't parse If-</span><span class='embexpr_beg'>#{</span> <span class='id identifier rubyid_none'>none</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>None-</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span> <span class='rbrace'>}</span><span class='tstring_content'>Match: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_header'>header</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_retval'>retval</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="if_modified_since-instance_method">
+  
+    - (<tt>nil</tt>, <tt>Time</tt>) <strong>if_modified_since</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>Time</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://tools.ietf.org/html/rfc2616#section-14.25" target="_parent" title="RFC2616, section 14.25">RFC2616, section 14.25</a></li>
+    
+      <li><span class='object_link'><a href="#if_unmodified_since-instance_method" title="ReST::Request#if_unmodified_since (method)">#if_unmodified_since</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 462</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_if_modified_since'>if_modified_since</span> <span class='id identifier rubyid_unmodified'>unmodified</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='id identifier rubyid_header'>header</span> <span class='op'>=</span> <span class='ivar'>@env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HTTP_IF_</span><span class='embexpr_beg'>#{</span> <span class='id identifier rubyid_unmodified'>unmodified</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>UN</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span> <span class='rbrace'>}</span><span class='tstring_content'>MODIFIED_SINCE</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_header'>header</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_header'>header</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_httpdate'>httpdate</span><span class='lparen'>(</span> <span class='id identifier rubyid_header'>header</span> <span class='rparen'>)</span>
+  <span class='kw'>rescue</span> <span class='const'>ArgumentError</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BAD_REQUEST Couldn't parse If-</span><span class='embexpr_beg'>#{</span> <span class='id identifier rubyid_unmodified'>unmodified</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Unmodified</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Modified</span><span class='tstring_end'>'</span></span> <span class='rbrace'>}</span><span class='tstring_content'>-Since: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_header'>header</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_header'>header</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="if_none_match-instance_method">
+  
+    - (<tt>nil</tt>, <tt>Array&lt;<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>&gt;</tt>) <strong>if_none_match</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Parses the HTTP/1.1 <tt>If-None-Match:</tt> header.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>Array&lt;<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+Actually, the returned Array is an <span class='object_link'><a href="ETagArray.html" title="ReST::ETagArray (class)">ETagArray</a></span>.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://tools.ietf.org/html/rfc2616#section-14.26" target="_parent" title="RFC2616, section 14.26">RFC2616, section 14.26</a></li>
+    
+      <li><span class='object_link'><a href="#if_match-instance_method" title="ReST::Request#if_match (method)">#if_match</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+451
+452
+453</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 451</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_if_none_match'>if_none_match</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_if_match'>if_match</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="if_unmodified_since-instance_method">
+  
+    - (<tt>Object</tt>) <strong>if_unmodified_since</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+# @return [nil, Time] # @see <a
+href="http://tools.ietf.org/html/rfc2616#section-14.28">tools.ietf.org/html/rfc2616#section-14.28</a>
+RFC2616, section 14.28 # @see #if_modified_since
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+479
+480
+481</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 479</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_if_unmodified_since'>if_unmodified_since</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_if_modified_since'>if_modified_since</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="truthy?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>truthy?</strong>(parameter) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>
+This method seems to be unused&#8230;
+</p>
+</div></div>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+407
+408
+409
+410</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 407</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_truthy?'>truthy?</span> <span class='id identifier rubyid_parameter'>parameter</span>
+  <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='const'>GET</span><span class='lbracket'>[</span><span class='id identifier rubyid_parameter'>parameter</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
+  <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A(1|t(rue)?|y(es)?|on)\z</span><span class='regexp_end'>}i</span></span> <span class='op'>===</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 11 10:10:40 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

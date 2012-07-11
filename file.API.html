@@ -1,0 +1,574 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: API
+  
+    &mdash; EPIC
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: API</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>EPIC Web Service API Definition</h1>
+
+<pre class="code ruby"><code>Copyright: © 2009-2011 SARA Computing and Networking Services
+  License: Creative Commons Attribution - Share Alike 3.0 Unported
+   Status: Draft
+  Version: 0.7
+  Authors: Pieter van Beek, SARA
+           Eric Auer, MPI Nijmegen
+           Hennie Brugman, Meertens Instituut
+</code></pre>
+
+<h2>Abstract</h2>
+
+<p>This document proposes a common interface for RESTful web service implementations (simply called &quot;the interface&quot; or &quot;the API&quot; hereafter) built around the Handle System. <code>TODO @Hennie: complete this abstract. -PieterB</code></p>
+
+<h2>Introduction</h2>
+
+<p><code>TODO: @Hennie: introductie -PieterB</code></p>
+
+<p>The key words <code>MUST</code>, <code>MUST NOT</code>, <code>REQUIRED</code>, <code>SHALL</code>, <code>SHALL NOT</code>, <code>SHOULD</code>, <code>SHOULD NOT</code>, <code>RECOMMENDED</code>, <code>MAY</code>, and <code>OPTIONAL</code> in this document are to be interpreted as described in <a href="http://tools.ietf.org/html/rfc2119">RFC2119</a>.</p>
+
+<p>This document describes a <a href="http://portal.acm.org/citation.cfm?id=932295">RESTful</a> web service, using the <a href="http://tools.ietf.org/html/rfc2616">HTTP/1.1</a> application protocol. The API strictly adheres to the rules of safety and idempotence laid out in §9.1 of <a href="http://tools.ietf.org/html/rfc2616">RFC2616</a>: GET is guaranteed to be both safe and idempotent; PUT and DELETE are idempotent, but not safe; POST is neither safe nor idempotent. Extension &quot;POE&quot; offers a method to circumvent the non-idempotence of the POST method.</p>
+
+<h3>Glossary</h3>
+
+<p>For clarity end brevity, some terms in this document have a very specific meaning:</p>
+
+<p><strong>the API:</strong> the Application Programming Interface laid out in this document<br>
+<strong>server, implementation:</strong> an implementation of the API<br>
+<strong>implementor:</strong> an entity that builds an implementation the API<br>
+<strong>(service) provider:</strong> an organisation or person that operates a server as a service<br>
+<strong>client:</strong> a piece of software that interacts with a server using the API<br>
+<strong>user:</strong> an organisation or person that operates a client</p>
+
+<h2>Representation</h2>
+
+<p><a href="http://www.json.org/">JSON</a> was chosen as the primary representation of resources, that all servers MUST be able to produce and consume. Implementations may, however, be able to produce and consume more than one representation of a resource. Servers MAY be able to produce and consume additional representations, like <a href="http://www.w3.org/TR/2008/REC-xml-20081126/">XML</a> or DER-encoded <a href="http://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One">ASN.1</a>. In order to promote interoperability, implementors SHOULD publish additional representations in extension documents as explained below. This document defines one additional representations: <a href="http://www.w3.org/TR/xhtml1">XHTML</a>.</p>
+
+<p>In order to promote consistency between representations and implementations, this paragraph contains three sections:</p>
+
+<ol>
+<li><p><strong>Atomic Types</strong> describes a set of simple atomic types that can be composed into more complex data structures.</p></li>
+<li><p><strong>JSON representations</strong> describes the way in which the atomic types are to be represented in JSON.</p></li>
+<li><p><strong>Abstract Data Model</strong> describes the complete data model of the service, in terms of atomic types.</p></li>
+</ol>
+
+<h3>Abstract Types</h3>
+
+<p>The following abstract types are used in the remainder of this document:</p>
+
+<p><strong>object:</strong> an unordered set of <strong>string</strong>→<strong>value</strong>-pairs with unique <strong>strings</strong>.<br>
+<strong>value:</strong> an <strong>object, list, string, blob</strong> or <strong>number.</strong><br>
+<strong>list:</strong> an unordered list of <strong>values.</strong><br>
+<strong>string:</strong> a sequence of zero or more Unicode characters.<br>
+<strong>blob:</strong> a sequence of octets.<br>
+<strong>number:</strong> a signed integer. Servers SHOULD support infinitely large integers. Servers MUST support 64-bit signed integers from ­–2<sup>63</sup> to 2<sup>63</sup>–1 inclusive.  </p>
+
+<p>Extensions defining additional abstract types MUST specify how these types are represented in various representational formats defined in this document and registered extensions. <code>Or should extension just restrict themselves to these abstract types? ––PieterB 2012/02/20</code></p>
+
+<h3>JSON Representation</h3>
+
+<p>This API uses JSON as the primary exchange format. All implementations MUST be able to produce and consume JSON.</p>
+
+<p>Representation of the atomic types is as follows:</p>
+
+<table>
+<tr><th>Atomic type</th><th>Representation in JSON</th></tr>
+<tr><th>string</th><td>JSON string:<pre class="code ruby"><code><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>¡Holá!</span><span class='tstring_end'>&quot;</span></span></code></pre></td></tr>
+<tr><th>blob</th><td>JSON string, containing the octet stream in <a href="http://tools.ietf.org/html/rfc4648">base64-encoded</a> form:<pre class="code ruby"><code><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SGVsbG8gd29ybGQh</span><span class='tstring_end'>&quot;</span></span></code></pre></td></tr>
+<tr><th>number</th><td>JSON number:<pre class="code ruby"><code><span class='op'>-</span><span class='int'>42</span></code></pre></td></tr>
+<tr><th>list</th><td>JSON array:<pre class="code ruby"><code><span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>¡Holá!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SGVsbG8gd29ybGQh</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>42</span> <span class='rbracket'>]</span></code></pre></td></tr>
+<tr><th>object</th><td>JSON object:<pre class="code ruby"><code>{
+  &quot;Grüße&quot; : &quot;¡Holá!&quot;,
+  &quot;data?&quot; : &quot;SGVsbG8gd29ybGQh&quot;,
+  &quot;number&quot;: -42,
+  &quot;list&quot;  : [ &quot;¡Holá!&quot;, &quot;SGVsbG8gd29ybGQh&quot;, -42 ]
+}</code></pre></td></tr>
+<tr><th>collection</th><td>JSON object. The index keys are pct-encoded if required, so they conform to the form <code>segment-nz</code> as defined in <a href="http://tools.ietf.org/html/rfc3986#section-3.3">section 3.3 of RFC3986</a>:<pre class="code ruby"><code>{
+  &quot;Gr%C3%BC%C3%9Fe&quot;: &quot;¡Holá!&quot;,
+  &quot;data%3F&quot;        : &quot;SGVsbG8gd29ybGQh&quot;
+}</code></pre></td></tr>
+</table>
+
+<p>For compatibility with a broad range of clients, implementations are encouraged to support the unofficial MIME-type <code>application/x-json</code> as an equivalent alternative to the officially IANA-registered MIME-type <code>text/json</code>.</p>
+
+<h3>XHTML Representation</h3>
+
+<p>Implementations are encouraged to produce <a href="http://www.w3.org/TR/xhtml1/">XHTML 1.0</a>.</p>
+
+<p>Representation of the atomic types is as follows:</p>
+
+<table>
+<tr><th>Atomic type</th><th>Representation in JSON</th></tr>
+<tr><th>string</th><td>XML PCDATA or CDATA:<pre class="code ruby"><code>Dr. Jekyll &amp;amp; Mr. Hyde
+&lt;![CDATA[ if (a &lt; b &amp;&amp; a &lt; 0) a = b; ]]&gt;</code></pre></td></tr>
+<tr><th>blob</th><td>XML PCDATA or CDATA, containing the octet stream in <a href="http://tools.ietf.org/html/rfc4648">base64-encoded</a> form:<pre class="code ruby"><code><span class='const'>SGVsbG8gd29ybGQh</span></code></pre></td></tr>
+<tr><th>number</th><td>XML PCDATA or CDATA with a text representation of the number:<pre class="code ruby"><code><span class='op'>-</span><span class='int'>42</span></code></pre></td></tr>
+<tr><th>list</th><td>An XHTML unordered list:<pre class="code ruby"><code>&lt;ul&gt;
+  &lt;li&gt;¡Holá!&lt;/li&gt;
+  &lt;li&gt;SGVsbG8gd29ybGQh&lt;/li&gt;
+  &lt;li&gt;-42&lt;/li&gt;
+&lt;/ul&gt;</code></pre></td></tr>
+<tr><th>list of objects with<br/>equal key-sets</th><td>XHTML table:<pre class="code ruby"><code><span class='const'>TODO</span></code></pre></td></tr>
+<tr><th>object</th><td>TODO</td></tr>
+<tr><th>collection of objects</th><td>TODO</td></tr>
+<tr><th>collection of collections</th><td>TODO</td></tr>
+</table>
+
+<h2>Abstract Data Model</h2>
+
+<p><strong>collection:</strong> an unordered set of <strong>string</strong>→<strong>resource</strong>-pairs, with unique <strong>strings</strong>. See also the section on <em>Resource Collections</em> below.<br>
+<strong>resource:</strong> a <strong>collection</strong> or an <strong>value.</strong>  </p>
+
+<p>Everything in this paragraph follows directly from <a href="http://tools.ietf.org/html/rfc3651">RFC3651</a>. It&#39;s only mentioned here for clarity, consistency and brevity in the remainder of this document.</p>
+
+<h3>From <a href="http://tools.ietf.org/html/rfc3651#section-2">§2 of RFC3651</a></h3>
+
+<p><strong>naming-authority:</strong>
+a <strong>string</strong> consisting of dot-seperated substrings of any Unicode character except dot &#39;.&#39; or slash &#39;/&#39;.</p>
+
+<p><strong>local-name:</strong>
+a <strong>string</strong> of Unicode characters.</p>
+
+<p><strong>handle:</strong>
+a <strong>string</strong> consisting of a <strong>naming-authority,</strong> a slash “/”, and a <strong>local-name.</strong> See §2 of RFC3651 for the syntax and semantics of a <strong>handle</strong> and its parts.</p>
+
+<p>Recent versions of the Handle System provide the possibility of Template Handles. Naming Authorities that use Template Handles must define a Template Delimiter Character for their namespace, which divides handles into a base part and an extension part. CNRI suggests the use of the at-sign &quot;@&quot; as Template Delimiter Character. <code>TODO This may no longer be accurate --Pieter van Beek 2012-02-09</code></p>
+
+<h3>From <a href="http://tools.ietf.org/html/rfc3651#section-3.1">§3.1 of RFC3651</a></h3>
+
+<p><strong>handle-value-set:</strong>
+a <strong>collection</strong> with the following members:</p>
+
+<ul>
+<li>  <code>values/</code>: a <strong>collection</strong> of <strong>handle values,</strong> indexed by the handle values&#39; idx-member.</li>
+<li>  <code>handle</code>: (if applicable) the <strong>handle</strong> that references this <strong>value set.</strong></li>
+</ul>
+
+<p>Extensions may define additional members.</p>
+
+<p><strong>value reference:</strong>
+a pointer to a Handle Value: a string consisting of the string representation of a non-negative number, a &#39;:&#39; character, and a <strong>handle</strong>. See §3 of RFC3651 for more information about <strong>value references.</strong></p>
+
+<h3>handle value</h3>
+
+<p>a <strong>collection</strong> with at least the following members:</p>
+
+<ul>
+<li><code>type</code>: A <strong>string</strong> consisting of a dot &quot;.&quot; separated list of strings of any unicode character except &quot;.&quot;. Specifies the data type of member <code>data</code>.</li>
+<li><p><code>data</code>: a <strong>blob.</strong>
+Additionally, the following members MAY exist:</p></li>
+<li><p><code>idx</code>: a positive number that specifies the unique index of this Handle Value within its Value Set.</p></li>
+<li><p><code>ttl</code>: a number that specifies the Time-To- Live of the value record. A positive value defines the time to live in terms of seconds since 00:00:00 UTC, January 1st 1970. A negative value specifies the time to live in terms of the number of seconds elapsed since the value was obtained.</p></li>
+<li><p><code>timestamp</code>: a number that records the last time this Handle Value was updated at the server. The field contains elapsed time since 00:00:00 UTC, January 1970 in milliseconds.</p></li>
+<li><p><code>refs</code>: a list of references to other Handle Values.</p></li>
+<li><p><code>parsed/</code>: depends on the value of type: by default, <code>parsed/</code> is unset. However, some of the pre-defined handle types are represented (in the Handle System) as a binary encoded structured value. In these cases, <code>parsed/</code> MUST contain a decoded representation of the structured value. In particular:</p>
+
+<ul>
+<li>if type == &quot;HS_VLIST&quot;, then <code>parsed/</code> contains a collection of references as described in §3.2.7 of RFC3651.</li>
+<li>if a reference points to a Handle Value controlled by the server, then it&#39;s indexed by URIref.</li>
+<li>otherwise, it&#39;s indexed by URI <code>http://hdl.handle.net/«handle»?index=«idx»</code></li>
+<li>if <code>type == &quot;10320/loc&quot;</code>, then parsed/ contains a collection with the following members (see 10320/loc for details):</li>
+<li><code>chooseby</code>: (optional) a list of strings. Defaults to [&quot;locatt&quot;,&quot;country&quot;,&quot;weighted&quot;] when omitted.</li>
+<li><code>locations/</code>: a collection of the following members, indexed by href, URI-escaped as explained in section NamingAuthorities and Suffixes in Path Segments:
+
+<ul>
+<li><code>href</code>:  a URI.</li>
+<li><code>weight</code> (optional): a number.</li>
+<li><code>...</code>: type string: any other attributes of the <location/> element, if present.</li>
+</ul></li>
+<li><code>...</code>: type string: other attributes (unescaped) of the <locations/> element, if present.</li>
+<li>other Handle Value Types (if not hidden by the server) such as HS<em>SITE, HS</em>PUBKEY, HS<em>SECKEY and HS</em>SERV MUST have decoded representations as well.</li>
+</ul></li>
+</ul>
+
+<p>Extensions may define additional members.</p>
+
+<p>The Handle System comes with its own authorization scheme. Services which do not respect this scheme SHOULD NOT relay any Handle Values or other information related to this scheme, such as HS_ADMIN values or the <permission> bit-mask described in §3.1 of RFC3651. Services which do respect the native Handle System authorization scheme SHOULD implement Extension 1.</p>
+
+<h2>Multistatus</h2>
+
+<p><code>Iets over multipart/mixed for returning multiple statuses. -Pieter van Beek 10/25/11 11:30 AM</code></p>
+
+<p><code>Iets over batch operaties, waarvoor ze wel en niet bedoeld zijn, alternatieven, usecases  -Pieter van Beek 2/3/11 4:28 PM</code></p>
+
+<p>This data type is only of importance to clients and servers that wish to use batch-wise operations which may affect multiple resources. In response to an HTTP-request that triggers such an operation, the server MUST respond with HTTP/1.1 207 Multistatus, and return a representation of a multistatus object, explaining which resources were affected and/or which errors occured. If an operation is defined as being atomic, and errors occur for some URIs targeted by the request, then the operation must fail entirely. Resources which failed to be affected because other resources failed to be affected within the same atomic request MUST fail with status HTTP/1.1 424 Failed Dependency as defined in <a href="http://tools.ietf.org/html/rfc4918">RFC4918</a>.</p>
+
+<p>A <strong>multistatus</strong> is a <strong>list</strong> of <strong>collections</strong> with the following members:</p>
+
+<ul>
+<li><code>baseuri</code>: (optional) the base <strong>URIref</strong> to be used when interpreting the URIrefs in member href. Normally, this is the URI of the resource that spawned the asynchronous process.</li>
+<li><code>href</code>: a <strong>list</strong> of one or more <strong>URIrefs</strong> which have been affected by the operation.</li>
+<li><code>status</code>: a <strong>number:</strong> the HTTP/1.1 status code returned by the resource(s) in <code>href</code>.</li>
+<li><code>error</code>: (optional) a <strong>list</strong> of pre-defined error condition <strong>strings</strong>, specifying the error(s) that occured during processing, if any.</li>
+<li><code>responsedescription</code>: (optional) a human-readable <strong>string</strong>, describing what happened.</li>
+<li><code>location</code>: (optional, implies only one entry in <code>href</code>) the <code>Location:</code> response header that was returned by the one resource in <code>href</code>.</li>
+</ul>
+
+<p>Those familiar with WebDAV will recognise the structure of an XML <multistatus/>-element as described in §13 of <a href="http://tools.ietf.org/html/rfc4918">RFC4918</a>.</p>
+
+<h3>Example</h3>
+
+<p>The clients submit the following batch request, which should affect multiple resources:</p>
+
+<pre class="code ruby"><code>POST /NAs/10/handles/
+Host: example.com
+Content-Type: application/json
+...
+
+[ { &quot;handle&quot; : &quot;handleOne&quot;,
+    &quot;values/&quot;: { &quot;1&quot;: { &quot;type&quot;: &quot;URL&quot;,
+                        &quot;data&quot;: &quot;http://www.example.com&quot; } } },
+  { &quot;handle&quot; : &quot;handleTwo&quot;,
+    &quot;values/&quot;: { &quot;1&quot;: { &quot;type&quot;: &quot;URL&quot;,
+                        &quot;data&quot;: &quot;http://mail.example.com&quot; } } } ]
+</code></pre>
+
+<p>The clients wants to affect two handles, with local names &quot;handleOne&quot; and &quot;handleTwo&quot; respectively. The server supports atomic batch operations, and replies responds as follows:</p>
+
+<pre class="code ruby"><code>HTTP/1.1 207 Multistatus
+Content-Type: application/json
+...
+
+[ { &quot;href&quot;  : &quot;handleOne&quot;,
+    &quot;status&quot;: 403 },       /* HTTP/1.1 403 Forbidden */
+  { &quot;href&quot;  : &quot;handleTwo&quot;,
+    &quot;status&quot;: 424 } ]      /* HTTP/1.1 424 Failed Dependency */
+</code></pre>
+
+<p>For some reasen, the client didn&#39;t have permission to create/update the value set at <code>/NAs/10/handles/handleOne</code>. As a result, the resource at <code>/NAs/10/handles/handleOne</code> was unaffected as well, because the operation was defined as atomic.</p>
+
+<h2>Core API, Extensions and Representations</h2>
+
+<p>This document aims at defining an API that can be widely adopted. This implies fulfilling some conflicting demands. The API has to be complete enough to be usable by a wide variety of users, but also simple to implement, so that multiple implementations can and will coexist. The API must be extensible, allowing features to vary between implementations, serving particular user groups. Still, the API must guarantee a level of uniformity which allows easy migration between implementations.</p>
+
+<p>To fulfill these demands, this document merely defines a <em>Core API</em>, which explicitly leaves room for functional <em>extensions</em> and extra <em>representations</em>.</p>
+
+<p>The <strong>Core API</strong> is the part of the API that all providers must implement. In other words, clients which restrict themselves to the Core API are guaranteed to be interoperable between implementations.</p>
+
+<p><strong>Extensions</strong> allow for extra, optional functionality. Our hope is that implementors will collaboratively define such API Extensions whenever they —otherwise independently— implement similar bits of additional functionality, thus enhancing compatibility between service providers.</p>
+
+<p><strong>Representations</strong> are extra resource representations supported by the service, in addition to the obligatory JSON representation. Servers may support these representations in HTTP/1.1 request bodies, response bodies, or both. For example, while JSON is commonly used in both request bodies and response bodies, the <code>application/xhtml+xml</code> data format is normally only used in response bodies, while the <code>application/x-www-form-urlencoded</code> format is normally only used in request bodies.
+</p>
+
+<h2>Core API</h2>
+
+<h3>URI Space Overview</h3>
+
+<p>The service roughly consists of the following URI space:&lt;!--┃┗┣━--&gt;</p>
+
+<pre class="code ruby"><code>«root»/
+┣━discovery/
+┗━NAs
+  ┗━«NAsegment»/
+    ┣━handles/
+    ┃ ┗━«LNsegment»/
+    ┃   ┗━...
+    ┣━profiles/
+    ┃ ┗━«profile»
+    ┣━status/
+    ┃ ┗━«id»
+    ┗━templator
+</code></pre>
+
+<p>The text below specifies the GET, PUT, POST and DELETE methods available per URI.</p>
+
+<h3>Resource Collections</h3>
+
+<p>Within the service&#39;s hierarchical URI space, many resources are collections of other resources, like a <em>directory</em> or <em>folder</em>. Such a container resource is represented by an unordered set of <strong>URIref→value</strong>-pairs called a <strong>collection</strong>.</p>
+
+<p><code>Meer uitleg, meer voorbeeldjes -Pieter van Beek 2/3/11 4:41 PM</code>  <code>Mention the slash as separator -Pieter van Beek 10/25/11 11:00 AM</code></p>
+
+<p>If the <strong>URIref</strong> in such a <strong>URIref→value</strong>-pair is a relative-ref as defined in §4.2 of [RFC3986], then it is relative (with decreasing precedence as per §14.14 of [RFC2616] and §5.1 of [RFC3986]) to:</p>
+
+<ul>
+<li>  in a nested <strong>collection</strong> (ie. a <strong>collection</strong> that is part of a <strong>URIref→collection</strong>-pair within a parent <strong>collection</strong>): the <strong>URIref</strong> by which the nested <strong>collection</strong> is indexed within its parent <strong>collection</strong>;</li>
+<li>  the <strong>URIref</strong> in the <code>Content-Location:</code> HTTP/1.1 response header</li>
+<li>  the request URI.</li>
+</ul>
+
+<h4>Request Depth</h4>
+
+<p>When performing a GET request on a resource <strong>collection</strong>, the user may specify an optional <code>Depth:</code> request header, specified in §10.2 of [RFC4918]. The value of this header is interpreted as follows:
+*   <code>&quot;0&quot;</code>: unused
+*   <code>&quot;1&quot;</code>: return the <strong>collection</strong>, with the value in each <strong>URIref→value</strong>-pair reduced to a &quot;display name&quot;-string, for example an unescaped version of the referring <strong>URIref</strong>.
+*   <code>&quot;infinity&quot;</code>: return the <strong>collection</strong>, including all child <strong>collections</strong>, recursively, <em>ad infinitum</em>.</p>
+
+<p>For all URIs, the default request depth is <code>&quot;1&quot;</code>, unless otherwise specified. Servers NEED NOT support all request depths on all URIs. In particular, servers need not support <code>Depth: infinity</code> on high-level <strong>collections</strong>, as this may generate a very large response.</p>
+
+<h4>Trailing slashes</h4>
+
+<p>Container resources have a trailing slash at the end of their (canonical) URIs. If the client accidentally omits this trailing slash, the server MUST do one of the following:</p>
+
+<ul>
+<li>  Respond as if the trailing slash were present, but with an additional <code>Content-Location:</code> response header, pointing to the correct URI. This is the prefered response, but it may cause problems with relative URIs in some web browsers that don&#39;t interpret the <code>Content-Location:</code> header, thus assuming the wrong base URI for the entity.</li>
+<li>  Respond with status <code>HTTP/1.1 301 Moved Permanently</code>, asking the client to resubmit the request to the correct URI. This is what <code>mod_dir</code> does in the Apache HTTP server.</li>
+</ul>
+
+<h3>NamingAuthorities and Suffixes in Path Segments</h3>
+
+<p>The URI space of this web service uses Handle NamingAuthorities and suffixes as URI path segments. According to [RFC3651], these NamingAuthorities and suffixes consist of UTF-8 encoded strings of printable Unicode characters, while [RFC2396] and its successor [RFC3986] allow only the following ASCII characters in a path segment:</p>
+
+<pre class="code ruby"><code><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A</span><span class='tstring_end'>&quot;</span></span><span class='op'>-</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Z</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='op'>-</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>z</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='op'>-</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>9</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>$</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>'</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>+</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<p>Therefore, all other octets must be percent-encoded as explained in §2.1 of [RFC3986]. For example, a space character (ASCII character 32 in decimal notation, or 20 in hexadecimal notation) must be encoded as <code>&quot;%20&quot;</code> in path segments.</p>
+
+<p>For maximum compatibility, clients SHOULD also escape the <code>&quot;;&quot;</code> character, because it has a special meaning in the (now obsolete) [RFC2396]. Servers SHOULD allow unescaped <code>&quot;;&quot;</code> characters.</p>
+
+<h3>«root»/</h3>
+
+<p>All URIs share some root, determined by the service provider, eg. <code>https://example.com/epic_web_service/</code>
+*   <code>GET</code> SHOULD return a collection.<br>
+    <code>Uitleg, voorbeeldje. Misschien alle collections -Pieter van Beek 2/3/11 4:41 PM</code></p>
+
+<h3>«root»/NAs/</h3>
+
+<ul>
+<li><p><code>GET</code> returns a collection of all NamingAuthorities hosted by this web service, indexed by <code>«NAsegment»/</code>. For example:</p>
+
+<pre class="code ruby"><code>{ &quot;10574/&quot; : &quot;10574&quot;,
+  &quot;H%A4%C3ndel/&quot; : &quot;Händel&quot; }
+</code></pre></li>
+</ul>
+
+<h3>«root»/NAs/«NAsegment»/</h3>
+
+<ul>
+<li>  <code>GET</code> SHOULD return a collection.</li>
+</ul>
+
+<h3>«root»/NAs/«NAsegment»/handles/</h3>
+
+<ul>
+<li>  <code>GET</code><br>
+Returns a collection of Handles indexed by <code>«LNsegment»/</code>, optionally filtered by the parameters below:
+
+<ul>
+<li>  Parameter <code>m_&lt;TYPE&gt;=«search_string»</code>: search string must match the Handle Value exactly;</li>
+<li>  Parameter <code>w_&lt;TYPE&gt;=«search_string»</code>: search strings are treated as wildcards, with the following meta-characters:
+
+<ul>
+<li>  <code>&#39;*&#39;</code>: matches zero or more octets;</li>
+<li>  <code>&#39;_&#39;</code>: matches exactly one octet;</li>
+<li>  <code>&#39;~&#39;</code>: escape character. For example, to match any value with a literal asterisk, you should use wildcard string <code>&quot;*~**&quot;</code>.</li>
+</ul></li>
+<li>  Parameter <code>r_&lt;TYPE&gt;=«search_string»</code>: search strings are treated as a [PCRE]. Providers NEED NOT implement this parameter.</li>
+<li>  <code>&lt;TYPE&gt;</code> specifies which metadata field value(s) to match. If <TYPE> ends with a <code>&#39;.&#39;</code> character, then this is treated as explained in §3.2.1 of [RFC3652].</li>
+<li>  If multiple search strings are specified, the intersection of all search results is returned (ie. the search strings are combined using a logical AND)</li>
+</ul></li>
+</ul>
+
+<h3>«root»/NAs/«NAsegment»/handles/«LNsegment»/</h3>
+
+<ul>
+<li>  <code>GET</code> Returns a Handle. The server SHOULD provide <code>Last-Modified:</code> and <code>ETag:</code> response headers.
+This resource, and all its child-resources, have a default <code>Depth:</code> HTTP header value of <code>&quot;infinity&quot;</code>.</li>
+<li>  <code>PUT</code> Submits a Handle.
+
+<ul>
+<li>  To assert that no handle yet exists at this URI, the <code>If-None-Match: *</code> HTTP request header can be used as per §14.26 of [RFC2616].<br></li>
+<li>  To assert that a handle yet exists at this URI, the <code>If-Match: *</code> HTTP request header can be used as per §14.24 of [RFC2616].</li>
+</ul></li>
+<li>  <code>DELETE</code> Deletes the handle.</li>
+<li>  <code>POST</code> Accepts a Value Set which MUST NOT contain a handle member.
+
+<ul>
+<li>  In this case, the <code>«LNsegment»</code> is interpreted as a suffix template. A suffix template is a suffix containing exactly one unescaped <code>&#39;*&#39;</code> character. This character will be replaced with a unique string by the server, resulting in a new and unique handle. The <code>&#39;~&#39;</code> character serves as escape character. So a literal string <code>&quot;*~&quot;</code> must be escaped as <code>&quot;~*~~&quot;</code>.</li>
+<li>  Creates a new handle with the provided metadata. An <code>HTTP/1.1 201 Created</code> status is returned upon success, with the location of the new resource in the <code>Location:</code> response header. The new handle is returned in an <code>X-Handle:</code> response header, encoded as per <a href="http://tools.ietf.org/html/rfc5987" title="Character Set and Language Encoding for Hypertext Transfer Protocol (HTTP) Header Field Parameters">RFC5987</a> if necessary.</li>
+</ul></li>
+</ul>
+
+<p>This URI points to a Handle, which is of type <strong>collection</strong>. Each member of this collection has its own <strong>URIref</strong>, and therefore its own URI within the service&#39;s namespace. This document doesn&#39;t describe these URIs in further detail. In general, all these URIs SHOULD support the GET, PUT and DELETE methods.</p>
+
+<h3>«root»/NAs/«NAsegment»/status/</h3>
+
+<p>The Core API itself doesn&#39;t include any asynchronous operations, but it does provide a framework for such operations, which can be used by extensions.</p>
+
+<p>Whenever a request cannot be handled synchronously, the server MUST respond with an HTTP/1.1 202 Accepted status response, create a new &quot;status resource&quot;, and return the URI of this resource in the Location: response header. The .../status/ resource is intended as the container for such status resources.</p>
+
+<p>Since a new status resource is created for each asynchronous request, this request is neither safe nor idempotent. This means that methods GET, PUT and DELETE are excluded from asynchronous handling. Therefore, only POST requests MAY be handled asynchronously.</p>
+
+<h3>«root»/NAs/«NAsegment»/status/«id»</h3>
+
+<p>A status resource, resulting from an asynchronous operation.</p>
+
+<ul>
+<li><p><code>GET</code><br>
+Returns one of the following:</p>
+
+<pre class="code ruby"><code>*   HTTP/1.1 503 Service Unavailable, indicating that the asynchronous request hasn't yet been handled. Servers SHOULD return a Retry-After: response header.
+
+*   HTTP/1.1 404 Not Found or HTTP/1.1 410 Gone, indicating that the operation has finished, and the client already deleted the status resource.
+
+*   Any other response must be interpreted as if it were the response to the original POST request that initiated the asynchronous process.
+</code></pre>
+
+<ul>
+<li><p>In this latter case, one status code is of special interest, especially to batch processes:</p>
+
+<ul>
+<li>  <code>HTTP/1.1 207 Multi-Status</code> can be used if the processing affected multiple resources. The response body MUST contain either an XML-document as per §13 of [RFC4918], or a multistatus (eg. in [JSON] format), subject to content negotiation.</li>
+</ul></li>
+</ul></li>
+<li><p><code>DELETE</code><br>
+Deletes the status resource.</p></li>
+</ul>
+
+<h1>Extensions</h1>
+
+<h2>Method Spoofing</h2>
+
+<p>The service allows users to use the HTTP/1.1 POST method instead of all other HTTP/1.1 methods, by specifying a <code>_method</code> query parameter in the request URI. Method spoofing is commonly used in the following cases:</p>
+
+<ol>
+<li> To perform HTTP/1.1 GET requests where the total length of all query parameters is too long to fit into a URI. Although there are no theoretical limits to the length of a URI, in practice many clients and servers have practical limits, often as small as 64k bytes.</li>
+<li> To perform any method, other than GET or POST, from within a browser. Unfortunately, most modern browsers only support the HTTP/1.1 GET and POST methods. So in order to DELETE a resource from within a browser (which is a perfectly reasonable use case), the request will have to be spoofed.</li>
+<li>To perform any method, other than GET or POST, from behind a firewall that only allows GET and POST requests.</li>
+</ol>
+
+<h3>Examples</h3>
+
+<p>The following two HTTP/1.1 requests are semantically identical:</p>
+
+<pre class="code ruby"><code>DELETE /some_resource HTTP/1.1
+Host: handle.sara.nl
+Date: Mon, 09 Sep 2008 08:17:35 GMT
+</code></pre>
+
+<!---->
+
+<pre class="code ruby"><code>POST /some_resource?_method=DELETE HTTP/1.1
+Host: handle.sara.nl
+Date: Mon, 09 Sep 2008 08:17:35 GMT
+Content-Length: 0
+</code></pre>
+
+<p>In XHTML, this request could be interfaced with a “delete button”, like this:</p>
+
+<pre class="code ruby"><code>&lt;form action=&quot;/some_resource?_method=DELETE&quot; method=&quot;post&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Delete some_resource&quot;/&gt; 
+&lt;/form&gt;
+</code></pre>
+
+<p>If you spoof an HTTP/1.1 GET method, and the MIME type of the request body is <code>application/x-www-form-urlencoded</code>, then query parameters of the request body are treated as if they are “GET parameters”. For example, the following two HTTP/1.1 requests are semantically identical:</p>
+
+<pre class="code ruby"><code>GET /some_resource?param=value HTTP/1.1
+Host: topos.grid.sara.nl
+Date: Mon, 09 Sep 2008 08:17:35 GMT
+</code></pre>
+
+<!---->
+
+<pre class="code ruby"><code>POST /some_resource?_method=GET HTTP/1.1
+Host: topos.grid.sara.nl
+Date: Mon, 09 Sep 2008 08:17:35 GMT
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 11
+
+param=value
+</code></pre>
+
+<h2>Header Spoofing</h2>
+
+<p>The service allows the user to pass HTTP/1.1 headers as query parameters. This is done to allow any kind of request from within a browser. This feature is provided strictly as a workaround for current web-browser limitations.<br>
+To specify an HTTP/1.1 header as a query parameter:</p>
+
+<ol>
+<li> replace all dashes &quot;-&quot; in the header name by underscores &quot;_&quot;;</li>
+<li> convert all characters in the header name to lowercase;</li>
+<li> prepend the header name with &quot;_http_&quot;.</li>
+</ol>
+
+<h3>Examples</h3>
+
+<p>The following two HTTP/1.1 requests are semantically identical:</p>
+
+<pre class="code ruby"><code>PUT /some_resource HTTP/1.1
+Host: handle.sara.nl
+Date: Mon, 09 Sep 2008 08:17:35 GMT
+If-None-Match: *
+...
+</code></pre>
+
+<!---->
+
+<pre class="code ruby"><code>PUT /some_resource?_http_if_none_match=* HTTP/1.1
+Host: handle.sara.nl
+Date: Mon, 09 Sep 2008 08:17:35 GMT
+...
+</code></pre>
+
+<p>Note how the <code>If-None-Match</code> header is specified as a query parameter in the second case.</p>
+
+<h2>POST-Once-Exactly</h2>
+
+<p>The POST method is neither safe nor idempotent. This poses a problem to the client: if an HTTP-request from the client is not answered by a (correct) HTTP-response from the server, the client has no way to determine if the request processed successfully or not. To circumvent this limitation, server implementations are encouraged to implement POST-Once-Exactly <a href="http://tools.ietf.org/html/draft-nottingham-http-poe-00" title="POST Once Exactly (POE)">POE</a>.</p>
+
+<!--References-->
+</div></div>
+
+    <div id="footer">
+  Generated on Wed Jul 11 10:10:39 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

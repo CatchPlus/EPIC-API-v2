@@ -1,0 +1,516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: EPIC::ResourceFactory
+  
+    &mdash; EPIC
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../EPIC.html" title="EPIC (module)">EPIC</a></span></span>
+     &raquo; 
+    <span class="title">ResourceFactory</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: EPIC::ResourceFactory
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">EPIC::ResourceFactory</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2">Singleton</dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">src/epic.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'><p>
+Move this class to a separate file? Not needed quite yet&#8230;
+</p>
+</div>
+  </div>
+
+<p>
+Resource Factory for all our ReSTful resources.
+</p>
+<p>
+<span class='object_link'><a href="../ReST/Server.html" title="ReST::Server (class)">ReST::Server</a></span> requires a <span class='object_link'><a href="../ReST/Server.html#resource_factory-instance_method" title="ReST::Server#resource_factory (method)">resource factory</a></span>.
+This singleton class implements EPIC&#8217;s resource factory.
+</p>
+<p>
+Like every Singleton in a multi-threaded environment, this class must be
+thread safe!
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%5B%5D-instance_method" title="#[] (instance method)">- (Resource<sup>?</sup>) <strong>[]</strong>(path) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#resource_cache-instance_method" title="#resource_cache (instance method)">- (Hash&lt; unslashified_path =&gt; resource_object &gt;) <strong>resource_cache</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+For performance, this <span class='object_link'><a href="" title="EPIC::ResourceFactory (class)">ResourceFactory</a></span> maintains a cache of
+<span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resources</a></span> it has produced earlier <em>within this same
+request.</em>.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#uncache-instance_method" title="#uncache (instance method)">- (self) <strong>uncache</strong>(path) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Can be called by tainted resources, to be removed from the cache.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="[]-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resource</a></span></tt><sup>?</sup>) <strong>[]</strong>(path) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the URI-encoded path to the resource.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resource</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../ReST/Server.html#resource_factory-instance_method" title="ReST::Server#resource_factory (method)">for details</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic.rb', line 69</span>
+
+<span class='kw'>def</span> <span class='op'>[]</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_unslashify'>unslashify</span>
+  <span class='id identifier rubyid_cached'>cached</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_cache'>resource_cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span>
+  <span class='comment'># Legal values for +cached+ are:
+</span>  <span class='comment'># - nil: the resource is not in cache
+</span>  <span class='comment'># - false: resource was requested earlier, without success
+</span>  <span class='comment'># - ReST::Resource
+</span>  <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_cached'>cached</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='comment'># if +cached+ is +false+, we want to return +nil+.
+</span>    <span class='kw'>return</span> <span class='id identifier rubyid_cached'>cached</span> <span class='op'>||</span> <span class='kw'>nil</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_resource_cache'>resource_cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_unescape_path'>unescape_path</span> <span class='comment'># already unslashified!
+</span>  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
+    <span class='const'>StaticCollection</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>handles/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>profiles/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>templates/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>batches/</span><span class='tstring_end'>'</span></span> <span class='rbracket'>]</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/handles</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/profiles</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/templates</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/batches</span><span class='tstring_end'>'</span></span>
+    <span class='const'>NAs</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/(batches)/\d+\z</span><span class='regexp_end'>}</span></span>
+    <span class='const'>StaticCollection</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/handles/\d+\z</span><span class='regexp_end'>}</span></span>
+    <span class='comment'>#StaticCollection.new path.to_s.slashify, ['hello/']
+</span>    <span class='const'>Handles</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/handles/\d+/[^/]+\z</span><span class='regexp_end'>}</span></span>
+    <span class='const'>Handle</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/(templates|profiles)/\d+\z</span><span class='regexp_end'>}</span></span>
+    <span class='const'>Directory</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/profiles/\d+/\w[^/]+\z</span><span class='regexp_end'>}</span></span>
+    <span class='const'>Profile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='comment'># when %r{\A/templates/\d+/[^/]+\z}
+</span>    <span class='comment'># Template.new path
+</span>  <span class='kw'>else</span>
+    <span class='kw'>false</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="resource_cache-instance_method">
+  
+    - (<tt>Hash&lt; unslashified_path =&gt; resource_object &gt;</tt>) <strong>resource_cache</strong>  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+For performance, this <span class='object_link'><a href="" title="EPIC::ResourceFactory (class)">EPIC::ResourceFactory</a></span> maintains a cache of
+<span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resources</a></span> it has produced earlier <em>within this same
+request.</em>
+</p>
+<p>
+Valid Hash values are:
+</p>
+<dl>
+<dt><span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">EPIC::Resource</a></span></dt><dd><p>
+A cached resource
+</p>
+</dd>
+<dt>false</dt><dd><p>
+The resource has been requested earlier, but wasn&#8217;t found.
+</p>
+</dd>
+<dt>nil</dt><dd><p>
+The resource hasn&#8217;t been requested yet.
+</p>
+</dd>
+</dl>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash&lt; unslashified_path =&gt; resource_object &gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic.rb', line 118</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_resource_cache'>resource_cache</span>
+  <span class='const'>ReST</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='symbol'>:epic_resource_cache</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="uncache-instance_method">
+  
+    - (<tt>self</tt>) <strong>uncache</strong>(path) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Can be called by tainted resources, to be removed from the cache.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic.rb', line 58</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_uncache'>uncache</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='id identifier rubyid_resource_cache'>resource_cache</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_unslashify'>unslashify</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 11 10:10:40 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

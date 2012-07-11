@@ -1,0 +1,706 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: ReST::Server
+  
+    &mdash; EPIC
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../ReST.html" title="ReST (module)">ReST</a></span></span>
+     &raquo; 
+    <span class="title">Server</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: ReST::Server
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ReST::Server</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">src/rest.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>
+# Rack compliant server class for implementing RESTful web services.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resource_factory-instance_method" title="#resource_factory (instance method)">- (#[]) <strong>resource_factory</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+An object responding thread safely to method <tt>#[]</tt>.
+</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#call-instance_method" title="#call (instance method)">- (Array&lt;(status_code, response_headers, response_body)&gt;) <strong>call</strong>(p_env) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+As required by the Rack specification.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#call%21-instance_method" title="#call! (instance method)">- (Array&lt;(status_code, response_headers, response_body)&gt;) <strong>call!</strong>(p_env) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Server) <strong>initialize</strong>(resource_factory) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#set_default_headers-instance_method" title="#set_default_headers (instance method)">- (Object) <strong>set_default_headers</strong>(resource, response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Adds <tt>ETag:</tt> and <tt>Last-Modified:</tt> response headers.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="ReST::Server (class)">Server</a></span></tt>) <strong>initialize</strong>(resource_factory) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+<p>
+An object responding thread safely to method <tt>#[]</tt>.
+</p>
+<p>
+A <span class='object_link'><a href="" title="ReST::Server (class)">ReST::Server</a></span> has no knowledge, and makes no presumptions, about your URI
+namespace. It requires a <em>Resource Factory</em> which produces <span class='object_link'><a href="Resource.html" title="ReST::Resource (module)">Resources</a></span> given a certain absolute path.
+</p>
+<p>
+The Resource Factory you provide need only implement one method, with
+signature <b><tt>Resource #[]( String path )</tt></b>. This method will be
+called with a URI-encoded path string, and must return a <span class='object_link'><a href="Resource.html" title="ReST::Resource (module)">Resource</a></span>, or
+<tt>nil</tt> if there&#8217;s no resource at the given path.
+</p>
+<p>
+For example, if a ReST client tries to access a resource with URI
+<a href="http://example.com/your/resource" target="_parent" title="http://example.com/some/resource">http://example.com/some/resource</a>, then
+your Resource Factory can expect to be called like this:
+</p>
+<pre class="code ruby"><code>
+  <span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_factory'>resource_factory</span><span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/your/resource</span><span class='tstring_end'>'</span></span> <span class='rbracket'>]</span>
+</code></pre>
+<p>
+If there&#8217;s no resource at the given path, but you&#8217;d still like
+to respond to <tt>POST</tt> or <tt>PUT</tt> requests to this path, you must
+return an <span class='object_link'><a href="Resource.html#empty%3F-instance_method" title="ReST::Resource#empty? (method)">empty resource</a></span>.
+</p>
+
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+880
+881
+882
+883</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 880</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_resource_factory'>resource_factory</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='rparen'>)</span>
+  <span class='ivar'>@resource_factory</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_factory'>resource_factory</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="resource_factory-instance_method">
+  
+    - (<tt>#[]</tt>) <strong>resource_factory</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+An object responding thread safely to method <tt>#[]</tt>.
+</p>
+<p>
+A <span class='object_link'><a href="" title="ReST::Server (class)">ReST::Server</a></span> has no knowledge, and makes no presumptions, about your URI
+namespace. It requires a <em>Resource Factory</em> which produces <span class='object_link'><a href="Resource.html" title="ReST::Resource (module)">Resources</a></span> given a certain absolute path.
+</p>
+<p>
+The Resource Factory you provide need only implement one method, with
+signature <b><tt>Resource #[]( String path )</tt></b>. This method will be
+called with a URI-encoded path string, and must return a <span class='object_link'><a href="Resource.html" title="ReST::Resource (module)">Resource</a></span>, or
+<tt>nil</tt> if there&#8217;s no resource at the given path.
+</p>
+<p>
+For example, if a ReST client tries to access a resource with URI
+<a href="http://example.com/your/resource" target="_parent" title="http://example.com/some/resource">http://example.com/some/resource</a>, then
+your Resource Factory can expect to be called like this:
+</p>
+<pre class="code ruby"><code>
+  <span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_factory'>resource_factory</span><span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/your/resource</span><span class='tstring_end'>'</span></span> <span class='rbracket'>]</span>
+</code></pre>
+<p>
+If there&#8217;s no resource at the given path, but you&#8217;d still like
+to respond to <tt>POST</tt> or <tt>PUT</tt> requests to this path, you must
+return an <span class='object_link'><a href="Resource.html#empty%3F-instance_method" title="ReST::Resource#empty? (method)">empty resource</a></span>.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>#[]</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#initialize-instance_method" title="ReST::Server#initialize (method)">#initialize</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+874
+875
+876</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 874</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_resource_factory'>resource_factory</span>
+  <span class='ivar'>@resource_factory</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="call-instance_method">
+  
+    - (<tt>Array&lt;(status_code, response_headers, response_body)&gt;</tt>) <strong>call</strong>(p_env) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+As required by the Rack specification.
+</p>
+<p>
+For thread safety, this method clones <tt>self</tt>, which handles the
+request in <span class='object_link'><a href="#call%21-instance_method" title="ReST::Server#call! (method)">#call!</a></span>. A similar approach is taken by the Sinatra library.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;(status_code, response_headers, response_body)&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+893
+894
+895
+896
+897
+898</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 893</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_p_env'>p_env</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_start'>start</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
+  <span class='id identifier rubyid_retval'>retval</span> <span class='op'>=</span> <span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_call!'>call!</span> <span class='id identifier rubyid_p_env'>p_env</span>
+  <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Duration: </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='lparen'>(</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span> <span class='op'>-</span> <span class='id identifier rubyid_start'>start</span> <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rparen'>)</span>
+  <span class='id identifier rubyid_retval'>retval</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="call!-instance_method">
+  
+    - (<tt>Array&lt;(status_code, response_headers, response_body)&gt;</tt>) <strong>call!</strong>(p_env) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;(status_code, response_headers, response_body)&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+903
+904
+905
+906
+907
+908
+909
+910
+911
+912
+913
+914
+915
+916
+917
+918
+919
+920
+921
+922
+923
+924
+925
+926
+927
+928
+929
+930
+931
+932
+933
+934
+935
+936
+937
+938
+939
+940
+941
+942
+943
+944
+945
+946
+947</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 903</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_call!'>call!</span><span class='lparen'>(</span><span class='id identifier rubyid_p_env'>p_env</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_request'>request</span>  <span class='op'>=</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span> <span class='id identifier rubyid_resource_factory'>resource_factory</span><span class='comma'>,</span> <span class='id identifier rubyid_p_env'>p_env</span> <span class='rparen'>)</span>
+  <span class='comment'># See also Request::current():
+</span>  <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:djinn_request</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_request'>request</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Response</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_FOUND</span><span class='tstring_end'>'</span></span> \
+        <span class='kw'>unless</span> <span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_resource_factory'>resource_factory</span><span class='lbracket'>[</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Content-Location</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_base_url'>base_url</span> <span class='op'>+</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> \
+        <span class='kw'>unless</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>==</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
+      <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_assert_if_headers'>assert_if_headers</span> <span class='id identifier rubyid_resource'>resource</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:http_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_request_method'>request_method</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid___send__'>__send__</span><span class='lparen'>(</span> <span class='symbol'>:http_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_request_method'>request_method</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span> <span class='rparen'>)</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:do_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_request_method'>request_method</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid___send__'>__send__</span><span class='lparen'>(</span> <span class='symbol'>:do_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_request_method'>request_method</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span> <span class='rparen'>)</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>METHOD_NOT_ALLOWED </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_http_methods'>http_methods</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>rescue</span> <span class='const'>HTTPStatus</span>
+      <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_response'>response</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>if</span> <span class='int'>500</span> <span class='op'>==</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span>
+      <span class='comment'># The next line fixes a small peculiarity in RFC2616: the response body of
+</span>      <span class='comment'># a +HEAD+ request _must_ be empty, even for responses outside 2xx.
+</span>      <span class='kw'>if</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_head?'>head?</span>
+        <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>0</span><span class='tstring_end'>'</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='kw'>if</span>  <span class='int'>201</span> <span class='op'>==</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='op'>&amp;&amp;</span>
+        <span class='lparen'>(</span> <span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Location</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+        <span class='lparen'>(</span> <span class='id identifier rubyid_new_resource'>new_resource</span> <span class='op'>=</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_resource_factory'>resource_factory</span><span class='lbracket'>[</span><span class='id identifier rubyid_location'>location</span><span class='rbracket'>]</span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+        <span class='op'>!</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> \
+    <span class='kw'>or</span>  <span class='lparen'>(</span> <span class='lparen'>(</span><span class='int'>200</span><span class='op'>...</span><span class='int'>300</span><span class='rparen'>)</span> <span class='op'>===</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='op'>||</span>
+           <span class='int'>304</span>        <span class='op'>==</span>  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+        <span class='op'>!</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Location</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span>
+        <span class='lparen'>(</span> <span class='id identifier rubyid_new_resource'>new_resource</span> <span class='op'>=</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_resource_factory'>resource_factory</span><span class='lbracket'>[</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+        <span class='op'>!</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='id identifier rubyid_set_default_headers'>set_default_headers</span> <span class='id identifier rubyid_new_resource'>new_resource</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_finish'>finish</span>
+  <span class='kw'>ensure</span>
+    <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:djinn_request</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>end</span> <span class='comment'># begin
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_default_headers-instance_method">
+  
+    - (<tt>Object</tt>) <strong>set_default_headers</strong>(resource, response)  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Adds <tt>ETag:</tt> and <tt>Last-Modified:</tt> response headers.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+956
+957
+958
+959
+960
+961
+962
+963
+964
+965</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/rest.rb', line 956</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_default_headers'>set_default_headers</span> <span class='id identifier rubyid_resource'>resource</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span>
+  <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ETag</span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+     <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span> <span class='symbol'>:etag</span> <span class='rparen'>)</span>
+    <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ETag</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_etag'>etag</span>
+  <span class='kw'>end</span>
+  <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+     <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span> <span class='symbol'>:last_modified</span> <span class='rparen'>)</span>
+    <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_last_modified'>last_modified</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_httpdate'>httpdate</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 11 10:10:40 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

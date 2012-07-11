@@ -1,0 +1,1123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: EPIC::HS
+  
+    &mdash; EPIC
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (H)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../EPIC.html" title="EPIC (module)">EPIC</a></span></span>
+     &raquo; 
+    <span class="title">HS</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: EPIC::HS
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">src/epic_hs.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="HDLLIB-constant" class="">HDLLIB =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Java</span><span class='op'>::</span><span class='const'>NetHandleHdllib</span></pre></dd>
+      
+        <dt id="PERMS_BY_S-constant" class="">PERMS_BY_S =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='symbol'>:add_handle</span>    <span class='op'>=&gt;</span> <span class='int'>0</span><span class='comma'>,</span>
+  <span class='symbol'>:delete_handle</span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
+  <span class='symbol'>:add_NA</span>        <span class='op'>=&gt;</span> <span class='int'>2</span><span class='comma'>,</span>
+  <span class='symbol'>:delete_NA</span>     <span class='op'>=&gt;</span> <span class='int'>3</span><span class='comma'>,</span>
+  <span class='symbol'>:modify_value</span>  <span class='op'>=&gt;</span> <span class='int'>4</span><span class='comma'>,</span>
+  <span class='symbol'>:remove_value</span>  <span class='op'>=&gt;</span> <span class='int'>5</span><span class='comma'>,</span>
+  <span class='symbol'>:add_value</span>     <span class='op'>=&gt;</span> <span class='int'>6</span><span class='comma'>,</span>
+  <span class='symbol'>:read_value</span>    <span class='op'>=&gt;</span> <span class='int'>7</span><span class='comma'>,</span>
+  <span class='symbol'>:modify_admin</span>  <span class='op'>=&gt;</span> <span class='int'>8</span><span class='comma'>,</span>
+  <span class='symbol'>:remove_admin</span>  <span class='op'>=&gt;</span> <span class='int'>9</span><span class='comma'>,</span>
+  <span class='symbol'>:add_admin</span>     <span class='op'>=&gt;</span> <span class='int'>10</span><span class='comma'>,</span>
+  <span class='symbol'>:list_handles</span>  <span class='op'>=&gt;</span> <span class='int'>11</span>
+<span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="PERMS_BY_I-constant" class="">PERMS_BY_I =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>PERMS_BY_S</span><span class='period'>.</span><span class='id identifier rubyid_invert'>invert</span></pre></dd>
+      
+        <dt id="AUTHINFO-constant" class="">AUTHINFO =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="MUTEX-constant" class="">MUTEX =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Mutex</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span></pre></dd>
+      
+        <dt id="EMPTY_HANDLE_VALUE-constant" class="">EMPTY_HANDLE_VALUE =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>HandleValue</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#authenticationInfo-class_method" title="authenticationInfo (class method)">+ (Object) <strong>authenticationInfo</strong>(user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_handle-class_method" title="create_handle (class method)">+ (Object) <strong>create_handle</strong>(handle, values, user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete-class_method" title="delete (class method)">+ (Object) <strong>delete</strong>(handle, user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_handle-class_method" title="delete_handle (class method)">+ (Object) <strong>delete_handle</strong>(handle, user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pack_HS_ADMIN-class_method" title="pack_HS_ADMIN (class method)">+ (Object) <strong>pack_HS_ADMIN</strong>(data) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pack_HS_VLIST-class_method" title="pack_HS_VLIST (class method)">+ (Object) <strong>pack_HS_VLIST</strong>(data) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resolver-class_method" title="resolver (class method)">+ (Object) <strong>resolver</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+HandleResolver should be thread safe, so there&#8217;s only one of it.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unpack_HS_ADMIN-class_method" title="unpack_HS_ADMIN (class method)">+ (Object) <strong>unpack_HS_ADMIN</strong>(data) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unpack_HS_VLIST-class_method" title="unpack_HS_VLIST (class method)">+ (Object) <strong>unpack_HS_VLIST</strong>(data) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update_handle-class_method" title="update_handle (class method)">+ (Object) <strong>update_handle</strong>(handle, old_values, new_values, user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="authenticationInfo-class_method">
+  
+    + (<tt>Object</tt>) <strong>authenticationInfo</strong>(user_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 149</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span> <span class='id identifier rubyid_user_name'>user_name</span>
+  <span class='kw'>unless</span> <span class='const'>AUTHINFO</span><span class='lbracket'>[</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_userInfo'>userInfo</span> <span class='op'>=</span> <span class='const'>EPIC</span><span class='op'>::</span><span class='const'>USERS</span><span class='lbracket'>[</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No user info found for user '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_userInfo'>userInfo</span>
+    <span class='const'>MUTEX</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='kw'>do</span>
+      <span class='const'>AUTHINFO</span><span class='lbracket'>[</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>SecretKeyAuthenticationInfo</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+        <span class='id identifier rubyid_userInfo'>userInfo</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
+        <span class='id identifier rubyid_userInfo'>userInfo</span><span class='lbracket'>[</span><span class='symbol'>:index</span><span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='id identifier rubyid_userInfo'>userInfo</span><span class='lbracket'>[</span><span class='symbol'>:secret</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
+        <span class='kw'>true</span>
+      <span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='const'>AUTHINFO</span><span class='lbracket'>[</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_handle-class_method">
+  
+    + (<tt>Object</tt>) <strong>create_handle</strong>(handle, values, user_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 185</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_create_handle'>create_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
+  <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_handle_value'>handle_value</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>CreateHandleRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span><span class='lparen'>(</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>HandleValue</span> <span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+  <span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_processRequest'>processRequest</span><span class='lparen'>(</span> <span class='id identifier rubyid_request'>request</span> <span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_responseCode'>responseCode</span>
+    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>FORBIDDEN</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_string'>to_string</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete-class_method">
+  
+    + (<tt>Object</tt>) <strong>delete</strong>(handle, user_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 166</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
+  <span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>DeleteHandleRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+  <span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_processRequest'>processRequest</span><span class='lparen'>(</span> <span class='id identifier rubyid_request'>request</span> <span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_responseCode'>responseCode</span>
+    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>FORBIDDEN</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_HANDLE_NOT_FOUND</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_FOUND</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_string'>to_string</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_handle-class_method">
+  
+    + (<tt>Object</tt>) <strong>delete_handle</strong>(handle, user_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 290</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_delete_handle'>delete_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
+  <span class='id identifier rubyid_authInfo'>authInfo</span> <span class='op'>=</span> <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+  <span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>DeleteHandleRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_authInfo'>authInfo</span>
+  <span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_processRequest'>processRequest</span><span class='lparen'>(</span> <span class='id identifier rubyid_request'>request</span> <span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_responseCode'>responseCode</span>
+    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>FORBIDDEN</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_HANDLE_NOT_FOUND</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_FOUND</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_string'>to_string</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pack_HS_ADMIN-class_method">
+  
+    + (<tt>Object</tt>) <strong>pack_HS_ADMIN</strong>(data) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 70</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pack_HS_ADMIN'>pack_HS_ADMIN</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Missing one or more required values</span><span class='tstring_end'>'</span></span> \
+    <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Hash</span> <span class='rparen'>)</span> <span class='op'>||</span>
+       <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminId</span><span class='rbracket'>]</span> <span class='op'>||</span>
+       <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminIdIndex</span><span class='rbracket'>]</span> <span class='op'>||</span>
+       <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span> <span class='op'>||</span>
+       <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Hash</span> <span class='rparen'>)</span> <span class='op'>||</span>
+       <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='const'>PERMS_BY_S</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_adminRecord'>adminRecord</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>AdminRecord</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminId'>adminId</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminId</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span>
+  <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminIdIndex'>adminIdIndex</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminIdIndex</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='id identifier rubyid_perms'>perms</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='lbracket'>[</span>
+    <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
+      <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+      <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+      <span class='lbracket'>[</span> <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span> <span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+  <span class='rbracket'>]</span>
+  <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_perms'>perms</span> <span class='op'>=</span> <span class='const'>PERMS_BY_I</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_perm'>perm</span><span class='op'>|</span>
+    <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_perms'>perms</span><span class='lbracket'>[</span><span class='id identifier rubyid_perm'>perm</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span> <span class='const'>Java</span><span class='op'>::</span><span class='id identifier rubyid_boolean'>boolean</span>
+  <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_from_java_bytes'>from_java_bytes</span><span class='lparen'>(</span>
+    <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_encodeAdminRecord'>encodeAdminRecord</span><span class='lparen'>(</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span> <span class='rparen'>)</span>
+  <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pack_HS_VLIST-class_method">
+  
+    + (<tt>Object</tt>) <strong>pack_HS_VLIST</strong>(data) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 109</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pack_HS_VLIST'>pack_HS_VLIST</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Bad HS_VLIST data.</span><span class='tstring_end'>'</span></span> \
+    <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Array</span> <span class='rparen'>)</span> <span class='op'>||</span>
+       <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span>
+         <span class='op'>|</span><span class='id identifier rubyid_ref'>ref</span><span class='op'>|</span>
+         <span class='id identifier rubyid_ref'>ref</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+         <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span>
+         <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_i</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+         <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span>
+         <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_s</span><span class='rparen'>)</span>
+       <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_ref'>ref</span><span class='op'>|</span>
+    <span class='const'>HS</span><span class='op'>::</span><span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ValueReference</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_ref'>ref</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span> <span class='const'>HS</span><span class='op'>::</span><span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ValueReference</span>
+  <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_from_java_bytes'>from_java_bytes</span><span class='lparen'>(</span>
+    <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_encodeValueReferenceList'>encodeValueReferenceList</span><span class='lparen'>(</span> <span class='id identifier rubyid_data'>data</span> <span class='rparen'>)</span>
+  <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="resolver-class_method">
+  
+    + (<tt>Object</tt>) <strong>resolver</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+HandleResolver should be thread safe, so there&#8217;s only one of it.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 134</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_resolver'>resolver</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_class_variable_defined?'>class_variable_defined?</span> <span class='symbol'>:@@resolver</span>
+    <span class='const'>MUTEX</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='kw'>do</span>
+      <span class='kw'>unless</span> <span class='id identifier rubyid_class_variable_defined?'>class_variable_defined?</span> <span class='symbol'>:@@resolver</span>
+        <span class='cvar'>@@resolver</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>HandleResolver</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+        <span class='id identifier rubyid_sessionSetupInfo'>sessionSetupInfo</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>SessionSetupInfo</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>nil</span>
+        <span class='id identifier rubyid_clientSessionTracker'>clientSessionTracker</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ClientSessionTracker</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_sessionSetupInfo'>sessionSetupInfo</span>
+        <span class='cvar'>@@resolver</span><span class='period'>.</span><span class='id identifier rubyid_setSessionTracker'>setSessionTracker</span> <span class='id identifier rubyid_clientSessionTracker'>clientSessionTracker</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='cvar'>@@resolver</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unpack_HS_ADMIN-class_method">
+  
+    + (<tt>Object</tt>) <strong>unpack_HS_ADMIN</strong>(data) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 51</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_unpack_HS_ADMIN'>unpack_HS_ADMIN</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_adminRecord'>adminRecord</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>AdminRecord</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_decodeAdminRecord'>decodeAdminRecord</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span>
+  <span class='rparen'>)</span>
+  <span class='id identifier rubyid_perms'>perms</span> <span class='op'>=</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_perms'>perms</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+  <span class='lbrace'>{</span>
+    <span class='symbol'>:adminId</span> <span class='op'>=&gt;</span> <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_from_java_bytes'>from_java_bytes</span><span class='lparen'>(</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminId'>adminId</span> <span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='symbol'>:adminIdIndex</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminIdIndex'>adminIdIndex</span><span class='comma'>,</span>
+    <span class='symbol'>:perms</span> <span class='op'>=&gt;</span> <span class='const'>Hash</span><span class='lbracket'>[</span>
+      <span class='id identifier rubyid_perms'>perms</span><span class='period'>.</span><span class='id identifier rubyid_each_index'>each_index</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span>
+        <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+        <span class='lbracket'>[</span> <span class='const'>PERMS_BY_I</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_perms'>perms</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='rbracket'>]</span> 
+      <span class='rbrace'>}</span>
+    <span class='rbracket'>]</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unpack_HS_VLIST-class_method">
+  
+    + (<tt>Object</tt>) <strong>unpack_HS_VLIST</strong>(data) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100
+101
+102
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_unpack_HS_VLIST'>unpack_HS_VLIST</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_vlist'>vlist</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_decodeValueReferenceList'>decodeValueReferenceList</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span> <span class='int'>0</span>
+  <span class='rparen'>)</span>
+  <span class='id identifier rubyid_vlist'>vlist</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_ref'>ref</span><span class='op'>|</span>
+    <span class='lbrace'>{</span> <span class='symbol'>:idx</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ref'>ref</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='comma'>,</span> <span class='symbol'>:handle</span> <span class='op'>=&gt;</span> <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_from_java_bytes'>from_java_bytes</span><span class='lparen'>(</span> <span class='id identifier rubyid_ref'>ref</span><span class='period'>.</span><span class='id identifier rubyid_handle'>handle</span> <span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update_handle-class_method">
+  
+    + (<tt>Object</tt>) <strong>update_handle</strong>(handle, old_values, new_values, user_name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 207</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update_handle'>update_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_old_values'>old_values</span><span class='comma'>,</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
+  <span class='id identifier rubyid_authInfo'>authInfo</span> <span class='op'>=</span> <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+  <span class='id identifier rubyid_values_2b_added'>values_2b_added</span>    <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_values_2b_modified'>values_2b_modified</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_values_2b_removed'>values_2b_removed</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_new_values'>new_values</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_new_value'>new_value</span><span class='op'>|</span>
+    <span class='comment'># If the passed handle value is equal to the existing handle value in all
+</span>    <span class='comment'># respects, and no timestamp is passed, then the old timestamp should be
+</span>    <span class='comment'># used.
+</span>    <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>=</span> <span class='id identifier rubyid_old_values'>old_values</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span>
+      <span class='op'>|</span><span class='id identifier rubyid_old_value'>old_value</span><span class='op'>|</span>
+      <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span> <span class='op'>==</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
+    <span class='kw'>end</span>
+    <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_old_value'>old_value</span>
+      <span class='id identifier rubyid_values_2b_added'>values_2b_added</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_handle_value'>handle_value</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_old_value'>old_value</span> <span class='kw'>and</span>
+        <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>!=</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>||</span>
+        <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span> <span class='op'>!=</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span> <span class='op'>||</span>
+        <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_ttl_type'>ttl_type</span> <span class='op'>!=</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_ttl_type'>ttl_type</span> <span class='op'>||</span>
+        <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_ttl'>ttl</span> <span class='op'>!=</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_ttl'>ttl</span> <span class='op'>||</span>
+        <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_refs'>refs</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span>
+            <span class='op'>|</span><span class='id identifier rubyid_ref1'>ref1</span><span class='op'>|</span>
+            <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_refs'>refs</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span> <span class='kw'>do</span>
+              <span class='op'>|</span><span class='id identifier rubyid_ref2'>ref2</span><span class='op'>|</span>
+              <span class='id identifier rubyid_ref1'>ref1</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span>    <span class='op'>==</span> <span class='id identifier rubyid_ref2'>ref2</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span>
+              <span class='id identifier rubyid_ref1'>ref1</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_ref2'>ref2</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span>
+            <span class='kw'>end</span> <span class='comment'># new_value.refs.any? do
+</span>          <span class='kw'>end</span> <span class='op'>||</span> <span class='comment'>#old_value.refs.all? do
+</span>        <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_refs'>refs</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span>
+            <span class='op'>|</span><span class='id identifier rubyid_ref1'>ref1</span><span class='op'>|</span>
+            <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_refs'>refs</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span> <span class='kw'>do</span>
+              <span class='op'>|</span><span class='id identifier rubyid_ref2'>ref2</span><span class='op'>|</span>
+              <span class='id identifier rubyid_ref1'>ref1</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span>    <span class='op'>==</span> <span class='id identifier rubyid_ref2'>ref2</span><span class='lbracket'>[</span><span class='symbol'>:idx</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span>
+              <span class='id identifier rubyid_ref1'>ref1</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_ref2'>ref2</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span>
+            <span class='kw'>end</span> <span class='comment'># old_value.refs.any?
+</span>          <span class='kw'>end</span> <span class='comment'># new_value.refs.all? do
+</span>      <span class='id identifier rubyid_values_2b_modified'>values_2b_modified</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_handle_value'>handle_value</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_old_values'>old_values</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_old_value'>old_value</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_new_value'>new_value</span><span class='op'>|</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span> <span class='op'>==</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_values_2b_removed'>values_2b_removed</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_requests'>requests</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_values_2b_added'>values_2b_added</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_requests'>requests</span> <span class='op'>&lt;&lt;</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>AddValueRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_values_2b_added'>values_2b_added</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span><span class='lparen'>(</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>HandleValue</span> <span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_values_2b_modified'>values_2b_modified</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_requests'>requests</span> <span class='op'>&lt;&lt;</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ModifyValueRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_values_2b_modified'>values_2b_modified</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span><span class='lparen'>(</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>HandleValue</span> <span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_values_2b_removed'>values_2b_removed</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_requests'>requests</span> <span class='op'>&lt;&lt;</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>RemoveValueRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_values_2b_removed'>values_2b_removed</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span><span class='lparen'>(</span> <span class='const'>Java</span><span class='op'>::</span><span class='id identifier rubyid_int'>int</span> <span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_requests'>requests</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_request'>request</span><span class='op'>|</span>
+    <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_processRequest'>processRequest</span><span class='lparen'>(</span> <span class='id identifier rubyid_request'>request</span> <span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span>
+      <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_responseCode'>responseCode</span>
+      <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>FORBIDDEN</span><span class='tstring_end'>'</span></span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_string'>to_string</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 11 10:10:39 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>
