@@ -19,79 +19,71 @@ require 'epic_hs.rb'
 module EPIC
 
 
-# Wrapper around Java::NetHandleHdllib::HandleValue.
+# Wrapper around +net.handle.hdllib.HandleValue+.
 #
 # A Handle, represented in this software system by {Handle}, is a collection of
 # Handle Values, represented by this class.
 # @see Handle#values
 class HandleValue # < Resource
 
-  # For those unfamiliar to this exotic Ruby syntax: the line below opens a new
-  # scope, where +self+ points to {HandleValue}'s metaclass. I.e. methods
-  # defined in this scope become _class methods_ of {HandleValue}.
-  class << self
+  # Meta programming helper method.
+  #
+  # This private class method can be called inside the class definition of
+  # {HandleValue}.
+  # @example
+  #   # Create a Ruby attribute "timestamp" which is mapped
+  #   # to Java methods getTimestamp() and setTimestamp():
+  #   map_java_bytes :timestamp, :Timestamp
+  # @param ruby_name [Symbol] name of the Ruby attribute to create
+  # @param java_name [Symbol] name of the corresponding attribute in
+  #   +net.handle.hdllib.HandleValue+
+  # @see map_java_bytes
+  # @private
+  def self.map_java ruby_name, java_name
+    define_method ruby_name do
+      @handle_value.send( :"get#{java_name}" )
+    end
+    define_method :"#{ruby_name}=" do
+      |value|
+      @handle_value.send( :"set#{java_name}", value )
+      value
+    end
+  end
 
 
-    private
-
-
-    # Meta programming helper method.
-    #
-    # This private class method can be called inside the class definition of
-    # {HandleValue}.
-    # @example
-    #   # Create a Ruby attribute "timestamp" which is mapped
-    #   # to Java methods getTimestamp() and setTimestamp():
-    #   map_java_bytes :timestamp, :Timestamp
-    # @param ruby_name [Symbol] name of the Ruby attribute to create
-    # @param java_name [Symbol] name of the corresponding attribute in
-    #   {Java::NetHandleHdllib::HandleValue}
-    # @see map_java_bytes
-    def map_java ruby_name, java_name
-      define_method ruby_name do
+  # Meta programming helper method.
+  #
+  # {include:map_java}
+  #
+  # The difference between this method and {map_java} is that {map_java} works
+  # for attributes with primitive Java types, while this method wraps a Ruby
+  # {String} attribute around a Java attribute of type +byte[]+. In order to
+  # do so, we need to define how the Java octet-stream must be interpreted,
+  # i.e. which encoding to use.
+  # @example
+  #   # Create a Ruby attribute "data" which is mapped
+  #   # to Java methods getData() and setData():
+  #   map_java_bytes :data, :Data, Encoding::BINARY
+  # @param (see map_java)
+  # @param encoding [Encoding] The encoding to be used when interpreting the
+  #   Java byte array.
+  # @see map_java
+  # @private
+  def self.map_java_bytes ruby_name, java_name, encoding = Encoding::UTF_8
+    define_method ruby_name do
+      String.from_java_bytes(
         @handle_value.send( :"get#{java_name}" )
-      end
-      define_method :"#{ruby_name}=" do
-        |value|
-        @handle_value.send( :"set#{java_name}", value )
-        value
-      end
+      ).force_encoding(encoding)
     end
-
-
-    # {include:map_java}
-    #
-    # The difference between this method and {map_java} is that {map_java} works
-    # for attributes with primitive Java types, while this method wraps a Ruby
-    # {String} attribute around a Java attribute of type +byte[]+. In order to
-    # do so, we need to define how the Java octet-stream must be interpreted,
-    # i.e. which encoding to use.
-    # @example
-    #   # Create a Ruby attribute "data" which is mapped
-    #   # to Java methods getData() and setData():
-    #   map_java_bytes :data, :Data, Encoding::BINARY
-    # @param (see map_java)
-    # @param encoding [Encoding] The encoding to be used when interpreting the
-    #   Java byte array.
-    # @see map_java
-    def map_java_bytes ruby_name, java_name, encoding = Encoding::UTF_8
-      define_method ruby_name do
-        String.from_java_bytes(
-          @handle_value.send( :"get#{java_name}" )
-        ).force_encoding(encoding)
-      end
-      define_method :"#{ruby_name}=" do
-        |value|
-        @handle_value.send(
-          :"set#{java_name}",
-          value.force_encoding(Encoding::ASCII_8BIT).to_java_bytes
-        )
-        value
-      end
+    define_method :"#{ruby_name}=" do
+      |value|
+      @handle_value.send(
+        :"set#{java_name}",
+        value.force_encoding(Encoding::ASCII_8BIT).to_java_bytes
+      )
+      value
     end
-
-
-  end # class << self
+  end
 
 
   # @!attribute [rw]

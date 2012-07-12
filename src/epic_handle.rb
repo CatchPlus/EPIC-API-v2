@@ -218,7 +218,7 @@ class Handle < Resource
   # @param values [Array<HandleValue>]
   # @param user_name [String]
   # @return [Array<HandleValue>] values
-  # @todo I found a method {GenericHSAdapter#createAdminValue} in Java that
+  # @todo I found a Java method +GenericHSAdapter#createAdminValue+ that
   #   does exactly what we need! Use that instead! ---PvB
   def self.enforce_admin_record values, user_name
     unless values.any? { |v| 'HS_ADMIN' === v.type }
@@ -249,18 +249,18 @@ class Handle < Resource
         :adminId => user_info[:handle],
         :adminIdIndex => user_info[:index],
         :perms => {
-          :add_handle    => true,
-          :delete_handle => true,
-          :add_NA        => false,
-          :delete_NA     => false,
-          :modify_value  => true,
-          :remove_value  => true,
-          :add_value     => true,
-          :read_value    => true,
-          :modify_admin  => true,
-          :remove_admin  => true,
-          :add_admin     => true,
-          :list_handles  => false
+          :add_handle         => true,
+          :delete_handle      => true,
+          :add_naming_auth    => false,
+          :delete_naming_auth => false,
+          :modify_value       => true,
+          :remove_value       => true,
+          :add_value          => true,
+          :read_value         => true,
+          :modify_admin       => true,
+          :remove_admin       => true,
+          :add_admin          => true,
+          :list_handles       => false
         }
       }
       values << admin_record

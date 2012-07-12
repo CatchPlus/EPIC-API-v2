@@ -107,8 +107,8 @@ For example, the +JSON+ representation of an +HS_ADMIN+ value looks like this
 
 To add a new "parseble" type to this web service, all you have to do is create
 two new methods in this module, called
-{#unpack_SOME_HANDLE_TYPE unpack_YOUR_TYPE} and
-{#pack_SOME_HANDLE_TYPE pack_YOUR_TYPE}, which translate between the binary and
+{unpack_SOME_HANDLE_TYPE unpack_YOUR_TYPE} and
+{pack_SOME_HANDLE_TYPE pack_YOUR_TYPE}, which translate between the binary and
 the structured representations.
 
 <b>See also:</b>::
@@ -159,7 +159,7 @@ Translates a Ruby structure into binary data.
 @see #pack_SOME_HANDLE_TYPE
 =end
   def pack_HS_ADMIN data
-    raise 'Missing one or more required values' \
+    raise ReST::HTTPStatus, "BAD_REQUEST Missing one or more required values: #{data.inspect}" \
       if ! data.kind_of?( Hash ) ||
          ! data[:adminId] ||
          ! data[:adminIdIndex] ||
@@ -172,9 +172,9 @@ Translates a Ruby structure into binary data.
     adminRecord = HDLLIB::AdminRecord.new
     adminRecord.adminId = data[:adminId].to_s.to_java_bytes
     adminRecord.adminIdIndex = data[:adminIdIndex].to_i
-    adminRecord.perms = PERMS_BY_I.values.collect do
+    adminRecord.perms = PERMS_BY_I.collect do
       |perm|
-      !! perms[ perm.to_s.downcase.to_sym ]
+      !! data[:perms][ perm.to_s.downcase.to_sym ]
     end.to_java Java::boolean
     String.from_java_bytes(
       HDLLIB::Encoder.encodeAdminRecord( adminRecord )

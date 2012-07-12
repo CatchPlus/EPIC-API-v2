@@ -875,7 +875,7 @@ If there's no resource at the given path, but you'd still like to respond to
 
 
 =begin rdoc
-{include:#resource_factory}
+{include:Server#resource_factory}
 =end
   def initialize(resource_factory)
     super()
