@@ -232,6 +232,7 @@ class HandleValue # < Resource
   # string, this attribute is +nil+.
   # @!attribute [rw] parsed_data
   # @return [Array, Hash, String, nil]
+  # @todo check if the transcodings can also be done with {String#force_encoding}.
   def parsed_data
     nicetype = type.gsub /\W+/, '_'
     if HS.respond_to? :"unpack_#{nicetype}"

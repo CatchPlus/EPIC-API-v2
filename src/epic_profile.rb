@@ -50,14 +50,16 @@ class Profile < Resource
   end
 
 
+  def empty?
+    ! File.exist? self.filename
+  end
+
+
   # @return [Time]
   # @see ReST::Resource#last_modified
-  # @todo implement
   def last_modified
     [
-      Time.at(
-        File.mtime(self.filename)
-      ),
+      File.mtime( self.filename ),
       false
     ]
   end
@@ -70,6 +72,7 @@ class Profile::XHTML < Serializer::XHTML
 
 
   def each_nested # :yields: strings
+    yield ''
   end
 
 

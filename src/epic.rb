@@ -25,6 +25,7 @@ require 'epic_handles.rb'
 require 'epic_handlevalue.rb'
 require 'epic_nas.rb'
 require 'epic_directory.rb'
+require 'epic_profile.rb'
 
 require 'singleton'
 
@@ -69,20 +70,20 @@ Can be called by tainted resources, to be removed from the cache.
     path = path.to_s.unslashify
     cached = resource_cache[path]
     # Legal values for +cached+ are:
-    # - Nil: the resource is not in cache
-    # - False: resource was requested earlier, without success
+    # - nil: the resource is not in cache
+    # - false: resource was requested earlier, without success
     # - ReST::Resource
     if ! cached.nil?
-      # if +cached+ is +false+, we want to return +Nil+.
+      # if +cached+ is +false+, we want to return +nil+.
       return cached || nil
     end
-    resource_cache[path] = case path # already unslashified!
+    resource_cache[path] = case path.unescape_path # already unslashified!
     when ''
       StaticCollection.new '/', [ 'handles/', 'profiles/', 'templates/', 'batches/' ]
     when '/handles', '/profiles', '/templates', '/batches'
       NAs.new path.slashify
     when %r{\A/(batches)/\d+\z}
-      StaticCollection.new path.to_s.slashify, []
+      StaticCollection.new path.slashify, []
     when %r{\A/handles/\d+\z}
       #StaticCollection.new path.to_s.slashify, ['hello/']
       Handles.new path.slashify
@@ -90,6 +91,10 @@ Can be called by tainted resources, to be removed from the cache.
       Handle.new path
     when %r{\A/(templates|profiles)/\d+\z}
       Directory.new path.slashify
+    when %r{\A/profiles/\d+/\w[^/]+\z}
+      Profile.new path
+    # when %r{\A/templates/\d+/[^/]+\z}
+      # Template.new path
     else
       false
     end
@@ -103,6 +108,11 @@ Can be called by tainted resources, to be removed from the cache.
 For performance, this {ResourceFactory} maintains a cache of
 {EPIC::Resource Resources} it has produced earlier <em>within this same
 request.</em>
+
+Valid Hash values are:
+[{Resource}] A cached resource
+[false] The resource has been requested earlier, but wasn't found.
+[nil] The resource hasn't been requested yet.
 @return [Hash< unslashified_path => resource_object >]
 =end
   def resource_cache

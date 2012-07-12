@@ -20,6 +20,10 @@ require 'singleton'
 
 module EPIC
 
+
+=begin
+@todo multi-host sites
+=end
 class DB
 
   include Singleton

@@ -578,7 +578,7 @@ As a courtesy, this module implements a default handler for HEAD requests,
 which calls {#do_METHOD #do_GET}, and then strips of the response body.
 
 If this resource implements method +content_types+, then <code>response['Content-Type']</code>
-will be set in the response object passed to +do_GET+.
+will be set in the response object passed to {#do_METHOD #do_GET}.
 
 Feel free to override this method at will.
 @return [void]
@@ -664,7 +664,7 @@ Wrapper around {#do_HEAD}
 
 
 =begin rdoc
-Wrapper around {#do_GET}
+Wrapper around {#do_METHOD #do_GET}
 @private
 @return [void]
 @raise [HTTPStatus]
@@ -680,7 +680,7 @@ Wrapper around {#do_GET}
 
 
 =begin rdoc
-Wrapper around {#do_PUT}
+Wrapper around {#do_METHOD #do_PUT}
 @private
 @return [void]
 @raise [HTTPStatus]
@@ -891,7 +891,10 @@ For thread safety, this method clones +self+, which handles the request in
 @return [Array<(status_code, response_headers, response_body)>]
 =end
   def call(p_env)
-    dup.call! p_env
+    start = Time.now
+    retval = dup.call! p_env
+    $stderr.puts( 'Duration: ' + ( Time.now - start ).to_s )
+    retval
   end
 
 =begin rdoc
@@ -899,6 +902,7 @@ For thread safety, this method clones +self+, which handles the request in
 =end
   def call!(p_env)
     request  = ReST::Request.new( resource_factory, p_env )
+    # See also Request::current():
     Thread.current[:djinn_request] = request
     begin
       response = Rack::Response.new

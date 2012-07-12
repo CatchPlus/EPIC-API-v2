@@ -1,20 +1,15 @@
 #!/bin/bash -l
 
 cd "`dirname "$0"`"/../
-#if ! [ -f epic.rb ]; then
-#	echo "Run this script from the top level directory." >&2
-#	exit 1
-#fi
 
-#export JRUBY_OPTS=$(
-#  echo -n $(
-#    for i in $JRUBY_OPTS; do
-#      echo $i;
-#    done |
-#    grep -v -- --1.9
-#  )
-#)
+# Yard doesn't seem to work nicely with my current version of JRuby, so I need
+# to load the "normal" Ruby interpreter:
+rvm use $( rvm list strings | grep '^ruby-' )
 
-rvm use ruby-1.9.2
 rm -rf .yardoc/
-yard server --reload
+if [ "yard" = "`basename "$0" ".sh"`" ]; then
+  rm -rf public/docs/yard/*
+  exec yard "$@"
+else
+  exec yard server --reload "$@"
+fi

@@ -20,35 +20,121 @@ require 'hsj/handle.jar'
 require 'hsj/cnriutil.jar'
 
 
-# The namespace for everything related to the EPIC Web Service.
 module EPIC
+
+
+=begin rdoc
+Namespace for everything related to the Handle System client library (Java).
+
+This module is not object-oriented; it's just a collection of "procedures" that
+wrap around bits of the Handle client library.
+=end
 module HS
 
 
+  # A shorthand for the Java +net.handle.hdllib+ package.
   HDLLIB = Java::NetHandleHdllib
 
-  PERMS_BY_S = {
-    :add_handle    => 0,
-    :delete_handle => 1,
-    :add_NA        => 2,
-    :delete_NA     => 3,
-    :modify_value  => 4,
-    :remove_value  => 5,
-    :add_value     => 6,
-    :read_value    => 7,
-    :modify_admin  => 8,
-    :remove_admin  => 9,
-    :add_admin     => 10,
-    :list_handles  => 11
-  }
-  PERMS_BY_I = PERMS_BY_S.invert
+  # All permissions in the Handle System, indexed by integers.
+  PERMS_BY_I = [
+    :add_handle,          #  0
+    :delete_handle,       #  1
+    :add_naming_auth,     #  2
+    :delete_naming_auth,  #  3
+    :modify_value,        #  4
+    :remove_value,        #  5
+    :add_value,           #  6
+    :read_value,          #  7
+    :modify_admin,        #  8
+    :remove_admin,        #  9
+    :add_admin,           # 10
+    :list_handles         # 11
+  ]
 
+  # All permissions in the Handle System, indexed by symbols.
+  PERMS_BY_S = Hash[ PERMS_BY_I.each_with_index.to_a ]
+
+  # These constants need to be the same as in Java.
+  # Let's check if they are:
+  unless PERMS_BY_S.all? {
+           |symbol, integer|
+           integer == HDLLIB.AdminRecord.const_get( symbol.to_s.upcase.to_sym )
+         }
+    raise 'Oops! CNRI changed their constants!'
+  end
+
+  # Cache of Java +AuthenticationInfo+ objects, indexed by user name.
   AUTHINFO = {}
+
+=begin rdoc
+Mutex used to make some of the methods in this class thread-safe.
+@see HS.resolver
+@see HS.authentication_info
+=end
   MUTEX = Mutex.new
   EMPTY_HANDLE_VALUE = HDLLIB::HandleValue.new
 
 
-  def self.unpack_HS_ADMIN data
+class << self
+
+
+=begin rdoc
+@!method unpack_SOME_HANDLE_TYPE(data)
+Translates binary data (from the database) to a Ruby structure.
+
+For certain binary encoded Handle value types, like +HS_ADMIN+ and +HS_VLIST+,
+the web service can produce <em>and consume</em> a structured representation.
+For example, the +JSON+ representation of an +HS_ADMIN+ value looks like this
+(abbreviated and prettified for clarity):
+
+  {
+    "idx"        : 100,
+    "type"       : "HS_ADMIN",
+    "data"       : "D/8AAAAKMC5OQS8xMTAyMgAAASwAAA==",
+    "parsed_data": {
+      "adminId"     : "0.NA/11022",
+      "adminIdIndex": 300,
+      "perms"       : {
+           "add_handle": true,     "add_naming_auth": true,
+        "delete_handle": true,  "delete_naming_auth": true,
+         "modify_value": true,        "modify_admin": true,
+         "remove_value": true,        "remove_admin": true,
+            "add_value": true,           "add_admin": true,
+           "read_value": true,        "list_handles": true
+      }
+    }
+  }
+
+To add a new "parseble" type to this web service, all you have to do is create
+two new methods in this module, called
+{#unpack_SOME_HANDLE_TYPE unpack_YOUR_TYPE} and
+{#pack_SOME_HANDLE_TYPE pack_YOUR_TYPE}, which translate between the binary and
+the structured representations.
+
+<b>See also:</b>::
+  {HandleValue#parsed_data} and {HandleValue#parsed_data=} which use
+  introspection to find out if a parsed representation of a value type
+  is available.
+@param data [String] some binary data.
+@return [Hash] a structured representation of +data+
+=end
+
+
+=begin rdoc
+@!method pack_SOME_HANDLE_TYPE(data)
+Translates a Ruby structure into binary data.
+@return [String] a binary representation of +data+
+@param data [Hash] some structured data
+@see #unpack_SOME_HANDLE_TYPE
+=end
+
+
+=begin rdoc
+@param data [String]
+@return [Hash]
+@see #unpack_SOME_HANDLE_TYPE
+=end
+  def unpack_HS_ADMIN data
     adminRecord = HDLLIB::AdminRecord.new
     HDLLIB::Encoder.decodeAdminRecord(
       data.to_java_bytes, 0, adminRecord
@@ -60,34 +146,35 @@ module HS
       :perms => Hash[
         perms.each_index.collect {
           |i|
-          [ PERMS_BY_I[i], perms[i] ] 
+          [ PERMS_BY_I[i].to_s.downcase, perms[i] ] 
         }
       ]
     }
   end
 
 
-  def self.pack_HS_ADMIN data
+=begin rdoc
+@param data [Hash]
+@return [String]
+@see #pack_SOME_HANDLE_TYPE
+=end
+  def pack_HS_ADMIN data
     raise 'Missing one or more required values' \
       if ! data.kind_of?( Hash ) ||
          ! data[:adminId] ||
          ! data[:adminIdIndex] ||
          ! data[:perms] ||
          ! data[:perms].kind_of?( Hash ) ||
-         ! data[:perms].keys.all? { |k| PERMS_BY_S[k] }
+         ! PERMS_BY_I.all? {
+             |perm|
+             data[:perms].key? perm.to_s.downcase.to_sym
+           }
     adminRecord = HDLLIB::AdminRecord.new
     adminRecord.adminId = data[:adminId].to_s.to_java_bytes
     adminRecord.adminIdIndex = data[:adminIdIndex].to_i
-    perms = Hash[
-      data[:perms].collect do
-        |key, value|
-        key = key.to_sym
-        [ key, value ]
-      end
-    ]
     adminRecord.perms = PERMS_BY_I.values.collect do
       |perm|
-      !!perms[perm]
+      !! perms[ perm.to_s.downcase.to_sym ]
     end.to_java Java::boolean
     String.from_java_bytes(
       HDLLIB::Encoder.encodeAdminRecord( adminRecord )
@@ -95,7 +182,12 @@ module HS
   end
 
 
-  def self.unpack_HS_VLIST data
+=begin rdoc
+@param data [String]
+@return [Hash]
+@see #unpack_SOME_HANDLE_TYPE
+=end
+  def unpack_HS_VLIST data
     vlist = HDLLIB::Encoder.decodeValueReferenceList(
       data.to_java_bytes, 0
     )
@@ -106,7 +198,12 @@ module HS
   end
 
 
-  def self.pack_HS_VLIST data
+=begin rdoc
+@param data [Hash]
+@return [String]
+@see #pack_SOME_HANDLE_TYPE
+=end
+  def pack_HS_VLIST data
     raise 'Bad HS_VLIST data.' \
       if ! data.kind_of?( Array ) ||
          ! data.all? {
@@ -130,8 +227,10 @@ module HS
   end
 
 
-  # HandleResolver should be thread safe, so there's only one of it.
-  def self.resolver
+=begin rdoc
+HandleResolver should be thread safe, so there's only one of it.
+=end
+  def resolver
     unless class_variable_defined? :@@resolver
       MUTEX.synchronize do
         unless class_variable_defined? :@@resolver
@@ -146,11 +245,21 @@ module HS
   end
 
 
-  def self.authenticationInfo user_name
+=begin rdoc
+A Java AuthenticationInfo object for user +user_name+.
+
+The objects are cached for efficiency, in class constant +AUTH_INFO+
+@private
+@param user_name [#to_s]
+@return [HDLLIB::AuthenticationInfo]
+=end
+  def authentication_info user_name
+    user_name = user_name.to_s
     unless AUTHINFO[user_name]
       userInfo = EPIC::USERS[user_name]
       raise "No user info found for user '#{user_name}'" unless userInfo
       MUTEX.synchronize do
+        #TODO Public key authentication
         AUTHINFO[user_name] ||= HDLLIB::SecretKeyAuthenticationInfo.new(
           userInfo[:handle].to_java_bytes,
           userInfo[:index],
@@ -163,26 +272,15 @@ module HS
   end
 
 
-  def self.delete handle, user_name
-    request = HDLLIB::DeleteHandleRequest.new(
-      handle.to_java_bytes,
-      authenticationInfo( user_name )
-    )
-    response = resolver.processRequest( request )
-    if response.kind_of? HDLLIB::ErrorResponse
-      case response.responseCode
-      when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-        raise ReST::HTTPStatus, 'FORBIDDEN'
-      when HDLLIB::ErrorResponse::RC_HANDLE_NOT_FOUND
-        raise ReST::HTTPStatus, 'NOT_FOUND'
-      else
-        raise response.to_string
-      end
-    end
-  end
-
-
-  def self.create_handle handle, values, user_name
+=begin
+Create a Handle
+@param handle [#to_s]
+@param values [Array<HandleValue>]
+@param user_name [#to_s]
+@return [void]
+@raise [ReST::HTTPStatus]
+=end
+  def create_handle handle, values, user_name
     values = values.collect do
       |value|
       value.handle_value
@@ -190,7 +288,7 @@ module HS
     request = HDLLIB::CreateHandleRequest.new(
       handle.to_java_bytes,
       values.to_java( HDLLIB::HandleValue ),
-      authenticationInfo( user_name )
+      authentication_info( user_name )
     )
     response = resolver.processRequest( request )
     if response.kind_of? HDLLIB::ErrorResponse
@@ -204,8 +302,17 @@ module HS
   end
 
 
-  def self.update_handle handle, old_values, new_values, user_name
-    authInfo = authenticationInfo( user_name )
+=begin
+Update a Handle
+@param handle [#to_s]
+@param old_values [Array<HandleValue>] The old values in +handle+.
+@param new_values [Array<HandleValue>] The new values for +handle+.
+@param user_name [#to_s]
+@return [void]
+@raise [ReST::HTTPStatus]
+=end
+  def update_handle handle, old_values, new_values, user_name
+    authInfo = authentication_info( user_name )
     values_2b_added    = []
     values_2b_modified = []
     values_2b_removed  = []
@@ -255,21 +362,21 @@ module HS
       requests << HDLLIB::AddValueRequest.new(
         handle.to_java_bytes,
         values_2b_added.to_java( HDLLIB::HandleValue ),
-        authenticationInfo( user_name )
+        authentication_info( user_name )
       )
     end
     if ! values_2b_modified.empty?
       requests << HDLLIB::ModifyValueRequest.new(
         handle.to_java_bytes,
         values_2b_modified.to_java( HDLLIB::HandleValue ),
-        authenticationInfo( user_name )
+        authentication_info( user_name )
       )
     end
     if ! values_2b_removed.empty?
       requests << HDLLIB::RemoveValueRequest.new(
         handle.to_java_bytes,
         values_2b_removed.to_java( Java::int ),
-        authenticationInfo( user_name )
+        authentication_info( user_name )
       )
     end
     requests.each do
@@ -287,8 +394,15 @@ module HS
   end
 
 
-  def self.delete_handle handle, user_name
-    authInfo = authenticationInfo( user_name )
+=begin
+Deletes a Handle
+@param handle [#to_s]
+@param user_name [#to_s]
+@return [void]
+@raise [ReST::HTTPStatus]
+=end
+  def delete_handle handle, user_name
+    authInfo = authentication_info( user_name )
     request = HDLLIB::DeleteHandleRequest.new(
       handle.to_java_bytes,
       authInfo
@@ -305,6 +419,9 @@ module HS
       end
     end
   end
+
+
+end # class << self
 
 
 end # module HS
