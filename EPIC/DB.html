@@ -103,7 +103,25 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'><p>
+multi-host sites
+</p>
+</div>
+  </div>
 
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -311,13 +329,13 @@ A new instance of DB
       <pre class="lines">
 
 
-39
-40
-41
-42</pre>
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@all_nas</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -350,12 +368,12 @@ A new instance of DB
       <pre class="lines">
 
 
-61
-62
-63</pre>
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_all_handle_values'>all_handle_values</span> <span class='id identifier rubyid_handle'>handle</span>
   <span class='id identifier rubyid_ds'>ds</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pool'>pool</span><span class='lbracket'>[</span><span class='symbol'>:handles</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span> <span class='symbol'>:handle</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_handle'>handle</span> <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
@@ -380,12 +398,12 @@ A new instance of DB
       <pre class="lines">
 
 
-44
-45
-46</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_all_nas'>all_nas</span>
   <span class='ivar'>@all_nas</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pool'>pool</span><span class='lbracket'>[</span><span class='symbol'>:nas</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='symbol'>:na</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:na</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -410,10 +428,6 @@ A new instance of DB
       <pre class="lines">
 
 
-48
-49
-50
-51
 52
 53
 54
@@ -421,10 +435,14 @@ A new instance of DB
 56
 57
 58
-59</pre>
+59
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_handle'>each_handle</span> <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='id identifier rubyid_ds'>ds</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pool'>pool</span><span class='lbracket'>[</span><span class='symbol'>:handles</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='symbol'>:handle</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_distinct'>distinct</span>
@@ -458,12 +476,12 @@ A new instance of DB
       <pre class="lines">
 
 
-27
-28
-29</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pool'>pool</span>
   <span class='ivar'>@pool</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sql_depth'>sql_depth</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Sequel</span><span class='period'>.</span><span class='id identifier rubyid_connect'>connect</span> <span class='op'>*</span><span class='const'>SEQUEL_CONNECTION_ARGS</span>
@@ -488,12 +506,12 @@ A new instance of DB
       <pre class="lines">
 
 
-31
-32
-33</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sql_depth'>sql_depth</span>
   <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:epic_sql_depth</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='int'>0</span>
@@ -518,12 +536,12 @@ A new instance of DB
       <pre class="lines">
 
 
-35
-36
-37</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sql_depth='>sql_depth=</span> <span class='id identifier rubyid_n'>n</span>
   <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:epic_sql_depth</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -538,7 +556,7 @@ A new instance of DB
 </div>
 
     <div id="footer">
-  Generated on Wed Jul 11 10:10:40 2012 by
+  Generated on Thu Jul 12 22:59:50 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

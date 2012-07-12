@@ -84,46 +84,133 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>
+Namespace for everything related to the Handle System client library
+(Java).
+</p>
+<p>
+This module is not object-oriented; it&#8217;s just a collection of
+&#8220;procedures&#8221; that wrap around bits of the Handle client
+library.
+</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
   <h2>Constant Summary</h2>
   
     <dl class="constants">
       
         <dt id="HDLLIB-constant" class="">HDLLIB =
-          
+          <div class="docstring">
+  <div class="discussion">
+    <p>
+A shorthand for the Java <tt>net.handle.hdllib</tt> package.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
         <dd><pre class="code"><span class='const'>Java</span><span class='op'>::</span><span class='const'>NetHandleHdllib</span></pre></dd>
       
-        <dt id="PERMS_BY_S-constant" class="">PERMS_BY_S =
-          
-        </dt>
-        <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='symbol'>:add_handle</span>    <span class='op'>=&gt;</span> <span class='int'>0</span><span class='comma'>,</span>
-  <span class='symbol'>:delete_handle</span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
-  <span class='symbol'>:add_NA</span>        <span class='op'>=&gt;</span> <span class='int'>2</span><span class='comma'>,</span>
-  <span class='symbol'>:delete_NA</span>     <span class='op'>=&gt;</span> <span class='int'>3</span><span class='comma'>,</span>
-  <span class='symbol'>:modify_value</span>  <span class='op'>=&gt;</span> <span class='int'>4</span><span class='comma'>,</span>
-  <span class='symbol'>:remove_value</span>  <span class='op'>=&gt;</span> <span class='int'>5</span><span class='comma'>,</span>
-  <span class='symbol'>:add_value</span>     <span class='op'>=&gt;</span> <span class='int'>6</span><span class='comma'>,</span>
-  <span class='symbol'>:read_value</span>    <span class='op'>=&gt;</span> <span class='int'>7</span><span class='comma'>,</span>
-  <span class='symbol'>:modify_admin</span>  <span class='op'>=&gt;</span> <span class='int'>8</span><span class='comma'>,</span>
-  <span class='symbol'>:remove_admin</span>  <span class='op'>=&gt;</span> <span class='int'>9</span><span class='comma'>,</span>
-  <span class='symbol'>:add_admin</span>     <span class='op'>=&gt;</span> <span class='int'>10</span><span class='comma'>,</span>
-  <span class='symbol'>:list_handles</span>  <span class='op'>=&gt;</span> <span class='int'>11</span>
-<span class='rbrace'>}</span></pre></dd>
-      
         <dt id="PERMS_BY_I-constant" class="">PERMS_BY_I =
-          
+          <div class="docstring">
+  <div class="discussion">
+    <p>
+All permissions in the Handle System, indexed by integers.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
-        <dd><pre class="code"><span class='const'>PERMS_BY_S</span><span class='period'>.</span><span class='id identifier rubyid_invert'>invert</span></pre></dd>
+        <dd><pre class="code"><span class='lbracket'>[</span>
+  <span class='symbol'>:add_handle</span><span class='comma'>,</span>          <span class='comment'>#  0
+</span>  <span class='symbol'>:delete_handle</span><span class='comma'>,</span>       <span class='comment'>#  1
+</span>  <span class='symbol'>:add_naming_auth</span><span class='comma'>,</span>     <span class='comment'>#  2
+</span>  <span class='symbol'>:delete_naming_auth</span><span class='comma'>,</span>  <span class='comment'>#  3
+</span>  <span class='symbol'>:modify_value</span><span class='comma'>,</span>        <span class='comment'>#  4
+</span>  <span class='symbol'>:remove_value</span><span class='comma'>,</span>        <span class='comment'>#  5
+</span>  <span class='symbol'>:add_value</span><span class='comma'>,</span>           <span class='comment'>#  6
+</span>  <span class='symbol'>:read_value</span><span class='comma'>,</span>          <span class='comment'>#  7
+</span>  <span class='symbol'>:modify_admin</span><span class='comma'>,</span>        <span class='comment'>#  8
+</span>  <span class='symbol'>:remove_admin</span><span class='comma'>,</span>        <span class='comment'>#  9
+</span>  <span class='symbol'>:add_admin</span><span class='comma'>,</span>           <span class='comment'># 10
+</span>  <span class='symbol'>:list_handles</span>         <span class='comment'># 11
+</span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="PERMS_BY_S-constant" class="">PERMS_BY_S =
+          <div class="docstring">
+  <div class="discussion">
+    <p>
+All permissions in the Handle System, indexed by symbols.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>Hash</span><span class='lbracket'>[</span> <span class='const'>PERMS_BY_I</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span> <span class='rbracket'>]</span></pre></dd>
       
         <dt id="AUTHINFO-constant" class="">AUTHINFO =
-          
+          <div class="docstring">
+  <div class="discussion">
+    <p>
+Cache of Java <tt>AuthenticationInfo</tt> objects, indexed by user name.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span><span class='rbrace'>}</span></pre></dd>
       
         <dt id="MUTEX-constant" class="">MUTEX =
-          
+          <div class="docstring">
+  <div class="discussion">
+    <p>
+Mutex used to make some of the methods in this class thread-safe.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#resolver-class_method" title="EPIC::HS.resolver (method)">resolver</a></span></li>
+    
+      <li><span class='object_link'><a href="#authentication_info-class_method" title="EPIC::HS.authentication_info (method)">authentication_info</a></span></li>
+    
+  </ul>
+
+</div>
         </dt>
         <dd><pre class="code"><span class='const'>Mutex</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span></pre></dd>
       
@@ -152,7 +239,82 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#authenticationInfo-class_method" title="authenticationInfo (class method)">+ (Object) <strong>authenticationInfo</strong>(user_name) </a>
+      <a href="#authentication_info-class_method" title="authentication_info (class method)">+ (HDLLIB::AuthenticationInfo) <strong>authentication_info</strong>(user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A Java AuthenticationInfo object for user <tt>user_name</tt>.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_handle-class_method" title="create_handle (class method)">+ (void) <strong>create_handle</strong>(handle, values, user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Create a Handle.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_handle-class_method" title="delete_handle (class method)">+ (void) <strong>delete_handle</strong>(handle, user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Deletes a Handle.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pack_HS_ADMIN-class_method" title="pack_HS_ADMIN (class method)">+ (String) <strong>pack_HS_ADMIN</strong>(data) </a>
     
 
     
@@ -174,7 +336,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_handle-class_method" title="create_handle (class method)">+ (Object) <strong>create_handle</strong>(handle, values, user_name) </a>
+      <a href="#pack_HS_VLIST-class_method" title="pack_HS_VLIST (class method)">+ (String) <strong>pack_HS_VLIST</strong>(data) </a>
     
 
     
@@ -196,7 +358,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#delete-class_method" title="delete (class method)">+ (Object) <strong>delete</strong>(handle, user_name) </a>
+      <a href="#pack_SOME_HANDLE_TYPE-class_method" title="pack_SOME_HANDLE_TYPE (class method)">+ (String) <strong>pack_SOME_HANDLE_TYPE</strong>(data) </a>
     
 
     
@@ -210,73 +372,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#delete_handle-class_method" title="delete_handle (class method)">+ (Object) <strong>delete_handle</strong>(handle, user_name) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#pack_HS_ADMIN-class_method" title="pack_HS_ADMIN (class method)">+ (Object) <strong>pack_HS_ADMIN</strong>(data) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#pack_HS_VLIST-class_method" title="pack_HS_VLIST (class method)">+ (Object) <strong>pack_HS_VLIST</strong>(data) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+Translates a Ruby structure into binary data.
+</p>
+</div></span>
   
 </li>
 
@@ -309,7 +408,7 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#unpack_HS_ADMIN-class_method" title="unpack_HS_ADMIN (class method)">+ (Object) <strong>unpack_HS_ADMIN</strong>(data) </a>
+      <a href="#unpack_HS_ADMIN-class_method" title="unpack_HS_ADMIN (class method)">+ (Hash) <strong>unpack_HS_ADMIN</strong>(data) </a>
     
 
     
@@ -331,7 +430,7 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#unpack_HS_VLIST-class_method" title="unpack_HS_VLIST (class method)">+ (Object) <strong>unpack_HS_VLIST</strong>(data) </a>
+      <a href="#unpack_HS_VLIST-class_method" title="unpack_HS_VLIST (class method)">+ (Hash) <strong>unpack_HS_VLIST</strong>(data) </a>
     
 
     
@@ -353,7 +452,7 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#update_handle-class_method" title="update_handle (class method)">+ (Object) <strong>update_handle</strong>(handle, old_values, new_values, user_name) </a>
+      <a href="#unpack_SOME_HANDLE_TYPE-class_method" title="unpack_SOME_HANDLE_TYPE (class method)">+ (Hash) <strong>unpack_SOME_HANDLE_TYPE</strong>(data) </a>
     
 
     
@@ -367,7 +466,35 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+Translates binary data (from the database) to a Ruby structure.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update_handle-class_method" title="update_handle (class method)">+ (void) <strong>update_handle</strong>(handle, old_values, new_values, user_name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Update a Handle.
+</p>
+</div></span>
   
 </li>
 
@@ -382,45 +509,92 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="authenticationInfo-class_method">
+  <h3 class="signature first" id="authentication_info-class_method">
   
-    + (<tt>Object</tt>) <strong>authenticationInfo</strong>(user_name) 
-  
-
+    + (<tt>HDLLIB::AuthenticationInfo</tt>) <strong>authentication_info</strong>(user_name) 
   
 
   
-</h3><table class="source_code">
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+A Java AuthenticationInfo object for user <tt>user_name</tt>.
+</p>
+<p>
+The objects are cached for efficiency, in class constant <tt>AUTH_INFO</tt>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>user_name</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>HDLLIB::AuthenticationInfo</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163</pre>
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 256</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span> <span class='id identifier rubyid_user_name'>user_name</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_authentication_info'>authentication_info</span> <span class='id identifier rubyid_user_name'>user_name</span>
+  <span class='id identifier rubyid_user_name'>user_name</span> <span class='op'>=</span> <span class='id identifier rubyid_user_name'>user_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
   <span class='kw'>unless</span> <span class='const'>AUTHINFO</span><span class='lbracket'>[</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_userInfo'>userInfo</span> <span class='op'>=</span> <span class='const'>EPIC</span><span class='op'>::</span><span class='const'>USERS</span><span class='lbracket'>[</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No user info found for user '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_userInfo'>userInfo</span>
     <span class='const'>MUTEX</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='kw'>do</span>
-      <span class='const'>AUTHINFO</span><span class='lbracket'>[</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>SecretKeyAuthenticationInfo</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+      <span class='comment'>#TODO Public key authentication
+</span>      <span class='const'>AUTHINFO</span><span class='lbracket'>[</span><span class='id identifier rubyid_user_name'>user_name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>SecretKeyAuthenticationInfo</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
         <span class='id identifier rubyid_userInfo'>userInfo</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
         <span class='id identifier rubyid_userInfo'>userInfo</span><span class='lbracket'>[</span><span class='symbol'>:index</span><span class='rbracket'>]</span><span class='comma'>,</span>
         <span class='id identifier rubyid_userInfo'>userInfo</span><span class='lbracket'>[</span><span class='symbol'>:secret</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
@@ -438,43 +612,105 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <div class="method_details ">
   <h3 class="signature " id="create_handle-class_method">
   
-    + (<tt>Object</tt>) <strong>create_handle</strong>(handle, values, user_name) 
+    + (<tt>void</tt>) <strong>create_handle</strong>(handle, values, user_name) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>
+Create a Handle
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>handle</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>values</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>user_name</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../ReST/HTTPStatus.html" title="ReST::HTTPStatus (class)">ReST::HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204</pre>
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 283</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_create_handle'>create_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_create_handle'>create_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
   <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
     <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
     <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_handle_value'>handle_value</span>
@@ -482,71 +718,13 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
   <span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>CreateHandleRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
     <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
     <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span><span class='lparen'>(</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>HandleValue</span> <span class='rparen'>)</span><span class='comma'>,</span>
-    <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+    <span class='id identifier rubyid_authentication_info'>authentication_info</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
   <span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_processRequest'>processRequest</span><span class='lparen'>(</span> <span class='id identifier rubyid_request'>request</span> <span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_responseCode'>responseCode</span>
     <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>FORBIDDEN</span><span class='tstring_end'>'</span></span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_string'>to_string</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="delete-class_method">
-  
-    + (<tt>Object</tt>) <strong>delete</strong>(handle, user_name) 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 166</span>
-
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
-  <span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>DeleteHandleRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
-    <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
-    <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
-  <span class='rparen'>)</span>
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_processRequest'>processRequest</span><span class='lparen'>(</span> <span class='id identifier rubyid_request'>request</span> <span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span>
-    <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_responseCode'>responseCode</span>
-    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>FORBIDDEN</span><span class='tstring_end'>'</span></span>
-    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_HANDLE_NOT_FOUND</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_FOUND</span><span class='tstring_end'>'</span></span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_string'>to_string</span>
     <span class='kw'>end</span>
@@ -560,42 +738,93 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <div class="method_details ">
   <h3 class="signature " id="delete_handle-class_method">
   
-    + (<tt>Object</tt>) <strong>delete_handle</strong>(handle, user_name) 
+    + (<tt>void</tt>) <strong>delete_handle</strong>(handle, user_name) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>
+Deletes a Handle
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>handle</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>user_name</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../ReST/HTTPStatus.html" title="ReST::HTTPStatus (class)">ReST::HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307</pre>
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 290</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 404</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_delete_handle'>delete_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
-  <span class='id identifier rubyid_authInfo'>authInfo</span> <span class='op'>=</span> <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_handle'>delete_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
+  <span class='id identifier rubyid_authInfo'>authInfo</span> <span class='op'>=</span> <span class='id identifier rubyid_authentication_info'>authentication_info</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
   <span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>DeleteHandleRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
     <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
     <span class='id identifier rubyid_authInfo'>authInfo</span>
@@ -620,69 +849,118 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <div class="method_details ">
   <h3 class="signature " id="pack_HS_ADMIN-class_method">
   
-    + (<tt>Object</tt>) <strong>pack_HS_ADMIN</strong>(data) 
+    + (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>pack_HS_ADMIN</strong>(data) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>data</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../ReST/HTTPStatus.html" title="ReST::HTTPStatus (class)">ReST::HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>#pack_SOME_HANDLE_TYPE</li>
+    
+  </ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95</pre>
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 161</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pack_HS_ADMIN'>pack_HS_ADMIN</span> <span class='id identifier rubyid_data'>data</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Missing one or more required values</span><span class='tstring_end'>'</span></span> \
+<span class='kw'>def</span> <span class='id identifier rubyid_pack_HS_ADMIN'>pack_HS_ADMIN</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BAD_REQUEST Missing one or more required values: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> \
     <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Hash</span> <span class='rparen'>)</span> <span class='op'>||</span>
        <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminId</span><span class='rbracket'>]</span> <span class='op'>||</span>
        <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminIdIndex</span><span class='rbracket'>]</span> <span class='op'>||</span>
        <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span> <span class='op'>||</span>
        <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Hash</span> <span class='rparen'>)</span> <span class='op'>||</span>
-       <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='const'>PERMS_BY_S</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+       <span class='op'>!</span> <span class='const'>PERMS_BY_I</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span>
+           <span class='op'>|</span><span class='id identifier rubyid_perm'>perm</span><span class='op'>|</span>
+           <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='id identifier rubyid_perm'>perm</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+         <span class='rbrace'>}</span>
   <span class='id identifier rubyid_adminRecord'>adminRecord</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>AdminRecord</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminId'>adminId</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminId</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span>
   <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminIdIndex'>adminIdIndex</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminIdIndex</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-  <span class='id identifier rubyid_perms'>perms</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='lbracket'>[</span>
-    <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
-      <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
-      <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-      <span class='lbracket'>[</span> <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span> <span class='rbracket'>]</span>
-    <span class='kw'>end</span>
-  <span class='rbracket'>]</span>
-  <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_perms'>perms</span> <span class='op'>=</span> <span class='const'>PERMS_BY_I</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_perms'>perms</span> <span class='op'>=</span> <span class='const'>PERMS_BY_I</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
     <span class='op'>|</span><span class='id identifier rubyid_perm'>perm</span><span class='op'>|</span>
-    <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_perms'>perms</span><span class='lbracket'>[</span><span class='id identifier rubyid_perm'>perm</span><span class='rbracket'>]</span>
+    <span class='op'>!</span><span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='lbracket'>[</span> <span class='id identifier rubyid_perm'>perm</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='rbracket'>]</span>
   <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span> <span class='const'>Java</span><span class='op'>::</span><span class='id identifier rubyid_boolean'>boolean</span>
   <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_from_java_bytes'>from_java_bytes</span><span class='lparen'>(</span>
     <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_encodeAdminRecord'>encodeAdminRecord</span><span class='lparen'>(</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span> <span class='rparen'>)</span>
@@ -696,45 +974,89 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <div class="method_details ">
   <h3 class="signature " id="pack_HS_VLIST-class_method">
   
-    + (<tt>Object</tt>) <strong>pack_HS_VLIST</strong>(data) 
+    + (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>pack_HS_VLIST</strong>(data) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>data</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>#pack_SOME_HANDLE_TYPE</li>
+    
+  </ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130</pre>
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 206</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pack_HS_VLIST'>pack_HS_VLIST</span> <span class='id identifier rubyid_data'>data</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_pack_HS_VLIST'>pack_HS_VLIST</span> <span class='id identifier rubyid_data'>data</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Bad HS_VLIST data.</span><span class='tstring_end'>'</span></span> \
     <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Array</span> <span class='rparen'>)</span> <span class='op'>||</span>
        <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span>
@@ -756,6 +1078,91 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
     <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_encodeValueReferenceList'>encodeValueReferenceList</span><span class='lparen'>(</span> <span class='id identifier rubyid_data'>data</span> <span class='rparen'>)</span>
   <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pack_SOME_HANDLE_TYPE-class_method">
+  
+    + (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>pack_SOME_HANDLE_TYPE</strong>(data) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Translates a Ruby structure into binary data.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>data</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+some structured data
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+a binary representation of <tt>data</tt>
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>#unpack_SOME_HANDLE_TYPE</li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 124</span>
+
+</pre>
     </td>
   </tr>
 </table>
@@ -788,24 +1195,24 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146</pre>
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 233</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_resolver'>resolver</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_resolver'>resolver</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_class_variable_defined?'>class_variable_defined?</span> <span class='symbol'>:@@resolver</span>
     <span class='const'>MUTEX</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='kw'>do</span>
       <span class='kw'>unless</span> <span class='id identifier rubyid_class_variable_defined?'>class_variable_defined?</span> <span class='symbol'>:@@resolver</span>
@@ -826,40 +1233,84 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <div class="method_details ">
   <h3 class="signature " id="unpack_HS_ADMIN-class_method">
   
-    + (<tt>Object</tt>) <strong>unpack_HS_ADMIN</strong>(data) 
+    + (<tt>Hash</tt>) <strong>unpack_HS_ADMIN</strong>(data) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>data</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>#unpack_SOME_HANDLE_TYPE</li>
+    
+  </ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67</pre>
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 137</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_unpack_HS_ADMIN'>unpack_HS_ADMIN</span> <span class='id identifier rubyid_data'>data</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_unpack_HS_ADMIN'>unpack_HS_ADMIN</span> <span class='id identifier rubyid_data'>data</span>
   <span class='id identifier rubyid_adminRecord'>adminRecord</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>AdminRecord</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_decodeAdminRecord'>decodeAdminRecord</span><span class='lparen'>(</span>
     <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span>
@@ -871,7 +1322,7 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
     <span class='symbol'>:perms</span> <span class='op'>=&gt;</span> <span class='const'>Hash</span><span class='lbracket'>[</span>
       <span class='id identifier rubyid_perms'>perms</span><span class='period'>.</span><span class='id identifier rubyid_each_index'>each_index</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span>
         <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
-        <span class='lbracket'>[</span> <span class='const'>PERMS_BY_I</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_perms'>perms</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='rbracket'>]</span> 
+        <span class='lbracket'>[</span> <span class='const'>PERMS_BY_I</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='comma'>,</span> <span class='id identifier rubyid_perms'>perms</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='rbracket'>]</span> 
       <span class='rbrace'>}</span>
     <span class='rbracket'>]</span>
   <span class='rbrace'>}</span>
@@ -884,32 +1335,76 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <div class="method_details ">
   <h3 class="signature " id="unpack_HS_VLIST-class_method">
   
-    + (<tt>Object</tt>) <strong>unpack_HS_VLIST</strong>(data) 
+    + (<tt>Hash</tt>) <strong>unpack_HS_VLIST</strong>(data) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>data</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>#unpack_SOME_HANDLE_TYPE</li>
+    
+  </ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-98
-99
-100
-101
-102
-103
-104
-105
-106</pre>
+190
+191
+192
+193
+194
+195
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 190</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_unpack_HS_VLIST'>unpack_HS_VLIST</span> <span class='id identifier rubyid_data'>data</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_unpack_HS_VLIST'>unpack_HS_VLIST</span> <span class='id identifier rubyid_data'>data</span>
   <span class='id identifier rubyid_vlist'>vlist</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_decodeValueReferenceList'>decodeValueReferenceList</span><span class='lparen'>(</span>
     <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span> <span class='int'>0</span>
   <span class='rparen'>)</span>
@@ -924,107 +1419,310 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="update_handle-class_method">
+  <h3 class="signature " id="unpack_SOME_HANDLE_TYPE-class_method">
   
-    + (<tt>Object</tt>) <strong>update_handle</strong>(handle, old_values, new_values, user_name) 
-  
-
+    + (<tt>Hash</tt>) <strong>unpack_SOME_HANDLE_TYPE</strong>(data) 
   
 
   
-</h3><table class="source_code">
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+Translates binary data (from the database) to a Ruby structure.
+</p>
+<p>
+For certain binary encoded Handle value types, like <tt>HS_ADMIN</tt> and
+<tt>HS_VLIST</tt>, the web service can produce <em>and consume</em> a
+structured representation. For example, the <tt>JSON</tt> representation of
+an <tt>HS_ADMIN</tt> value looks like this (abbreviated and prettified for
+clarity):
+</p>
+<pre class="code ruby"><code>
+  {
+    &quot;idx&quot;        : 100,
+    &quot;type&quot;       : &quot;HS_ADMIN&quot;,
+    &quot;data&quot;       : &quot;D/8AAAAKMC5OQS8xMTAyMgAAASwAAA==&quot;,
+    &quot;parsed_data&quot;: {
+      &quot;adminId&quot;     : &quot;0.NA/11022&quot;,
+      &quot;adminIdIndex&quot;: 300,
+      &quot;perms&quot;       : {
+           &quot;add_handle&quot;: true,     &quot;add_naming_auth&quot;: true,
+        &quot;delete_handle&quot;: true,  &quot;delete_naming_auth&quot;: true,
+         &quot;modify_value&quot;: true,        &quot;modify_admin&quot;: true,
+         &quot;remove_value&quot;: true,        &quot;remove_admin&quot;: true,
+            &quot;add_value&quot;: true,           &quot;add_admin&quot;: true,
+           &quot;read_value&quot;: true,        &quot;list_handles&quot;: true
+      }
+    }
+  }
+</code></pre>
+<p>
+To add a new &#8220;parseble&#8221; type to this web service, all you have
+to do is create two new methods in this module, called
+<span class='object_link'><a href="#unpack_SOME_HANDLE_TYPE-class_method" title="EPIC::HS.unpack_SOME_HANDLE_TYPE (method)">unpack_YOUR_TYPE</a></span> and <span class='object_link'><a href="#pack_SOME_HANDLE_TYPE-class_method" title="EPIC::HS.pack_SOME_HANDLE_TYPE (method)">pack_YOUR_TYPE</a></span>, which translate between the binary and the structured
+representations.
+</p>
+<table>
+<tr><td valign="top"><b>See also:</b></td><td><p>
+<span class='object_link'><a href="HandleValue.html#parsed_data-instance_method" title="EPIC::HandleValue#parsed_data (method)">EPIC::HandleValue#parsed_data</a></span> and <span class='object_link'><a href="HandleValue.html#parsed_data%3D-instance_method" title="EPIC::HandleValue#parsed_data= (method)">EPIC::HandleValue#parsed_data=</a></span> which use
+introspection to find out if a parsed representation of a value type is
+available.
+</p>
+</td></tr>
+</table>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>data</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+some binary data.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+a structured representation of <tt>data</tt>
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287</pre>
+</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 0</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update_handle'>update_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_old_values'>old_values</span><span class='comma'>,</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
-  <span class='id identifier rubyid_authInfo'>authInfo</span> <span class='op'>=</span> <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update_handle-class_method">
+  
+    + (<tt>void</tt>) <strong>update_handle</strong>(handle, old_values, new_values, user_name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>
+Update a Handle
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>handle</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>old_values</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The old values in <tt>handle</tt>.
+</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>new_values</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The new values for <tt>handle</tt>.
+</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>user_name</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../ReST/HTTPStatus.html" title="ReST::HTTPStatus (class)">ReST::HTTPStatus</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 314</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_update_handle'>update_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_old_values'>old_values</span><span class='comma'>,</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
+  <span class='id identifier rubyid_authInfo'>authInfo</span> <span class='op'>=</span> <span class='id identifier rubyid_authentication_info'>authentication_info</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
   <span class='id identifier rubyid_values_2b_added'>values_2b_added</span>    <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_values_2b_modified'>values_2b_modified</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_values_2b_removed'>values_2b_removed</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1074,21 +1772,21 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
     <span class='id identifier rubyid_requests'>requests</span> <span class='op'>&lt;&lt;</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>AddValueRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
       <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
       <span class='id identifier rubyid_values_2b_added'>values_2b_added</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span><span class='lparen'>(</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>HandleValue</span> <span class='rparen'>)</span><span class='comma'>,</span>
-      <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+      <span class='id identifier rubyid_authentication_info'>authentication_info</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
     <span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_values_2b_modified'>values_2b_modified</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
     <span class='id identifier rubyid_requests'>requests</span> <span class='op'>&lt;&lt;</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ModifyValueRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
       <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
       <span class='id identifier rubyid_values_2b_modified'>values_2b_modified</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span><span class='lparen'>(</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>HandleValue</span> <span class='rparen'>)</span><span class='comma'>,</span>
-      <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+      <span class='id identifier rubyid_authentication_info'>authentication_info</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
     <span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_values_2b_removed'>values_2b_removed</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
     <span class='id identifier rubyid_requests'>requests</span> <span class='op'>&lt;&lt;</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>RemoveValueRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
       <span class='id identifier rubyid_handle'>handle</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span><span class='comma'>,</span>
       <span class='id identifier rubyid_values_2b_removed'>values_2b_removed</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span><span class='lparen'>(</span> <span class='const'>Java</span><span class='op'>::</span><span class='id identifier rubyid_int'>int</span> <span class='rparen'>)</span><span class='comma'>,</span>
-      <span class='id identifier rubyid_authenticationInfo'>authenticationInfo</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
+      <span class='id identifier rubyid_authentication_info'>authentication_info</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
     <span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_requests'>requests</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
@@ -1114,7 +1812,7 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
 </div>
 
     <div id="footer">
-  Generated on Wed Jul 11 10:10:39 2012 by
+  Generated on Thu Jul 12 22:59:49 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

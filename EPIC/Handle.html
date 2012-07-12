@@ -971,8 +971,8 @@ only used by <span class='object_link'><a href="#initialize-instance_method" tit
   <div class="note todo">
     <strong>TODO:</strong>
     <div class='inline'><p>
-I found a method GenericHSAdapter#createAdminValue in Java that does
-exactly what we need! Use that instead! --PvB
+I found a Java method <tt>GenericHSAdapter#createAdminValue</tt> that does exactly
+what we need! Use that instead! --PvB
 </p>
 </div>
   </div>
@@ -1119,18 +1119,18 @@ values
       <span class='symbol'>:adminId</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_user_info'>user_info</span><span class='lbracket'>[</span><span class='symbol'>:handle</span><span class='rbracket'>]</span><span class='comma'>,</span>
       <span class='symbol'>:adminIdIndex</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_user_info'>user_info</span><span class='lbracket'>[</span><span class='symbol'>:index</span><span class='rbracket'>]</span><span class='comma'>,</span>
       <span class='symbol'>:perms</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
-        <span class='symbol'>:add_handle</span>    <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='symbol'>:delete_handle</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='symbol'>:add_NA</span>        <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
-        <span class='symbol'>:delete_NA</span>     <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
-        <span class='symbol'>:modify_value</span>  <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='symbol'>:remove_value</span>  <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='symbol'>:add_value</span>     <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='symbol'>:read_value</span>    <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='symbol'>:modify_admin</span>  <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='symbol'>:remove_admin</span>  <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='symbol'>:add_admin</span>     <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='symbol'>:list_handles</span>  <span class='op'>=&gt;</span> <span class='kw'>false</span>
+        <span class='symbol'>:add_handle</span>         <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:delete_handle</span>      <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:add_naming_auth</span>    <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
+        <span class='symbol'>:delete_naming_auth</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
+        <span class='symbol'>:modify_value</span>       <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:remove_value</span>       <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:add_value</span>          <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:read_value</span>         <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:modify_admin</span>       <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:remove_admin</span>       <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:add_admin</span>          <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='symbol'>:list_handles</span>       <span class='op'>=&gt;</span> <span class='kw'>false</span>
       <span class='rbrace'>}</span>
     <span class='rbrace'>}</span>
     <span class='id identifier rubyid_values'>values</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_admin_record'>admin_record</span>
@@ -1899,7 +1899,7 @@ Handles an HTTP/1.1 PUT request.
 </div>
 
     <div id="footer">
-  Generated on Wed Jul 11 10:10:41 2012 by
+  Generated on Thu Jul 12 22:59:50 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

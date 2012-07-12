@@ -228,6 +228,32 @@ As required by the Rack specification.
 
   
     <span class="summary_desc"><div class='inline'><p>
+<p>
+An object responding thread safely to method <tt>#[]</tt>.
+</p>
+<p>
+A <span class='object_link'><a href="" title="ReST::Server (class)">Server</a></span> has no knowledge, and makes no presumptions, about your URI
+namespace. It requires a <em>Resource Factory</em> which produces <span class='object_link'><a href="Resource.html" title="ReST::Resource (module)">Resources</a></span> given a certain absolute path.
+</p>
+<p>
+The Resource Factory you provide need only implement one method, with
+signature <b><tt>Resource #[]( String path )</tt></b>. This method will be
+called with a URI-encoded path string, and must return a <span class='object_link'><a href="Resource.html" title="ReST::Resource (module)">Resource</a></span>, or
+<tt>nil</tt> if there&#8217;s no resource at the given path.
+</p>
+<p>
+For example, if a ReST client tries to access a resource with URI
+<a href="http://example.com/your/resource" target="_parent" title="http://example.com/some/resource">http://example.com/some/resource</a>, then
+your Resource Factory can expect to be called like this:
+</p>
+<pre class="code ruby"><code>
+  <span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_factory'>resource_factory</span><span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/your/resource</span><span class='tstring_end'>'</span></span> <span class='rbracket'>]</span>
+</code></pre>
+<p>
+If there&#8217;s no resource at the given path, but you&#8217;d still like
+to respond to <tt>POST</tt> or <tt>PUT</tt> requests to this path, you must
+return an <span class='object_link'><a href="Resource.html#empty%3F-instance_method" title="ReST::Resource#empty? (method)">empty resource</a></span>.
+</p>
 .
 </p>
 </div></span>
@@ -697,7 +723,7 @@ Adds <tt>ETag:</tt> and <tt>Last-Modified:</tt> response headers.
 </div>
 
     <div id="footer">
-  Generated on Wed Jul 11 10:10:40 2012 by
+  Generated on Thu Jul 12 22:59:50 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>
