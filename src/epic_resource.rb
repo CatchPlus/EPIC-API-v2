@@ -14,7 +14,7 @@
   limitations under the License.
 =end
 
-require 'rest.rb'
+require 'rackful'
 
 module EPIC
 
@@ -22,7 +22,7 @@ module EPIC
 # Base class of all resources in this web service.
 class Resource
 
-  include ReST::Resource
+  include Rackful::Resource
 
 
   GLOBAL_LOCK_MUTEX = Mutex.new

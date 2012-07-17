@@ -83,7 +83,7 @@ class Handle < Resource
   end
 
 
-  # @see ReST::Resource#do_Method
+  # @see Rackful::Resource#do_Method
   def do_GET request, response
     bct = request.best_content_type CONTENT_TYPES
     response.header['Content-Type'] = bct
@@ -98,7 +98,7 @@ class Handle < Resource
 
 
   # Handles an HTTP/1.1 PUT request.
-  # @see ReST::Resource#do_METHOD
+  # @see Rackful::Resource#do_METHOD
   def do_PUT request, response
     case request.media_type
     when 'application/json', 'application/x-json'
@@ -108,12 +108,12 @@ class Handle < Resource
           :symbolize_names => true
         )
       rescue
-        raise ReST::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
+        raise Rackful::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
       end # begin
     else
-      raise ReST::HTTPStatus, 'UNSUPPORTED_MEDIA_TYPE application/json'
+      raise Rackful::HTTPStatus, 'UNSUPPORTED_MEDIA_TYPE application/json'
     end # case request.media_type
-    raise ReST::HTTPStatus, 'BAD_REQUEST Array expected' \
+    raise Rackful::HTTPStatus, 'BAD_REQUEST Array expected' \
       unless handle_values_in.kind_of? Array
     new_values = handle_values_in.collect do
       |handle_value_in|
@@ -131,7 +131,7 @@ class Handle < Resource
         handle_value.parsed_data = handle_value_in[:parsed_data]
         unless data == handle_value.data ||
                parsed_data == handle_value.parsed_data
-          raise ReST::HTTPStatus, 'BAD_REQUEST Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
+          raise Rackful::HTTPStatus, 'BAD_REQUEST Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
         end # unless
       elsif handle_value_in.key?( :parsed_data )
         handle_value.parsed_data = handle_value_in[:parsed_data]
@@ -166,7 +166,7 @@ class Handle < Resource
       if self.empty?
         HS.create_handle(self.handle, new_values, request.env['REMOTE_USER'])
         @values = nil
-        raise ReST::HTTPStatus, 'CREATED ' + self.path
+        raise Rackful::HTTPStatus, 'CREATED ' + self.path
       else
         HS.update_handle(self.handle, self.values, new_values, request.env['REMOTE_USER'])
         @values = nil
@@ -178,7 +178,7 @@ class Handle < Resource
   end
 
 
-  # @see ReST::Resource#do_Method
+  # @see Rackful::Resource#do_Method
   def do_DELETE request, response
     HS.delete_handle self.handle, request.env['REMOTE_USER']
     @values = nil
@@ -198,7 +198,7 @@ class Handle < Resource
     values.each do
       |value|
       next if HS::EMPTY_HANDLE_VALUE.getIndex == value.idx
-      raise( ReST::HTTPStatus, "BAD_REQUEST Multiple values with index #{value.idx}" ) \
+      raise( Rackful::HTTPStatus, "BAD_REQUEST Multiple values with index #{value.idx}" ) \
         if all_indexes.member? value.idx
       all_indexes << value.idx
     end
@@ -292,14 +292,14 @@ class Handle < Resource
 
 
   # @return [Boolean]
-  # @see ReST::Resource#empty?
+  # @see Rackful::Resource#empty?
   def empty?
     self.values.empty?
   end
 
 
   # @return [Time]
-  # @see ReST::Resource#last_modified
+  # @see Rackful::Resource#last_modified
   def last_modified
     [
       Time.at(
@@ -314,7 +314,7 @@ class Handle < Resource
 
 
   # @return [String]
-  # @see ReST::Resource#etag
+  # @see Rackful::Resource#etag
   def etag
     retval = self.values.sort_by do
       |value| value.idx

@@ -159,7 +159,7 @@ Translates a Ruby structure into binary data.
 @see #pack_SOME_HANDLE_TYPE
 =end
   def pack_HS_ADMIN data
-    raise ReST::HTTPStatus, "BAD_REQUEST Missing one or more required values: #{data.inspect}" \
+    raise Rackful::HTTPStatus, "BAD_REQUEST Missing one or more required values: #{data.inspect}" \
       if ! data.kind_of?( Hash ) ||
          ! data[:adminId] ||
          ! data[:adminIdIndex] ||
@@ -278,7 +278,7 @@ Create a Handle
 @param values [Array<HandleValue>]
 @param user_name [#to_s]
 @return [void]
-@raise [ReST::HTTPStatus]
+@raise [Rackful::HTTPStatus]
 =end
   def create_handle handle, values, user_name
     values = values.collect do
@@ -294,7 +294,7 @@ Create a Handle
     if response.kind_of? HDLLIB::ErrorResponse
       case response.responseCode
       when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-        raise ReST::HTTPStatus, 'FORBIDDEN'
+        raise Rackful::HTTPStatus, 'FORBIDDEN'
       else
         raise response.to_string
       end
@@ -309,7 +309,7 @@ Update a Handle
 @param new_values [Array<HandleValue>] The new values for +handle+.
 @param user_name [#to_s]
 @return [void]
-@raise [ReST::HTTPStatus]
+@raise [Rackful::HTTPStatus]
 =end
   def update_handle handle, old_values, new_values, user_name
     authInfo = authentication_info( user_name )
@@ -385,7 +385,7 @@ Update a Handle
       if response.kind_of? HDLLIB::ErrorResponse
         case response.responseCode
         when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-          raise ReST::HTTPStatus, 'FORBIDDEN'
+          raise Rackful::HTTPStatus, 'FORBIDDEN'
         else
           raise response.to_string
         end
@@ -399,7 +399,7 @@ Deletes a Handle
 @param handle [#to_s]
 @param user_name [#to_s]
 @return [void]
-@raise [ReST::HTTPStatus]
+@raise [Rackful::HTTPStatus]
 =end
   def delete_handle handle, user_name
     authInfo = authentication_info( user_name )
@@ -411,9 +411,9 @@ Deletes a Handle
     if response.kind_of? HDLLIB::ErrorResponse
       case response.responseCode
       when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-        raise ReST::HTTPStatus, 'FORBIDDEN'
+        raise Rackful::HTTPStatus, 'FORBIDDEN'
       when HDLLIB::ErrorResponse::RC_HANDLE_NOT_FOUND
-        raise ReST::HTTPStatus, 'NOT_FOUND'
+        raise Rackful::HTTPStatus, 'NOT_FOUND'
       else
         raise response.to_string
       end

@@ -21,7 +21,7 @@ require 'epic_resource.rb'
 module EPIC
 
 
-class Profile < Resource
+class Template < Resource
 
 
   attr_reader :filename
@@ -68,7 +68,7 @@ class Profile < Resource
 end # class Profile
 
 
-class Profile::XHTML < Serializer::XHTML
+class Template::XHTML < Serializer::XHTML
 
 
   def each_nested # :yields: strings

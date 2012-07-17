@@ -20,12 +20,14 @@ require '../secrets/users.rb'
 
 require 'epic_monkeypatches.rb'
 
+# Require all the resources served by this Resource Factory:
 require 'epic_handle.rb'
 require 'epic_handles.rb'
 require 'epic_handlevalue.rb'
 require 'epic_nas.rb'
 require 'epic_directory.rb'
 require 'epic_profile.rb'
+require 'epic_template.rb'
 
 require 'singleton'
 
@@ -39,7 +41,7 @@ module EPIC
 =begin
 Resource Factory for all our ReSTful resources.
 
-{ReST::Server} requires a {ReST::Server#resource_factory resource factory}. This
+{Rackful::Server} requires a {Rackful::Server#resource_factory resource factory}. This
 singleton class implements EPIC's resource factory.
 
 Like every Singleton in a multi-threaded environment, this class must be thread safe!
@@ -64,7 +66,7 @@ Can be called by tainted resources, to be removed from the cache.
 =begin
 @param path [#to_s] the URI-encoded path to the resource.
 @return [Resource, nil]
-@see ReST::Server#resource_factory for details
+@see Rackful::Server#resource_factory for details
 =end
   def [] path
     path = path.to_s.unslashify
@@ -72,7 +74,7 @@ Can be called by tainted resources, to be removed from the cache.
     # Legal values for +cached+ are:
     # - nil: the resource is not in cache
     # - false: resource was requested earlier, without success
-    # - ReST::Resource
+    # - Rackful::Resource
     if ! cached.nil?
       # if +cached+ is +false+, we want to return +nil+.
       return cached || nil
@@ -116,7 +118,7 @@ Valid Hash values are:
 @return [Hash< unslashified_path => resource_object >]
 =end
   def resource_cache
-    ReST::Request.current.env[:epic_resource_cache] ||= Hash.new
+    Rackful::Request.current.env[:epic_resource_cache] ||= Hash.new
   end
 
 

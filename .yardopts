@@ -13,5 +13,5 @@ src/**/*.rb
 -
 INSTALL.rdoc
 EPIC.rdoc
-LICENSE.txt
+LICENSE.md
 API.md
