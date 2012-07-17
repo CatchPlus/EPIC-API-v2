@@ -296,8 +296,8 @@ The suffix of this Handle.
 
   
   
-  <h3 class="inherited">Attributes included from <span class='object_link'><a href="../ReST/Resource.html" title="ReST::Resource (module)">ReST::Resource</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../ReST/Resource.html#path-instance_method" title="ReST::Resource#path (method)">#path</a></span></p>
+  <h3 class="inherited">Attributes included from <span class='object_link'><a href="../Rackful/Resource.html" title="Rackful::Resource (module)">Rackful::Resource</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#path-instance_method" title="Rackful::Resource#path (method)">#path</a></span></p>
 
 
   
@@ -575,8 +575,8 @@ A new instance of Handle.
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../ReST/Resource.html" title="ReST::Resource (module)">ReST::Resource</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../ReST/Resource.html#do_HEAD-instance_method" title="ReST::Resource#do_HEAD (method)">#do_HEAD</a></span>, <span class='object_link'><a href="../ReST/Resource.html#do_METHOD-instance_method" title="ReST::Resource#do_METHOD (method)">#do_METHOD</a></span>, <span class='object_link'><a href="../ReST/Resource.html#do_OPTIONS-instance_method" title="ReST::Resource#do_OPTIONS (method)">#do_OPTIONS</a></span>, <span class='object_link'><a href="../ReST/Resource.html#http_GET-instance_method" title="ReST::Resource#http_GET (method)">#http_GET</a></span>, <span class='object_link'><a href="../ReST/Resource.html#http_HEAD-instance_method" title="ReST::Resource#http_HEAD (method)">#http_HEAD</a></span>, <span class='object_link'><a href="../ReST/Resource.html#http_PUT-instance_method" title="ReST::Resource#http_PUT (method)">#http_PUT</a></span>, <span class='object_link'><a href="../ReST/Resource.html#http_methods-instance_method" title="ReST::Resource#http_methods (method)">#http_methods</a></span></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Rackful/Resource.html" title="Rackful::Resource (module)">Rackful::Resource</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#do_HEAD-instance_method" title="Rackful::Resource#do_HEAD (method)">#do_HEAD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#do_METHOD-instance_method" title="Rackful::Resource#do_METHOD (method)">#do_METHOD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#do_OPTIONS-instance_method" title="Rackful::Resource#do_OPTIONS (method)">#do_OPTIONS</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_GET-instance_method" title="Rackful::Resource#http_GET (method)">#http_GET</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_HEAD-instance_method" title="Rackful::Resource#http_HEAD (method)">#http_HEAD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_PUT-instance_method" title="Rackful::Resource#http_PUT (method)">#http_PUT</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_methods-instance_method" title="Rackful::Resource#http_methods (method)">#http_methods</a></span></p>
 
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
@@ -1236,7 +1236,7 @@ values
   <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
     <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='const'>HS</span><span class='op'>::</span><span class='const'>EMPTY_HANDLE_VALUE</span><span class='period'>.</span><span class='id identifier rubyid_getIndex'>getIndex</span> <span class='op'>==</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
-    <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BAD_REQUEST Multiple values with index </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rparen'>)</span> \
+    <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BAD_REQUEST Multiple values with index </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rparen'>)</span> \
       <span class='kw'>if</span> <span class='id identifier rubyid_all_indexes'>all_indexes</span><span class='period'>.</span><span class='id identifier rubyid_member?'>member?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
     <span class='id identifier rubyid_all_indexes'>all_indexes</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_idx'>idx</span>
   <span class='kw'>end</span>
@@ -1282,7 +1282,7 @@ values
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li>ReST::Resource#do_Method</li>
+      <li>Rackful::Resource#do_Method</li>
     
   </ul>
 
@@ -1332,7 +1332,7 @@ values
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li>ReST::Resource#do_Method</li>
+      <li>Rackful::Resource#do_Method</li>
     
   </ul>
 
@@ -1399,7 +1399,7 @@ Handles an HTTP/1.1 PUT request.
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../ReST/HTTPStatus.html" title="ReST::HTTPStatus (class)">ReST::HTTPStatus</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/HTTPStatus.html" title="Rackful::HTTPStatus (class)">Rackful::HTTPStatus</a></span></tt>)</span>
       
       
       
@@ -1410,7 +1410,7 @@ Handles an HTTP/1.1 PUT request.
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li><span class='object_link'><a href="../ReST/Resource.html#do_METHOD-instance_method" title="ReST::Resource#do_METHOD (method)">ReST::Resource#do_METHOD</a></span></li>
+      <li><span class='object_link'><a href="../Rackful/Resource.html#do_METHOD-instance_method" title="Rackful::Resource#do_METHOD (method)">Rackful::Resource#do_METHOD</a></span></li>
     
   </ul>
 
@@ -1510,12 +1510,12 @@ Handles an HTTP/1.1 PUT request.
         <span class='symbol'>:symbolize_names</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
       <span class='rparen'>)</span>
     <span class='kw'>rescue</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>BAD_REQUEST </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>BAD_REQUEST </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
     <span class='kw'>end</span> <span class='comment'># begin
 </span>  <span class='kw'>else</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>UNSUPPORTED_MEDIA_TYPE application/json</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>UNSUPPORTED_MEDIA_TYPE application/json</span><span class='tstring_end'>'</span></span>
   <span class='kw'>end</span> <span class='comment'># case request.media_type
-</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>BAD_REQUEST Array expected</span><span class='tstring_end'>'</span></span> \
+</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>BAD_REQUEST Array expected</span><span class='tstring_end'>'</span></span> \
     <span class='kw'>unless</span> <span class='id identifier rubyid_handle_values_in'>handle_values_in</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>Array</span>
   <span class='id identifier rubyid_new_values'>new_values</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_values_in'>handle_values_in</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
     <span class='op'>|</span><span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='op'>|</span>
@@ -1533,7 +1533,7 @@ Handles an HTTP/1.1 PUT request.
       <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_parsed_data'>parsed_data</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:parsed_data</span><span class='rbracket'>]</span>
       <span class='kw'>unless</span> <span class='id identifier rubyid_data'>data</span> <span class='op'>==</span> <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span> <span class='op'>||</span>
              <span class='id identifier rubyid_parsed_data'>parsed_data</span> <span class='op'>==</span> <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_parsed_data'>parsed_data</span>
-        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>BAD_REQUEST Handle Value contains both &lt;tt&gt;data&lt;/tt&gt; and &lt;tt&gt;parsed_data&lt;/tt&gt;, and their contents are not semantically equal.</span><span class='tstring_end'>'</span></span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>BAD_REQUEST Handle Value contains both &lt;tt&gt;data&lt;/tt&gt; and &lt;tt&gt;parsed_data&lt;/tt&gt;, and their contents are not semantically equal.</span><span class='tstring_end'>'</span></span>
       <span class='kw'>end</span> <span class='comment'># unless
 </span>    <span class='kw'>elsif</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span> <span class='symbol'>:parsed_data</span> <span class='rparen'>)</span>
       <span class='id identifier rubyid_handle_value'>handle_value</span><span class='period'>.</span><span class='id identifier rubyid_parsed_data'>parsed_data</span> <span class='op'>=</span> <span class='id identifier rubyid_handle_value_in'>handle_value_in</span><span class='lbracket'>[</span><span class='symbol'>:parsed_data</span><span class='rbracket'>]</span>
@@ -1568,7 +1568,7 @@ Handles an HTTP/1.1 PUT request.
     <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
       <span class='const'>HS</span><span class='period'>.</span><span class='id identifier rubyid_create_handle'>create_handle</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>REMOTE_USER</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
       <span class='ivar'>@values</span> <span class='op'>=</span> <span class='kw'>nil</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ReST</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>CREATED </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>CREATED </span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
     <span class='kw'>else</span>
       <span class='const'>HS</span><span class='period'>.</span><span class='id identifier rubyid_update_handle'>update_handle</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='comma'>,</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>REMOTE_USER</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
       <span class='ivar'>@values</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -1617,7 +1617,7 @@ Handles an HTTP/1.1 PUT request.
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li><span class='object_link'><a href="../ReST/Resource.html#empty%3F-instance_method" title="ReST::Resource#empty? (method)">ReST::Resource#empty?</a></span></li>
+      <li><span class='object_link'><a href="../Rackful/Resource.html#empty%3F-instance_method" title="Rackful::Resource#empty? (method)">Rackful::Resource#empty?</a></span></li>
     
   </ul>
 
@@ -1676,7 +1676,7 @@ Handles an HTTP/1.1 PUT request.
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li><span class='object_link'><a href="../ReST/Resource.html#etag-instance_method" title="ReST::Resource#etag (method)">ReST::Resource#etag</a></span></li>
+      <li><span class='object_link'><a href="../Rackful/Resource.html#etag-instance_method" title="Rackful::Resource#etag (method)">Rackful::Resource#etag</a></span></li>
     
   </ul>
 
@@ -1769,7 +1769,7 @@ Handles an HTTP/1.1 PUT request.
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li><span class='object_link'><a href="../ReST/Resource.html#last_modified-instance_method" title="ReST::Resource#last_modified (method)">ReST::Resource#last_modified</a></span></li>
+      <li><span class='object_link'><a href="../Rackful/Resource.html#last_modified-instance_method" title="Rackful::Resource#last_modified (method)">Rackful::Resource#last_modified</a></span></li>
     
   </ul>
 
@@ -1899,7 +1899,7 @@ Handles an HTTP/1.1 PUT request.
 </div>
 
     <div id="footer">
-  Generated on Thu Jul 12 23:56:05 2012 by
+  Generated on Tue Jul 17 12:30:24 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

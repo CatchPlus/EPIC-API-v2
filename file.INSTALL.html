@@ -62,115 +62,97 @@
     <iframe id="search_frame"></iframe>
 
     <div id="content"><div id='filecontents'><h1>Installation</h1>
+
 <h2>Requirements</h2>
-<h3>JRuby</h3>
-<p>
-First of all, this software requires JRuby, as it interfaces with the Java
-client library of the Handle System. JRuby can be installed in many ways.
-You can go to the <a href="http://jruby.org/">JRuby web site</a> and
-download it from there. The developers of this software prefer using the <a
-href="http://beginrescueend.com/">Ruby Version Manager (RVM)</a> for
-managing multiple Ruby installations on a single machine, and for managing
-multiple gemsets.
-</p>
-<p>
-After installing JRuby, make sure that the interpreter runs in <em>1.9</em>
-<em>mode</em>. This is done by adding option <tt>--1.9</tt> to environment
-variable <tt>JRUBY_OPTS</tt>. If you use <tt>RVM</tt>, you might consider
-using an <tt>.rvmrc</tt> document. There&#8217;s an example of such a
-document in the distribution, by executing
-</p>
-<pre class="code ruby"><code>
-  <span class='id identifier rubyid_rvm'>rvm</span> <span class='id identifier rubyid_rvmrc'>rvmrc</span>
+
+<p>=== JRuby
+First of all, this software requires JRuby, as it interfaces with the Java client library of the Handle System.
+JRuby can be installed in many ways.
+You can go to the <a href="http://jruby.org/">JRuby web site</a> and download it from there.
+The developers of this software prefer using the <a href="http://beginrescueend.com/">Ruby Version Manager (RVM)</a> for managing multiple Ruby installations on a single machine, and for managing multiple gemsets.</p>
+
+<p>After installing JRuby, make sure that the interpreter runs in <em>1.9</em> <em>mode</em>.
+This is done by adding option <code>--1.9</code> to environment variable <code>JRUBY_OPTS</code>.
+If you use <code>RVM</code>, you might consider using an <code>.rvmrc</code> document.
+There&#39;s an example of such a document in the distribution, by executing</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_rvm'>rvm</span> <span class='id identifier rubyid_rvmrc'>rvmrc</span>
 </code></pre>
-<p>
-inside the root of this distribution.
-</p>
-<h3>Handle System v7</h3>
-<p>
-You&#8217;ll need a running Handle System installation. Details can be
-found at the <a href="http://www.handle.net/">Handle System web site</a>.
-</p>
-<p>
-The web service needs to know the location of your Handle System
-installation. Create a symbolic link inside the Web Service top level
-directory called <tt>hsj</tt>, pointing to <tt>$HS_DISTRO_ROOT/lib</tt>.
-</p>
-<h3>Sequel</h3>
-<p>
-Sequel is a Ruby database abstraction layer and Object-Relational Mapper
-(ORM). For performance reasons, we don&#8217;t use the ORM features.
-</p>
-<p>
-Installing <tt>sequel</tt> is easy:
-</p>
-<pre class="code ruby"><code>
-  <span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_sequel'>sequel</span>
+
+<p>inside the root of this distribution.</p>
+
+<p>=== Handle System v7
+You&#39;ll need a running Handle System installation.
+Details can be found at the <a href="http://www.handle.net/">Handle System web site</a>.</p>
+
+<p>The web service needs to know the location of your Handle System installation.
+Create a symbolic link inside the Web Service top level directory called <code>hsj</code>, pointing to <code>$HS_DISTRO_ROOT/lib</code>.</p>
+
+<p>=== Sequel
+Sequel is a Ruby database abstraction layer and Object-Relational Mapper (ORM).
+For performance reasons, we don&#39;t use the ORM features.</p>
+
+<p>Installing <code>sequel</code> is easy:</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_sequel'>sequel</span>
 </code></pre>
-<p>
-Depending on the kind of database you&#8217;re using underneath the Handle
-System, you&#8217;ll probably need to install some database handler as
-well. The service developers use gem <tt>jdbc-mysql</tt> in order to
-connect to their MySQL databases.
-</p>
-<h3>Rack</h3>
-<p>
-If you don&#8217;t know what Rack is, read the <a
-href="http://rack.rubyforge.org/doc/SPEC.html">Rack interface
-specification</a> and <a href="http://rack.rubyforge.org/doc/">other
-documentation</a> to find out. It&#8217;s important.
-</p>
-<pre class="code ruby"><code>
-  <span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_rack'>rack</span>
-  <span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_rack'>rack</span><span class='op'>-</span><span class='id identifier rubyid_protection'>protection</span>
+
+<p>Depending on the kind of database you&#39;re using underneath the Handle System,
+you&#39;ll probably need to install some database handler as well.
+The service developers use gem <code>jdbc-mysql</code> in order to connect to their
+MySQL databases.</p>
+
+<p>=== Rackful
+<a href="http://pieterb.github.com/Rackful/">Rackful</a> is a library to build ReSTful web
+services on top of <a href="http://rack.rubyforge.org/doc/">Rack</a>.</p>
+
+<p>You might want to read the
+<a href="http://rack.rubyforge.org/doc/SPEC.html">Rack interface specification</a>
+and <a href="">other Rack documentation</a> as well.</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_rackful'>rackful</span>
 </code></pre>
+
 <h2>Configuration</h2>
-<p>
-The web service comes preconfigured for HTTP Digest authentication.
-You&#8217;ll need to create two configuration files for this to work,
-though:
-</p>
-<h3>General configuration</h3>
-<p>
-The default installation expects some configuration information in file
-<tt>config.rb</tt>. You&#8217;ll find a sample configuration file called
-<tt>config.rb.example</tt> in the distribution. Copy or rename this file to
-<tt>config.rb</tt> and edit it to your situation:
-</p>
-<pre class="code ruby"><code>
-  cp -a config.rb.example config.rb
-  $EDITOR config.rb
+
+<p>The web service comes preconfigured for HTTP Digest authentication.
+You&#39;ll need to create two configuration files for this to work, though:</p>
+
+<p>=== General configuration
+The default installation expects some configuration information in file <code>config.rb</code>.
+You&#39;ll find a sample configuration file called <code>config.rb.example</code> in the distribution.
+Copy or rename this file to <code>config.rb</code> and edit it to your situation:</p>
+
+<pre class="code ruby"><code>cp -a config.rb.example config.rb
+$EDITOR config.rb
 </code></pre>
-<h3>User accounts</h3>
-<p>
-In the default configuration, account information is expected in file
-<tt>secrets/users.rb</tt>. From the installation root, do the following:
-</p>
-<pre class="code ruby"><code>
-  cd secrets/
-  cp -a users.rb.example users.rb
-  $EDITOR users.rb
+
+<p>=== User accounts
+In the default configuration, account information is expected in file <code>secrets/users.rb</code>.
+From the installation root, do the following:</p>
+
+<pre class="code ruby"><code>cd secrets/
+cp -a users.rb.example users.rb
+$EDITOR users.rb
 </code></pre>
+
 <h2>Running!</h2>
-<p>
-At this point, you should be able to start the web service:
-</p>
-<pre class="code ruby"><code>
-  <span class='id identifier rubyid_rackup'>rackup</span>
+
+<p>At this point, you should be able to start the web service:</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_rackup'>rackup</span>
 </code></pre>
-<p>
-By default, this will start a Webrick web server, listening to port 9292.
-</p>
-<p>
-If you&#8217;d like to use another web server, another port number, another
-authentication method, then check out the Rack documentation, and start
-editing the rackup configuration file <tt>config.ru</tt>. That files
-contains a lot of in-line documentation that hopefully gets you started.
-</p>
+
+<p>By default, this will start a Webrick web server, listening to port 9292.</p>
+
+<p>If you&#39;d like to use another web server, another port number, another authentication method,
+then check out the Rack documentation,
+and start editing the rackup configuration file <code>config.ru</code>.
+That files contains a lot of in-line documentation that hopefully gets you started.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Thu Jul 12 23:56:04 2012 by
+  Generated on Tue Jul 17 12:30:23 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

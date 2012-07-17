@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-  Class: ReST::RelativeLocation
+  Class: Rackful::RelativeLocation
   
     &mdash; EPIC
   
@@ -32,7 +32,7 @@
       <div id="menu">
   
     <a href="../_index.html">Index (R)</a> &raquo;
-    <span class='title'><span class='object_link'><a href="../ReST.html" title="ReST (module)">ReST</a></span></span>
+    <span class='title'><span class='object_link'><a href="../Rackful.html" title="Rackful (module)">Rackful</a></span></span>
      &raquo; 
     <span class="title">RelativeLocation</span>
   
@@ -63,7 +63,7 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><h1>Class: ReST::RelativeLocation
+    <div id="content"><h1>Class: Rackful::RelativeLocation
   
   
   
@@ -78,7 +78,7 @@
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">ReST::RelativeLocation</li>
+            <li class="next">Rackful::RelativeLocation</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -94,7 +94,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">src/rest.rb</dd>
+    <dd class="r2 last">gems/rackful-0.0.1/lib/rackful/relative_location.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -105,26 +105,22 @@
 Rack middleware, inspired by Rack::RelativeRedirect.
 </p>
 <p>
-This middleware allows you to return a path your <tt>Location:</tt>
-response header. This was common practice in HTTP/1.0, but HTTP/1.1
-requires a full URI in the <tt>Location:</tt> header. This middleware
-automatically translates your absolute path to a full URI.
+This middleware allows you to return a relative or absolute path your
+<tt>Location:</tt> response header. This was common practice in HTTP/1.0,
+but HTTP/1.1 requires a full URI in the <tt>Location:</tt> header. This
+middleware automatically translates your path to a full URI.
 </p>
 <p>
 Differences with Rack::RelativeRedirect:
 </p>
 <ul>
 <li><p>
-uses Rack::Utils::base_uri for creating absolute URIs.
+uses Rack::Request::base_url for creating absolute URIs.
 </p>
 </li>
 <li><p>
-the <tt>Location:</tt> header, if present, is always rectified, independent
-of the HTTP status code.
-</p>
-</li>
-<li><p>
-relative paths (such as <tt>../../some/path</tt>) are not supported.
+the `Location:` header, if present, is always rectified, independent of the
+HTTP status code.
 </p>
 </li>
 </ul>
@@ -167,10 +163,7 @@ relative paths (such as <tt>../../some/path</tt>) are not supported.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Call the next middleware with the environment.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -211,7 +204,7 @@ A new instance of RelativeLocation.
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="ReST::RelativeLocation (class)">RelativeLocation</a></span></tt>) <strong>initialize</strong>(app) 
+    - (<tt><span class='object_link'><a href="" title="Rackful::RelativeLocation (class)">RelativeLocation</a></span></tt>) <strong>initialize</strong>(app) 
   
 
   
@@ -235,12 +228,12 @@ A new instance of RelativeLocation
       <pre class="lines">
 
 
-814
-815
-816</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/rest.rb', line 814</span>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.0.1/lib/rackful/relative_location.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_app'>app</span><span class='rparen'>)</span>
   <span class='ivar'>@app</span> <span class='op'>=</span> <span class='id identifier rubyid_app'>app</span>
@@ -266,47 +259,29 @@ A new instance of RelativeLocation
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>
-Call the next middleware with the environment.
-</p>
-<p>
-If the <tt>Location:</tt> header is a <tt>path-absolute</tt> as defined in
-<a href="http://tools.ietf.org/html/rfc3986#section-3.3" target="_parent" title="RFC3986, section 3.3">RFC3986, section 3.3</a>, then
-prepend the current scheme, server name, and port, to constitute a full
-URI.
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-826
-827
-828
-829
-830
-831
-832
-833
-834
-835
-836
-837
-838
-839</pre>
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/rest.rb', line 826</span>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.0.1/lib/rackful/relative_location.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_res'>res</span> <span class='op'>=</span> <span class='ivar'>@app</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
@@ -332,7 +307,7 @@ URI.
 </div>
 
     <div id="footer">
-  Generated on Thu Jul 12 23:56:04 2012 by
+  Generated on Tue Jul 17 12:30:26 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

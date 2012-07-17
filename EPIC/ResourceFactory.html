@@ -118,8 +118,7 @@ Move this class to a separate file? Not needed quite yet&#8230;
 Resource Factory for all our ReSTful resources.
 </p>
 <p>
-<span class='object_link'><a href="../ReST/Server.html" title="ReST::Server (class)">ReST::Server</a></span> requires a <span class='object_link'><a href="../ReST/Server.html#resource_factory-instance_method" title="ReST::Server#resource_factory (method)">resource factory</a></span>.
-This singleton class implements EPIC&#8217;s resource factory.
+<span class='object_link'><a href="../Rackful/Server.html" title="Rackful::Server (class)">Rackful::Server</a></span> requires a <span class='object_link'><a href="../Rackful/Server.html#resource_factory-instance_method" title="Rackful::Server#resource_factory (method)">resource factory</a></span>. This singleton class implements EPIC&#8217;s resource factory.
 </p>
 <p>
 Like every Singleton in a multi-threaded environment, this class must be
@@ -286,7 +285,7 @@ the URI-encoded path to the resource.
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li><span class='object_link'><a href="../ReST/Server.html#resource_factory-instance_method" title="ReST::Server#resource_factory (method)">for details</a></span></li>
+      <li><span class='object_link'><a href="../Rackful/Server.html#resource_factory-instance_method" title="Rackful::Server#resource_factory (method)">for details</a></span></li>
     
   </ul>
 
@@ -296,8 +295,6 @@ the URI-encoded path to the resource.
       <pre class="lines">
 
 
-69
-70
 71
 72
 73
@@ -328,10 +325,12 @@ the URI-encoded path to the resource.
 98
 99
 100
-101</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'src/epic.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span> <span class='id identifier rubyid_path'>path</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_unslashify'>unslashify</span>
@@ -339,7 +338,7 @@ the URI-encoded path to the resource.
   <span class='comment'># Legal values for +cached+ are:
 </span>  <span class='comment'># - nil: the resource is not in cache
 </span>  <span class='comment'># - false: resource was requested earlier, without success
-</span>  <span class='comment'># - ReST::Resource
+</span>  <span class='comment'># - Rackful::Resource
 </span>  <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_cached'>cached</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
     <span class='comment'># if +cached+ is +false+, we want to return +nil+.
 </span>    <span class='kw'>return</span> <span class='id identifier rubyid_cached'>cached</span> <span class='op'>||</span> <span class='kw'>nil</span>
@@ -430,15 +429,15 @@ The resource hasn&#8217;t been requested yet.
       <pre class="lines">
 
 
-118
-119
-120</pre>
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'src/epic.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resource_cache'>resource_cache</span>
-  <span class='const'>ReST</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='symbol'>:epic_resource_cache</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='symbol'>:epic_resource_cache</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -485,13 +484,13 @@ Can be called by tainted resources, to be removed from the cache.
       <pre class="lines">
 
 
-58
-59
 60
-61</pre>
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'src/epic.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uncache'>uncache</span> <span class='id identifier rubyid_path'>path</span>
   <span class='id identifier rubyid_resource_cache'>resource_cache</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_unslashify'>unslashify</span>
@@ -507,7 +506,7 @@ Can be called by tainted resources, to be removed from the cache.
 </div>
 
     <div id="footer">
-  Generated on Thu Jul 12 23:56:04 2012 by
+  Generated on Tue Jul 17 12:30:24 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>
