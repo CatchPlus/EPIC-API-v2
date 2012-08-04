@@ -33,16 +33,6 @@ module EPIC
 class Handle < Resource
 
 
-  CONTENT_TYPES = {
-    'application/xhtml+xml; charset=UTF-8' => 1,
-    'text/html; charset=UTF-8' => 1,
-    'text/xml; charset=UTF-8' => 1,
-    'application/xml; charset=UTF-8' => 1,
-    'application/json' => 0.5,
-    'application/x-json' => 0.5
-  }
-
-
   # The prefix of this Handle
   # @return [String]
   attr_reader :prefix
@@ -64,8 +54,8 @@ class Handle < Resource
     super path
     raise "Unexpected path: #{path}" \
       unless matches = %r{([^/]+)/([^/]+)\z}.match(path)
-    @suffix = matches[2].unescape_path
-    @prefix = matches[1].unescape_path
+    @suffix = matches[2].to_path.unescape
+    @prefix = matches[1].to_path.unescape
     @handle = @prefix + '/' + @suffix
     @handle_encoded = matches[0]
     self.values handle_values if handle_values
@@ -83,19 +73,8 @@ class Handle < Resource
   end
 
 
-  # @see Rackful::Resource#do_Method
-  def do_GET request, response
-    bct = request.best_content_type CONTENT_TYPES
-    response.header['Content-Type'] = bct
-    response.body =
-      case bct.split( ';' ).first
-      when 'application/json', 'application/x-json'
-        JSON.new self, request
-      else
-        XHTML.new self, request
-      end
-  end
-
+  add_media_type 'application/json'
+  add_media_type 'application/x-json'
 
   # Handles an HTTP/1.1 PUT request.
   # @see Rackful::Resource#do_METHOD
@@ -103,10 +82,7 @@ class Handle < Resource
     case request.media_type
     when 'application/json', 'application/x-json'
       begin
-        handle_values_in = ::JSON.parse(
-          request.body.read,
-          :symbolize_names => true
-        )
+        handle_values_in = Rackful::JSON.parse( request.body )
       rescue
         raise Rackful::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
       end # begin
@@ -270,22 +246,23 @@ class Handle < Resource
 
 
   # @return [ Array< Hash > ]
-  def to_a
+  def to_rackful
     self.values.sort_by { |v| v.idx }.collect {
       |v|
       {
-        :idx => v.idx.to_i,
-        :type => v.type.to_s,
+        :idx => v.idx,
+        :type => v.type,
         :parsed_data => v.parsed_data,
-        :data => Base64.encode64(v.data).chomp,
-        :timestamp => v.timestamp.to_i,
-        :ttl_type => v.ttl_type.to_i,
-        :ttl => v.ttl.to_i,
+        :data => v.data,
+        :timestamp => Time.at(v.timestamp),
+        :ttl_type => v.ttl_type,
+        :ttl => ( 0 == v.ttl_type ? v.ttl : Time.at( v.ttl ) ),
         :refs => v.refs.collect { |ref| ref[:idx].to_s + ':' + ref[:handle] },
-        :admin_read  => !!v.admin_read,
-        :admin_write => !!v.admin_write,
-        :pub_read    => !!v.pub_read,
-        :pub_write   => !!v.pub_write
+        :privs =>
+          ( v.admin_read  ? 'r' : '-' ) +
+          ( v.admin_write ? 'w' : '-' ) +
+          ( v.pub_read    ? 'r' : '-' ) +
+          ( v.pub_write   ? 'w' : '-' )
       }
     }
   end
@@ -300,7 +277,7 @@ class Handle < Resource
 
   # @return [Time]
   # @see Rackful::Resource#last_modified
-  def last_modified
+  def get_last_modified
     [
       Time.at(
         self.values.reduce(0) do
@@ -315,7 +292,7 @@ class Handle < Resource
 
   # @return [String]
   # @see Rackful::Resource#etag
-  def etag
+  def get_etag
     retval = self.values.sort_by do
       |value| value.idx
     end.reduce(Digest::MD5.new) do
@@ -340,7 +317,7 @@ class Handle < Resource
 end # class Handle
 
 
-class Handle::XHTML < Serializer::XHTML
+class Handle::XHTML < Rackful::XHTML
 
 
   def each_nested # :yields: strings
@@ -369,7 +346,7 @@ class Handle::XHTML < Serializer::XHTML
 end # class Collection::XHTML
 
 
-class Handle::JSON < Serializer::JSON
+class Handle::JSON < Rackful::JSON
 
 
   def each

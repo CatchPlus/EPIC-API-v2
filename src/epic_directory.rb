@@ -21,13 +21,14 @@ module EPIC
 class Directory < Collection
 
   def each
-    dirname = "./public#{self.path.unescape_path}"
+    dirname = "./public#{self.path.unescape}"
     Dir.open dirname do
       |dir|
       dir.each do
         |filename|
         filepath = dirname + filename
-        yield filename.escape_path if File::file? filepath
+        yield Rackful::Path.new( self.path + escape_path(filename) ) \
+          if File::file? filepath
       end
     end
   end

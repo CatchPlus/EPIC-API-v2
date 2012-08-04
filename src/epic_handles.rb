@@ -22,7 +22,7 @@ module EPIC
 class Handles < Collection
 
   def prefix
-    @epic_handles_prefix ||= File::basename(path.unslashify).unescape_path
+    @epic_handles_prefix ||= File::basename(path.unslashify).to_path.unescape
   end
 
 =begin rdoc
@@ -30,21 +30,9 @@ TODO: better implementation (server-side data retention) for streaming responses
 =end
   def each
     start_position = self.prefix.size + 1
-    # ActiveHandleValue.select([:handle, :id]).
-      # where('`handle` LIKE ?', self.prefix + '/%').
-      # group_by(:handle).
-      # find_each do |ahv|
-        # yield ahv.handle[start_position .. -1]
-      # end
-    # if self.recurse?
-      # DB.instance.all_handles.collect {
-        # |handle|
-        # handle[start_position .. -1].escape_path
-      # }.each &block
-    # else
     DB.instance.each_handle do
       |handle|
-      yield handle[start_position .. -1].escape_path
+      yield Rackful::Path.new( self.path + escape_path(handle[start_position .. -1]) )
     end
     # end
   end

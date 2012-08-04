@@ -3,10 +3,10 @@
 Version 2.0, January 2004  
 http://www.apache.org/licenses/
 
-Terms and Conditions for Use, Reproduction, and Distribution
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 ============================================================
 
-1. Definitions
+Definitions
 --------------
 
 "License" shall mean the terms and conditions for use, reproduction,
@@ -70,7 +70,7 @@ designated in writing by the copyright owner as "Not a Contribution."
 on behalf of whom a Contribution has been received by Licensor and
 subsequently incorporated within the Work.
 
-2. Grant of Copyright License
+Grant of Copyright License
 -----------------------------
 
 Subject to the terms and conditions of
@@ -80,7 +80,7 @@ copyright license to reproduce, prepare Derivative Works of,
 publicly display, publicly perform, sublicense, and distribute the
 Work and such Derivative Works in Source or Object form.
 
-3. Grant of Patent License
+Grant of Patent License
 --------------------------
 
 Subject to the terms and conditions of
@@ -99,7 +99,7 @@ or contributory patent infringement, then any patent licenses
 granted to You under this License for that Work shall terminate
 as of the date such litigation is filed.
 
-4. Redistribution
+Redistribution
 -----------------
 
 You may reproduce and distribute copies of the
@@ -143,7 +143,7 @@ for any such Derivative Works as a whole, provided Your use,
 reproduction, and distribution of the Work otherwise complies with
 the conditions stated in this License.
 
-5. Submission of Contributions
+Submission of Contributions
 ------------------------------
 
 Unless You explicitly state otherwise,
@@ -154,7 +154,7 @@ Notwithstanding the above, nothing herein shall supersede or modify
 the terms of any separate license agreement you may have executed
 with Licensor regarding such Contributions.
 
-6. Trademarks
+Trademarks
 -------------
 
 This License does not grant permission to use the trade
@@ -162,7 +162,7 @@ names, trademarks, service marks, or product names of the Licensor,
 except as required for reasonable and customary use in describing the
 origin of the Work and reproducing the content of the NOTICE file.
 
-7. Disclaimer of Warranty
+Disclaimer of Warranty
 -------------------------
 
 Unless required by applicable law or
@@ -175,7 +175,7 @@ PARTICULAR PURPOSE. You are solely responsible for determining the
 appropriateness of using or redistributing the Work and assume any
 risks associated with Your exercise of permissions under this License.
 
-8. Limitation of Liability
+Limitation of Liability
 --------------------------
 
 In no event and under no legal theory,
@@ -190,7 +190,7 @@ work stoppage, computer failure or malfunction, or any and all
 other commercial damages or losses), even if such Contributor
 has been advised of the possibility of such damages.
 
-9. Accepting Warranty or Additional Liability
+Accepting Warranty or Additional Liability
 ---------------------------------------------
 
 While redistributing
@@ -203,3 +203,28 @@ of any other Contributor, and only if You agree to indemnify,
 defend, and hold each Contributor harmless for any liability
 incurred by, or claims asserted against, such Contributor by reason
 of your accepting any such warranty or additional liability.
+
+APPENDIX: How to apply the Apache License to your work
+======================================================
+
+To apply the Apache License to your work, attach the following boilerplate
+notice, with the fields enclosed by brackets "[]" replaced with your own
+identifying information. (Don't include the brackets!) The text should be
+enclosed in the appropriate comment syntax for the file format. We also
+recommend that a file or class name and description of purpose be included
+on the same "printed page" as the copyright notice for easier identification
+within third-party archives.
+
+    Copyright [yyyy] [name of copyright owner]
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.

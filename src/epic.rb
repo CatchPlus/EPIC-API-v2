@@ -18,7 +18,7 @@
 require 'config.rb'
 require '../secrets/users.rb'
 
-require 'epic_monkeypatches.rb'
+#require 'epic_monkeypatches.rb'
 
 # Require all the resources served by this Resource Factory:
 require 'epic_handle.rb'
@@ -69,7 +69,7 @@ Can be called by tainted resources, to be removed from the cache.
 @see Rackful::Server#resource_factory for details
 =end
   def [] path
-    path = path.to_s.unslashify
+    path = path.unslashify
     cached = resource_cache[path]
     # Legal values for +cached+ are:
     # - nil: the resource is not in cache
@@ -79,7 +79,7 @@ Can be called by tainted resources, to be removed from the cache.
       # if +cached+ is +false+, we want to return +nil+.
       return cached || nil
     end
-    resource_cache[path] = case path.unescape_path # already unslashified!
+    resource_cache[path] = case path.unescape # already unslashified!
     when ''
       StaticCollection.new '/', [ 'handles/', 'profiles/', 'templates/', 'batches/' ]
     when '/handles', '/profiles', '/templates', '/batches'

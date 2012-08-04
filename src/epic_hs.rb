@@ -37,18 +37,18 @@ module HS
 
   # All permissions in the Handle System, indexed by integers.
   PERMS_BY_I = [
-    :add_handle,          #  0
-    :delete_handle,       #  1
-    :add_naming_auth,     #  2
-    :delete_naming_auth,  #  3
-    :modify_value,        #  4
-    :remove_value,        #  5
-    :add_value,           #  6
-    :read_value,          #  7
-    :modify_admin,        #  8
-    :remove_admin,        #  9
-    :add_admin,           # 10
-    :list_handles         # 11
+    'add_handle',          #  0
+    'delete_handle',       #  1
+    'add_naming_auth',     #  2
+    'delete_naming_auth',  #  3
+    'modify_value',        #  4
+    'remove_value',        #  5
+    'add_value',           #  6
+    'read_value',          #  7
+    'modify_admin',        #  8
+    'remove_admin',        #  9
+    'add_admin',           # 10
+    'list_handles'         # 11
   ]
 
   # All permissions in the Handle System, indexed by symbols.
@@ -57,8 +57,8 @@ module HS
   # These constants need to be the same as in Java.
   # Let's check if they are:
   unless PERMS_BY_S.all? {
-           |symbol, integer|
-           integer == HDLLIB.AdminRecord.const_get( symbol.to_s.upcase.to_sym )
+           |perm, integer|
+           integer == HDLLIB.AdminRecord.const_get( perm.upcase.to_sym )
          }
     raise 'Oops! CNRI changed their constants!'
   end
@@ -141,12 +141,12 @@ Translates a Ruby structure into binary data.
     )
     perms = adminRecord.perms.to_a
     {
-      :adminId => String.from_java_bytes( adminRecord.adminId ),
+      :adminId => String.from_java_bytes( adminRecord.adminId ).force_encoding(Encoding::UTF_8),
       :adminIdIndex => adminRecord.adminIdIndex,
       :perms => Hash[
         perms.each_index.collect {
           |i|
-          [ PERMS_BY_I[i].to_s.downcase, perms[i] ] 
+          [ PERMS_BY_I[i], perms[i] ] 
         }
       ]
     }
@@ -167,14 +167,15 @@ Translates a Ruby structure into binary data.
          ! data[:perms].kind_of?( Hash ) ||
          ! PERMS_BY_I.all? {
              |perm|
-             data[:perms].key? perm.to_s.downcase.to_sym
+             data[:perms].key? perm.to_sym
            }
     adminRecord = HDLLIB::AdminRecord.new
-    adminRecord.adminId = data[:adminId].to_s.to_java_bytes
+    adminRecord.adminId =
+      data[:adminId].to_s.force_encoding(Encoding::ASCII_8BIT).to_java_bytes
     adminRecord.adminIdIndex = data[:adminIdIndex].to_i
     adminRecord.perms = PERMS_BY_I.collect do
       |perm|
-      !! data[:perms][ perm.to_s.downcase.to_sym ]
+      !! data[:perms][ perm.to_sym ]
     end.to_java Java::boolean
     String.from_java_bytes(
       HDLLIB::Encoder.encodeAdminRecord( adminRecord )

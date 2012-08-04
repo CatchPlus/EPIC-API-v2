@@ -19,18 +19,6 @@
 
 $LOAD_PATH.unshift 'src'
 
-# Perform header spoofing.
-#
-# This allows users to provide HTTP headers in query parameters to the service.
-# This can be handy when you're using a web browser to contact the service.
-# For example, to retrieve a JSON response instead of the "default" XHTML, you'd
-# normally send an +Accept:+ request header.
-#
-# With the following middleware in place, you can also append
-# +?_http_accept=application/json+ to the URL.
-require 'rackful/header_spoofing'
-use Rackful::HeaderSpoofing
-
 # The default configuration uses Rack::Chunked to allow streaming of response
 # bodies. Using this middleware, we don't have to specify a +Content-Length+
 # header.
@@ -77,6 +65,18 @@ use Rack::Auth::Digest::MD5, {
   username = username.to_str
   EPIC::USERS[username] ? EPIC::USERS[username][:digest] : nil
 end
+
+# Perform header spoofing.
+#
+# This allows users to provide HTTP headers in query parameters to the service.
+# This can be handy when you're using a web browser to contact the service.
+# For example, to retrieve a JSON response instead of the "default" XHTML, you'd
+# normally send an +Accept:+ request header.
+#
+# With the following middleware in place, you can also append
+# +?_http_accept=application/json+ to the URL.
+require 'rackful/header_spoofing'
+use Rackful::HeaderSpoofing
 
 # And finally, let's start the actual web service:
 # +epic.rb+ is the top level include file for the EPIC web service.

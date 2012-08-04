@@ -27,26 +27,10 @@ class Profile < Resource
   attr_reader :filename
 
 
-  CONTENT_TYPES = {
-    'application/xhtml+xml; charset=UTF-8' => 1,
-    'text/html; charset=UTF-8' => 1,
-    'text/xml; charset=UTF-8' => 1,
-    'application/xml; charset=UTF-8' => 1
-  }
-
-
   def initialize path, register = false
     super path
-    @filename = "./public#{self.path.unescape_path}"
+    @filename = "./public#{self.path.unescape}"
     # TODO IMPLEMENT
-  end
-
-
-  # @see Rackful::Resource#do_Method
-  def do_GET request, response
-    bct = request.best_content_type CONTENT_TYPES
-    response.header['Content-Type'] = bct
-    response.body = XHTML.new self, request
   end
 
 
@@ -65,18 +49,10 @@ class Profile < Resource
   end
 
 
+  def to_rackful; nil; end
+
+
 end # class Profile
-
-
-class Profile::XHTML < Serializer::XHTML
-
-
-  def each_nested # :yields: strings
-    yield ''
-  end
-
-
-end # class Collection::XHTML
 
 
 end # module EPIC

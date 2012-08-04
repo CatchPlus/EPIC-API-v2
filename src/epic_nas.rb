@@ -24,7 +24,7 @@ class NAs < Collection
   def each
     DB.instance.all_nas.each do
       |na|
-      yield na[5..-1].escape_path + '/'
+      yield Rackful::Path.new( self.path + escape_path( na[5..-1] ) + '/' )
     end
   end
 

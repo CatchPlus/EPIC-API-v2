@@ -1,17 +1,21 @@
 --private
 #--no-private
 --protected
---main EPIC.rdoc
+--main EPIC.md
 --output-dir public/docs/yard
 --charset UTF-8
 --title EPIC
 --exclude sequel/adapters
+#--markup markdown
+--hide-void-return
+--default-return void
 src/**/*.rb
 #gems/rack-1*/lib/**/*.rb
 #gems/sequel*/lib/**/*.rb
 #gems/json*/lib/**/*.rb
+gems/rackful-0.*/lib/**/*.rb
 -
-INSTALL.rdoc
-EPIC.rdoc
+INSTALL.md
+EPIC.md
 LICENSE.md
 API.md

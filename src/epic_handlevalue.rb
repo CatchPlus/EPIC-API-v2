@@ -165,7 +165,7 @@ class HandleValue # < Resource
     # super path
     # matches = %r{/([^/]+/[^/]+)/(\d+)\z}.match path
     # raise "Unexpected path: #{path}" unless matches
-    # @handle = matches[1].unescape_path
+    # @handle = matches[1].to_path.unescape
     # @idx = matches[2].to_i
     @handle_value = HS::HDLLIB::HandleValue.new
     if dbrow
