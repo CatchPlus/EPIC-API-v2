@@ -37,6 +37,24 @@ TODO: better implementation (server-side data retention) for streaming responses
     # end
   end
 
+  add_media_type 'application/json', :POST
+  add_media_type 'application/x-json', :POST
+
+  # Handles an HTTP/1.1 PUT request.
+  # @see Rackful::Resource#do_METHOD
+  def do_POST request, response
+    begin
+      handle_values_in = Rackful::JSON.parse( request.body )
+    rescue
+      raise Rackful::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
+    end # begin
+
+    # TODO: Do something with the request body!
+    # ...
+    # ...
+
+  end
+
 end # class Handles
 
 end # module EPIC

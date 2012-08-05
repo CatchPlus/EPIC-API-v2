@@ -79,16 +79,11 @@ class Handle < Resource
   # Handles an HTTP/1.1 PUT request.
   # @see Rackful::Resource#do_METHOD
   def do_PUT request, response
-    case request.media_type
-    when 'application/json', 'application/x-json'
-      begin
-        handle_values_in = Rackful::JSON.parse( request.body )
-      rescue
-        raise Rackful::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
-      end # begin
-    else
-      raise Rackful::HTTPStatus, 'UNSUPPORTED_MEDIA_TYPE application/json'
-    end # case request.media_type
+    begin
+      handle_values_in = Rackful::JSON.parse( request.body )
+    rescue
+      raise Rackful::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
+    end # begin
     raise Rackful::HTTPStatus, 'BAD_REQUEST Array expected' \
       unless handle_values_in.kind_of? Array
     new_values = handle_values_in.collect do
