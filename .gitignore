@@ -11,3 +11,4 @@ public/docs/epic
 public/docs/yard
 .yardoc
 gems
+.settings
