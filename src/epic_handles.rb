@@ -43,16 +43,13 @@ TODO: better implementation (server-side data retention) for streaming responses
   # Handles an HTTP/1.1 PUT request.
   # @see Rackful::Resource#do_METHOD
   def do_POST request, response
-    begin
-      handle_values_in = Rackful::JSON.parse( request.body )
-    rescue
-      raise Rackful::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
-    end # begin
-
-    # TODO: Do something with the request body!
-    # ...
-    # ...
-
+    generator_name = request.GET['generator'] || EPIC::DEFAULT_GENERATOR
+    unless generator = request.resource_factory["/generators/#{generator_name}"]
+      raise Rackful::HTTP400BadRequest, "No such generator: '#{generator_name}'"
+    end
+    pid_suffix = escape_path( generator.generate( request ) )
+    handle = request.resource_factory["/handles/#{prefix}/#{pid_suffix}"]
+    handle.do_PUT( request, response )
   end
 
 end # class Handles

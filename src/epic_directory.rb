@@ -18,6 +18,7 @@ require 'epic_collection.rb'
 
 module EPIC
 
+# @deprecated This class doesn't seem to be used anymore.
 class Directory < Collection
 
   def each

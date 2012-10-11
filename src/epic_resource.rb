@@ -55,7 +55,12 @@ EOS
   end # header
 
   def footer
-    '<p align="right"><em>Developed for <a href="http://www.catchplus.nl/">CATCH+</a><br/>by <a href="http://www.sara.nl/">SARA</a></em></p></body></html>'
+    <<EOS
+<p align="right"><em>
+Developed by <a href="http://www.sara.nl/">SARA</a> and <a href="http://www.gwdg.de/">GWDG</a><br/>
+Sponsored by <a href="http://www.catchplus.nl/">CATCH+</a> and <a href="http://www.eudat.eu/">EUDAT</a>
+</em></p></body></html>
+EOS
   end # footer
 
 end # class XHTML
@@ -98,7 +103,7 @@ class Resource
       if unlock
         GLOBAL_LOCK_HASH.delete path
       elsif GLOBAL_LOCK_HASH[path]
-        raise HTTPStatus, 'SERVICE_UNAVAILABLE Another client is modifying the resource.'
+        raise HTTP503ServiceUnavailable, 'Another client is modifying the resource.'
       else
         GLOBAL_LOCK_HASH[path] = true
       end

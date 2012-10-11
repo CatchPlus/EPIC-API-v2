@@ -20,42 +20,40 @@ require 'epic_resource.rb'
 module EPIC
 
 
-class Profile < Resource
-
-
-  # @api private
-  # @return [Hash{ String(prefix) => Hash{ String(name) => Profile } }]
-  def Profile.profiles
-    @@profiles ||= {}
-  end
-
+class Generator < Resource
 
   # @api private
-  # @return [Hash{ String(name) => Profile }]
-  def Profile.[] name
-    profiles[name.to_s.downcase]
+  # @return [Hash{ String(prefix) => Hash{ String(name) => Generator } }]
+  def Generator.generators
+    @@generators ||= {}
   end
 
-  
-  def Profile.inherited klass
-    profiles[klass.name.split('::').last.downcase] = klass
+  # @api private
+  # @return [Hash{ String(name) => Generator }]
+  def Generator.[] name
+    generators[name.to_s.downcase]
   end
-
   
+  def Generator.inherited klass
+    generators[klass.name.split('::').last.downcase] = klass
+  end
+  
+  # @return [Hash{Symbol => String(description}]
+  attr_reader :parameters
+
   # @return [String]
   attr_reader :description
-
   
   def to_rackful
-    description
+    { :description => description,
+      :parameters => parameters }
   end
 
-
-  # @!method validate(request)
+  # @!method generate(request)
   #   @param [Rackful::Request] request
 
-  # A profile that uses UUIDs to guarantee the uniqueness of created Handles.
-  class UUID < Profile
+  # A generator that uses UUIDs to guarantee the uniqueness of created Handles.
+  class UUID < Generator
 
     def initialize *args
       super( *args )
@@ -63,19 +61,18 @@ class Profile < Resource
         :prefix => 'Optional: a string of UTF-8 encoded printable unicode characters to put before the UUID.',
         :suffix => 'Optional: a string of UTF-8 encoded printable unicode characters to put after the UUID.'
       }
-      @description = 'This profile uses UUIDs to guarantee the uniqueness of created Handles.'
+      @description = 'This generator uses UUIDs to guarantee the uniqueness of created Handles.'
     end
 
-    def validate request
+    def generate request
       prefix = request.GET['prefix'] || ''
       suffix = request.GET['suffix'] || ''
       prefix + DB.instance.uuid + suffix
     end
 
-  end # class UUID < Profile
+  end # class UUID < Generator
 
-end # class Profile
+end # class Generator
 
 end # module EPIC
-
 

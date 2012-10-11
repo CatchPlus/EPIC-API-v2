@@ -23,117 +23,107 @@ require 'hsj/cnriutil.jar'
 module EPIC
 
 
-=begin rdoc
-Namespace for everything related to the Handle System client library (Java).
-
-This module is not object-oriented; it's just a collection of "procedures" that
-wrap around bits of the Handle client library.
-=end
+# Namespace for everything related to the Handle System client library (Java).
+# 
+# This module is not object-oriented; it's just a collection of "procedures" that
+# wrap around bits of the Handle client library.
 module HS
 
 
-  # A shorthand for the Java +net.handle.hdllib+ package.
-  HDLLIB = Java::NetHandleHdllib
+# A shorthand for the Java +net.handle.hdllib+ package.
+HDLLIB = Java::NetHandleHdllib
 
-  # All permissions in the Handle System, indexed by integers.
-  PERMS_BY_I = [
-    'add_handle',          #  0
-    'delete_handle',       #  1
-    'add_naming_auth',     #  2
-    'delete_naming_auth',  #  3
-    'modify_value',        #  4
-    'remove_value',        #  5
-    'add_value',           #  6
-    'read_value',          #  7
-    'modify_admin',        #  8
-    'remove_admin',        #  9
-    'add_admin',           # 10
-    'list_handles'         # 11
-  ]
+# All permissions in the Handle System, indexed by integers.
+PERMS_BY_I = [
+  'add_handle',          #  0
+  'delete_handle',       #  1
+  'add_naming_auth',     #  2
+  'delete_naming_auth',  #  3
+  'modify_value',        #  4
+  'remove_value',        #  5
+  'add_value',           #  6
+  'read_value',          #  7
+  'modify_admin',        #  8
+  'remove_admin',        #  9
+  'add_admin',           # 10
+  'list_handles'         # 11
+]
 
-  # All permissions in the Handle System, indexed by symbols.
-  PERMS_BY_S = Hash[ PERMS_BY_I.each_with_index.to_a ]
+# All permissions in the Handle System, indexed by symbols.
+PERMS_BY_S = Hash[ PERMS_BY_I.each_with_index.to_a ]
 
-  # These constants need to be the same as in Java.
-  # Let's check if they are:
-  unless PERMS_BY_S.all? {
-           |perm, integer|
-           integer == HDLLIB.AdminRecord.const_get( perm.upcase.to_sym )
-         }
-    raise 'Oops! CNRI changed their constants!'
-  end
+# These constants need to be the same as in Java.
+# Let's check if they are:
+unless PERMS_BY_S.all? {
+         |perm, integer|
+         integer == HDLLIB.AdminRecord.const_get( perm.upcase.to_sym )
+       }
+  raise 'Oops! CNRI changed their constants!'
+end
 
-  # Cache of Java +AuthenticationInfo+ objects, indexed by user name.
-  AUTHINFO = {}
+# Cache of Java +AuthenticationInfo+ objects, indexed by user name.
+AUTHINFO = {}
 
-=begin rdoc
-Mutex used to make some of the methods in this class thread-safe.
-@see HS.resolver
-@see HS.authentication_info
-=end
-  MUTEX = Mutex.new
-  EMPTY_HANDLE_VALUE = HDLLIB::HandleValue.new
+# Mutex used to make some of the methods in this class thread-safe.
+# @see HS.resolver
+# @see HS.authentication_info
+MUTEX = Mutex.new
+EMPTY_HANDLE_VALUE = HDLLIB::HandleValue.new
 
 
 class << self
 
 
-=begin rdoc
-@!method unpack_SOME_HANDLE_TYPE(data)
-Translates binary data (from the database) to a Ruby structure.
-
-For certain binary encoded Handle value types, like +HS_ADMIN+ and +HS_VLIST+,
-the web service can produce <em>and consume</em> a structured representation.
-For example, the +JSON+ representation of an +HS_ADMIN+ value looks like this
-(abbreviated and prettified for clarity):
-
-  {
-    "idx"        : 100,
-    "type"       : "HS_ADMIN",
-    "data"       : "D/8AAAAKMC5OQS8xMTAyMgAAASwAAA==",
-    "parsed_data": {
-      "adminId"     : "0.NA/11022",
-      "adminIdIndex": 300,
-      "perms"       : {
-           "add_handle": true,     "add_naming_auth": true,
-        "delete_handle": true,  "delete_naming_auth": true,
-         "modify_value": true,        "modify_admin": true,
-         "remove_value": true,        "remove_admin": true,
-            "add_value": true,           "add_admin": true,
-           "read_value": true,        "list_handles": true
-      }
-    }
-  }
-
-To add a new "parseble" type to this web service, all you have to do is create
-two new methods in this module, called
-{unpack_SOME_HANDLE_TYPE unpack_YOUR_TYPE} and
-{pack_SOME_HANDLE_TYPE pack_YOUR_TYPE}, which translate between the binary and
-the structured representations.
-
-<b>See also:</b>::
-  {HandleValue#parsed_data} and {HandleValue#parsed_data=} which use
-  introspection to find out if a parsed representation of a value type
-  is available.
-@param data [String] some binary data.
-@return [Hash] a structured representation of +data+
-=end
+  # @!method unpack_SOME_HANDLE_TYPE(data)
+  # Translates binary data (from the database) to a Ruby structure.
+  # 
+  # For certain binary encoded Handle value types, like +HS_ADMIN+ and +HS_VLIST+,
+  # the web service can produce <em>and consume</em> a structured representation.
+  # For example, the +JSON+ representation of an +HS_ADMIN+ value looks like this
+  # (abbreviated and prettified for clarity):
+  # 
+  #   {
+  #     "idx"        : 100,
+  #     "type"       : "HS_ADMIN",
+  #     "data"       : "D/8AAAAKMC5OQS8xMTAyMgAAASwAAA==",
+  #     "parsed_data": {
+  #       "adminId"     : "0.NA/11022",
+  #       "adminIdIndex": 300,
+  #       "perms"       : {
+  #            "add_handle": true,     "add_naming_auth": true,
+  #         "delete_handle": true,  "delete_naming_auth": true,
+  #          "modify_value": true,        "modify_admin": true,
+  #          "remove_value": true,        "remove_admin": true,
+  #             "add_value": true,           "add_admin": true,
+  #            "read_value": true,        "list_handles": true
+  #       }
+  #     }
+  #   }
+  #
+  # To add a new "parseble" type to this web service, all you have to do is create
+  # two new methods in this module, called
+  # {unpack_SOME_HANDLE_TYPE unpack_YOUR_TYPE} and
+  # {pack_SOME_HANDLE_TYPE pack_YOUR_TYPE}, which translate between the binary and
+  # the structured representations.
+  #
+  # <b>See also:</b>::
+  #   {HandleValue#parsed_data} and {HandleValue#parsed_data=} which use
+  #   introspection to find out if a parsed representation of a value type
+  #   is available.
+  # @param data [String] some binary data.
+  # @return [Hash] a structured representation of +data+
 
 
-=begin rdoc
-@!method pack_SOME_HANDLE_TYPE(data)
-Translates a Ruby structure into binary data.
-@return [String] a binary representation of +data+
-@param data [Hash] some structured data
-@see #unpack_SOME_HANDLE_TYPE
-=end
+  # @!method pack_SOME_HANDLE_TYPE(data)
+  # Translates a Ruby structure into binary data.
+  # @return [String] a binary representation of +data+
+  # @param data [Hash] some structured data
+  # @see #unpack_SOME_HANDLE_TYPE
 
 
-=begin rdoc
-@param data [String]
-@return [Hash]
-@see #unpack_SOME_HANDLE_TYPE
-=end
+  # @param data [String]
+  # @return [Hash]
+  # @see #unpack_SOME_HANDLE_TYPE
   def unpack_HS_ADMIN data
     adminRecord = HDLLIB::AdminRecord.new
     HDLLIB::Encoder.decodeAdminRecord(
@@ -153,13 +143,11 @@ Translates a Ruby structure into binary data.
   end
 
 
-=begin rdoc
-@param data [Hash]
-@return [String]
-@see #pack_SOME_HANDLE_TYPE
-=end
+  # @param data [Hash]
+  # @return [String]
+  # @see #pack_SOME_HANDLE_TYPE
   def pack_HS_ADMIN data
-    raise Rackful::HTTPStatus, "BAD_REQUEST Missing one or more required values: #{data.inspect}" \
+    raise Rackful::HTTP400BadRequest, "Missing one or more required values: #{data.inspect}" \
       if ! data.kind_of?( Hash ) ||
          ! data[:adminId] ||
          ! data[:adminIdIndex] ||
@@ -183,11 +171,9 @@ Translates a Ruby structure into binary data.
   end
 
 
-=begin rdoc
-@param data [String]
-@return [Hash]
-@see #unpack_SOME_HANDLE_TYPE
-=end
+  # @param data [String]
+  # @return [Hash]
+  # @see #unpack_SOME_HANDLE_TYPE
   def unpack_HS_VLIST data
     vlist = HDLLIB::Encoder.decodeValueReferenceList(
       data.to_java_bytes, 0
@@ -199,11 +185,9 @@ Translates a Ruby structure into binary data.
   end
 
 
-=begin rdoc
-@param data [Hash]
-@return [String]
-@see #pack_SOME_HANDLE_TYPE
-=end
+  # @param data [Hash]
+  # @return [String]
+  # @see #pack_SOME_HANDLE_TYPE
   def pack_HS_VLIST data
     raise 'Bad HS_VLIST data.' \
       if ! data.kind_of?( Array ) ||
@@ -228,9 +212,7 @@ Translates a Ruby structure into binary data.
   end
 
 
-=begin rdoc
-HandleResolver should be thread safe, so there's only one of it.
-=end
+  # HandleResolver should be thread safe, so there's only one of it.
   def resolver
     unless class_variable_defined? :@@resolver
       MUTEX.synchronize do
@@ -246,14 +228,12 @@ HandleResolver should be thread safe, so there's only one of it.
   end
 
 
-=begin rdoc
-A Java AuthenticationInfo object for user +user_name+.
-
-The objects are cached for efficiency, in class constant +AUTH_INFO+
-@private
-@param user_name [#to_s]
-@return [HDLLIB::AuthenticationInfo]
-=end
+  # A Java AuthenticationInfo object for user +user_name+.
+  # 
+  # The objects are cached for efficiency, in class constant +AUTH_INFO+
+  # @api private
+  # @param user_name [#to_s]
+  # @return [HDLLIB::AuthenticationInfo]
   def authentication_info user_name
     user_name = user_name.to_s
     unless AUTHINFO[user_name]
@@ -273,14 +253,12 @@ The objects are cached for efficiency, in class constant +AUTH_INFO+
   end
 
 
-=begin
-Create a Handle
-@param handle [#to_s]
-@param values [Array<HandleValue>]
-@param user_name [#to_s]
-@return [void]
-@raise [Rackful::HTTPStatus]
-=end
+  # Create a Handle
+  # @param handle [#to_s]
+  # @param values [Array<HandleValue>]
+  # @param user_name [#to_s]
+  # @return [void]
+  # @raise [Rackful::HTTP403Forbidden, String]
   def create_handle handle, values, user_name
     values = values.collect do
       |value|
@@ -294,8 +272,9 @@ Create a Handle
     response = resolver.processRequest( request )
     if response.kind_of? HDLLIB::ErrorResponse
       case response.responseCode
-      when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-        raise Rackful::HTTPStatus, 'FORBIDDEN'
+      when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS,
+           HDLLIB::ErrorResponse::RC_INVALID_ADMIN
+        raise Rackful::HTTP403Forbidden
       else
         raise response.to_string
       end
@@ -303,15 +282,13 @@ Create a Handle
   end
 
 
-=begin
-Update a Handle
-@param handle [#to_s]
-@param old_values [Array<HandleValue>] The old values in +handle+.
-@param new_values [Array<HandleValue>] The new values for +handle+.
-@param user_name [#to_s]
-@return [void]
-@raise [Rackful::HTTPStatus]
-=end
+  # Update a Handle
+  # @param handle [#to_s]
+  # @param old_values [Array<HandleValue>] The old values in +handle+.
+  # @param new_values [Array<HandleValue>] The new values for +handle+.
+  # @param user_name [#to_s]
+  # @return [void]
+  # @raise [Rackful::HTTP403Forbidden, String]
   def update_handle handle, old_values, new_values, user_name
     authInfo = authentication_info( user_name )
     values_2b_added    = []
@@ -385,8 +362,9 @@ Update a Handle
       response = resolver.processRequest( request )
       if response.kind_of? HDLLIB::ErrorResponse
         case response.responseCode
-        when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-          raise Rackful::HTTPStatus, 'FORBIDDEN'
+        when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS,
+             HDLLIB::ErrorResponse::RC_INVALID_ADMIN
+          raise Rackful::HTTP403Forbidden
         else
           raise response.to_string
         end
@@ -395,13 +373,11 @@ Update a Handle
   end
 
 
-=begin
-Deletes a Handle
-@param handle [#to_s]
-@param user_name [#to_s]
-@return [void]
-@raise [Rackful::HTTPStatus]
-=end
+  # Deletes a Handle
+  # @param handle [#to_s]
+  # @param user_name [#to_s]
+  # @return [void]
+  # @raise [Rackful::HTTP403Forbidden, Rackful::HTTP404NotFound, String]
   def delete_handle handle, user_name
     authInfo = authentication_info( user_name )
     request = HDLLIB::DeleteHandleRequest.new(
@@ -411,10 +387,11 @@ Deletes a Handle
     response = resolver.processRequest( request )
     if response.kind_of? HDLLIB::ErrorResponse
       case response.responseCode
-      when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-        raise Rackful::HTTPStatus, 'FORBIDDEN'
+      when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS,
+           HDLLIB::ErrorResponse::RC_INVALID_ADMIN
+        raise Rackful::HTTP403Forbidden
       when HDLLIB::ErrorResponse::RC_HANDLE_NOT_FOUND
-        raise Rackful::HTTPStatus, 'NOT_FOUND'
+        raise Rackful::HTTP404NotFound
       else
         raise response.to_string
       end
