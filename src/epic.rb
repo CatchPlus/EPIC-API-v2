@@ -15,9 +15,6 @@
 =end
 
 
-require 'config.rb'
-require '../secrets/users.rb'
-
 #require 'epic_monkeypatches.rb'
 
 # Require all the resources served by this Resource Factory:
@@ -27,36 +24,33 @@ require 'epic_handlevalue.rb'
 require 'epic_nas.rb'
 require 'epic_directory.rb'
 require 'epic_profile.rb'
-require 'epic_template.rb'
+require 'epic_generator.rb'
+
+require 'config.rb'
+require '../secrets/users.rb'
 
 require 'singleton'
 
 
-=begin rdoc
-@todo Documentation
-=end
+# @todo Documentation
 module EPIC
 
 
-=begin
-Resource Factory for all our ReSTful resources.
-
-{Rackful::Server} requires a {Rackful::Server#resource_factory resource factory}. This
-singleton class implements EPIC's resource factory.
-
-Like every Singleton in a multi-threaded environment, this class must be thread safe!
-@todo Move this class to a separate file? Not needed quite yet...
-=end
+# Resource Factory for all our ReSTful resources.
+# 
+# {Rackful::Server} requires a {Rackful::Server#resource_factory resource factory}. This
+# singleton class implements EPIC's resource factory.
+# 
+# Like every Singleton in a multi-threaded environment, this class must be thread safe!
+# @todo Move this class to a separate file? Not needed quite yet...
 class ResourceFactory
 
 
   include Singleton
 
 
-=begin
-Can be called by tainted resources, to be removed from the cache.
-@return [self]
-=end
+  # Can be called by tainted resources, to be removed from the cache.
+  # @return [self]
   def uncache path
     resource_cache.delete path.to_s.unslashify
     self
@@ -64,12 +58,13 @@ Can be called by tainted resources, to be removed from the cache.
 
 
 =begin
-@param path [#to_s] the URI-encoded path to the resource.
+@param path [Rackful::Path] the URI-encoded path to the resource.
 @return [Resource, nil]
 @see Rackful::Server#resource_factory for details
 =end
   def [] path
-    path = path.unslashify
+    path.unslashify!
+    segments = path.segments
     cached = resource_cache[path]
     # Legal values for +cached+ are:
     # - nil: the resource is not in cache
@@ -79,26 +74,33 @@ Can be called by tainted resources, to be removed from the cache.
       # if +cached+ is +false+, we want to return +nil+.
       return cached || nil
     end
-    resource_cache[path] = case path.unescape # already unslashified!
-    when ''
-      StaticCollection.new '/', [ 'handles/', 'profiles/', 'templates/', 'batches/' ]
-    when '/handles', '/profiles', '/templates', '/batches'
-      NAs.new path.slashify
-    when %r{\A/(batches)/\d+\z}
-      StaticCollection.new path.slashify, []
-    when %r{\A/handles/\d+\z}
-      #StaticCollection.new path.to_s.slashify, ['hello/']
-      Handles.new path.slashify
-    when %r{\A/handles/\d+/[^/]+\z}
-      Handle.new path
-    when %r{\A/(templates|profiles)/\d+\z}
-      Directory.new path.slashify
-    when %r{\A/profiles/\d+/\w[^/]+\z}
-      Profile.new path
-    # when %r{\A/templates/\d+/[^/]+\z}
-      # Template.new path
-    else
-      false
+    n = segments.length
+    resource_cache[path] =
+    if 0 === n
+      StaticCollection.new(
+        '/', [
+          'handles/',
+          #~ 'profiles/',
+          'generators/',
+          #~ 'batches/'
+        ]
+      )
+    elsif 'handles' === segments[0]
+      if 1 === n
+        NAs.new( path.slashify )
+      elsif %r{\A\d+\z} === segments[1]
+        if 2 === n
+          Handles.new( path.slashify )
+        elsif 3 === n
+          Handle.new path
+        end
+      end
+    elsif 'generators' === segments[0]
+      if 1 === n
+        StaticCollection.new(path.slashify, Generator.generators.keys)
+      elsif 2 === n
+        Generator.generators[segments[1]].new path
+      end
     end
   end
 
@@ -106,17 +108,15 @@ Can be called by tainted resources, to be removed from the cache.
   private
 
 
-=begin
-For performance, this {ResourceFactory} maintains a cache of
-{EPIC::Resource Resources} it has produced earlier <em>within this same
-request.</em>
-
-Valid Hash values are:
-[{Resource}] A cached resource
-[false] The resource has been requested earlier, but wasn't found.
-[nil] The resource hasn't been requested yet.
-@return [Hash< unslashified_path => resource_object >]
-=end
+# For performance, this {ResourceFactory} maintains a cache of
+# {EPIC::Resource Resources} it has produced earlier <em>within this same
+# request.</em>
+# 
+# Valid Hash values are:
+# [{Resource}] A cached resource
+# [false] The resource has been requested earlier, but wasn't found.
+# [nil] The resource hasn't been requested yet.
+# @return [Hash< unslashified_path => resource_object >]
   def resource_cache
     Rackful::Request.current.env[:epic_resource_cache] ||= Hash.new
   end

@@ -14,22 +14,20 @@
   limitations under the License.
 =end
 
-#require 'rubygems'
+#~ require 'rubygems'
 require 'sequel'
 require 'singleton'
 
 module EPIC
 
 
-=begin
-@todo multi-host sites
-=end
+# @todo multi-host sites
 class DB
 
   include Singleton
 
   def pool
-    @pool[self.sql_depth] ||= Sequel.connect *SEQUEL_CONNECTION_ARGS
+    @pool[self.sql_depth] ||= Sequel.connect(*SEQUEL_CONNECTION_ARGS)
   end
 
   def sql_depth
@@ -52,7 +50,7 @@ class DB
   def each_handle prefix = nil
     ds = self.pool[:handles].select(:handle).distinct
     if prefix
-      ds = ds.filter( '`handle` LIKE ?', prefix + '/%' )
+      ds = ds.filter( '`handle` LIKE ?', prefix.to_s + '/%' )
     end
     self.sql_depth = self.sql_depth + 1
     begin
@@ -64,6 +62,10 @@ class DB
 
   def all_handle_values handle
     ds = self.pool[:handles].where( :handle => handle ).all
+  end
+  
+  def uuid
+    self.pool['SELECT UUID()'].first
   end
 
 end

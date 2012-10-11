@@ -82,9 +82,9 @@ class Handle < Resource
     begin
       handle_values_in = Rackful::JSON.parse( request.body )
     rescue
-      raise Rackful::HTTPStatus, 'BAD_REQUEST ' + $!.to_s
+      raise Rackful::HTTP400BadRequest, $!.to_s
     end # begin
-    raise Rackful::HTTPStatus, 'BAD_REQUEST Array expected' \
+    raise Rackful::HTTP400BadRequest, 'Array expected' \
       unless handle_values_in.kind_of? Array
     new_values = handle_values_in.collect do
       |handle_value_in|
@@ -102,7 +102,7 @@ class Handle < Resource
         handle_value.parsed_data = handle_value_in[:parsed_data]
         unless data == handle_value.data ||
                parsed_data == handle_value.parsed_data
-          raise Rackful::HTTPStatus, 'BAD_REQUEST Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
+          raise Rackful::HTTP400, 'Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
         end # unless
       elsif handle_value_in.key?( :parsed_data )
         handle_value.parsed_data = handle_value_in[:parsed_data]
@@ -137,7 +137,7 @@ class Handle < Resource
       if self.empty?
         HS.create_handle(self.handle, new_values, request.env['REMOTE_USER'])
         @values = nil
-        raise Rackful::HTTPStatus, 'CREATED ' + self.path
+        raise Rackful::HTTP201Created, self.path
       else
         HS.update_handle(self.handle, self.values, new_values, request.env['REMOTE_USER'])
         @values = nil
@@ -169,7 +169,7 @@ class Handle < Resource
     values.each do
       |value|
       next if HS::EMPTY_HANDLE_VALUE.getIndex == value.idx
-      raise( Rackful::HTTPStatus, "BAD_REQUEST Multiple values with index #{value.idx}" ) \
+      raise( Rackful::HTTP400BadRequest, "Multiple values with index #{value.idx}" ) \
         if all_indexes.member? value.idx
       all_indexes << value.idx
     end

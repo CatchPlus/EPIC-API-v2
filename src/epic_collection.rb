@@ -25,17 +25,17 @@ class TXT < Rackful::Serializer
     'text/csv; charset=US-ASCII',
   ]
   def initialize *args
-    super *args
+    super(*args)
     @newline = ( 'text/csv; charset=US-ASCII' == self.content_type ) ?
       "\r\n" : "\n"
   end
   def each
     self.resource.each do
       |path|
-      yield path + @newline
+      yield path.to_s + @newline
     end
   end
-end # class Collection::TXT
+end # class EPIC::TXT
 
 
 # Abstract base class for all collection-style resources in this web service.
@@ -86,16 +86,18 @@ class Collection < Resource
       @resource.each &block
     end
 
-  end
+  end # class Collection::Recursive
 
 end # class Collection
 
 
 class StaticCollection < Collection
 
+  # @param [Path] path
+  # @param [Enumerable<#to_s>] uris an array of URIs
   def initialize path, uris
     super path
-    @uris = uris.collect { |uri| (path + uri).to_path }
+    @uris = uris.collect { |uri| (path + uri.to_s).to_path }
   end
 
   def each &block; @uris.each &block; end

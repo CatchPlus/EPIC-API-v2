@@ -159,7 +159,7 @@ Translates a Ruby structure into binary data.
 @see #pack_SOME_HANDLE_TYPE
 =end
   def pack_HS_ADMIN data
-    raise Rackful::HTTPStatus, "BAD_REQUEST Missing one or more required values: #{data.inspect}" \
+    raise Rackful::HTTP400BadRequest, "Missing one or more required values: #{data.inspect}" \
       if ! data.kind_of?( Hash ) ||
          ! data[:adminId] ||
          ! data[:adminIdIndex] ||
@@ -279,7 +279,7 @@ Create a Handle
 @param values [Array<HandleValue>]
 @param user_name [#to_s]
 @return [void]
-@raise [Rackful::HTTPStatus]
+@raise [Rackful::HTTP403Forbidden, String]
 =end
   def create_handle handle, values, user_name
     values = values.collect do
@@ -295,7 +295,7 @@ Create a Handle
     if response.kind_of? HDLLIB::ErrorResponse
       case response.responseCode
       when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-        raise Rackful::HTTPStatus, 'FORBIDDEN'
+        raise Rackful::HTTP403Forbidden
       else
         raise response.to_string
       end
@@ -310,7 +310,7 @@ Update a Handle
 @param new_values [Array<HandleValue>] The new values for +handle+.
 @param user_name [#to_s]
 @return [void]
-@raise [Rackful::HTTPStatus]
+@raise [Rackful::HTTP403Forbidden, String]
 =end
   def update_handle handle, old_values, new_values, user_name
     authInfo = authentication_info( user_name )
@@ -386,7 +386,7 @@ Update a Handle
       if response.kind_of? HDLLIB::ErrorResponse
         case response.responseCode
         when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-          raise Rackful::HTTPStatus, 'FORBIDDEN'
+          raise Rackful::HTTP403Forbidden
         else
           raise response.to_string
         end
@@ -400,7 +400,7 @@ Deletes a Handle
 @param handle [#to_s]
 @param user_name [#to_s]
 @return [void]
-@raise [Rackful::HTTPStatus]
+@raise [Rackful::HTTP403Forbidden, Rackful::HTTP404NotFound, String]
 =end
   def delete_handle handle, user_name
     authInfo = authentication_info( user_name )
@@ -412,9 +412,9 @@ Deletes a Handle
     if response.kind_of? HDLLIB::ErrorResponse
       case response.responseCode
       when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS
-        raise Rackful::HTTPStatus, 'FORBIDDEN'
+        raise Rackful::HTTP403Forbidden
       when HDLLIB::ErrorResponse::RC_HANDLE_NOT_FOUND
-        raise Rackful::HTTPStatus, 'NOT_FOUND'
+        raise Rackful::HTTP404NotFound
       else
         raise response.to_string
       end
