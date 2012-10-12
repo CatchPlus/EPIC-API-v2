@@ -64,7 +64,7 @@ class ResourceFactory
 =end
   def [] path
     path = path.to_path unless Rackful::Path == path.class
-    path.to_path.unslashify!
+    path.unslashify!
     segments = path.segments
     cached = resource_cache[path]
     # Legal values for +cached+ are:

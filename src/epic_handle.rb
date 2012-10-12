@@ -20,6 +20,7 @@ require 'epic_hs.rb'
 require 'base64'
 require 'time'
 require 'json'
+
 # By default, the json gem uses the +Ext+ parser and generator, which uses a
 # fast Java implementation. We use the +Pure+ parser and generator, because it
 # seems to handle Unicode characters better. This is strange, as these two
