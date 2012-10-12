@@ -79,8 +79,8 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">gems/rackful-0.0.1/lib/rackful.rb<span class="defines">,<br />
-  gems/rackful-0.0.1/lib/rackful/method_spoofing.rb,<br /> gems/rackful-0.0.1/lib/rackful/header_spoofing.rb,<br /> gems/rackful-0.0.1/lib/rackful/relative_location.rb</span>
+    <dd class="r1 last">gems/rackful-0.1.1/lib/rackful_server.rb<span class="defines">,<br />
+  gems/rackful-0.1.1/lib/rackful_path.rb,<br /> gems/rackful-0.1.1/lib/rackful_request.rb,<br /> gems/rackful-0.1.1/lib/rackful_resource.rb,<br /> gems/rackful-0.1.1.orig/lib/rackful_path.rb,<br /> gems/rackful-0.1.1/lib/rackful_serializer.rb,<br /> gems/rackful-0.1.1/lib/rackful_http_status.rb,<br /> gems/rackful-0.1.1.orig/lib/rackful_server.rb,<br /> gems/rackful-0.1.1.orig/lib/rackful_request.rb,<br /> gems/rackful-0.1.1.orig/lib/rackful_resource.rb,<br /> gems/rackful-0.1.1.orig/lib/rackful_serializer.rb,<br /> gems/rackful-0.1.1.orig/lib/rackful_http_status.rb</span>
 </dd>
   
 </dl>
@@ -89,22 +89,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>
-Copyright ??2011-2012 Pieter van Beek <pieterb@sara.nl>
-</p>
-<p>
-Licensed under the Apache License, Version 2.0 (the &#8220;License&#8221;);
-you may not use this file except in compliance with the License. You may
-obtain a copy of the License at
-</p>
-<pre class="code ruby"><code>
-    <span class='id identifier rubyid_http'>http</span><span class='symbol'>:/</span><span class='op'>/</span><span class='id identifier rubyid_www'>www</span><span class='period'>.</span><span class='id identifier rubyid_apache'>apache</span><span class='period'>.</span><span class='id identifier rubyid_org'>org</span><span class='op'>/</span><span class='id identifier rubyid_licenses'>licenses</span><span class='op'>/</span><span class='const'>LICENSE</span><span class='op'>-</span><span class='float'>2.0</span>
-</code></pre>
-<p>
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an &#8220;AS IS&#8221;
-BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-implied. See the License for the specific language governing permissions
-and limitations under the License.
+Required for running:
 </p>
 
 
@@ -121,7 +106,7 @@ and limitations under the License.
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Rackful/HTTPStatus.html" title="Rackful::HTTPStatus (class)">HTTPStatus</a></span>, <span class='object_link'><a href="Rackful/HeaderSpoofing.html" title="Rackful::HeaderSpoofing (class)">HeaderSpoofing</a></span>, <span class='object_link'><a href="Rackful/MethodSpoofing.html" title="Rackful::MethodSpoofing (class)">MethodSpoofing</a></span>, <span class='object_link'><a href="Rackful/RelativeLocation.html" title="Rackful::RelativeLocation (class)">RelativeLocation</a></span>, <span class='object_link'><a href="Rackful/Request.html" title="Rackful::Request (class)">Request</a></span>, <span class='object_link'><a href="Rackful/Server.html" title="Rackful::Server (class)">Server</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Rackful/HTTP201Created.html" title="Rackful::HTTP201Created (class)">HTTP201Created</a></span>, <span class='object_link'><a href="Rackful/HTTP202Accepted.html" title="Rackful::HTTP202Accepted (class)">HTTP202Accepted</a></span>, <span class='object_link'><a href="Rackful/HTTP301MovedPermanently.html" title="Rackful::HTTP301MovedPermanently (class)">HTTP301MovedPermanently</a></span>, <span class='object_link'><a href="Rackful/HTTP303SeeOther.html" title="Rackful::HTTP303SeeOther (class)">HTTP303SeeOther</a></span>, <span class='object_link'><a href="Rackful/HTTP304NotModified.html" title="Rackful::HTTP304NotModified (class)">HTTP304NotModified</a></span>, <span class='object_link'><a href="Rackful/HTTP307TemporaryRedirect.html" title="Rackful::HTTP307TemporaryRedirect (class)">HTTP307TemporaryRedirect</a></span>, <span class='object_link'><a href="Rackful/HTTP400BadRequest.html" title="Rackful::HTTP400BadRequest (class)">HTTP400BadRequest</a></span>, <span class='object_link'><a href="Rackful/HTTP403Forbidden.html" title="Rackful::HTTP403Forbidden (class)">HTTP403Forbidden</a></span>, <span class='object_link'><a href="Rackful/HTTP404NotFound.html" title="Rackful::HTTP404NotFound (class)">HTTP404NotFound</a></span>, <span class='object_link'><a href="Rackful/HTTP405MethodNotAllowed.html" title="Rackful::HTTP405MethodNotAllowed (class)">HTTP405MethodNotAllowed</a></span>, <span class='object_link'><a href="Rackful/HTTP406NotAcceptable.html" title="Rackful::HTTP406NotAcceptable (class)">HTTP406NotAcceptable</a></span>, <span class='object_link'><a href="Rackful/HTTP409Conflict.html" title="Rackful::HTTP409Conflict (class)">HTTP409Conflict</a></span>, <span class='object_link'><a href="Rackful/HTTP410Gone.html" title="Rackful::HTTP410Gone (class)">HTTP410Gone</a></span>, <span class='object_link'><a href="Rackful/HTTP411LengthRequired.html" title="Rackful::HTTP411LengthRequired (class)">HTTP411LengthRequired</a></span>, <span class='object_link'><a href="Rackful/HTTP412PreconditionFailed.html" title="Rackful::HTTP412PreconditionFailed (class)">HTTP412PreconditionFailed</a></span>, <span class='object_link'><a href="Rackful/HTTP415UnsupportedMediaType.html" title="Rackful::HTTP415UnsupportedMediaType (class)">HTTP415UnsupportedMediaType</a></span>, <span class='object_link'><a href="Rackful/HTTP422UnprocessableEntity.html" title="Rackful::HTTP422UnprocessableEntity (class)">HTTP422UnprocessableEntity</a></span>, <span class='object_link'><a href="Rackful/HTTP501NotImplemented.html" title="Rackful::HTTP501NotImplemented (class)">HTTP501NotImplemented</a></span>, <span class='object_link'><a href="Rackful/HTTP503ServiceUnavailable.html" title="Rackful::HTTP503ServiceUnavailable (class)">HTTP503ServiceUnavailable</a></span>, <span class='object_link'><a href="Rackful/HTTPSimpleStatus.html" title="Rackful::HTTPSimpleStatus (class)">HTTPSimpleStatus</a></span>, <span class='object_link'><a href="Rackful/HTTPStatus.html" title="Rackful::HTTPStatus (class)">HTTPStatus</a></span>, <span class='object_link'><a href="Rackful/HeaderSpoofing.html" title="Rackful::HeaderSpoofing (class)">HeaderSpoofing</a></span>, <span class='object_link'><a href="Rackful/JSON.html" title="Rackful::JSON (class)">JSON</a></span>, <span class='object_link'><a href="Rackful/MethodSpoofing.html" title="Rackful::MethodSpoofing (class)">MethodSpoofing</a></span>, <span class='object_link'><a href="Rackful/Path.html" title="Rackful::Path (class)">Path</a></span>, <span class='object_link'><a href="Rackful/RelativeLocation.html" title="Rackful::RelativeLocation (class)">RelativeLocation</a></span>, <span class='object_link'><a href="Rackful/Request.html" title="Rackful::Request (class)">Request</a></span>, <span class='object_link'><a href="Rackful/Serializer.html" title="Rackful::Serializer (class)">Serializer</a></span>, <span class='object_link'><a href="Rackful/Server.html" title="Rackful::Server (class)">Server</a></span>, <span class='object_link'><a href="Rackful/XHTML.html" title="Rackful::XHTML (class)">XHTML</a></span>
     
   
 </p>
@@ -132,12 +117,131 @@ and limitations under the License.
 
 
 
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
 
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#headers-instance_method" title="#headers (instance method)">- (Hash<sup>?</sup>) <strong>headers</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  <span class="abstract note title">abstract</span>
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+You don&#8217;t have to include the `Content-Type` header, as this is done
+<em>for</em> you.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="headers-instance_method">
+  
+    - (<tt>Hash</tt><sup>?</sup>) <strong>headers</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note abstract">
+  <strong>This method is abstract.</strong>
+  <div class='inline'></div>
+</div>
+<p>
+You don&#8217;t have to include the `Content-Type` header, as this is done
+<em>for</em> you.
+</p>
+<p>
+This method is optional.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>
+0.1.0
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful_serializer.rb', line 46</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:23 2012 by
+  Generated on Fri Oct 12 18:56:31 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

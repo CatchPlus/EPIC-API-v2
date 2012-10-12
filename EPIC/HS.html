@@ -140,18 +140,18 @@ All permissions in the Handle System, indexed by integers.
 </div>
         </dt>
         <dd><pre class="code"><span class='lbracket'>[</span>
-  <span class='symbol'>:add_handle</span><span class='comma'>,</span>          <span class='comment'>#  0
-</span>  <span class='symbol'>:delete_handle</span><span class='comma'>,</span>       <span class='comment'>#  1
-</span>  <span class='symbol'>:add_naming_auth</span><span class='comma'>,</span>     <span class='comment'>#  2
-</span>  <span class='symbol'>:delete_naming_auth</span><span class='comma'>,</span>  <span class='comment'>#  3
-</span>  <span class='symbol'>:modify_value</span><span class='comma'>,</span>        <span class='comment'>#  4
-</span>  <span class='symbol'>:remove_value</span><span class='comma'>,</span>        <span class='comment'>#  5
-</span>  <span class='symbol'>:add_value</span><span class='comma'>,</span>           <span class='comment'>#  6
-</span>  <span class='symbol'>:read_value</span><span class='comma'>,</span>          <span class='comment'>#  7
-</span>  <span class='symbol'>:modify_admin</span><span class='comma'>,</span>        <span class='comment'>#  8
-</span>  <span class='symbol'>:remove_admin</span><span class='comma'>,</span>        <span class='comment'>#  9
-</span>  <span class='symbol'>:add_admin</span><span class='comma'>,</span>           <span class='comment'># 10
-</span>  <span class='symbol'>:list_handles</span>         <span class='comment'># 11
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>add_handle</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>          <span class='comment'>#  0
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>delete_handle</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>       <span class='comment'>#  1
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>add_naming_auth</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>     <span class='comment'>#  2
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>delete_naming_auth</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>  <span class='comment'>#  3
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>modify_value</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>        <span class='comment'>#  4
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>remove_value</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>        <span class='comment'>#  5
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>add_value</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>           <span class='comment'>#  6
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>read_value</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>          <span class='comment'>#  7
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>modify_admin</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>        <span class='comment'>#  8
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>remove_admin</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>        <span class='comment'>#  9
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>add_admin</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>           <span class='comment'># 10
+</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>list_handles</span><span class='tstring_end'>'</span></span>         <span class='comment'># 11
 </span><span class='rbracket'>]</span></pre></dd>
       
         <dt id="PERMS_BY_S-constant" class="">PERMS_BY_S =
@@ -250,7 +250,7 @@ Mutex used to make some of the methods in this class thread-safe.
   
   
   
-  
+  <span class="private note title">private</span>
 
   
     <span class="summary_desc"><div class='inline'><p>
@@ -264,7 +264,7 @@ A Java AuthenticationInfo object for user <tt>user_name</tt>.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_handle-class_method" title="create_handle (class method)">+ (void) <strong>create_handle</strong>(handle, values, user_name) </a>
+      <a href="#create_handle-class_method" title="create_handle (class method)">+ <strong>create_handle</strong>(handle, values, user_name) </a>
     
 
     
@@ -289,7 +289,7 @@ Create a Handle.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#delete_handle-class_method" title="delete_handle (class method)">+ (void) <strong>delete_handle</strong>(handle, user_name) </a>
+      <a href="#delete_handle-class_method" title="delete_handle (class method)">+ <strong>delete_handle</strong>(handle, user_name) </a>
     
 
     
@@ -383,7 +383,7 @@ Translates a Ruby structure into binary data.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#resolver-class_method" title="resolver (class method)">+ (Object) <strong>resolver</strong> </a>
+      <a href="#resolver-class_method" title="resolver (class method)">+ (void) <strong>resolver</strong> </a>
     
 
     
@@ -477,7 +477,7 @@ Translates binary data (from the database) to a Ruby structure.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#update_handle-class_method" title="update_handle (class method)">+ (void) <strong>update_handle</strong>(handle, old_values, new_values, user_name) </a>
+      <a href="#update_handle-class_method" title="update_handle (class method)">+ <strong>update_handle</strong>(handle, old_values, new_values, user_name) </a>
     
 
     
@@ -519,7 +519,11 @@ Update a Handle.
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+<p>
 A Java AuthenticationInfo object for user <tt>user_name</tt>.
 </p>
 <p>
@@ -566,26 +570,26 @@ The objects are cached for efficiency, in class constant <tt>AUTH_INFO</tt>
       <pre class="lines">
 
 
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272</pre>
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 256</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 237</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_authentication_info'>authentication_info</span> <span class='id identifier rubyid_user_name'>user_name</span>
   <span class='id identifier rubyid_user_name'>user_name</span> <span class='op'>=</span> <span class='id identifier rubyid_user_name'>user_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -612,7 +616,7 @@ The objects are cached for efficiency, in class constant <tt>AUTH_INFO</tt>
       <div class="method_details ">
   <h3 class="signature " id="create_handle-class_method">
   
-    + (<tt>void</tt>) <strong>create_handle</strong>(handle, values, user_name) 
+    + <strong>create_handle</strong>(handle, values, user_name) 
   
 
   
@@ -672,7 +676,7 @@ Create a Handle
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/HTTPStatus.html" title="Rackful::HTTPStatus (class)">Rackful::HTTPStatus</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/HTTP403Forbidden.html" title="Rackful::HTTP403Forbidden (class)">Rackful::HTTP403Forbidden</a></span></tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -686,29 +690,30 @@ Create a Handle
       <pre class="lines">
 
 
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302</pre>
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 283</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 262</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_handle'>create_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
   <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
@@ -723,8 +728,9 @@ Create a Handle
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_processRequest'>processRequest</span><span class='lparen'>(</span> <span class='id identifier rubyid_request'>request</span> <span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_responseCode'>responseCode</span>
-    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>FORBIDDEN</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span><span class='comma'>,</span>
+         <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INVALID_ADMIN</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTP403Forbidden</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_string'>to_string</span>
     <span class='kw'>end</span>
@@ -738,7 +744,7 @@ Create a Handle
       <div class="method_details ">
   <h3 class="signature " id="delete_handle-class_method">
   
-    + (<tt>void</tt>) <strong>delete_handle</strong>(handle, user_name) 
+    + <strong>delete_handle</strong>(handle, user_name) 
   
 
   
@@ -787,7 +793,7 @@ Deletes a Handle
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/HTTPStatus.html" title="Rackful::HTTPStatus (class)">Rackful::HTTPStatus</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/HTTP403Forbidden.html" title="Rackful::HTTP403Forbidden (class)">Rackful::HTTP403Forbidden</a></span></tt>, <tt><span class='object_link'><a href="../Rackful/HTTP404NotFound.html" title="Rackful::HTTP404NotFound (class)">Rackful::HTTP404NotFound</a></span></tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -801,27 +807,28 @@ Deletes a Handle
       <pre class="lines">
 
 
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421</pre>
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 404</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 381</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_handle'>delete_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
   <span class='id identifier rubyid_authInfo'>authInfo</span> <span class='op'>=</span> <span class='id identifier rubyid_authentication_info'>authentication_info</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
@@ -832,10 +839,11 @@ Deletes a Handle
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_processRequest'>processRequest</span><span class='lparen'>(</span> <span class='id identifier rubyid_request'>request</span> <span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_responseCode'>responseCode</span>
-    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>FORBIDDEN</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span><span class='comma'>,</span>
+         <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INVALID_ADMIN</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTP403Forbidden</span>
     <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_HANDLE_NOT_FOUND</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT_FOUND</span><span class='tstring_end'>'</span></span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTP404NotFound</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_string'>to_string</span>
     <span class='kw'>end</span>
@@ -897,7 +905,7 @@ Deletes a Handle
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/HTTPStatus.html" title="Rackful::HTTPStatus (class)">Rackful::HTTPStatus</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/HTTP400BadRequest.html" title="Rackful::HTTP400BadRequest (class)">Rackful::HTTP400BadRequest</a></span></tt>)</span>
       
       
       
@@ -918,6 +926,18 @@ Deletes a Handle
       <pre class="lines">
 
 
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
 161
 162
 163
@@ -928,24 +948,13 @@ Deletes a Handle
 168
 169
 170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182</pre>
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pack_HS_ADMIN'>pack_HS_ADMIN</span> <span class='id identifier rubyid_data'>data</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BAD_REQUEST Missing one or more required values: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> \
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTP400BadRequest</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing one or more required values: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> \
     <span class='kw'>if</span> <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Hash</span> <span class='rparen'>)</span> <span class='op'>||</span>
        <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminId</span><span class='rbracket'>]</span> <span class='op'>||</span>
        <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminIdIndex</span><span class='rbracket'>]</span> <span class='op'>||</span>
@@ -953,14 +962,15 @@ Deletes a Handle
        <span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span> <span class='const'>Hash</span> <span class='rparen'>)</span> <span class='op'>||</span>
        <span class='op'>!</span> <span class='const'>PERMS_BY_I</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span>
            <span class='op'>|</span><span class='id identifier rubyid_perm'>perm</span><span class='op'>|</span>
-           <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='id identifier rubyid_perm'>perm</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+           <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='id identifier rubyid_perm'>perm</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
          <span class='rbrace'>}</span>
   <span class='id identifier rubyid_adminRecord'>adminRecord</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>AdminRecord</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminId'>adminId</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminId</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span>
+  <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminId'>adminId</span> <span class='op'>=</span>
+    <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminId</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>ASCII_8BIT</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_java_bytes'>to_java_bytes</span>
   <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminIdIndex'>adminIdIndex</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:adminIdIndex</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
   <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_perms'>perms</span> <span class='op'>=</span> <span class='const'>PERMS_BY_I</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span>
     <span class='op'>|</span><span class='id identifier rubyid_perm'>perm</span><span class='op'>|</span>
-    <span class='op'>!</span><span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='lbracket'>[</span> <span class='id identifier rubyid_perm'>perm</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='rbracket'>]</span>
+    <span class='op'>!</span><span class='op'>!</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:perms</span><span class='rbracket'>]</span><span class='lbracket'>[</span> <span class='id identifier rubyid_perm'>perm</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='rbracket'>]</span>
   <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_java'>to_java</span> <span class='const'>Java</span><span class='op'>::</span><span class='id identifier rubyid_boolean'>boolean</span>
   <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_from_java_bytes'>from_java_bytes</span><span class='lparen'>(</span>
     <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_encodeAdminRecord'>encodeAdminRecord</span><span class='lparen'>(</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span> <span class='rparen'>)</span>
@@ -1030,31 +1040,31 @@ Deletes a Handle
       <pre class="lines">
 
 
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
 206
 207
 208
 209
 210
 211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227</pre>
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 191</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pack_HS_VLIST'>pack_HS_VLIST</span> <span class='id identifier rubyid_data'>data</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Bad HS_VLIST data.</span><span class='tstring_end'>'</span></span> \
@@ -1160,7 +1170,7 @@ a binary representation of <tt>data</tt>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 117</span>
 
 </pre>
     </td>
@@ -1171,7 +1181,7 @@ a binary representation of <tt>data</tt>
       <div class="method_details ">
   <h3 class="signature " id="resolver-class_method">
   
-    + (<tt>Object</tt>) <strong>resolver</strong> 
+    + (<tt>void</tt>) <strong>resolver</strong> 
   
 
   
@@ -1195,22 +1205,22 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <pre class="lines">
 
 
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245</pre>
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolver'>resolver</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_class_variable_defined?'>class_variable_defined?</span> <span class='symbol'>:@@resolver</span>
@@ -1289,26 +1299,26 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <pre class="lines">
 
 
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
 137
 138
 139
 140
 141
 142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153</pre>
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unpack_HS_ADMIN'>unpack_HS_ADMIN</span> <span class='id identifier rubyid_data'>data</span>
   <span class='id identifier rubyid_adminRecord'>adminRecord</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>AdminRecord</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1317,12 +1327,12 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
   <span class='rparen'>)</span>
   <span class='id identifier rubyid_perms'>perms</span> <span class='op'>=</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_perms'>perms</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
   <span class='lbrace'>{</span>
-    <span class='symbol'>:adminId</span> <span class='op'>=&gt;</span> <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_from_java_bytes'>from_java_bytes</span><span class='lparen'>(</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminId'>adminId</span> <span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='symbol'>:adminId</span> <span class='op'>=&gt;</span> <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_from_java_bytes'>from_java_bytes</span><span class='lparen'>(</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminId'>adminId</span> <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>UTF_8</span><span class='rparen'>)</span><span class='comma'>,</span>
     <span class='symbol'>:adminIdIndex</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_adminRecord'>adminRecord</span><span class='period'>.</span><span class='id identifier rubyid_adminIdIndex'>adminIdIndex</span><span class='comma'>,</span>
     <span class='symbol'>:perms</span> <span class='op'>=&gt;</span> <span class='const'>Hash</span><span class='lbracket'>[</span>
       <span class='id identifier rubyid_perms'>perms</span><span class='period'>.</span><span class='id identifier rubyid_each_index'>each_index</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span>
         <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
-        <span class='lbracket'>[</span> <span class='const'>PERMS_BY_I</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='comma'>,</span> <span class='id identifier rubyid_perms'>perms</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='rbracket'>]</span> 
+        <span class='lbracket'>[</span> <span class='const'>PERMS_BY_I</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_perms'>perms</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='rbracket'>]</span> 
       <span class='rbrace'>}</span>
     <span class='rbracket'>]</span>
   <span class='rbrace'>}</span>
@@ -1391,18 +1401,18 @@ HandleResolver should be thread safe, so there&#8217;s only one of it.
       <pre class="lines">
 
 
-190
-191
-192
-193
-194
-195
-196
-197
-198</pre>
+177
+178
+179
+180
+181
+182
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unpack_HS_VLIST'>unpack_HS_VLIST</span> <span class='id identifier rubyid_data'>data</span>
   <span class='id identifier rubyid_vlist'>vlist</span> <span class='op'>=</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>Encoder</span><span class='period'>.</span><span class='id identifier rubyid_decodeValueReferenceList'>decodeValueReferenceList</span><span class='lparen'>(</span>
@@ -1528,7 +1538,7 @@ a structured representation of <tt>data</tt>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 0</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 77</span>
 
 </pre>
     </td>
@@ -1539,7 +1549,7 @@ a structured representation of <tt>data</tt>
       <div class="method_details ">
   <h3 class="signature " id="update_handle-class_method">
   
-    + (<tt>void</tt>) <strong>update_handle</strong>(handle, old_values, new_values, user_name) 
+    + <strong>update_handle</strong>(handle, old_values, new_values, user_name) 
   
 
   
@@ -1622,7 +1632,7 @@ The new values for <tt>handle</tt>.
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/HTTPStatus.html" title="Rackful::HTTPStatus (class)">Rackful::HTTPStatus</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/HTTP403Forbidden.html" title="Rackful::HTTP403Forbidden (class)">Rackful::HTTP403Forbidden</a></span></tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1636,6 +1646,28 @@ The new values for <tt>handle</tt>.
       <pre class="lines">
 
 
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
 314
 315
 316
@@ -1695,31 +1727,10 @@ The new values for <tt>handle</tt>.
 370
 371
 372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394</pre>
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 314</span>
+      <pre class="code"><span class="info file"># File 'src/epic_hs.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_handle'>update_handle</span> <span class='id identifier rubyid_handle'>handle</span><span class='comma'>,</span> <span class='id identifier rubyid_old_values'>old_values</span><span class='comma'>,</span> <span class='id identifier rubyid_new_values'>new_values</span><span class='comma'>,</span> <span class='id identifier rubyid_user_name'>user_name</span>
   <span class='id identifier rubyid_authInfo'>authInfo</span> <span class='op'>=</span> <span class='id identifier rubyid_authentication_info'>authentication_info</span><span class='lparen'>(</span> <span class='id identifier rubyid_user_name'>user_name</span> <span class='rparen'>)</span>
@@ -1794,8 +1805,9 @@ The new values for <tt>handle</tt>.
     <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_processRequest'>processRequest</span><span class='lparen'>(</span> <span class='id identifier rubyid_request'>request</span> <span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span>
       <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_responseCode'>responseCode</span>
-      <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span>
-        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>FORBIDDEN</span><span class='tstring_end'>'</span></span>
+      <span class='kw'>when</span> <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INSUFFICIENT_PERMISSIONS</span><span class='comma'>,</span>
+           <span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>ErrorResponse</span><span class='op'>::</span><span class='const'>RC_INVALID_ADMIN</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>HTTP403Forbidden</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_string'>to_string</span>
       <span class='kw'>end</span>
@@ -1812,7 +1824,7 @@ The new values for <tt>handle</tt>.
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:23 2012 by
+  Generated on Fri Oct 12 18:56:31 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

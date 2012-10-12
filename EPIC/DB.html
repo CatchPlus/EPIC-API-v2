@@ -139,7 +139,7 @@ multi-host sites
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#all_handle_values-instance_method" title="#all_handle_values (instance method)">- (Object) <strong>all_handle_values</strong>(handle) </a>
+      <a href="#all_handle_values-instance_method" title="#all_handle_values (instance method)">- (void) <strong>all_handle_values</strong>(handle) </a>
     
 
     
@@ -161,7 +161,7 @@ multi-host sites
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#all_nas-instance_method" title="#all_nas (instance method)">- (Object) <strong>all_nas</strong> </a>
+      <a href="#all_nas-instance_method" title="#all_nas (instance method)">- (void) <strong>all_nas</strong> </a>
     
 
     
@@ -183,7 +183,7 @@ multi-host sites
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#each_handle-instance_method" title="#each_handle (instance method)">- (Object) <strong>each_handle</strong>(prefix = nil) </a>
+      <a href="#each_handle-instance_method" title="#each_handle (instance method)">- (void) <strong>each_handle</strong>(prefix = nil) </a>
     
 
     
@@ -232,7 +232,7 @@ A new instance of DB.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#pool-instance_method" title="#pool (instance method)">- (Object) <strong>pool</strong> </a>
+      <a href="#pool-instance_method" title="#pool (instance method)">- (void) <strong>pool</strong> </a>
     
 
     
@@ -254,7 +254,7 @@ A new instance of DB.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#sql_depth-instance_method" title="#sql_depth (instance method)">- (Object) <strong>sql_depth</strong> </a>
+      <a href="#sql_depth-instance_method" title="#sql_depth (instance method)">- (void) <strong>sql_depth</strong> </a>
     
 
     
@@ -276,7 +276,29 @@ A new instance of DB.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#sql_depth%3D-instance_method" title="#sql_depth= (instance method)">- (Object) <strong>sql_depth=</strong>(n) </a>
+      <a href="#sql_depth%3D-instance_method" title="#sql_depth= (instance method)">- (void) <strong>sql_depth=</strong>(n) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#uuid-instance_method" title="#uuid (instance method)">- (void) <strong>uuid</strong> </a>
     
 
     
@@ -329,13 +351,13 @@ A new instance of DB
       <pre class="lines">
 
 
+41
+42
 43
-44
-45
-46</pre>
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@all_nas</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -356,7 +378,7 @@ A new instance of DB
       <div class="method_details first">
   <h3 class="signature first" id="all_handle_values-instance_method">
   
-    - (<tt>Object</tt>) <strong>all_handle_values</strong>(handle) 
+    - (<tt>void</tt>) <strong>all_handle_values</strong>(handle) 
   
 
   
@@ -368,12 +390,12 @@ A new instance of DB
       <pre class="lines">
 
 
-65
-66
-67</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_all_handle_values'>all_handle_values</span> <span class='id identifier rubyid_handle'>handle</span>
   <span class='id identifier rubyid_ds'>ds</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pool'>pool</span><span class='lbracket'>[</span><span class='symbol'>:handles</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span> <span class='symbol'>:handle</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_handle'>handle</span> <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
@@ -386,7 +408,7 @@ A new instance of DB
       <div class="method_details ">
   <h3 class="signature " id="all_nas-instance_method">
   
-    - (<tt>Object</tt>) <strong>all_nas</strong> 
+    - (<tt>void</tt>) <strong>all_nas</strong> 
   
 
   
@@ -398,12 +420,12 @@ A new instance of DB
       <pre class="lines">
 
 
-48
-49
-50</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_all_nas'>all_nas</span>
   <span class='ivar'>@all_nas</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pool'>pool</span><span class='lbracket'>[</span><span class='symbol'>:nas</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='symbol'>:na</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:na</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -416,7 +438,7 @@ A new instance of DB
       <div class="method_details ">
   <h3 class="signature " id="each_handle-instance_method">
   
-    - (<tt>Object</tt>) <strong>each_handle</strong>(prefix = nil) 
+    - (<tt>void</tt>) <strong>each_handle</strong>(prefix = nil) 
   
 
   
@@ -428,6 +450,8 @@ A new instance of DB
       <pre class="lines">
 
 
+50
+51
 52
 53
 54
@@ -437,17 +461,15 @@ A new instance of DB
 58
 59
 60
-61
-62
-63</pre>
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_handle'>each_handle</span> <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='id identifier rubyid_ds'>ds</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pool'>pool</span><span class='lbracket'>[</span><span class='symbol'>:handles</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='symbol'>:handle</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_distinct'>distinct</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_prefix'>prefix</span>
-    <span class='id identifier rubyid_ds'>ds</span> <span class='op'>=</span> <span class='id identifier rubyid_ds'>ds</span><span class='period'>.</span><span class='id identifier rubyid_filter'>filter</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>`handle` LIKE ?</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/%</span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span>
+    <span class='id identifier rubyid_ds'>ds</span> <span class='op'>=</span> <span class='id identifier rubyid_ds'>ds</span><span class='period'>.</span><span class='id identifier rubyid_filter'>filter</span><span class='lparen'>(</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>`handle` LIKE ?</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/%</span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sql_depth'>sql_depth</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sql_depth'>sql_depth</span> <span class='op'>+</span> <span class='int'>1</span>
   <span class='kw'>begin</span>
@@ -464,7 +486,7 @@ A new instance of DB
       <div class="method_details ">
   <h3 class="signature " id="pool-instance_method">
   
-    - (<tt>Object</tt>) <strong>pool</strong> 
+    - (<tt>void</tt>) <strong>pool</strong> 
   
 
   
@@ -476,15 +498,15 @@ A new instance of DB
       <pre class="lines">
 
 
-31
-32
-33</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pool'>pool</span>
-  <span class='ivar'>@pool</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sql_depth'>sql_depth</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Sequel</span><span class='period'>.</span><span class='id identifier rubyid_connect'>connect</span> <span class='op'>*</span><span class='const'>SEQUEL_CONNECTION_ARGS</span>
+  <span class='ivar'>@pool</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sql_depth'>sql_depth</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Sequel</span><span class='period'>.</span><span class='id identifier rubyid_connect'>connect</span><span class='lparen'>(</span><span class='op'>*</span><span class='const'>SEQUEL_CONNECTION_ARGS</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -494,7 +516,7 @@ A new instance of DB
       <div class="method_details ">
   <h3 class="signature " id="sql_depth-instance_method">
   
-    - (<tt>Object</tt>) <strong>sql_depth</strong> 
+    - (<tt>void</tt>) <strong>sql_depth</strong> 
   
 
   
@@ -506,12 +528,12 @@ A new instance of DB
       <pre class="lines">
 
 
-35
-36
-37</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sql_depth'>sql_depth</span>
   <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:epic_sql_depth</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='int'>0</span>
@@ -524,7 +546,7 @@ A new instance of DB
       <div class="method_details ">
   <h3 class="signature " id="sql_depth=-instance_method">
   
-    - (<tt>Object</tt>) <strong>sql_depth=</strong>(n) 
+    - (<tt>void</tt>) <strong>sql_depth=</strong>(n) 
   
 
   
@@ -536,15 +558,45 @@ A new instance of DB
       <pre class="lines">
 
 
-39
-40
-41</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sql_depth='>sql_depth=</span> <span class='id identifier rubyid_n'>n</span>
   <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:epic_sql_depth</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="uuid-instance_method">
+  
+    - (<tt>void</tt>) <strong>uuid</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_sequel.rb', line 67</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_uuid'>uuid</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pool'>pool</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>SELECT UUID()</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -556,7 +608,7 @@ A new instance of DB
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:24 2012 by
+  Generated on Fri Oct 12 18:56:32 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

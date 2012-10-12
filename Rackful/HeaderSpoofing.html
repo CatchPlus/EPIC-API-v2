@@ -94,7 +94,9 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">gems/rackful-0.0.1/lib/rackful/header_spoofing.rb</dd>
+    <dd class="r2 last">gems/rackful-0.1.1/lib/rackful/header_spoofing.rb<span class="defines">,<br />
+  gems/rackful-0.1.1.orig/lib/rackful/header_spoofing.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
@@ -135,6 +137,23 @@ Using this middleware
     
   </div>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>
+0.0.1
+</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -154,7 +173,7 @@ Using this middleware
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#before_call-instance_method" title="#before_call (instance method)">- (Object) <strong>before_call</strong>(env) </a>
+      <a href="#after_call-instance_method" title="#after_call (instance method)">- (void) <strong>after_call</strong>(env) </a>
     
 
     
@@ -176,7 +195,29 @@ Using this middleware
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-instance_method" title="#call (instance method)">- (Object) <strong>call</strong>(env) </a>
+      <a href="#before_call-instance_method" title="#before_call (instance method)">- (void) <strong>before_call</strong>(env) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#call-instance_method" title="#call (instance method)">- (void) <strong>call</strong>(env) </a>
     
 
     
@@ -248,6 +289,23 @@ A new instance of HeaderSpoofing
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>
+0.0.1
+</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -255,12 +313,12 @@ A new instance of HeaderSpoofing
       <pre class="lines">
 
 
-32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'gems/rackful-0.0.1/lib/rackful/header_spoofing.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful/header_spoofing.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_app'>app</span>
   <span class='ivar'>@app</span> <span class='op'>=</span> <span class='id identifier rubyid_app'>app</span>
@@ -278,22 +336,108 @@ A new instance of HeaderSpoofing
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="before_call-instance_method">
+  <h3 class="signature first" id="after_call-instance_method">
   
-    - (<tt>Object</tt>) <strong>before_call</strong>(env) 
-  
-
+    - (<tt>void</tt>) <strong>after_call</strong>(env) 
   
 
   
-</h3><table class="source_code">
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>
+0.0.1
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-42
-43
+66
+67
+68
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful/header_spoofing.rb', line 66</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_after_call'>after_call</span> <span class='id identifier rubyid_env'>env</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_original_query_string'>original_query_string</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rackful.header_spoofing.query_string</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rackful.header_spoofing.query_string</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>QUERY_STRING</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>QUERY_STRING</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_original_query_string'>original_query_string</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="before_call-instance_method">
+  
+    - (<tt>void</tt>) <strong>before_call</strong>(env) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>
+0.0.1
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
 44
 45
 46
@@ -312,10 +456,12 @@ A new instance of HeaderSpoofing
 59
 60
 61
-62</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'gems/rackful-0.0.1/lib/rackful/header_spoofing.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful/header_spoofing.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_before_call'>before_call</span> <span class='id identifier rubyid_env'>env</span>
   <span class='id identifier rubyid_original_query_string'>original_query_string</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>QUERY_STRING</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
@@ -325,7 +471,7 @@ A new instance of HeaderSpoofing
     <span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span>
       <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
       <span class='kw'>if</span>  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A_http_([a-z]+(?:[\-_][a-z]+)*)\z</span><span class='regexp_end'>/i</span></span> <span class='op'>===</span> <span class='id identifier rubyid_p'>p</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_header_name'>header_name</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>-</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>_</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span>
+        <span class='id identifier rubyid_header_name'>header_name</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>-</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>_</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
         <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='id identifier rubyid_header_name'>header_name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>=</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
         <span class='kw'>false</span>
       <span class='kw'>else</span>
@@ -346,32 +492,60 @@ A new instance of HeaderSpoofing
       <div class="method_details ">
   <h3 class="signature " id="call-instance_method">
   
-    - (<tt>Object</tt>) <strong>call</strong>(env) 
+    - (<tt>void</tt>) <strong>call</strong>(env) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>
+0.0.1
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-36
 37
 38
 39
-40</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'gems/rackful-0.0.1/lib/rackful/header_spoofing.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful/header_spoofing.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span> <span class='id identifier rubyid_env'>env</span>
   <span class='id identifier rubyid_before_call'>before_call</span> <span class='id identifier rubyid_env'>env</span>
-  <span class='ivar'>@app</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='id identifier rubyid_env'>env</span>
-  <span class='comment'># after_call env
-</span><span class='kw'>end</span></pre>
+  <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='ivar'>@app</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='id identifier rubyid_env'>env</span>
+  <span class='id identifier rubyid_after_call'>after_call</span> <span class='id identifier rubyid_env'>env</span>
+  <span class='id identifier rubyid_r'>r</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -382,7 +556,7 @@ A new instance of HeaderSpoofing
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:26 2012 by
+  Generated on Fri Oct 12 18:56:38 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

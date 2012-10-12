@@ -512,7 +512,7 @@ The type of this handle value.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#map_java-class_method" title="map_java (class method)">+ (Object) <strong>map_java</strong>(ruby_name, java_name) </a>
+      <a href="#map_java-class_method" title="map_java (class method)">+ (void) <strong>map_java</strong>(ruby_name, java_name) </a>
     
 
     
@@ -537,7 +537,7 @@ Meta programming helper method.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#map_java_bytes-class_method" title="map_java_bytes (class method)">+ (Object) <strong>map_java_bytes</strong>(ruby_name, java_name, encoding = Encoding::UTF_8) </a>
+      <a href="#map_java_bytes-class_method" title="map_java_bytes (class method)">+ (void) <strong>map_java_bytes</strong>(ruby_name, java_name, encoding = Encoding::UTF_8) </a>
     
 
     
@@ -698,7 +698,7 @@ an optional hash of values to initialize this handle value with.
   <span class='comment'># super path
 </span>  <span class='comment'># matches = %r{/([^/]+/[^/]+)/(\d+)\z}.match path
 </span>  <span class='comment'># raise &quot;Unexpected path: #{path}&quot; unless matches
-</span>  <span class='comment'># @handle = matches[1].unescape_path
+</span>  <span class='comment'># @handle = matches[1].to_path.unescape
 </span>  <span class='comment'># @idx = matches[2].to_i
 </span>  <span class='ivar'>@handle_value</span> <span class='op'>=</span> <span class='const'>HS</span><span class='op'>::</span><span class='const'>HDLLIB</span><span class='op'>::</span><span class='const'>HandleValue</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_dbrow'>dbrow</span>
@@ -1536,7 +1536,7 @@ the type of this handle value
       <div class="method_details first">
   <h3 class="signature first" id="map_java-class_method">
   
-    + (<tt>Object</tt>) <strong>map_java</strong>(ruby_name, java_name) 
+    + (<tt>void</tt>) <strong>map_java</strong>(ruby_name, java_name) 
   
 
   
@@ -1652,7 +1652,7 @@ name of the corresponding attribute in
       <div class="method_details ">
   <h3 class="signature " id="map_java_bytes-class_method">
   
-    + (<tt>Object</tt>) <strong>map_java_bytes</strong>(ruby_name, java_name, encoding = Encoding::UTF_8) 
+    + (<tt>void</tt>) <strong>map_java_bytes</strong>(ruby_name, java_name, encoding = Encoding::UTF_8) 
   
 
   
@@ -1812,7 +1812,7 @@ name of the corresponding attribute in
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:25 2012 by
+  Generated on Fri Oct 12 18:56:35 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

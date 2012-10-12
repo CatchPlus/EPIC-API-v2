@@ -94,11 +94,29 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">src/epic_monkeypatches.rb</dd>
+    <dd class="r2 last">gems/rackful-0.1.1/lib/rackful_path.rb<span class="defines">,<br />
+  gems/rackful-0.1.1.orig/lib/rackful_path.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>
+A String monkeypatch
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="Rackful/Path.html" title="Rackful::Path (class)">Rackful::Path</a></span></p>
+</div>
 
 
 
@@ -117,104 +135,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#escape_html-instance_method" title="#escape_html (instance method)">- (Object) <strong>escape_html</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-An alias for Rack::Utils.escape_html.
-</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#escape_path-instance_method" title="#escape_path (instance method)">- (Object) <strong>escape_path</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-An alias for Rack::Utils.escape_path.
-</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#slashify-instance_method" title="#slashify (instance method)">- (Object) <strong>slashify</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#unescape_path-instance_method" title="#unescape_path (instance method)">- (Object) <strong>unescape_path</strong>(encoding = Encoding::UTF_8) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-An alias for Rack::Utils.unescape.
-</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#unslashify-instance_method" title="#unslashify (instance method)">- (Object) <strong>unslashify</strong> </a>
+      <a href="#to_path-instance_method" title="#to_path (instance method)">- (void) <strong>to_path</strong> </a>
     
 
     
@@ -243,85 +164,9 @@ An alias for Rack::Utils.unescape.
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="escape_html-instance_method">
+  <h3 class="signature first" id="to_path-instance_method">
   
-    - (<tt>Object</tt>) <strong>escape_html</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>
-An alias for Rack::Utils.escape_html
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-40</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'src/epic_monkeypatches.rb', line 40</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_escape_html'>escape_html</span><span class='semicolon'>;</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id identifier rubyid_escape_html'>escape_html</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="escape_path-instance_method">
-  
-    - (<tt>Object</tt>) <strong>escape_path</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>
-An alias for Rack::Utils.escape_path
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-42</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'src/epic_monkeypatches.rb', line 42</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_escape_path'>escape_path</span><span class='semicolon'>;</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id identifier rubyid_escape_path'>escape_path</span> <span class='kw'>self</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="slashify-instance_method">
-  
-    - (<tt>Object</tt>) <strong>slashify</strong> 
+    - (<tt>void</tt>) <strong>to_path</strong> 
   
 
   
@@ -333,100 +178,12 @@ An alias for Rack::Utils.escape_path
       <pre class="lines">
 
 
-25
-26
-27
-28
-29
-30
-31</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_monkeypatches.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful_path.rb', line 11</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_slashify'>slashify</span>
-  <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='op'>==</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='comma'>,</span><span class='int'>1</span><span class='rbracket'>]</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-  <span class='kw'>else</span>
-    <span class='kw'>self</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="unescape_path-instance_method">
-  
-    - (<tt>Object</tt>) <strong>unescape_path</strong>(encoding = Encoding::UTF_8) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>
-An alias for Rack::Utils.unescape
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-44</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'src/epic_monkeypatches.rb', line 44</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_unescape_path'>unescape_path</span><span class='lparen'>(</span> <span class='id identifier rubyid_encoding'>encoding</span> <span class='op'>=</span> <span class='const'>Encoding</span><span class='op'>::</span><span class='const'>UTF_8</span> <span class='rparen'>)</span><span class='semicolon'>;</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id identifier rubyid_unescape'>unescape</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_encoding'>encoding</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="unslashify-instance_method">
-  
-    - (<tt>Object</tt>) <strong>unslashify</strong> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-32
-33
-34
-35
-36
-37
-38</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'src/epic_monkeypatches.rb', line 32</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_unslashify'>unslashify</span>
-  <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='op'>==</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='comma'>,</span><span class='int'>1</span><span class='rbracket'>]</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span>
-  <span class='kw'>else</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_to_path'>to_path</span><span class='semicolon'>;</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>Path</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -437,7 +194,7 @@ An alias for Rack::Utils.unescape
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:25 2012 by
+  Generated on Fri Oct 12 18:56:35 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

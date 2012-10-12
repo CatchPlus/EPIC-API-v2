@@ -64,7 +64,7 @@
     <iframe id="search_frame"></iframe>
 
     <div id="content"><h1>Exception: Rackful::HTTPStatus
-  
+  <span class="abstract note title">Abstract</span>
   
   
 </h1>
@@ -93,29 +93,29 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2">Rack::Utils</dd>
+      <dd class="r2"><span class='object_link'><a href="Resource.html" title="Rackful::Resource (module)">Resource</a></span></dd>
       
     
   
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">gems/rackful-0.0.1/lib/rackful.rb</dd>
+    <dd class="r1 last">gems/rackful-0.1.1/lib/rackful_http_status.rb<span class="defines">,<br />
+  gems/rackful-0.1.1.orig/lib/rackful_http_status.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-  <div class="note todo">
-    <strong>TODO:</strong>
-    <div class='inline'><p>
-documentation
-</p>
+    <div class="note abstract">
+  <strong>This class is abstract.</strong>
+  <div class='inline'></div>
 </div>
-  </div>
-
+<p>
+Exception which represents an HTTP Status response.
+</p>
 
 
   </div>
@@ -132,7 +132,7 @@ documentation
       
         
         <div class='inline'><p>
-0.0.1
+0.1.0
 </p>
 </div>
       
@@ -140,61 +140,20 @@ documentation
   
 </ul>
 
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="HTTP201Created.html" title="Rackful::HTTP201Created (class)">HTTP201Created</a></span>, <span class='object_link'><a href="HTTP202Accepted.html" title="Rackful::HTTP202Accepted (class)">HTTP202Accepted</a></span>, <span class='object_link'><a href="HTTP301MovedPermanently.html" title="Rackful::HTTP301MovedPermanently (class)">HTTP301MovedPermanently</a></span>, <span class='object_link'><a href="HTTP303SeeOther.html" title="Rackful::HTTP303SeeOther (class)">HTTP303SeeOther</a></span>, <span class='object_link'><a href="HTTP304NotModified.html" title="Rackful::HTTP304NotModified (class)">HTTP304NotModified</a></span>, <span class='object_link'><a href="HTTP307TemporaryRedirect.html" title="Rackful::HTTP307TemporaryRedirect (class)">HTTP307TemporaryRedirect</a></span>, <span class='object_link'><a href="HTTP405MethodNotAllowed.html" title="Rackful::HTTP405MethodNotAllowed (class)">HTTP405MethodNotAllowed</a></span>, <span class='object_link'><a href="HTTP406NotAcceptable.html" title="Rackful::HTTP406NotAcceptable (class)">HTTP406NotAcceptable</a></span>, <span class='object_link'><a href="HTTP412PreconditionFailed.html" title="Rackful::HTTP412PreconditionFailed (class)">HTTP412PreconditionFailed</a></span>, <span class='object_link'><a href="HTTP415UnsupportedMediaType.html" title="Rackful::HTTP415UnsupportedMediaType (class)">HTTP415UnsupportedMediaType</a></span>, <span class='object_link'><a href="HTTPSimpleStatus.html" title="Rackful::HTTPSimpleStatus (class)">HTTPSimpleStatus</a></span></p>
 </div>
-  <h2>Constant Summary</h2>
+<h2>Defined Under Namespace</h2>
+<p class="children">
   
-    <dl class="constants">
-      
-        <dt id="DEFAULT_TEMPLATE-constant" class="">DEFAULT_TEMPLATE =
-          <div class="docstring">
-  <div class="discussion">
     
-
-  </div>
-</div>
-<div class="tags">
   
-<p class="tag_title">Since:</p>
-<ul class="since">
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="HTTPStatus/XHTML.html" title="Rackful::HTTPStatus::XHTML (class)">XHTML</a></span>
+    
   
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>
-0.0.1
 </p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div>
-        </dt>
-        <dd><pre class="code"><span class='id identifier rubyid_lambda'>lambda</span> <span class='kw'>do</span>
-  <span class='op'>|</span> <span class='id identifier rubyid_status_code'>status_code</span><span class='comma'>,</span> <span class='id identifier rubyid_xhtml_message'>xhtml_message</span> <span class='op'>|</span>
-  <span class='id identifier rubyid_status_code'>status_code</span> <span class='op'>=</span> <span class='id identifier rubyid_status_code'>status_code</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-  <span class='id identifier rubyid_xhtml_message'>xhtml_message</span> <span class='op'>=</span> <span class='id identifier rubyid_xhtml_message'>xhtml_message</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
-  <span class='heredoc_beg'>&lt;&lt;EOS</span>
-<span class='tstring_content'>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-&lt;head&gt;
-</span><span class='embexpr_beg'>  &lt;title&gt;HTTP/1.1 #{</span><span class='id identifier rubyid_status_code'>status_code</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='const'>HTTP_STATUS_CODES</span><span class='lbracket'>[</span><span class='id identifier rubyid_status_code'>status_code</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-</span><span class='embexpr_beg'>  &lt;h1&gt;HTTP/1.1 #{</span><span class='id identifier rubyid_status_code'>status_code</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='const'>HTTP_STATUS_CODES</span><span class='lbracket'>[</span><span class='id identifier rubyid_status_code'>status_code</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>&lt;/h1&gt;
-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_xhtml_message'>xhtml_message</span><span class='rbrace'>}</span><span class='tstring_content'>
-&lt;/body&gt;
-&lt;/html&gt;
-</span><span class='heredoc_end'>EOS
-</span><span class='kw'>end</span></pre></dd>
-      
-    </dl>
-  
 
 
 
@@ -205,7 +164,61 @@ documentation
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#response-instance_method" title="#response (instance method)">- (Object) <strong>response</strong> </a>
+      <a href="#headers-instance_method" title="#headers (instance method)">- (void) <strong>headers</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#status-instance_method" title="#status (instance method)">- (void) <strong>status</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_rackful-instance_method" title="#to_rackful (instance method)">- (void) <strong>to_rackful</strong> </a>
     
 
     
@@ -233,41 +246,12 @@ documentation
 
 
 
+  
+  
+  <h3 class="inherited">Attributes included from <span class='object_link'><a href="Resource.html" title="Rackful::Resource (module)">Resource</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Resource.html#get_etag-instance_method" title="Rackful::Resource#get_etag (method)">#get_etag</a></span>, <span class='object_link'><a href="Resource.html#get_last_modified-instance_method" title="Rackful::Resource#get_last_modified (method)">#get_last_modified</a></span>, <span class='object_link'><a href="Resource.html#path-instance_method" title="Rackful::Resource#path (method)">#path</a></span></p>
 
-  
-    <h2>
-      Class Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
-    </h2>
 
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#template-class_method" title="template (class method)">+ (Object) <strong>template</strong>(&amp;block) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-Sets/gets the current template.
-</p>
-</div></span>
-  
-</li>
-
-      
-    </ul>
   
     <h2>
       Instance Method Summary
@@ -279,7 +263,7 @@ Sets/gets the current template.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (HTTPStatus) <strong>initialize</strong>(message) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (HTTPStatus) <strong>initialize</strong>(status, message = nil, info = {}) </a>
     
 
     
@@ -308,13 +292,24 @@ A new instance of HTTPStatus.
 
 
   
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Resource.html" title="Rackful::Resource (module)">Resource</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Resource.html#default_headers-instance_method" title="Rackful::Resource#default_headers (method)">#default_headers</a></span>, <span class='object_link'><a href="Resource.html#destroy-instance_method" title="Rackful::Resource#destroy (method)">#destroy</a></span>, <span class='object_link'><a href="Resource.html#do_METHOD-instance_method" title="Rackful::Resource#do_METHOD (method)">#do_METHOD</a></span>, <span class='object_link'><a href="Resource.html#empty%3F-instance_method" title="Rackful::Resource#empty? (method)">#empty?</a></span>, <span class='object_link'><a href="Resource.html#http_DELETE-instance_method" title="Rackful::Resource#http_DELETE (method)">#http_DELETE</a></span>, <span class='object_link'><a href="Resource.html#http_GET-instance_method" title="Rackful::Resource#http_GET (method)">#http_GET</a></span>, <span class='object_link'><a href="Resource.html#http_HEAD-instance_method" title="Rackful::Resource#http_HEAD (method)">#http_HEAD</a></span>, <span class='object_link'><a href="Resource.html#http_OPTIONS-instance_method" title="Rackful::Resource#http_OPTIONS (method)">#http_OPTIONS</a></span>, <span class='object_link'><a href="Resource.html#http_PUT-instance_method" title="Rackful::Resource#http_PUT (method)">#http_PUT</a></span>, <span class='object_link'><a href="Resource.html#http_method-instance_method" title="Rackful::Resource#http_method (method)">#http_method</a></span>, <span class='object_link'><a href="Resource.html#http_methods-instance_method" title="Rackful::Resource#http_methods (method)">#http_methods</a></span>, <span class='object_link'><a href="Resource.html#included-class_method" title="Rackful::Resource.included (method)">included</a></span>, <span class='object_link'><a href="Resource.html#requested%3F-instance_method" title="Rackful::Resource#requested? (method)">#requested?</a></span>, <span class='object_link'><a href="Resource.html#serializer-instance_method" title="Rackful::Resource#serializer (method)">#serializer</a></span>, <span class='object_link'><a href="Resource.html#title-instance_method" title="Rackful::Resource#title (method)">#title</a></span>, <span class='object_link'><a href="Resource.html#to_struct-instance_method" title="Rackful::Resource#to_struct (method)">#to_struct</a></span></p>
+
+  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Rackful::HTTPStatus (class)">HTTPStatus</a></span></tt>) <strong>initialize</strong>(message) 
+    - (<tt><span class='object_link'><a href="" title="Rackful::HTTPStatus (class)">HTTPStatus</a></span></tt>) <strong>initialize</strong>(status, message = nil, info = {}) 
   
 
   
@@ -341,10 +336,46 @@ A new instance of HTTPStatus
         <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
       
         &mdash;
         <div class='inline'><p>
-`<status> [ <space> <message> ]`
+XHTML
+</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>status</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>, <tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+e.g. `404` or `:not_found`
+</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>headers</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+HTTP response headers
 </p>
 </div>
       
@@ -362,7 +393,7 @@ A new instance of HTTPStatus
       
         
         <div class='inline'><p>
-0.0.1
+0.1.0
 </p>
 </div>
       
@@ -376,105 +407,65 @@ A new instance of HTTPStatus
       <pre class="lines">
 
 
-711
-712
-713
-714
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731
-732
-733
-734
-735
-736
-737
-738
-739
-740
-741
-742
-743
-744
-745
-746
-747
-748
-749
-750
-751
-752
-753
-754
-755
-756
-757
-758</pre>
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'gems/rackful-0.0.1/lib/rackful.rb', line 711</span>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful_http_status.rb', line 28</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span> <span class='id identifier rubyid_message'>message</span> <span class='rparen'>)</span>
-  <span class='ivar'>@response</span> <span class='op'>=</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Response</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='id identifier rubyid_matches'>matches</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A(\S+)\s*(.*)\z</span><span class='regexp_end'>}m</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='id identifier rubyid_status_code'>status_code</span><span class='lparen'>(</span><span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
-  <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='id identifier rubyid_status'>status</span>
-  <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_matches'>matches</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span>
-  <span class='kw'>case</span> <span class='id identifier rubyid_status'>status</span>
-  <span class='kw'>when</span> <span class='int'>201</span><span class='comma'>,</span> <span class='int'>301</span><span class='comma'>,</span> <span class='int'>302</span><span class='comma'>,</span> <span class='int'>303</span><span class='comma'>,</span> <span class='int'>305</span><span class='comma'>,</span> <span class='int'>307</span>
-    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\s+</span><span class='regexp_end'>/</span></span>
-    <span class='kw'>case</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
-    <span class='kw'>when</span> <span class='int'>0</span>
-      <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
-    <span class='kw'>when</span> <span class='int'>1</span>
-      <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Location</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;p&gt;&lt;a href=\&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>\&quot;&gt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_escape_html'>escape_html</span><span class='lparen'>(</span><span class='id identifier rubyid_unescape'>unescape</span> <span class='id identifier rubyid_message'>message</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>&lt;/a&gt;&lt;/p&gt;</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;ul&gt;</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span>
-        <span class='op'>|</span><span class='id identifier rubyid_url'>url</span><span class='op'>|</span>
-        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n&lt;li&gt;&lt;a href=\&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='rbrace'>}</span><span class='tstring_content'>\&quot;&gt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_escape_html'>escape_html</span><span class='lparen'>(</span><span class='id identifier rubyid_unescape'>unescape</span> <span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>&lt;/a&gt;&lt;/li&gt;</span><span class='tstring_end'>&quot;</span></span>
-      <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;/ul&gt;</span><span class='tstring_end'>'</span></span>
-    <span class='kw'>end</span>
-  <span class='kw'>when</span> <span class='int'>405</span> <span class='comment'># Method not allowed
-</span>    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\s+</span><span class='regexp_end'>/</span></span>
-    <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Allow</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>, </span><span class='tstring_end'>'</span></span>
-    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;h2&gt;Allowed methods:&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;</span><span class='tstring_end'>'</span></span> <span class='op'>+</span>
-      <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;/li&gt;&lt;li&gt;</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;/li&gt;&lt;/ul&gt;</span><span class='tstring_end'>'</span></span>
-  <span class='kw'>when</span> <span class='int'>406</span> <span class='comment'># Unacceptable
-</span>    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\s+</span><span class='regexp_end'>/</span></span>
-    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;h2&gt;Available representations:&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;</span><span class='tstring_end'>'</span></span> <span class='op'>+</span>
-      <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;/li&gt;&lt;li&gt;</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;/li&gt;&lt;/ul&gt;</span><span class='tstring_end'>'</span></span>
-  <span class='kw'>when</span> <span class='int'>415</span> <span class='comment'># Unsupported Media Type
-</span>    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\s+</span><span class='regexp_end'>/</span></span>
-    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;h2&gt;Supported Media Types:&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;</span><span class='tstring_end'>'</span></span> <span class='op'>+</span>
-      <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;/li&gt;&lt;li&gt;</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;/li&gt;&lt;/ul&gt;</span><span class='tstring_end'>'</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_status'>status</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_info'>info</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
+  <span class='ivar'>@status</span> <span class='op'>=</span> <span class='id identifier rubyid_status_code'>status_code</span> <span class='id identifier rubyid_status'>status</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wrong status: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_status'>status</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='int'>0</span> <span class='op'>==</span> <span class='ivar'>@status</span>
+  <span class='id identifier rubyid_message'>message</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
+  <span class='ivar'>@headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@to_rackful</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
+    <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>Symbol</span> <span class='kw'>then</span> <span class='ivar'>@to_rackful</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>
+    <span class='kw'>else</span> <span class='ivar'>@headers</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span> <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='kw'>super</span> <span class='id identifier rubyid_message'>message</span>
+  <span class='ivar'>@to_rackful</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='ivar'>@to_rackful</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
   <span class='kw'>begin</span>
     <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> \
       <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><span class='tstring_end'>'</span></span> <span class='op'>+</span>
-      <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;div&gt;</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id identifier rubyid_message'>message</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;/div&gt;</span><span class='tstring_end'>'</span></span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;div&gt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='rbrace'>}</span><span class='tstring_content'>&lt;/div&gt;</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>rescue</span>
-    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_escape_html'>escape_html</span> <span class='id identifier rubyid_message'>message</span>
+    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id identifier rubyid_escape_html'>escape_html</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;p&gt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='rbrace'>}</span><span class='tstring_content'>&lt;/p&gt;</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;</span><span class='tstring_end'>'</span></span> <span class='op'>==</span> <span class='id identifier rubyid_message'>message</span><span class='lbracket'>[</span><span class='int'>0</span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\n</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;br/&gt;\n</span><span class='tstring_end'>&quot;</span></span> <span class='rparen'>)</span>
-  <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>text/html; charset=&quot;UTF-8&quot;</span><span class='tstring_end'>'</span></span>
-  <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_template'>template</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span> <span class='id identifier rubyid_status'>status</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span> <span class='rparen'>)</span> <span class='rbracket'>]</span>
+  <span class='kw'>super</span> <span class='id identifier rubyid_message'>message</span>
+  <span class='kw'>if</span> <span class='int'>500</span> <span class='op'>&lt;=</span> <span class='ivar'>@status</span>
+    <span class='id identifier rubyid_errors'>errors</span> <span class='op'>=</span> <span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack.errors</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+    <span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Headers: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@headers</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Info: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@to_rackful</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -489,9 +480,9 @@ A new instance of HTTPStatus
       
       <span id=""></span>
       <div class="method_details first">
-  <h3 class="signature first" id="response-instance_method">
+  <h3 class="signature first" id="headers-instance_method">
   
-    - (<tt>Object</tt>) <strong>response</strong>  <span class="extras">(readonly)</span>
+    - (<tt>void</tt>) <strong>headers</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -515,7 +506,7 @@ A new instance of HTTPStatus
       
         
         <div class='inline'><p>
-0.0.1
+0.1.0
 </p>
 </div>
       
@@ -529,32 +520,27 @@ A new instance of HTTPStatus
       <pre class="lines">
 
 
-704
-705
-706</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'gems/rackful-0.0.1/lib/rackful.rb', line 704</span>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful_http_status.rb', line 20</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_response'>response</span>
-  <span class='ivar'>@response</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_headers'>headers</span>
+  <span class='ivar'>@headers</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
 </div>
     
-  </div>
-
-
-  <div id="class_method_details" class="method_details_list">
-    <h2>Class Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="template-class_method">
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="status-instance_method">
   
-    + (<tt>Object</tt>) <strong>template</strong>(&amp;block) 
+    - (<tt>void</tt>) <strong>status</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -562,26 +548,7 @@ A new instance of HTTPStatus
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>
-Sets/gets the current template.
-</p>
-<p>
-The passed block must accept two arguments:
-</p>
-<ol>
-<li><p>
-<b>int</b> a status code
-</p>
-</li>
-<li><p>
-<b>string</b> an xhtml fragment
-</p>
-</li>
-</ol>
-<p>
-and return a string
-</p>
-
+    
 
   </div>
 </div>
@@ -597,7 +564,7 @@ and return a string
       
         
         <div class='inline'><p>
-0.0.1
+0.1.0
 </p>
 </div>
       
@@ -611,15 +578,73 @@ and return a string
       <pre class="lines">
 
 
-792
-793
-794</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'gems/rackful-0.0.1/lib/rackful.rb', line 792</span>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful_http_status.rb', line 20</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_template'>template</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='ivar'>@template</span> <span class='op'>||=</span> <span class='lparen'>(</span> <span class='id identifier rubyid_block'>block</span> <span class='op'>||</span> <span class='const'>DEFAULT_TEMPLATE</span> <span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_status'>status</span>
+  <span class='ivar'>@status</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="to_rackful-instance_method">
+  
+    - (<tt>void</tt>) <strong>to_rackful</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>
+0.1.0
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'gems/rackful-0.1.1/lib/rackful_http_status.rb', line 20</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_rackful'>to_rackful</span>
+  <span class='ivar'>@to_rackful</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -627,11 +652,12 @@ and return a string
 </div>
     
   </div>
+
 
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:25 2012 by
+  Generated on Fri Oct 12 18:56:36 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

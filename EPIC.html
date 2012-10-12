@@ -80,7 +80,7 @@
   
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">src/epic.rb<span class="defines">,<br />
-  src/config.rb,<br /> src/epic_hs.rb,<br /> src/epic_nas.rb,<br /> src/epic_handle.rb,<br /> src/epic_sequel.rb,<br /> src/epic_handles.rb,<br /> src/epic_profile.rb,<br /> src/epic_template.rb,<br /> src/epic_resource.rb,<br /> src/epic_directory.rb,<br /> src/epic_collection.rb,<br /> src/epic_handlevalue.rb</span>
+  src/config.rb,<br /> src/epic_hs.rb,<br /> src/epic_nas.rb,<br /> src/epic_sequel.rb,<br /> src/epic_handle.rb,<br /> src/epic_handles.rb,<br /> src/epic_profile.rb,<br /> src/epic_resource.rb,<br /> src/epic_directory.rb,<br /> src/epic_generator.rb,<br /> src/epic_collection.rb,<br /> src/epic_handlevalue.rb</span>
 </dd>
   
 </dl>
@@ -119,7 +119,7 @@ Copyright ??2011-2012 Pieter van Beek <pieterb@sara.nl>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="EPIC/Collection.html" title="EPIC::Collection (class)">Collection</a></span>, <span class='object_link'><a href="EPIC/DB.html" title="EPIC::DB (class)">DB</a></span>, <span class='object_link'><a href="EPIC/Directory.html" title="EPIC::Directory (class)">Directory</a></span>, <span class='object_link'><a href="EPIC/Handle.html" title="EPIC::Handle (class)">Handle</a></span>, <span class='object_link'><a href="EPIC/HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>, <span class='object_link'><a href="EPIC/Handles.html" title="EPIC::Handles (class)">Handles</a></span>, <span class='object_link'><a href="EPIC/NAs.html" title="EPIC::NAs (class)">NAs</a></span>, <span class='object_link'><a href="EPIC/Profile.html" title="EPIC::Profile (class)">Profile</a></span>, <span class='object_link'><a href="EPIC/Resource.html" title="EPIC::Resource (class)">Resource</a></span>, <span class='object_link'><a href="EPIC/ResourceFactory.html" title="EPIC::ResourceFactory (class)">ResourceFactory</a></span>, <span class='object_link'><a href="EPIC/Serializer.html" title="EPIC::Serializer (class)">Serializer</a></span>, <span class='object_link'><a href="EPIC/StaticCollection.html" title="EPIC::StaticCollection (class)">StaticCollection</a></span>, <span class='object_link'><a href="EPIC/Template.html" title="EPIC::Template (class)">Template</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="EPIC/Collection.html" title="EPIC::Collection (class)">Collection</a></span>, <span class='object_link'><a href="EPIC/DB.html" title="EPIC::DB (class)">DB</a></span>, <span class='object_link'><a href="EPIC/Directory.html" title="EPIC::Directory (class)">Directory</a></span>, <span class='object_link'><a href="EPIC/Generator.html" title="EPIC::Generator (class)">Generator</a></span>, <span class='object_link'><a href="EPIC/Handle.html" title="EPIC::Handle (class)">Handle</a></span>, <span class='object_link'><a href="EPIC/HandleValue.html" title="EPIC::HandleValue (class)">HandleValue</a></span>, <span class='object_link'><a href="EPIC/Handles.html" title="EPIC::Handles (class)">Handles</a></span>, <span class='object_link'><a href="EPIC/NAs.html" title="EPIC::NAs (class)">NAs</a></span>, <span class='object_link'><a href="EPIC/Profile.html" title="EPIC::Profile (class)">Profile</a></span>, <span class='object_link'><a href="EPIC/Resource.html" title="EPIC::Resource (class)">Resource</a></span>, <span class='object_link'><a href="EPIC/ResourceFactory.html" title="EPIC::ResourceFactory (class)">ResourceFactory</a></span>, <span class='object_link'><a href="EPIC/StaticCollection.html" title="EPIC::StaticCollection (class)">StaticCollection</a></span>, <span class='object_link'><a href="EPIC/TXT.html" title="EPIC::TXT (class)">TXT</a></span>, <span class='object_link'><a href="EPIC/XHTML.html" title="EPIC::XHTML (class)">XHTML</a></span>
     
   
 </p>
@@ -142,13 +142,18 @@ Copyright ??2011-2012 Pieter van Beek <pieterb@sara.nl>
           
         </dt>
         <dd><pre class="code"><span class='lbracket'>[</span>
-  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>jdbc:mysql://localhost/epic</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='lbrace'>{</span>
-    <span class='symbol'>:user</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>epic</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
-    <span class='symbol'>:password</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>epic</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>jdbc:mysql://localhost/7_master</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='lbrace'>{</span>
+    <span class='symbol'>:user</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>7_master</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+    <span class='symbol'>:password</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>T49WpiQT</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
     <span class='symbol'>:autoReconnect</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
     <span class='symbol'>:single_threaded</span> <span class='op'>=&gt;</span> <span class='kw'>false</span>
   <span class='rbrace'>}</span>
 <span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="DEFAULT_GENERATOR-constant" class="">DEFAULT_GENERATOR =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>uuid</span><span class='tstring_end'>'</span></span></pre></dd>
       
     </dl>
   
@@ -164,7 +169,7 @@ Copyright ??2011-2012 Pieter van Beek <pieterb@sara.nl>
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:23 2012 by
+  Generated on Fri Oct 12 18:56:31 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

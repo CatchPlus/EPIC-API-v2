@@ -112,12 +112,6 @@
   <h2>Constant Summary</h2>
   
   <h3 class="inherited">Constants inherited
-     from <span class='object_link'><a href="Collection.html" title="EPIC::Collection (class)">Collection</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Collection.html#CONTENT_TYPES-constant" title="EPIC::Collection::CONTENT_TYPES (constant)">Collection::CONTENT_TYPES</a></span></p>
-
-  
-  
-  <h3 class="inherited">Constants inherited
      from <span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resource</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="Resource.html#GLOBAL_LOCK_HASH-constant" title="EPIC::Resource::GLOBAL_LOCK_HASH (constant)">Resource::GLOBAL_LOCK_HASH</a></span>, <span class='object_link'><a href="Resource.html#GLOBAL_LOCK_MUTEX-constant" title="EPIC::Resource::GLOBAL_LOCK_MUTEX (constant)">Resource::GLOBAL_LOCK_MUTEX</a></span></p>
 
@@ -127,7 +121,7 @@
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes included from <span class='object_link'><a href="../Rackful/Resource.html" title="Rackful::Resource (module)">Rackful::Resource</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#etag-instance_method" title="Rackful::Resource#etag (method)">#etag</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#last_modified-instance_method" title="Rackful::Resource#last_modified (method)">#last_modified</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#path-instance_method" title="Rackful::Resource#path (method)">#path</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#get_etag-instance_method" title="Rackful::Resource#get_etag (method)">#get_etag</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#get_last_modified-instance_method" title="Rackful::Resource#get_last_modified (method)">#get_last_modified</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#path-instance_method" title="Rackful::Resource#path (method)">#path</a></span></p>
 
 
   
@@ -141,7 +135,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#each-instance_method" title="#each (instance method)">- (Object) <strong>each</strong> </a>
+      <a href="#each-instance_method" title="#each (instance method)">- (void) <strong>each</strong> </a>
     
 
     
@@ -173,7 +167,7 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Collection.html" title="EPIC::Collection (class)">Collection</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Collection.html#do_GET-instance_method" title="EPIC::Collection#do_GET (method)">#do_GET</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Collection.html#recurse%3F-instance_method" title="EPIC::Collection#recurse? (method)">#recurse?</a></span>, <span class='object_link'><a href="Collection.html#to_rackful-instance_method" title="EPIC::Collection#to_rackful (method)">#to_rackful</a></span>, <span class='object_link'><a href="Collection.html#xhtml-instance_method" title="EPIC::Collection#xhtml (method)">#xhtml</a></span></p>
 
   
   
@@ -185,7 +179,7 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Resource.html" title="EPIC::Resource (class)">Resource</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Resource.html#lock-instance_method" title="EPIC::Resource#lock (method)">#lock</a></span>, <span class='object_link'><a href="Resource.html#lock-class_method" title="EPIC::Resource.lock (method)">lock</a></span>, <span class='object_link'><a href="Resource.html#unlock-instance_method" title="EPIC::Resource#unlock (method)">#unlock</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Resource.html#initialize-instance_method" title="EPIC::Resource#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="Resource.html#lock-instance_method" title="EPIC::Resource#lock (method)">#lock</a></span>, <span class='object_link'><a href="Resource.html#lock-class_method" title="EPIC::Resource.lock (method)">lock</a></span>, <span class='object_link'><a href="Resource.html#unlock-instance_method" title="EPIC::Resource#unlock (method)">#unlock</a></span>, <span class='object_link'><a href="Resource.html#xhtml-instance_method" title="EPIC::Resource#xhtml (method)">#xhtml</a></span></p>
 
   
   
@@ -196,12 +190,12 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Rackful/Resource.html" title="Rackful::Resource (module)">Rackful::Resource</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#do_HEAD-instance_method" title="Rackful::Resource#do_HEAD (method)">#do_HEAD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#do_METHOD-instance_method" title="Rackful::Resource#do_METHOD (method)">#do_METHOD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#do_OPTIONS-instance_method" title="Rackful::Resource#do_OPTIONS (method)">#do_OPTIONS</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#empty%3F-instance_method" title="Rackful::Resource#empty? (method)">#empty?</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_GET-instance_method" title="Rackful::Resource#http_GET (method)">#http_GET</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_HEAD-instance_method" title="Rackful::Resource#http_HEAD (method)">#http_HEAD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_PUT-instance_method" title="Rackful::Resource#http_PUT (method)">#http_PUT</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_methods-instance_method" title="Rackful::Resource#http_methods (method)">#http_methods</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#initialize-instance_method" title="Rackful::Resource#initialize (method)">#initialize</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#default_headers-instance_method" title="Rackful::Resource#default_headers (method)">#default_headers</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#destroy-instance_method" title="Rackful::Resource#destroy (method)">#destroy</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#do_METHOD-instance_method" title="Rackful::Resource#do_METHOD (method)">#do_METHOD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#empty%3F-instance_method" title="Rackful::Resource#empty? (method)">#empty?</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_DELETE-instance_method" title="Rackful::Resource#http_DELETE (method)">#http_DELETE</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_GET-instance_method" title="Rackful::Resource#http_GET (method)">#http_GET</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_HEAD-instance_method" title="Rackful::Resource#http_HEAD (method)">#http_HEAD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_OPTIONS-instance_method" title="Rackful::Resource#http_OPTIONS (method)">#http_OPTIONS</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_PUT-instance_method" title="Rackful::Resource#http_PUT (method)">#http_PUT</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_method-instance_method" title="Rackful::Resource#http_method (method)">#http_method</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_methods-instance_method" title="Rackful::Resource#http_methods (method)">#http_methods</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#included-class_method" title="Rackful::Resource.included (method)">included</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#requested%3F-instance_method" title="Rackful::Resource#requested? (method)">#requested?</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#serializer-instance_method" title="Rackful::Resource#serializer (method)">#serializer</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#title-instance_method" title="Rackful::Resource#title (method)">#title</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#to_rackful-instance_method" title="Rackful::Resource#to_rackful (method)">#to_rackful</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#to_struct-instance_method" title="Rackful::Resource#to_struct (method)">#to_struct</a></span></p>
 
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
-    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="../Rackful/Resource.html#initialize-instance_method" title="Rackful::Resource#initialize (method)">Rackful::Resource</a></span></p>
+    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="Resource.html#initialize-instance_method" title="EPIC::Resource#initialize (method)">EPIC::Resource</a></span></p>
   
 </div>
 
@@ -213,7 +207,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="each-instance_method">
   
-    - (<tt>Object</tt>) <strong>each</strong> 
+    - (<tt>void</tt>) <strong>each</strong> 
   
 
   
@@ -238,7 +232,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span>
   <span class='const'>DB</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_all_nas'>all_nas</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span>
     <span class='op'>|</span><span class='id identifier rubyid_na'>na</span><span class='op'>|</span>
-    <span class='kw'>yield</span> <span class='id identifier rubyid_na'>na</span><span class='lbracket'>[</span><span class='int'>5</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_escape_path'>escape_path</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>yield</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>Path</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>+</span> <span class='id identifier rubyid_escape_path'>escape_path</span><span class='lparen'>(</span> <span class='id identifier rubyid_na'>na</span><span class='lbracket'>[</span><span class='int'>5</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -251,7 +245,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:24 2012 by
+  Generated on Fri Oct 12 18:56:32 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

@@ -254,7 +254,7 @@ Can be called by tainted resources, to be removed from the cache.
         <span class='name'>path</span>
       
       
-        <span class='type'>(<tt>#to_s</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Rackful/Path.html" title="Rackful::Path (class)">Rackful::Path</a></span></tt>)</span>
       
       
       
@@ -295,6 +295,12 @@ the URI-encoded path to the resource.
       <pre class="lines">
 
 
+65
+66
+67
+68
+69
+70
 71
 72
 73
@@ -327,13 +333,19 @@ the URI-encoded path to the resource.
 100
 101
 102
-103</pre>
+103
+104
+105
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'src/epic.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span> <span class='id identifier rubyid_path'>path</span>
-  <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_unslashify'>unslashify</span>
+  <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_path'>to_path</span> <span class='kw'>unless</span> <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>Path</span> <span class='op'>==</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>
+  <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_unslashify!'>unslashify!</span>
+  <span class='id identifier rubyid_segments'>segments</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_segments'>segments</span>
   <span class='id identifier rubyid_cached'>cached</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_cache'>resource_cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span>
   <span class='comment'># Legal values for +cached+ are:
 </span>  <span class='comment'># - nil: the resource is not in cache
@@ -343,26 +355,34 @@ the URI-encoded path to the resource.
     <span class='comment'># if +cached+ is +false+, we want to return +nil+.
 </span>    <span class='kw'>return</span> <span class='id identifier rubyid_cached'>cached</span> <span class='op'>||</span> <span class='kw'>nil</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_resource_cache'>resource_cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_unescape_path'>unescape_path</span> <span class='comment'># already unslashified!
-</span>  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
-    <span class='const'>StaticCollection</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>handles/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>profiles/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>templates/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>batches/</span><span class='tstring_end'>'</span></span> <span class='rbracket'>]</span>
-  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/handles</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/profiles</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/templates</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/batches</span><span class='tstring_end'>'</span></span>
-    <span class='const'>NAs</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span>
-  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/(batches)/\d+\z</span><span class='regexp_end'>}</span></span>
-    <span class='const'>StaticCollection</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/handles/\d+\z</span><span class='regexp_end'>}</span></span>
-    <span class='comment'>#StaticCollection.new path.to_s.slashify, ['hello/']
-</span>    <span class='const'>Handles</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span>
-  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/handles/\d+/[^/]+\z</span><span class='regexp_end'>}</span></span>
-    <span class='const'>Handle</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span>
-  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/(templates|profiles)/\d+\z</span><span class='regexp_end'>}</span></span>
-    <span class='const'>Directory</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span>
-  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A/profiles/\d+/\w[^/]+\z</span><span class='regexp_end'>}</span></span>
-    <span class='const'>Profile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span>
-  <span class='comment'># when %r{\A/templates/\d+/[^/]+\z}
-</span>    <span class='comment'># Template.new path
-</span>  <span class='kw'>else</span>
-    <span class='kw'>false</span>
+  <span class='id identifier rubyid_n'>n</span> <span class='op'>=</span> <span class='id identifier rubyid_segments'>segments</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+  <span class='id identifier rubyid_resource_cache'>resource_cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span> <span class='op'>=</span>
+  <span class='kw'>if</span> <span class='int'>0</span> <span class='op'>===</span> <span class='id identifier rubyid_n'>n</span>
+    <span class='const'>StaticCollection</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='lbracket'>[</span>
+        <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>handles/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+        <span class='comment'>#~ 'profiles/',
+</span>        <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>generators/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+        <span class='comment'>#~ 'batches/'
+</span>      <span class='rbracket'>]</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>handles</span><span class='tstring_end'>'</span></span> <span class='op'>===</span> <span class='id identifier rubyid_segments'>segments</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='int'>1</span> <span class='op'>===</span> <span class='id identifier rubyid_n'>n</span>
+      <span class='const'>NAs</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span> <span class='rparen'>)</span>
+    <span class='kw'>elsif</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A\d+\z</span><span class='regexp_end'>}</span></span> <span class='op'>===</span> <span class='id identifier rubyid_segments'>segments</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='int'>2</span> <span class='op'>===</span> <span class='id identifier rubyid_n'>n</span>
+        <span class='const'>Handles</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span> <span class='rparen'>)</span>
+      <span class='kw'>elsif</span> <span class='int'>3</span> <span class='op'>===</span> <span class='id identifier rubyid_n'>n</span>
+        <span class='const'>Handle</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_path'>path</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>elsif</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>generators</span><span class='tstring_end'>'</span></span> <span class='op'>===</span> <span class='id identifier rubyid_segments'>segments</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='int'>1</span> <span class='op'>===</span> <span class='id identifier rubyid_n'>n</span>
+      <span class='const'>StaticCollection</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_slashify'>slashify</span><span class='comma'>,</span> <span class='const'>Generator</span><span class='period'>.</span><span class='id identifier rubyid_generators'>generators</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
+    <span class='kw'>elsif</span> <span class='int'>2</span> <span class='op'>===</span> <span class='id identifier rubyid_n'>n</span>
+      <span class='id identifier rubyid_generator'>generator</span> <span class='op'>=</span> <span class='const'>Generator</span><span class='period'>.</span><span class='id identifier rubyid_generators'>generators</span><span class='lbracket'>[</span><span class='id identifier rubyid_segments'>segments</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_generator'>generator</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_generator'>generator</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span> <span class='id identifier rubyid_path'>path</span> <span class='rparen'>)</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -429,12 +449,12 @@ The resource hasn&#8217;t been requested yet.
       <pre class="lines">
 
 
-120
-121
-122</pre>
+122
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'src/epic.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resource_cache'>resource_cache</span>
   <span class='const'>Rackful</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='symbol'>:epic_resource_cache</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -484,13 +504,13 @@ Can be called by tainted resources, to be removed from the cache.
       <pre class="lines">
 
 
-60
-61
-62
-63</pre>
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'src/epic.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uncache'>uncache</span> <span class='id identifier rubyid_path'>path</span>
   <span class='id identifier rubyid_resource_cache'>resource_cache</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_unslashify'>unslashify</span>
@@ -506,7 +526,7 @@ Can be called by tainted resources, to be removed from the cache.
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:24 2012 by
+  Generated on Fri Oct 12 18:56:32 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

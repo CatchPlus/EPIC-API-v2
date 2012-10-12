@@ -65,8 +65,9 @@
 
 <h2>Requirements</h2>
 
-<p>=== JRuby
-First of all, this software requires JRuby, as it interfaces with the Java client library of the Handle System.
+<h3>JRuby</h3>
+
+<p>First of all, this software requires JRuby, as it interfaces with the Java client library of the Handle System.
 JRuby can be installed in many ways.
 You can go to the <a href="http://jruby.org/">JRuby web site</a> and download it from there.
 The developers of this software prefer using the <a href="http://beginrescueend.com/">Ruby Version Manager (RVM)</a> for managing multiple Ruby installations on a single machine, and for managing multiple gemsets.</p>
@@ -81,15 +82,17 @@ There&#39;s an example of such a document in the distribution, by executing</p>
 
 <p>inside the root of this distribution.</p>
 
-<p>=== Handle System v7
-You&#39;ll need a running Handle System installation.
+<h3>Handle System v7</h3>
+
+<p>You&#39;ll need a running Handle System installation.
 Details can be found at the <a href="http://www.handle.net/">Handle System web site</a>.</p>
 
 <p>The web service needs to know the location of your Handle System installation.
 Create a symbolic link inside the Web Service top level directory called <code>hsj</code>, pointing to <code>$HS_DISTRO_ROOT/lib</code>.</p>
 
-<p>=== Sequel
-Sequel is a Ruby database abstraction layer and Object-Relational Mapper (ORM).
+<h3>Sequel</h3>
+
+<p>Sequel is a Ruby database abstraction layer and Object-Relational Mapper (ORM).
 For performance reasons, we don&#39;t use the ORM features.</p>
 
 <p>Installing <code>sequel</code> is easy:</p>
@@ -102,8 +105,9 @@ you&#39;ll probably need to install some database handler as well.
 The service developers use gem <code>jdbc-mysql</code> in order to connect to their
 MySQL databases.</p>
 
-<p>=== Rackful
-<a href="http://pieterb.github.com/Rackful/">Rackful</a> is a library to build ReSTful web
+<h3>Rackful</h3>
+
+<p><a href="http://pieterb.github.com/Rackful/">Rackful</a> is a library to build ReSTful web
 services on top of <a href="http://rack.rubyforge.org/doc/">Rack</a>.</p>
 
 <p>You might want to read the
@@ -118,8 +122,9 @@ and <a href="">other Rack documentation</a> as well.</p>
 <p>The web service comes preconfigured for HTTP Digest authentication.
 You&#39;ll need to create two configuration files for this to work, though:</p>
 
-<p>=== General configuration
-The default installation expects some configuration information in file <code>config.rb</code>.
+<h3>General configuration</h3>
+
+<p>The default installation expects some configuration information in file <code>config.rb</code>.
 You&#39;ll find a sample configuration file called <code>config.rb.example</code> in the distribution.
 Copy or rename this file to <code>config.rb</code> and edit it to your situation:</p>
 
@@ -127,8 +132,9 @@ Copy or rename this file to <code>config.rb</code> and edit it to your situation
 $EDITOR config.rb
 </code></pre>
 
-<p>=== User accounts
-In the default configuration, account information is expected in file <code>secrets/users.rb</code>.
+<h3>User accounts</h3>
+
+<p>In the default configuration, account information is expected in file <code>secrets/users.rb</code>.
 From the installation root, do the following:</p>
 
 <pre class="code ruby"><code>cd secrets/
@@ -152,7 +158,7 @@ That files contains a lot of in-line documentation that hopefully gets you start
 </div></div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:23 2012 by
+  Generated on Fri Oct 12 18:56:31 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>

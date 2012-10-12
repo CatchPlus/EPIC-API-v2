@@ -117,7 +117,7 @@ Base class of all resources in this web service.
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="Collection.html" title="EPIC::Collection (class)">Collection</a></span>, <span class='object_link'><a href="Handle.html" title="EPIC::Handle (class)">Handle</a></span>, <span class='object_link'><a href="Profile.html" title="EPIC::Profile (class)">Profile</a></span>, <span class='object_link'><a href="Template.html" title="EPIC::Template (class)">Template</a></span></p>
+  <p class="children"><span class='object_link'><a href="Collection.html" title="EPIC::Collection (class)">Collection</a></span>, <span class='object_link'><a href="Generator.html" title="EPIC::Generator (class)">Generator</a></span>, <span class='object_link'><a href="Handle.html" title="EPIC::Handle (class)">Handle</a></span>, <span class='object_link'><a href="Profile.html" title="EPIC::Profile (class)">Profile</a></span></p>
 </div>
 
   <h2>Constant Summary</h2>
@@ -145,7 +145,7 @@ Base class of all resources in this web service.
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes included from <span class='object_link'><a href="../Rackful/Resource.html" title="Rackful::Resource (module)">Rackful::Resource</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#etag-instance_method" title="Rackful::Resource#etag (method)">#etag</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#last_modified-instance_method" title="Rackful::Resource#last_modified (method)">#last_modified</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#path-instance_method" title="Rackful::Resource#path (method)">#path</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#get_etag-instance_method" title="Rackful::Resource#get_etag (method)">#get_etag</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#get_last_modified-instance_method" title="Rackful::Resource#get_last_modified (method)">#get_last_modified</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#path-instance_method" title="Rackful::Resource#path (method)">#path</a></span></p>
 
 
   
@@ -159,7 +159,7 @@ Base class of all resources in this web service.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#lock-class_method" title="lock (class method)">+ (Object) <strong>lock</strong>(path, unlock) </a>
+      <a href="#lock-class_method" title="lock (class method)">+ (void) <strong>lock</strong>(path, unlock) </a>
     
 
     
@@ -190,7 +190,34 @@ Base class of all resources in this web service.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#lock-instance_method" title="#lock (instance method)">- (Object) <strong>lock</strong>(unlock = false) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Resource) <strong>initialize</strong>(path) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of Resource.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#lock-instance_method" title="#lock (instance method)">- (void) <strong>lock</strong>(unlock = false) </a>
     
 
     
@@ -212,7 +239,29 @@ Base class of all resources in this web service.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#unlock-instance_method" title="#unlock (instance method)">- (Object) <strong>unlock</strong> </a>
+      <a href="#unlock-instance_method" title="#unlock (instance method)">- (void) <strong>unlock</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#xhtml-instance_method" title="#xhtml (instance method)">- (void) <strong>xhtml</strong> </a>
     
 
     
@@ -244,12 +293,98 @@ Base class of all resources in this web service.
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Rackful/Resource.html" title="Rackful::Resource (module)">Rackful::Resource</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#do_HEAD-instance_method" title="Rackful::Resource#do_HEAD (method)">#do_HEAD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#do_METHOD-instance_method" title="Rackful::Resource#do_METHOD (method)">#do_METHOD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#do_OPTIONS-instance_method" title="Rackful::Resource#do_OPTIONS (method)">#do_OPTIONS</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#empty%3F-instance_method" title="Rackful::Resource#empty? (method)">#empty?</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_GET-instance_method" title="Rackful::Resource#http_GET (method)">#http_GET</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_HEAD-instance_method" title="Rackful::Resource#http_HEAD (method)">#http_HEAD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_PUT-instance_method" title="Rackful::Resource#http_PUT (method)">#http_PUT</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_methods-instance_method" title="Rackful::Resource#http_methods (method)">#http_methods</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#initialize-instance_method" title="Rackful::Resource#initialize (method)">#initialize</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Rackful/Resource.html#default_headers-instance_method" title="Rackful::Resource#default_headers (method)">#default_headers</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#destroy-instance_method" title="Rackful::Resource#destroy (method)">#destroy</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#do_METHOD-instance_method" title="Rackful::Resource#do_METHOD (method)">#do_METHOD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#empty%3F-instance_method" title="Rackful::Resource#empty? (method)">#empty?</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_DELETE-instance_method" title="Rackful::Resource#http_DELETE (method)">#http_DELETE</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_GET-instance_method" title="Rackful::Resource#http_GET (method)">#http_GET</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_HEAD-instance_method" title="Rackful::Resource#http_HEAD (method)">#http_HEAD</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_OPTIONS-instance_method" title="Rackful::Resource#http_OPTIONS (method)">#http_OPTIONS</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_PUT-instance_method" title="Rackful::Resource#http_PUT (method)">#http_PUT</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_method-instance_method" title="Rackful::Resource#http_method (method)">#http_method</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#http_methods-instance_method" title="Rackful::Resource#http_methods (method)">#http_methods</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#included-class_method" title="Rackful::Resource.included (method)">included</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#requested%3F-instance_method" title="Rackful::Resource#requested? (method)">#requested?</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#serializer-instance_method" title="Rackful::Resource#serializer (method)">#serializer</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#title-instance_method" title="Rackful::Resource#title (method)">#title</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#to_rackful-instance_method" title="Rackful::Resource#to_rackful (method)">#to_rackful</a></span>, <span class='object_link'><a href="../Rackful/Resource.html#to_struct-instance_method" title="Rackful::Resource#to_struct (method)">#to_struct</a></span></p>
 
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
-    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="../Rackful/Resource.html#initialize-instance_method" title="Rackful::Resource#initialize (method)">Rackful::Resource</a></span></p>
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="EPIC::Resource (class)">Resource</a></span></tt>) <strong>initialize</strong>(path) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of Resource
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The path of this resource. This is a `path-absolute` as defined in
+<a href="http://tools.ietf.org/html/rfc3986#section-3.3" target="_parent" title="RFC3986, section 3.3">RFC3986, section 3.3</a>.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../Rackful/Resource.html#path-instance_method" title="Rackful::Resource#path (method)">Rackful::Resource#path</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>
+0.0.1
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_resource.rb', line 86</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
   
 </div>
 
@@ -261,7 +396,7 @@ Base class of all resources in this web service.
       <div class="method_details first">
   <h3 class="signature first" id="lock-class_method">
   
-    + (<tt>Object</tt>) <strong>lock</strong>(path, unlock) 
+    + (<tt>void</tt>) <strong>lock</strong>(path, unlock) 
   
 
   
@@ -273,27 +408,27 @@ Base class of all resources in this web service.
       <pre class="lines">
 
 
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52</pre>
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_resource.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'src/epic_resource.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_unlock'>unlock</span>
   <span class='const'>GLOBAL_LOCK_MUTEX</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='kw'>do</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_unlock'>unlock</span>
       <span class='const'>GLOBAL_LOCK_HASH</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_path'>path</span>
     <span class='kw'>elsif</span> <span class='const'>GLOBAL_LOCK_HASH</span><span class='lbracket'>[</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTPStatus</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>SERVICE_UNAVAILABLE Another client is modifying the resource.</span><span class='tstring_end'>'</span></span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>HTTP503ServiceUnavailable</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Another client is modifying the resource.</span><span class='tstring_end'>'</span></span>
     <span class='kw'>else</span>
       <span class='const'>GLOBAL_LOCK_HASH</span><span class='lbracket'>[</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
     <span class='kw'>end</span>
@@ -313,7 +448,7 @@ Base class of all resources in this web service.
       <div class="method_details first">
   <h3 class="signature first" id="lock-instance_method">
   
-    - (<tt>Object</tt>) <strong>lock</strong>(unlock = false) 
+    - (<tt>void</tt>) <strong>lock</strong>(unlock = false) 
   
 
   
@@ -325,12 +460,12 @@ Base class of all resources in this web service.
       <pre class="lines">
 
 
-32
-33
-34</pre>
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_resource.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'src/epic_resource.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lock'>lock</span> <span class='id identifier rubyid_unlock'>unlock</span> <span class='op'>=</span> <span class='kw'>false</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_unlock'>unlock</span>
@@ -343,7 +478,7 @@ Base class of all resources in this web service.
       <div class="method_details ">
   <h3 class="signature " id="unlock-instance_method">
   
-    - (<tt>Object</tt>) <strong>unlock</strong> 
+    - (<tt>void</tt>) <strong>unlock</strong> 
   
 
   
@@ -355,16 +490,42 @@ Base class of all resources in this web service.
       <pre class="lines">
 
 
-37
-38
-39</pre>
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'src/epic_resource.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'src/epic_resource.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unlock'>unlock</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span> <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="xhtml-instance_method">
+  
+    - (<tt>void</tt>) <strong>xhtml</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+114</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'src/epic_resource.rb', line 114</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_xhtml'>xhtml</span><span class='semicolon'>;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -375,7 +536,7 @@ Base class of all resources in this web service.
 </div>
 
     <div id="footer">
-  Generated on Tue Jul 17 12:30:24 2012 by
+  Generated on Fri Oct 12 18:56:34 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.2).
 </div>
