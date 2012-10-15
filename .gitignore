@@ -7,8 +7,8 @@ secrets/users.rb
 config.rb
 .project
 src.java
-public/docs/epic
-public/docs/yard
+public/v2/docs/epic
+public/v2/docs/yard
 .yardoc
 gems
 .settings

@@ -6,6 +6,7 @@
 --charset UTF-8
 --title EPIC
 --exclude sequel/adapters
+--exclude config.rb
 #--markup markdown
 --hide-void-return
 --default-return void

@@ -1,18 +1,16 @@
-=begin License
-  Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
-  
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-      http://www.apache.org/licenses/LICENSE-2.0
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-=end
+# Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 require 'rackful'
 
@@ -39,27 +37,28 @@ class XHTML < Rackful::XHTML
 
   def header
     <<EOS
-<link rel="stylesheet" href="/inc/bootstrap/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="/inc/bootstrap/css/bootstrap-responsive.min.css"/>
-<!--<link rel="stylesheet/less" type="text/css" href="/inc/epic.less"/>-->
+<link rel="stylesheet" href="/v2/inc/bootstrap/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/v2/inc/bootstrap/css/bootstrap-responsive.min.css"/>
+<!--<link rel="stylesheet/less" type="text/css" href="/v2/inc/epic.less"/>-->
 <title>#{Rack::Utils.escape_html( resource.title )}</title></head>
 <body>#{self.breadcrumbs}#{resource.xhtml}
-<script src="/inc/jquery.js" type="text/javascript"></script>
+<script src="/v2/inc/jquery.js" type="text/javascript"></script>
+<script src="/v2/inc/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-  window.onload = function() {
+  $(document).ready( function() {
     $("dl.rackful-object").addClass("dl-horizontal");
     $("table.rackful-objects").addClass("table table-striped table-condensed table-bordered");
-  }
+  } );
 </script>
 EOS
   end # header
 
   def footer
     <<EOS
-<p align="right"><em>
+<div class="row"><div align="right" class="span12"><em>
 Developed by <a href="http://www.sara.nl/">SARA</a> and <a href="http://www.gwdg.de/">GWDG</a><br/>
 Sponsored by <a href="http://www.catchplus.nl/">CATCH+</a> and <a href="http://www.eudat.eu/">EUDAT</a>
-</em></p></body></html>
+</em></div></div></body></html>
 EOS
   end # footer
 
@@ -77,12 +76,9 @@ class Resource
   GLOBAL_LOCK_HASH = {}
 
 
-=begin markdown
-@param path [#to_s] The path of this resource. This is a `path-absolute` as
-  defined in {http://tools.ietf.org/html/rfc3986#section-3.3 RFC3986, section 3.3}.
-@see #path
-@since 0.0.1
-=end
+  # @param path [#to_s] The path of this resource. This is a `path-absolute` as
+  #   defined in {http://tools.ietf.org/html/rfc3986#section-3.3 RFC3986, section 3.3}.
+  # @see #path
   def initialize path
     self.path = path
   end

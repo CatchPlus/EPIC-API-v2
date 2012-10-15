@@ -1,18 +1,16 @@
-=begin License
-  Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
-  
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-      http://www.apache.org/licenses/LICENSE-2.0
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-=end
+# Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 
 #require 'epic_monkeypatches.rb'
@@ -26,7 +24,7 @@ require 'epic_directory.rb'
 require 'epic_profile.rb'
 require 'epic_generator.rb'
 
-require 'config.rb'
+require '../config.rb'
 require '../secrets/users.rb'
 
 require 'singleton'
@@ -57,11 +55,9 @@ class ResourceFactory
   end
 
 
-=begin
-@param path [Rackful::Path] the URI-encoded path to the resource.
-@return [Resource, nil]
-@see Rackful::Server#resource_factory for details
-=end
+  # @param path [Rackful::Path] the URI-encoded path to the resource.
+  # @return [Resource, nil]
+  # @see Rackful::Server#resource_factory for details
   def [] path
     path = path.to_path unless Rackful::Path == path.class
     path.unslashify!
@@ -71,37 +67,39 @@ class ResourceFactory
     # - nil: the resource is not in cache
     # - false: resource was requested earlier, without success
     # - Rackful::Resource
-    if ! cached.nil?
+    unless cached.nil?
       # if +cached+ is +false+, we want to return +nil+.
       return cached || nil
     end
     n = segments.length
     resource_cache[path] =
-    if 0 === n
-      StaticCollection.new(
-        '/', [
-          'handles/',
-          #~ 'profiles/',
-          'generators/',
-          #~ 'batches/'
-        ]
-      )
-    elsif 'handles' === segments[0]
+    if 'v2' == segments[0]
       if 1 === n
-        NAs.new( path.slashify )
-      elsif %r{\A\d+\z} === segments[1]
+        StaticCollection.new(
+          '/v2/', [
+            'handles/',
+            #~ 'profiles/',
+            'generators/',
+            #~ 'batches/'
+          ]
+        )
+      elsif 'handles' === segments[1]
         if 2 === n
-          Handles.new( path.slashify )
-        elsif 3 === n
-          Handle.new path
+          NAs.new( path.slashify )
+        elsif %r{\A\d+\z} === segments[2]
+          if 3 === n
+            Handles.new( path.slashify )
+          elsif 4 === n
+            Handle.new path
+          end
         end
-      end
-    elsif 'generators' === segments[0]
-      if 1 === n
-        StaticCollection.new(path.slashify, Generator.generators.keys)
-      elsif 2 === n
-        generator = Generator.generators[segments[1]]
-        generator && generator.new( path )
+      elsif 'generators' === segments[1]
+        if 2 === n
+          StaticCollection.new(path.slashify, Generator.generators.keys)
+        elsif 3 === n
+          generator = Generator.generators[segments[2]]
+          generator && generator.new( path )
+        end
       end
     end
   end

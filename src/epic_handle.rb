@@ -1,18 +1,16 @@
-=begin License
-  Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
-  
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-      http://www.apache.org/licenses/LICENSE-2.0
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-=end
+# Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 require 'epic_collection.rb'
 require 'epic_sequel.rb'
@@ -54,7 +52,7 @@ class Handle < Resource
   def initialize path, handle_values = nil
     super path
     raise "Unexpected path: #{path}" \
-      unless matches = %r{([^/]+)/([^/]+)\z}.match(path)
+      unless matches = %r{([\d]+(?:\.[^/]+)*)/([^/]+)\z}.match(path)
     @suffix = matches[2].to_path.unescape
     @prefix = matches[1].to_path.unescape
     @handle = @prefix + '/' + @suffix
@@ -103,7 +101,7 @@ class Handle < Resource
         handle_value.parsed_data = handle_value_in[:parsed_data]
         unless data == handle_value.data ||
                parsed_data == handle_value.parsed_data
-          raise Rackful::HTTP400, 'Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
+          raise Rackful::HTTP400BadRequest, 'Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
         end # unless
       elsif handle_value_in.key?( :parsed_data )
         handle_value.parsed_data = handle_value_in[:parsed_data]
@@ -155,6 +153,7 @@ class Handle < Resource
     HS.delete_handle self.handle, request.env['REMOTE_USER']
     @values = nil
     response.status = status_code(:no_content)
+    nil
   end
 
 
@@ -218,8 +217,8 @@ class Handle < Resource
       admin_record.idx = idx
       admin_record.type = 'HS_ADMIN'
       admin_record.parsed_data = {
-        :adminId => user_info[:handle],
-        :adminIdIndex => user_info[:index],
+        :adminId => user_info[:handle_create] || user_info[:handle],
+        :adminIdIndex => user_info[:index_create] || user_info[:index],
         :perms => {
           :add_handle         => true,
           :delete_handle      => true,

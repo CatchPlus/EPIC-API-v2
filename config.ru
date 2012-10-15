@@ -1,4 +1,4 @@
-#\ --port 8003
+#\ --port 9002
 =begin License
   Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
   
@@ -42,7 +42,8 @@ use Rack::Sendfile
 # but just served statically from the filesystem.
 # This includes stuff like CSS files, the favicon etc.
 use Rack::Static,
-  :urls  => ['/inc/', '/favicon.ico', '/docs/'], #, %r{/(templates|profiles)/\d+/.+}],
+  #~ :urls  => ['/v2/inc/', '/favicon.ico', '/docs/'], #, %r{/(templates|profiles)/\d+/.+}],
+  :urls  => ['/v2/inc', '/v2/docs'], #, %r{/(templates|profiles)/\d+/.+}],
   :root  => 'public',
   :index => nil
 
@@ -58,12 +59,18 @@ use Rackful::RelativeLocation
 require 'epic.rb'
 
 # As said, the distribution comes with HTTP Digest authentication preconfigured.
-use Rack::Auth::Digest::MD5, {
-    :realm => EPIC::REALM, :opaque => EPIC::OPAQUE, :passwords_hashed => true
-  } do
-  |username|
-  username = username.to_str
-  EPIC::USERS[username] ? EPIC::USERS[username][:digest] : nil
+#use Rack::Auth::Digest::MD5, {
+#    :realm => EPIC::REALM, :opaque => EPIC::OPAQUE, :passwords_hashed => true
+#  } do
+#  |username|
+#  username = username.to_str
+#  EPIC::USERS[username] ? EPIC::USERS[username][:digest] : nil
+#end
+use Rack::Auth::Basic do
+  |username, password|
+  EPIC::USERS[username] ?
+    ( EPIC::USERS[username][:basic] == password ) :
+    false
 end
 
 # Perform header spoofing.
