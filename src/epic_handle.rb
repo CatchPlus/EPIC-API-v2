@@ -16,6 +16,7 @@ require 'epic_collection.rb'
 require 'epic_sequel.rb'
 require 'epic_hs.rb'
 require 'base64'
+require 'digest'
 require 'time'
 require 'json'
 

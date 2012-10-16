@@ -73,33 +73,31 @@ class ResourceFactory
     end
     n = segments.length
     resource_cache[path] =
-    if 'v2' == segments[0]
+    if 0 === n
+      StaticCollection.new(
+        '/', [
+          'handles/',
+          #~ 'profiles/',
+          'generators/',
+          #~ 'batches/'
+        ]
+      )
+    elsif 'handles' === segments[0]
       if 1 === n
-        StaticCollection.new(
-          '/v2/', [
-            'handles/',
-            #~ 'profiles/',
-            'generators/',
-            #~ 'batches/'
-          ]
-        )
-      elsif 'handles' === segments[1]
+        NAs.new( path.slashify )
+      elsif %r{\A\d+\z} === segments[1]
         if 2 === n
-          NAs.new( path.slashify )
-        elsif %r{\A\d+\z} === segments[2]
-          if 3 === n
-            Handles.new( path.slashify )
-          elsif 4 === n
-            Handle.new path
-          end
-        end
-      elsif 'generators' === segments[1]
-        if 2 === n
-          StaticCollection.new(path.slashify, Generator.generators.keys)
+          Handles.new( path.slashify )
         elsif 3 === n
-          generator = Generator.generators[segments[2]]
-          generator && generator.new( path )
+          Handle.new path
         end
+      end
+    elsif 'generators' === segments[0]
+      if 1 === n
+        StaticCollection.new(path.slashify, Generator.generators.keys)
+      elsif 2 === n
+        generator = Generator.generators[segments[1]]
+        generator && generator.new( path )
       end
     end
   end

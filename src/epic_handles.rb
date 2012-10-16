@@ -61,11 +61,11 @@ class Handles < Collection
   # @see Rackful::Resource#do_METHOD
   def do_POST request, response
     generator_name = request.GET['generator'] || EPIC::DEFAULT_GENERATOR
-    unless generator = request.resource_factory["/v2/generators/#{generator_name}"]
+    unless generator = request.resource_factory["/generators/#{generator_name}"]
       raise Rackful::HTTP400BadRequest, "No such generator: '#{generator_name}'"
     end
     pid_suffix = escape_path( generator.generate( request ) )
-    handle = request.resource_factory["/v2/handles/#{prefix}/#{pid_suffix}"]
+    handle = request.resource_factory["/handles/#{prefix}/#{pid_suffix}"]
     handle.do_PUT( request, response )
   end
 

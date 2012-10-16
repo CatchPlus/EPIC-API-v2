@@ -36,14 +36,15 @@ class XHTML < Rackful::XHTML
   end
 
   def header
+    inc = '/inc/'.to_path.relative
     <<EOS
-<link rel="stylesheet" href="/v2/inc/bootstrap/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="/v2/inc/bootstrap/css/bootstrap-responsive.min.css"/>
-<!--<link rel="stylesheet/less" type="text/css" href="/v2/inc/epic.less"/>-->
+<link rel="stylesheet" href="#{inc}bootstrap/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="#{inc}bootstrap/css/bootstrap-responsive.min.css"/>
+<!--<link rel="stylesheet/less" type="text/css" href="#{inc}epic.less"/>-->
 <title>#{Rack::Utils.escape_html( resource.title )}</title></head>
 <body>#{self.breadcrumbs}#{resource.xhtml}
-<script src="/v2/inc/jquery.js" type="text/javascript"></script>
-<script src="/v2/inc/bootstrap/js/bootstrap.min.js"></script>
+<script src="#{inc}jquery.js" type="text/javascript"></script>
+<script src="#{inc}bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
   $(document).ready( function() {
     $("dl.rackful-object").addClass("dl-horizontal");

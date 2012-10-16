@@ -1,4 +1,4 @@
-#\ --port 9002
+#\ --port 9003 --server mizuno
 =begin License
   Copyright ©2011-2012 Pieter van Beek <pieterb@sara.nl>
   
@@ -42,8 +42,8 @@ use Rack::Sendfile
 # but just served statically from the filesystem.
 # This includes stuff like CSS files, the favicon etc.
 use Rack::Static,
-  #~ :urls  => ['/v2/inc/', '/favicon.ico', '/docs/'], #, %r{/(templates|profiles)/\d+/.+}],
-  :urls  => ['/v2/inc', '/v2/docs'], #, %r{/(templates|profiles)/\d+/.+}],
+  #~ :urls  => ['/inc/', '/favicon.ico', '/docs/'], #, %r{/(templates|profiles)/\d+/.+}],
+  :urls  => ['/inc', '/docs'], #, %r{/(templates|profiles)/\d+/.+}],
   :root  => 'public',
   :index => nil
 
@@ -68,9 +68,11 @@ require 'epic.rb'
 #end
 use Rack::Auth::Basic do
   |username, password|
-  EPIC::USERS[username] ?
-    ( EPIC::USERS[username][:basic] == password ) :
-    false
+  EPIC::USERS[username] && (
+    EPIC::USERS[username][:digest] == Digest::MD5.hexdigest(
+      [ username, EPIC::REALM, password ] * ':'
+    ).to_s
+  )
 end
 
 # Perform header spoofing.
