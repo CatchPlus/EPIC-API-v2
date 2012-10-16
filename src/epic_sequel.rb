@@ -68,6 +68,16 @@ class DB
     self.pool['SELECT UUID()'].get
   end
 
+  def gwdgpid
+    ### INSERT INTO `pidsequence` (`processID`) VALUE (NULL);
+    ### SELECT LAST_INSERT_ID()
+    ### SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'pidsequence';
+    ###self.pool['INSERT INTO pidsequence (processID) VALUE (NULL); SELECT LAST_INSERT_ID()'].get
+    ###self.pool['SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = "pidsequence"].get
+    dataset = self.pool["INSERT INTO `pidsequence` (`processID`) VALUES (NULL)"]
+    dataset.insert # returns the new ID
+  end
+
 end
 
 end
