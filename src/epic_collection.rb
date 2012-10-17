@@ -30,7 +30,7 @@ class TXT < Rackful::Serializer
   def each
     self.resource.each do
       |path|
-      yield path.to_s + @newline
+      yield path.relative + @newline
     end
   end
 end # class EPIC::TXT

@@ -150,18 +150,20 @@ class Generator < Resource
       ### Do we want own sequence numbers per institute like DB.instance.gwdgpidsequence('inst')?
       sequence = DB.instance.gwdgpidsequence #.to_s(16).capitalize.rjust(12,'0')
       if sequence? :nil
-      if sequence < 0 or sequence > "FFFFFFFFFFFF".to_i(16)
-        nil
-      else
-        ### Fixnum -> Hex: http://www.ruby-doc.org/core/classes/Fixnum.html#M001069
-        ### Fixnum.to_s(base=16): Returns a string containing the representation of fix radix base (between 2 and 36).
-        sequence = sequence.to_s(16).capitalize.rjust(12,'0') + '-'
+        if sequence < 0 or sequence > "FFFFFFFFFFFF".to_i(16)
+          nil
+        else
+          ### Fixnum -> Hex: http://www.ruby-doc.org/core/classes/Fixnum.html#M001069
+          ### Fixnum.to_s(base=16): Returns a string containing the representation of fix radix base (between 2 and 36).
+          sequence = sequence.to_s(16).capitalize.rjust(12,'0') + '-'
+        end
 
-      ### Checksum
-      ### TODO: implement ISO7064 digit check
-      checksum = 'X'
-      
-      '00-' + inst + prefix + sequence + code + suffix
+        ### Checksum
+        ### TODO: implement ISO7064 digit check
+        checksum = 'X'
+        
+        '00-' + inst + prefix + sequence + code + suffix
+      end
     end
 
   end # class GWDGPID < Generator
