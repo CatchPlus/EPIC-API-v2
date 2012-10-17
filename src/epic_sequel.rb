@@ -68,7 +68,7 @@ class DB
     self.pool['SELECT UUID()'].get
   end
 
-  def gwdgpid
+  def gwdgpidsequence
     ### INSERT INTO `pidsequence` (`processID`) VALUE (NULL);
     ### SELECT LAST_INSERT_ID()
     ### SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'pidsequence';

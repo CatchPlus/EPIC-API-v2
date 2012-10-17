@@ -136,25 +136,29 @@ class Generator < Resource
     def generate request
       ### Institute code
       ### TODO: it should come from the AAI module and not as user input! Or the user input can be a hint, but has to be proven.
-      inst = request.GET['inst'].capitalize + '-' || 'XXXX-'
-      ###if inst? :nil
+      inst = request.GET['inst'] + '-' || 'XXXX-'
+#      inst.capitalize
+      ### if inst? :nil
       
       ### Prefix
       ### TODO: should be a hex string? How long may it be?
-      prefix = request.GET['prefix'].capitalize + '-' || ''
+      prefix = request.GET['prefix'] + '-' || ''
+#      prefix.capitalize
 
       ### Suffix
       ### TODO: should be a hex string? How long may it be?
-      suffix = '-' + request.GET['suffix'].capitalize || ''
+      suffix = '-' + request.GET['suffix'] || ''
+#      suffix.capitalize
 
       ### Sequence number
       ### The sequence number is at most 0xffffffffffL, not negative
       ### Do we want own sequence numbers per institute like DB.instance.gwdgpidsequence('inst')?
-      sequence = DB.instance.gwdgpidsequence #.to_s(16).capitalize.rjust(12,'0')
-      if sequence? :nil
-      if sequence < 0 or sequence > "FFFFFFFFFFFF".to_i(16)
-        nil
-      else
+      sequence = DB.instance.gwdgpidsequence 
+      # .to_s(16).capitalize.rjust(12,'0')
+      ### if sequence? :nil
+#      if sequence < 0 or sequence > "FFFFFFFFFFFF".to_i(16)
+#        nil
+#      else
         ### Fixnum -> Hex: http://www.ruby-doc.org/core/classes/Fixnum.html#M001069
         ### Fixnum.to_s(base=16): Returns a string containing the representation of fix radix base (between 2 and 36).
         sequence = sequence.to_s(16).capitalize.rjust(12,'0') + '-'
@@ -163,7 +167,7 @@ class Generator < Resource
       ### TODO: implement ISO7064 digit check
       checksum = 'X'
       
-      '00-' + inst + prefix + sequence + code + suffix
+      '00-' + inst + prefix + sequence + checksum + suffix
     end
 
   end # class GWDGPID < Generator
