@@ -136,19 +136,17 @@ class Generator < Resource
     def generate request
       ### Institute code
       ### TODO: it should come from the AAI module and not as user input! Or the user input can be a hint, but has to be proven.
-      inst = request.GET['inst'] + '-' || 'XXXX-'
-#      inst.capitalize
+      inst = ( request.GET['inst'] ) ? request.GET['inst'].upcase + '-' : 'XXXX-'
       ### if inst? :nil
       
       ### Prefix
       ### TODO: should be a hex string? How long may it be?
-      prefix = request.GET['prefix'] + '-' || ''
-#      prefix.capitalize
+      prefix = ( request.GET['prefix'] ) ? request.GET['prefix'].upcase + '-' : ''
 
       ### Suffix
       ### TODO: should be a hex string? How long may it be?
-      suffix = '-' + request.GET['suffix'] || ''
-#      suffix.capitalize
+      suffix = ( request.GET['suffix'] ) ? '-' + request.GET['suffix'].upcase : ''
+     
 
       ### Sequence number
       ### The sequence number is at most 0xffffffffffL, not negative
@@ -161,7 +159,7 @@ class Generator < Resource
 #      else
         ### Fixnum -> Hex: http://www.ruby-doc.org/core/classes/Fixnum.html#M001069
         ### Fixnum.to_s(base=16): Returns a string containing the representation of fix radix base (between 2 and 36).
-        sequence = sequence.to_s(16).capitalize.rjust(12,'0') + '-'
+        sequence = sequence.to_s(16).upcase.rjust(12,'0') + '-'
 
       ### Checksum
       ### TODO: implement ISO7064 digit check
