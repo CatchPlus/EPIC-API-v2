@@ -70,7 +70,8 @@ class Generator < Resource
 
   end # class UUID < Generator
 
-  ### A generator that creates GWDG-like strings and guarantees the uniqueness of created Handles.
+
+  # A generator that creates GWDG-like strings to guarantee the uniqueness of created Handles.
   class GWDGPID < Generator
 
     def initialize *args
@@ -83,79 +84,24 @@ class Generator < Resource
       @description = 'This generator creates GWDG-like strings and guarantees the uniqueness of created Handles.' ###(by using DB sequence).'
     end
 
-###    /**
-###     * Create Handle / PID string from components
-###     * @param prefix the handle prefix, for example 42
-###     * @param key the institute key, must be 4 uppercase letters or digits
-###     * @param number the item number, at most 0xffffffffffL, not negative
-###     * @param suffix the OPTIONAL suffix string, max MAX_SUFFIX_LEN uppercase
-###     *   letters, digits or hyphens, or null (recommended) if no suffix used
-###     * @return the converted value, for example 42/00-GWDG-0000-0000-D542-D,
-###     * or null on error (check digit is ISO7064 for main 12 hex digits)
-###     */
-###    public static String makeHandle(String prefix, String key, long number, String suffix) {
-###        // ISO7064 check digit, see e.g. http://modp.com/release/checkdigits/
-###        // or             http://www.eurocode.org/guides/checkdig/english/
-###        // or             http://www.collectionscanada.ca/iso/tc46sc9/isan/wg1n130.pdf
-###        // or ISAN FAQ:   http://www.collectionscanada.ca/iso/tc46sc9/isan.htm
-###        // or V-ISAN FAQ: http://www.collectionscanada.ca/iso/tc46sc9/v-isan.htm
-###        if (number < 0 | number > 0xffffffffffffL)
-###            return null; // number out of range
-###        if ((key==null) || (!key.matches("^[A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]$")))
-###            return null; // bad institute key
-###        if (suffix!=null && (suffix.length()>MAX_SUFFIX_LEN || !suffix.matches("^[A-Z0-9-]*$")))
-###            return null; // invalid suffix
-###        String hex = "00000000000" + Long.toHexString(number).toUpperCase();
-###        hex = hex.substring(hex.length() - 12); // pad with 0s to 12 digits
-###        StringBuffer handle = new StringBuffer(prefix);
-###        handle.append("/00-");
-###        handle.append(key).append('-');
-###        handle.append(hex.substring(0, 4)).append('-');
-###        handle.append(hex.substring(4, 8)).append('-');
-###        handle.append(hex.substring(8)).append('-');
-###        long check = 16;
-###        for (int n = 11; n >= 0; n--) {           // check 12 lower digits
-###            long digit = (number >> (4*n)) & 15;   // start at high digit...
-###            digit = (digit + check) & 15;         // ...calculate modulo 16
-###            if (digit == 0) digit = 16;           // ...but replace 0 by 16
-###            digit = digit * 2;                    // ...now multiply by 2
-###            if (digit >= 17) digit = digit - 17;        // ...and wrap to base 17
-###            check = digit;
-###        }
-###        check = (17 - check) & 15;                // ...modulo 16
-###        handle.append(Long.toHexString(check).toUpperCase()); // check digit
-###        if (suffix!=null) { // suffix sanity checks already done above
-###            handle.append('-');
-###            handle.append(suffix);
-###        }
-###        return handle.toString();
-###    } // makeHandle
 
+    # @todo implement ISO7064 digit check
+    # @todo Institute code should come from the AAI module and not as user
+    #       input! Or the user input can be a hint, but has to be proven.
+    # @todo Parameter `prefix` should be a hex string? How long may it be?
+    # @todo Parameter `suffix` should be a hex string? How long may it be?
+    # @todo Sequences: Do we want own sequence numbers per institute like
+    #       `DB.instance.gwdgpidsequence('inst')`?
     def generate request
-      ### Institute code
-      ### TODO: it should come from the AAI module and not as user input! Or the user input can be a hint, but has to be proven.
-      inst = request.GET['inst'] ?
-        request.GET['inst'].capitalize + '-' : 'XXXX-'
-      ###if inst? :nil
-      
-      ### Prefix
-      ### TODO: should be a hex string? How long may it be?
-      prefix = request.GET['prefix'] ?
-        request.GET['prefix'].capitalize + '-' : ''
+      inst = ( request.GET['inst'] ) ? request.GET['inst'].upcase + '-' : 'XXXX-'
+      prefix = ( request.GET['prefix'] ) ? request.GET['prefix'].upcase + '-' : ''
+      suffix = ( request.GET['suffix'] ) ? '-' + request.GET['suffix'].upcase : ''
+      sequence = DB.instance.gwdgpidsequence
 
-      ### Suffix
-      ### TODO: should be a hex string? How long may it be?
-      suffix = request.GET['suffix'] ?
-        '-' + request.GET['suffix'].capitalize : ''
+      ### Fixnum -> Hex: http://www.ruby-doc.org/core/classes/Fixnum.html#M001069
+      ### Fixnum.to_s(base=16): Returns a string containing the representation of fix radix base (between 2 and 36).
+      sequence = sequence.to_s(16).upcase.rjust(12,'0') + '-'
 
-      ### Sequence number
-      ### The sequence number is at most 0xffffffffffL, not negative
-      ### Do we want own sequence numbers per institute like DB.instance.gwdgpidsequence('inst')?
-      sequence = DB.instance.gwdgpid #.to_s(16).capitalize.rjust(12,'0')
-      sequence = sequence.to_s(16).capitalize.rjust(12,'0') + '-'
-      
-      ### Checksum
-      ### TODO: implement ISO7064 digit check
       checksum = 'X'
       
       '00-' + inst + prefix + sequence + checksum + suffix

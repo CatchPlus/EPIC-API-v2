@@ -120,13 +120,15 @@ class DB
   def all_handle_values handle
     ds = self.pool[:handles].where( :handle => handle ).all
   end
-  
+
 
   def uuid
     self.pool['SELECT UUID()'].get
   end
 
-  def gwdgpid
+
+  # @return [Fixnum]
+  def gwdgpidsequence
     ### INSERT INTO `pidsequence` (`processID`) VALUE (NULL);
     ### SELECT LAST_INSERT_ID()
     ### SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'pidsequence';
@@ -135,6 +137,8 @@ class DB
     self.pool["INSERT INTO `pidsequence` (`processID`) VALUES (NULL)"].insert
   end
 
+
 end
+
 
 end
