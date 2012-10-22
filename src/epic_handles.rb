@@ -29,15 +29,32 @@ class Handles < Collection
 
   # @todo better implementation (server-side data retention) for streaming responses.
   def each
+    query = Rackful::Request.current.GET.dup
+    if limit = query['limit']
+      query.delete('limit')
+      if (limit = limit.to_i) < 0
+        raise Rackful::HTTP400BadRequest, "Query parameter 'limit' must be greater than or equal to zero."
+      end
+    else
+      limit = 1000
+    end
+    if page = query['page']
+      query.delete('page')
+      if (page = page.to_i) < 1
+        raise Rackful::HTTP400BadRequest, "Query parameter 'page' must be greater than zero."
+      end
+    else
+      page = 1
+    end
     start_position = self.prefix.size + 1
-    if Rackful::Request.current.GET.empty?
-      DB.instance.each_handle( self.prefix ) do
+    if query.empty?
+      DB.instance.each_handle( self.prefix, limit, page ) do
         |handle|
         yield ( self.path + escape_path( handle[start_position .. -1] ) ).to_path
       end
     else
       filter = []
-      Rackful::Request.current.GET.each_pair do
+      query.each_pair do
         |k,v|
         if String == v.class
           filter.push( [k, v] )
@@ -45,7 +62,7 @@ class Handles < Collection
           v.each { |v2| filter.push( [k, v2] ) }
         end
       end
-      DB.instance.each_handle_filtered( self.prefix, filter ) do
+      DB.instance.each_handle_filtered( self.prefix, filter, limit, page ) do
         |handle|
         yield ( self.path + escape_path( handle[start_position .. -1] ) ).to_path
       end

@@ -16,10 +16,11 @@ require 'rackful'
 
 module EPIC
 
-
+# @todo re-enable `dl-horizontal` in the header.
 class XHTML < Rackful::XHTML
 
-  def breadcrumbs
+
+  def self.breadcrumbs
     segments = Rackful::Request.current.path.split('/')
     segments.pop
     return '' if segments.empty?
@@ -27,22 +28,22 @@ class XHTML < Rackful::XHTML
     '<ul class="breadcrumb">' + segments.collect do
       |segment|
       bc_path += segment + '/'
-      '<li><a href="' + bc_path + '" rel="' + (
-        segment.empty? && 'home' || 'contents'
+      '<li><a href="' + bc_path.to_path.relative + '" rel="' + (
+        segment.empty? ? 'home' : 'contents'
       ) + '">' + (
-        segment.empty? && 'home' || segment.to_path.unescape
+        segment.empty? ? 'home' : segment.to_path.unescape
       ) + '</a><span class="divider">/</span></li>'
     end.join + '</ul>'
   end
 
-  def header
+
+  header {
+    |serializer|
     inc = '/inc/'.to_path.relative
-    <<EOS
+    retval = <<EOS
 <link rel="stylesheet" href="#{inc}bootstrap/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="#{inc}bootstrap/css/bootstrap-responsive.min.css"/>
 <!--<link rel="stylesheet/less" type="text/css" href="#{inc}epic.less"/>-->
-<title>#{Rack::Utils.escape_html( resource.title )}</title></head>
-<body>#{self.breadcrumbs}#{resource.xhtml}
 <script src="#{inc}jquery.js" type="text/javascript"></script>
 <script src="#{inc}bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -50,18 +51,41 @@ class XHTML < Rackful::XHTML
     $("dl.rackful-object").addClass("dl-horizontal");
     $("table.rackful-objects").addClass("table table-striped table-condensed table-bordered");
   } );
+  $(".collapse").collapse();
 </script>
+</head><body>#{EPIC::XHTML.breadcrumbs}
+<div class="container-fluid">
 EOS
-  end # header
+    if serializer.resource.respond_to?(:xhtml_help)
+      retval += <<EOS
+<button id="epic_help_button" class="pull-right btn btn-info btn-mini" data-toggle="collapse" data-target="#epic_help">Help</button>
+<div class="collapse" id="epic_help"><div class="row-fluid"><div class="span12">
+<h1>Help</h1>#{serializer.resource.xhtml_help}</div></div><hr style="border-color: #000"/></div>
+EOS
+    end
+    if serializer.resource.respond_to?(:xhtml_start)
+      retval += serializer.resource.xhtml_start
+    end
+    retval
+  }
 
-  def footer
-    <<EOS
-<div class="row"><div align="right" class="span12"><em>
+
+  footer {
+    |serializer|
+    retval = ''
+    if serializer.resource.respond_to?(:xhtml_end)
+      retval += serializer.resource.xhtml_end
+    end
+    retval += <<EOS
+<div class="row-fluid"><div align="right" class="span12"><em>
 Developed by <a href="http://www.sara.nl/">SARA</a> and <a href="http://www.gwdg.de/">GWDG</a><br/>
-Sponsored by <a href="http://www.catchplus.nl/">CATCH+</a> and <a href="http://www.eudat.eu/">EUDAT</a>
-</em></div></div></body></html>
+Sponsored by <a href="http://www.catchplus.nl/">CATCH+</a> and <a href="http://www.eudat.eu/">EUDAT</a><br/>
+Powered by <a href="http://github.com/pieterb/Rackful">Rackful</a>
+</em></div></div></div></body></html>
 EOS
-  end # footer
+    retval
+  }
+
 
 end # class XHTML
 
@@ -108,7 +132,25 @@ class Resource
   end
 
 
-  def xhtml; ''; end
+  def xhtml_help
+    <<EOS
+<h2>General</h2>
+All resources honor the <code>Accept:</code> HTTP request header, and can be represented in the following formats:
+<dl class="dl-horizontal">
+  <dt>XHTML5</dt>
+  <dd>by specifying one of
+    <code>application/xhtml+xml</code> (prefered),
+    <code>text/xml</code> or
+    <code>application/xml</code>;</dd>
+  <dt>HTML5</dt>
+  <dd>by specifying <code>text/html</code>;</dd>
+  <dt>JSON</dt>
+  <dd>by specifying one of
+    <code>application/json</code> (prefered) or
+    <code>application/x-json</code> (deprecated);</dd>
+</dl>
+EOS
+  end
 
 
   add_serializer EPIC::XHTML

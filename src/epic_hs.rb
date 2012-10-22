@@ -30,6 +30,9 @@ module HS
 
 # A shorthand for the Java +net.handle.hdllib+ package.
 HDLLIB = Java::NetHandleHdllib
+module JavaIO
+  include_package "java.io"
+end
 
 # All permissions in the Handle System, indexed by integers.
 PERMS_BY_I = [
@@ -232,19 +235,35 @@ class << self
   # @api private
   # @param user_name [#to_s]
   # @return [HDLLIB::AuthenticationInfo]
+  # @todo Public key authentication
   def authentication_info user_name
     user_name = user_name.to_s
     unless AUTHINFO[user_name]
-      userInfo = EPIC::USERS[user_name]
-      raise "No user info found for user '#{user_name}'" unless userInfo
+      unless userInfo = EPIC::USERS[user_name]
+        raise "No user info found for user '#{user_name}'"
+      end
       MUTEX.synchronize do
-        #TODO Public key authentication
-        AUTHINFO[user_name] ||= HDLLIB::SecretKeyAuthenticationInfo.new(
-          userInfo[:handle].to_java_bytes,
-          userInfo[:index],
-          userInfo[:secret].to_java_bytes,
-          true
-        )
+        AUTHINFO[user_name] ||= if userInfo[:secret]
+          AUTHINFO[user_name] ||= HDLLIB::SecretKeyAuthenticationInfo.new(
+            userInfo[:handle].to_java_bytes,
+            userInfo[:index],
+            userInfo[:secret].to_java_bytes,
+            true
+          )
+        else
+          HDLLIB::PublicKeyAuthenticationInfo.new(
+            userInfo[:handle].to_java_bytes,
+            userInfo[:index],
+            HDLLIB::Util.getPrivateKeyFromFileWithPassphrase(
+              JavaIO::File.new(
+                'secrets/' + (
+                  userInfo[:index].to_s + ':' + userInfo[:handle]
+                ).gsub(/\W+/, '_')
+              ),
+              nil
+            )
+          )
+        end
       end
     end
     AUTHINFO[user_name]

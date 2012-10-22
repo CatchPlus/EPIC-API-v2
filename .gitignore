@@ -1,15 +1,26 @@
+# Backup files:
 *~
+*.bak
+
+# Config files:
 config.rb
-*.geany
-gems
-hsj
-.project
-public/docs/epic
-public/docs/yard
-rackful
-rhino*
+config.ru
+
+# Secrets:
 secrets/[0-9]*
 secrets/users.rb
+
+# IDE stuff:
+#   Geany:
+*.geany
+#   Eclipse:
+.project
 .settings
-src.java
+.build
+
+# Yard:
 .yardoc
+
+# Auto generated docs:
+public/docs/epic
+public/docs/yard

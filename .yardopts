@@ -7,14 +7,14 @@
 --title EPIC
 --exclude sequel/adapters
 --exclude config.rb
-#--markup markdown
+--markup markdown
 --hide-void-return
 --default-return void
 src/**/*.rb
-gems/rack-1.4.*/lib/**/*.rb
+gems/rack-1.*/lib/**/*.rb
 #gems/sequel*/lib/**/*.rb
 #gems/json*/lib/**/*.rb
-gems/rackful-0.*/lib/**/*.rb
+gems/rackful-*/lib/**/*.rb
 -
 INSTALL.md
 EPIC.md

@@ -26,6 +26,9 @@ class DB
   include Singleton
 
 
+  DEFAULT_LIMIT = 1000
+
+
   def pool
     @pool[self.sql_depth] ||= Sequel.connect(*SEQUEL_CONNECTION_ARGS)
   end
@@ -52,10 +55,19 @@ class DB
   end
 
 
-  def each_handle( prefix = nil )
+  def each_handle( prefix = nil, limit = DEFAULT_LIMIT, page = 1 )
+    if (page = page.to_i) < 1
+      raise "parameter page must be greater than 0."
+    end
+    if (limit = limit.to_i) < 0
+      raise "parameter limit must be greater than or equal to 0."
+    end
     ds = self.pool[:handles].select(:handle).distinct
     if prefix
       ds = ds.filter( '`handle` LIKE ?', prefix.to_s + '/%' )
+    end
+    if 0 < limit
+      ds = ds.limit( limit, (page - 1) * limit )
     end
     self.sql_depth = self.sql_depth + 1
     begin
@@ -66,7 +78,13 @@ class DB
   end
 
 
-  def each_handle_filtered( prefix, filter )
+  def each_handle_filtered( prefix, filter, limit = DEFAULT_LIMIT, page = 1 )
+    if (page = page.to_i) < 1
+      raise "parameter page must be greater than 0."
+    end
+    if (limit = limit.to_i) < 0
+      raise "parameter limit must be greater than or equal to 0."
+    end
     ds = nil
     filter.each do
       | type, value |
@@ -86,6 +104,9 @@ class DB
           filter( '`data` LIKE ?', value )
       end
       ds = ds ? ds.where( :handle => tmp_ds ) : tmp_ds
+    end
+    if 0 < limit
+      ds = ds.limit( limit, (page - 1) * limit )
     end
     self.sql_depth = self.sql_depth + 1
     begin

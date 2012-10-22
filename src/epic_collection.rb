@@ -48,19 +48,61 @@ class Collection < Resource
   include Enumerable
 
   def recurse?
-    depth = self.class.const_defined?( :DEFAULT_DEPTH ) ?
-      DEFAULT_DEPTH.to_s : '0'
-    depth = Rackful::Request.current.env['HTTP_DEPTH'] || depth
-    self.requested? && '0' != depth || 'infinity' == depth
+    depth = Rackful::Request.current.env['HTTP_DEPTH'] || (
+      self.class.const_defined?( :DEFAULT_DEPTH ) ? DEFAULT_DEPTH.to_s : '0'
+    )
+    'infinity' == depth || self.requested? && '0' != depth
   end
+
 
   def to_rackful
     self.recurse? ? Recursive.new(self) : self
   end
-
-  def xhtml
-    '<h1>Contents:</h1>'
+  
+  
+  def xhtml_start
+    '<h1>Contents</h1>'
   end
+  
+
+  def xhtml_help
+    retval = <<EOS
+<h2>Collections</h2>
+<p>This resource is nothing but a <em>collection</em> of other resources.<br/>
+Please note that its URL ends with a slash "/". This slash is <em>not</em> optional; it's required for every collection.</p>
+<h3>Request headers</h3>
+<dl class="dl-horizontal">
+  <dt>Depth:</dt>
+  <dd>This header MUST have value <code>0</code>, <code>1</code> or <code>infinity</code>.
+    With <code>Depth: 0</code>, only links to child resources are shown.
+    With <code>Depth: 1</code>, the child resources themselves are returned as well, as if
+    they were requested with <code>Depth: 0</code>.
+    With <code>Depth: infinity</code>, child resources and their child resources are returned,
+    ad infinitum.
+  </dd>
+  <dt>Accept:</dt>
+  <dd>Apart from the formats supported by all resources, collections can also
+    be represented as plain text, by supplying the <code>Accept: text/plain</code> request header.
+    The plain text representation doesn't support recursion using the <code>Depth:</code> header.</dd>
+</dl>
+<h3>Query parameters</h3>
+Because collections can get very lange, they are rendered page by page.
+By default, you'll only see the first page with at maximum 1000 results.
+To modify this behaviour, use the following query parameters:
+<dl class="dl-horizontal">
+  <dt>limit</dt>
+  <dd>the maximum number of items to return. The default is 1000. As a special
+    case, if you specify <code>limit=0</code>, <em>all</em> items will be returned,
+    without limit.
+  </dd>
+  <dt>page:</dt>
+  <dd>the number of the page to return. I.e., if you specify <code>limit=100&amp;page=3</code>,
+    items 201 through 300 will be returned.</dd>
+</dl>
+EOS
+  retval + super
+  end
+
 
   class Recursive
 
@@ -70,17 +112,15 @@ class Collection < Resource
       @resource = resource
     end
 
-    def each_pair
+    def each
       rf = Rackful::Request.current.resource_factory
       @resource.each do
         |path|
         yield path, rf[path]
       end
     end
-
-    def each &block
-      @resource.each &block
-    end
+    
+    alias_method :each_pair, :each
 
   end # class Collection::Recursive
 
