@@ -20,46 +20,41 @@ module EPIC
 
 class Generator < Resource
 
+
   # @api private
   # @return [Hash{ String(prefix) => Hash{ String(name) => Generator } }]
   def Generator.generators
     @@generators ||= {}
   end
 
+
   # @api private
   # @return [Hash{ String(name) => Generator }]
   def Generator.[] name
     generators[name.to_s.downcase]
   end
+
   
   def Generator.inherited klass
     generators[klass.name.split('::').last.downcase] = klass
   end
-  
-  # @return [Hash{Symbol => String(description}]
-  attr_reader :parameters
 
-  # @return [String]
-  attr_reader :description
   
-  def to_rackful
-    { :description => description,
-      :parameters => parameters }
-  end
-
   # @!method generate(request)
   #   @param [Rackful::Request] request
+
 
   # A generator that uses UUIDs to guarantee the uniqueness of created Handles.
   class UUID < Generator
 
-    def initialize *args
-      super( *args )
-      @parameters = {
-        :prefix => 'Optional: a string of UTF-8 encoded printable unicode characters to put before the UUID.',
-        :suffix => 'Optional: a string of UTF-8 encoded printable unicode characters to put after the UUID.'
+    def to_rackful
+      {
+        'Description' => 'This generator uses UUIDs to guarantee the uniqueness of created Handles.',
+        'Query parameters' => {
+          :prefix => 'Optional: a string of UTF-8 encoded printable unicode characters to put before the UUID.',
+          :suffix => 'Optional: a string of UTF-8 encoded printable unicode characters to put after the UUID.'
+        },
       }
-      @description = 'This generator uses UUIDs to guarantee the uniqueness of created Handles.'
     end
 
     def generate request
@@ -74,14 +69,15 @@ class Generator < Resource
   # A generator that creates GWDG-like strings to guarantee the uniqueness of created Handles.
   class GWDGPID < Generator
 
-    def initialize *args
-      super( *args )
-      @parameters = {
-        :inst => 'Mandatory: Institutecode, a string of UTF-8 encoded printable unicode characters to put at the beginning of the GWDGPID.',
-        :prefix => 'Optional: a string of UTF-8 encoded printable unicode characters to put before the GWDGPID.',
-        :suffix => 'Optional: a string of UTF-8 encoded printable unicode characters to put after the GWDGPID.'
+    def to_rackful
+      {
+        'Description' => 'This generator creates GWDG-like strings and guarantees the uniqueness of created Handles.', # (by using DB sequence).'
+        'Query parameters' => {
+          :inst => 'Mandatory: Institutecode, a string of UTF-8 encoded printable unicode characters to put at the beginning of the GWDGPID.',
+          :prefix => 'Optional: a string of UTF-8 encoded printable unicode characters to put before the GWDGPID.',
+          :suffix => 'Optional: a string of UTF-8 encoded printable unicode characters to put after the GWDGPID.'
+        }
       }
-      @description = 'This generator creates GWDG-like strings and guarantees the uniqueness of created Handles.' ###(by using DB sequence).'
     end
 
 

@@ -39,30 +39,65 @@ class Profile < Resource
     profiles[klass.name.split('::').last.downcase] = klass
   end
 
-  
-  # @return [String]
-  attr_reader :description
 
-  
-  def to_rackful
-    description
+  # This method validates the creation of a new handle.
+  # 
+  # The method can not only veto the creation of a handle, but also allow
+  # handle creation, but with modified handle values.
+  # @param [Rackful::Request] request
+  # @param [String] prefix
+  # @param [String] suffix
+  # @param [(HandleValue)] values
+  # @return [(HandleValue), nil] The (possibly modified) array of
+  #   {HandleValue HandleValues} to put in the new {Handle}.
+  # @raise [Rackful::HTTPStatus] if creation cannot pass.
+  def create( request, prefix, suffix, values )
+    values
   end
 
 
-  # @!method validate(request)
-  #   @param [Rackful::Request] request
+  # @!method 
+  # This method validates the update of an existing handle.
+  # 
+  # The method can not only veto the creation of a handle, but also allow
+  # handle creation, but with modified handle values.
+  # @param request [Rackful::Request]
+  # @param prefix [String]
+  # @param suffix [String]
+  # @param old_values [(HandleValue)]
+  # @param new_values [(HandleValue)]
+  # @return [(HandleValue), nil] The (possibly modified) array of
+  #   {HandleValue HandleValues} to put in the new {Handle}.
+  # @raise [Rackful::HTTPStatus] if the update cannot pass.
+  def update( request, prefix, suffix, old_values, new_values )
+    new_values
+  end
+
+
+  # This method must validate the deletion of a handle.
+  # @param handle [Handle]
+  # @return [void]
+  # @raise [Rackful::HTTPStatus] if the deletion cannot pass.
+  def delete( handle ); end
+
 
   # A profile that uses UUIDs to guarantee the uniqueness of created Handles.
-  class UUID < Profile
+  class NoDelete < Profile
 
-    def initialize *args
-      super( *args )
-      @parameters = {
-        :prefix => 'Optional: a string of UTF-8 encoded printable unicode characters to put before the UUID.',
-        :suffix => 'Optional: a string of UTF-8 encoded printable unicode characters to put after the UUID.'
+
+    def to_rackful
+      {
+        'Description' => <<EOS
+This profile disables the deletion of all pids that match some regular expression.<br/>
+EOS
+        'Query parameters' => {
+          :inst => 'Mandatory: Institutecode, a string of UTF-8 encoded printable unicode characters to put at the beginning of the GWDGPID.',
+          :prefix => 'Optional: a string of UTF-8 encoded printable unicode characters to put before the GWDGPID.',
+          :suffix => 'Optional: a string of UTF-8 encoded printable unicode characters to put after the GWDGPID.'
+        }
       }
-      @description = 'This profile uses UUIDs to guarantee the uniqueness of created Handles.'
     end
+
 
     def validate request
       prefix = request.GET['prefix'] || ''
@@ -70,9 +105,12 @@ class Profile < Resource
       prefix + DB.instance.uuid + suffix
     end
 
+
   end # class UUID < Profile
 
+
 end # class Profile
+
 
 end # module EPIC
 
