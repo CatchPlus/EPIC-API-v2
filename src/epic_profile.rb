@@ -87,22 +87,8 @@ class Profile < Resource
 
     def to_rackful
       {
-        'Description' => <<EOS
-This profile disables the deletion of all pids that match some regular expression.<br/>
-EOS
-        'Query parameters' => {
-          :inst => 'Mandatory: Institutecode, a string of UTF-8 encoded printable unicode characters to put at the beginning of the GWDGPID.',
-          :prefix => 'Optional: a string of UTF-8 encoded printable unicode characters to put before the GWDGPID.',
-          :suffix => 'Optional: a string of UTF-8 encoded printable unicode characters to put after the GWDGPID.'
-        }
+        'Description' => 'This profile disables the deletion of all pids that match some regular expression.'
       }
-    end
-
-
-    def validate request
-      prefix = request.GET['prefix'] || ''
-      suffix = request.GET['suffix'] || ''
-      prefix + DB.instance.uuid + suffix
     end
 
 
