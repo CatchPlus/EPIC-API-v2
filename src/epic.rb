@@ -77,7 +77,7 @@ class ResourceFactory
       StaticCollection.new(
         '/', [
           'handles/',
-          #~ 'profiles/',
+          'profiles/',
           'generators/',
           #~ 'batches/'
         ]
@@ -99,6 +99,13 @@ class ResourceFactory
         generator = Generator.generators[segments[1]]
         generator && generator.new( path )
       end
+    elsif 'profiles' === segments[0]
+      if 1 === n
+        StaticCollection.new(path.slashify, Profile.profiles.keys)
+      else
+        profile = Profile.profiles[segments[1]]
+        profile && profile.new( path )
+      end
     end
   end
 
@@ -106,15 +113,15 @@ class ResourceFactory
   private
 
 
-# For performance, this {ResourceFactory} maintains a cache of
-# {EPIC::Resource Resources} it has produced earlier <em>within this same
-# request.</em>
-# 
-# Valid Hash values are:
-# [{Resource}] A cached resource
-# [false] The resource has been requested earlier, but wasn't found.
-# [nil] The resource hasn't been requested yet.
-# @return [Hash< unslashified_path => resource_object >]
+  # For performance, this {ResourceFactory} maintains a cache of
+  # {EPIC::Resource Resources} it has produced earlier <em>within this same
+  # request.</em>
+  # 
+  # Valid Hash values are:
+  # [{Resource}] A cached resource
+  # [false] The resource has been requested earlier, but wasn't found.
+  # [nil] The resource hasn't been requested yet.
+  # @return [Hash< unslashified_path => resource_object >]
   def resource_cache
     Rackful::Request.current.env[:epic_resource_cache] ||= Hash.new
   end

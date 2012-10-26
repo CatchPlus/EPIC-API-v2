@@ -43,7 +43,7 @@ class Handle < Resource
 
   # The entire handle, {#prefix} <tt>"/"</tt> {#suffix}
   # @return [String]
-  attr_reader :handle
+  def handle; "#{prefix}/#{suffix}"
 
   # The URI-encoded handle as it was received by the server.
   # @return [String]
@@ -56,7 +56,6 @@ class Handle < Resource
       unless matches = %r{([\d]+(?:\.[^/]+)*)/([^/]+)\z}.match(path)
     @suffix = matches[2].to_path.unescape
     @prefix = matches[1].to_path.unescape
-    @handle = @prefix + '/' + @suffix
     @handle_encoded = matches[0]
     self.values handle_values if handle_values
   end
@@ -135,12 +134,12 @@ class Handle < Resource
     begin
       @values = nil
       if self.empty?
+        # @todo invoke profiles
         HS.create_handle(self.handle, new_values, request.env['REMOTE_USER'])
-        @values = nil
         raise Rackful::HTTP201Created, self.path
       else
+        # @todo invoke profiles
         HS.update_handle(self.handle, self.values, new_values, request.env['REMOTE_USER'])
-        @values = nil
         response.status = status_code(:no_content)
       end
     ensure
@@ -151,6 +150,7 @@ class Handle < Resource
 
   # @see Rackful::Resource#do_Method
   def destroy request, response
+    Profile.profiles.each { |p| p.delete self }
     HS.delete_handle self.handle, request.env['REMOTE_USER']
     @values = nil
     response.status = status_code(:no_content)
