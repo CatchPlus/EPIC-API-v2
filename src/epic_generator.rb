@@ -73,7 +73,8 @@ class Generator < Resource
       {
         'Description' => 'This generator creates GWDG-like strings and guarantees the uniqueness of created Handles.', # (by using DB sequence).'
         'Query parameters' => {
-          :inst => 'Mandatory: Institutecode, a string of UTF-8 encoded printable unicode characters to put at the beginning of the GWDGPID.',
+          ### Institute code is not a user input anymore
+          ###:inst => 'Mandatory: Institutecode, a string of UTF-8 encoded printable unicode characters to put at the beginning of the GWDGPID.',
           :prefix => 'Optional: a string of UTF-8 encoded printable unicode characters to put before the GWDGPID.',
           :suffix => 'Optional: a string of UTF-8 encoded printable unicode characters to put after the GWDGPID.'
         }
@@ -82,17 +83,29 @@ class Generator < Resource
 
 
     # @todo implement ISO7064 digit check
-    # @todo Institute code should come from the AAI module and not as user
-    #       input! Or the user input can be a hint, but has to be proven.
     # @todo Parameter `prefix` should be a hex string? How long may it be?
     # @todo Parameter `suffix` should be a hex string? How long may it be?
     # @todo Sequences: Do we want own sequence numbers per institute like
     #       `DB.instance.gwdgpidsequence('inst')`?
     def generate request
-      inst = ( request.GET['inst'] ) ? request.GET['inst'].upcase + '-' : 'XXXX-'
+    
+    # Institute code is provided by the service and not as user input!
+    #@todo: multi-institute user: the user input can be a hint, but has to be proven.
+    ###inst = ( request.GET['inst'] ) ? request.GET['inst'].upcase + '-' : 'XXXX-'
+
+    ### 
+    unless USERS[request.env['REMOTE_USER']][:institute]
+	raise HTTP403Forbidden, "No institute code is configured for your user."
+    end
+    inst = USERS[request.env['REMOTE_USER']][:institute].upcase + '-'
+
+  
       prefix = ( request.GET['prefix'] ) ? request.GET['prefix'].upcase + '-' : ''
       suffix = ( request.GET['suffix'] ) ? '-' + request.GET['suffix'].upcase : ''
       sequence = DB.instance.gwdgpidsequence
+      if sequence < 1 or sequence > "FFFFFFFFFFFF".to_i(16)
+        raise HTTP500InternalServerError, "A new identifier cannot be generated."
+      end
 
       ### Fixnum -> Hex: http://www.ruby-doc.org/core/classes/Fixnum.html#M001069
       ### Fixnum.to_s(base=16): Returns a string containing the representation of fix radix base (between 2 and 36).
