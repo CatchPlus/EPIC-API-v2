@@ -95,7 +95,7 @@ class Generator < Resource
 #	raise Rackful::HTTP400BadRequest, 'No institute code is provided in the request.'
 #    end # unless
     unless USERS[request.env['REMOTE_USER']][:institute]
-	raise HTTP403Forbidden, "No institute code is configured for your user."
+	raise Rackful::HTTP403Forbidden, "No institute code is configured for your user."
     end
 
 #	raise HTTP403Forbidden, "The operation is not allowed for the institute code." 
@@ -110,7 +110,7 @@ class Generator < Resource
       sequence = DB.instance.gwdgpidsequence
 #sequence = 323984	#323984->4F190 (9),  #20249->004F19 (E),  #312607->"04C51F" (D),  #304415->"04A51F" (1),  #5551->"015AF" (5)
       if sequence < 1 or sequence > "FFFFFFFFFFFF".to_i(16)
-        raise HTTP500InternalServerError, "A new sequence number cannot be generated."
+        raise Rackful::HTTP500InternalServerError, "A new sequence number cannot be generated."
       end
 
       ### Fixnum -> Hex: http://www.ruby-doc.org/core/classes/Fixnum.html#M001069
