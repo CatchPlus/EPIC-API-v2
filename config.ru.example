@@ -19,6 +19,9 @@
 
 $LOAD_PATH.unshift 'src'
 require 'epic.rb'
+# Initialize Logging
+require 'epic_logging.rb'
+LOGGER = EPIC::Logging.instance()
 
 
 # The default configuration uses Rack::Chunked to allow streaming of response
@@ -56,8 +59,10 @@ use Rack::Static,
 
 # When run behind an Apache reverse proxy server, the original request scheme
 # (http or https) gets lost. This config works around this for epic_1.0.0:
+# This config also sends the environment to the logging in order to create Messages there
 use Rack::Config do
   |env|
+  LOGGER.set_rack_environment(env)
   env['HTTP_X_FORWARDED_SSL'] = 'on'
 end
 
@@ -73,6 +78,7 @@ use Rackful::RelativeLocation
 
 
 # As said, the distribution comes with HTTP Digest authentication preconfigured.
+# The example of HTTP Basic Auth shows the usage of the logging in order to detect failed accesses.
 #use Rack::Auth::Digest::MD5, {
 #    :realm => EPIC::REALM, :opaque => EPIC::OPAQUE, :passwords_hashed => true
 #  } do
@@ -82,11 +88,17 @@ use Rackful::RelativeLocation
 #end
 use Rack::Auth::Basic do
   |username, password|
+  LOGGER.set_rack_username(username)
+  result = 
   EPIC::USERS[username] && (
     EPIC::USERS[username][:digest] == Digest::MD5.hexdigest(
       [ username, EPIC::REALM, password ] * ':'
     ).to_s
   )
+  unless result
+  	LOGGER.warn("Unauthorized. #{username} provided wrong password/username.")
+  end
+  result
 end
 
 

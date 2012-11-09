@@ -6,6 +6,13 @@
 # PATH
 # TMP_FOLDER
 
+# Java Options for Debugging JRUBY-Running behaviour
+
+# Timing
+# export JAVA_OPTS="-Djruby.debug.loadService.timing=true"
+# Loaded jars
+# export JAVA_OPTS="-Djruby.debug.loadService=true"
+
 # Check if Eclipse's External Tool Configuration is configured completely 
 echo ${JRE_HOME?Error \$JRE_HOME is not defined. Check External-Tool Config}
 echo ${JRUBY_BIN?Error \$JRUBY_BIN is not defined. Check External-Tool Config}
@@ -27,20 +34,22 @@ export PATH=$JRUBY_BIN:$PATH
 unset JDK_HOME
 unset SDK_HOME
 
+
 # Check if EPIC is already running and present options
 if [ -f $TMP_FOLDER/epic_standalone.pid ]
 then
     echo -e  "\n----- PID-File of EPIC-API-v2 was found --- \n"
-    echo -e "Select one option (1,2):\n"
+    echo -e "Select one option (1,2,3):\n"
     echo -e "Restart server        (1)"
     echo -e "Kill exiting instance (2)"
-    echo -e "Do nothing            (3)"
+    echo -e "Cancel                (3)"
     read choice
     if (( "$choice" == "1" )) || (( "choice" == "2" ))
     then
     	echo "Terminating Server..."
-    	kill -9 `cat $TMP_FOLDER/epic_standalone.pid`
-    	rm $TMP_FOLDER/epic_standalone.pid
+    	kill -9 `cat $TMP_FOLDER/epic_standalone.pid` 2> /dev/null
+    	rm $TMP_FOLDER/epic_standalone.pid 2> /dev/null
+		rm $TMP_FOLDER/epic_log.txt 2> /dev/null
     fi
     if (( "$choice" == "2" )) || (( "$choice" == "3" ))
     then

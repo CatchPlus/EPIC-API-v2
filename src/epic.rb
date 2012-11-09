@@ -23,6 +23,7 @@ require 'epic_nas.rb'
 require 'epic_directory.rb'
 require 'epic_profile.rb'
 require 'epic_generator.rb'
+require 'epic_logging.rb'
 
 require '../config.rb'
 require '../secrets/users.rb'
@@ -33,6 +34,8 @@ require 'singleton'
 # @todo Documentation
 module EPIC
 
+# Make an Instance of the logger available through all modules.
+LOGGER = Logging.instance()
 
 # Resource Factory for all our ReSTful resources.
 # 
@@ -45,11 +48,16 @@ class ResourceFactory
 
 
   include Singleton
+  
+  def initialize()
+    LOGGER.info("EPIC API Server started.")
+  end
 
 
   # Can be called by tainted resources, to be removed from the cache.
   # @return [self]
   def uncache path
+    LOGGER.debug_method(self, caller, path) 
     resource_cache.delete path.to_s.unslashify
     self
   end
@@ -59,6 +67,7 @@ class ResourceFactory
   # @return [Resource, nil]
   # @see Rackful::Server#resource_factory for details
   def [] path
+    LOGGER.debug_method(self, caller, path)
     path = path.to_path unless Rackful::Path == path.class
     path.unslashify!
     segments = path.segments
@@ -74,6 +83,7 @@ class ResourceFactory
     n = segments.length
     resource_cache[path] =
     if 0 === n
+      LOGGER.info_httpevent("GET all available paths", "GET")
       StaticCollection.new(
         '/', [
           'handles/',
@@ -84,25 +94,32 @@ class ResourceFactory
       )
     elsif 'handles' === segments[0]
       if 1 === n
+        LOGGER.info_httpevent("GET all prefixes in system", "GET")
         NAs.new( path.slashify )
       elsif %r{\A\d+\z} === segments[1]
         if 2 === n
+          LOGGER.info_httpevent("GET a list of all handles for an prefix", "GET")
           Handles.new( path.slashify )
         elsif 3 === n
+          LOGGER.info_httpevent("GET a specific handle", "GET") 
           Handle.new path
         end
       end
     elsif 'generators' === segments[0]
       if 1 === n
+        LOGGER.info_httpevent("GET a list of all available generators" , "GET")
         StaticCollection.new(path.slashify, Generator.generators.keys)
       elsif 2 === n
+        LOGGER.info_httpevent("GET description of a generator", "GET")
         generator = Generator.generators[segments[1]]
         generator && generator.new( path )
       end
     elsif 'profiles' === segments[0]
       if 1 === n
+        LOGGER.info_httpevent("GET a list of all available profiles", "GET")
         StaticCollection.new(path.slashify, Profile.profiles.keys)
       else
+        LOGGER.info_httpevent("GET description of a profile", "GET")
         profile = Profile.profiles[segments[1]]
         profile && profile.new( path )
       end
