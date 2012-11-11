@@ -20,6 +20,7 @@ module EPIC
 class Directory < Collection
 
   def each
+    debug_method(class_reference, caller_reference)
     dirname = "./public#{self.path.unescape}"
     Dir.open dirname do
       |dir|

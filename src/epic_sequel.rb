@@ -30,16 +30,19 @@ class DB
 
 
   def pool
+    LOGGER.debug_method(self, caller)
     @pool[self.sql_depth] ||= Sequel.connect(*SEQUEL_CONNECTION_ARGS)
   end
 
 
   def sql_depth
+    LOGGER.debug_method(self, caller)
     Thread.current[:epic_sql_depth] ||= 0
   end
 
 
   def sql_depth= n
+    LOGGER.debug_method(self, caller, n)
     Thread.current[:epic_sql_depth] = n.to_i
   end
 
@@ -56,6 +59,7 @@ class DB
 
 
   def each_handle( prefix = nil, limit = DEFAULT_LIMIT, page = 1 )
+    LOGGER.debug_method(self, caller, [prefix, limit, page])
     if (page = page.to_i) < 1
       raise "parameter page must be greater than 0."
     end
@@ -79,6 +83,7 @@ class DB
 
 
   def each_handle_filtered( prefix, filter, limit = DEFAULT_LIMIT, page = 1 )
+    LOGGER.debug_method(self, caller, [prefix, filter, limit, page])
     if (page = page.to_i) < 1
       raise "parameter page must be greater than 0."
     end
@@ -118,12 +123,22 @@ class DB
 
 
   def all_handle_values handle
-    ds = self.pool[:handles].where( :handle => handle ).all
+    LOGGER.debug_method(self, caller, handle)
+    begin
+      ds = self.pool[:handles].where( :handle => handle ).all
+    rescue
+      msg = "APPLICATION STOPPED: Cannot connect to database!"
+      LOGGER.fatal(msg)
+      abort(msg)
+    end  
+    
   end
 
 
   def uuid
-    self.pool['SELECT UUID()'].get
+    returnvalue = self.pool['SELECT UUID()'].get
+      LOGGER.debug("Extracting UUID: #{returnvalue} from database")
+    returnvalue
   end
 
 

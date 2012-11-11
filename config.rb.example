@@ -28,5 +28,16 @@ module EPIC
     'jdbc:mysql://localhost/YOUR_DATABASE?user=YOUR_USER&password=YOUR_PASSWD',
     :single_threaded => false
   ]
+  
+   LOG_SETTINGS = {
+   # Supported Log-Levels are (DEBUG, ERROR, FATAL, INFO, WARN)
+   :log_level => 'debug',
+   # Path to Log-File
+   :log_path => '/tmp/epic_log.txt',
+   # Define the maximum size of the log file in megabyte. 0 means no limit.
+   :max_log_size => 100,
+   # Define the number of days for retention. 0 means no limit.
+   :max_log_days => 0
+   }
 
 end
