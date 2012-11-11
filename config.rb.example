@@ -29,15 +29,15 @@ module EPIC
     :single_threaded => false
   ]
   
-   LOG_SETTINGS = {
-   # Supported Log-Levels are (DEBUG, ERROR, FATAL, INFO, WARN)
-   :log_level => 'debug',
-   # Path to Log-File
-   :log_path => '/tmp/epic_log.txt',
-   # Define the maximum size of the log file in megabyte. 0 means no limit.
-   :max_log_size => 100,
-   # Define the number of days for retention. 0 means no limit.
-   :max_log_days => 0
-   }
+  LOG_SETTINGS = {
+    # Supported Log-Levels are (DEBUG, ERROR, FATAL, INFO, WARN)
+    :log_level => 'debug',
+    # Path to Log-File
+    :log_path => '/tmp/epic_log.txt',
+    # Define the maximum size of the log file in megabyte. 0 means no limit.
+    :max_log_mb => 100,
+    # Define the number of days for retention. 0 means no limit.
+    :max_log_days => 0
+  }
 
 end

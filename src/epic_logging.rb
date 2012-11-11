@@ -1,23 +1,21 @@
 require 'logger'
+require 'forwardable'
 require 'singleton'
 
 module EPIC
-  # Logging Class for EPIC
-  # Works as Singelton
+  # Logging Singleton for EPIC
   class Logging
 
-    # Initialize Singleton
     include Singleton
+    
+    extend Forwardable
 
-    private
-    @logger
-    @env
-    @username
-
-    public
     def initialize
       # Set Filepath
-      @logger = Logger.new(LOG_SETTINGS[:log_path], LOG_SETTINGS[:max_log_days],  LOG_SETTINGS[:max_log_size] * 1024 * 1024)
+      @logger = Logger.new(
+        LOG_SETTINGS[:log_path],
+        LOG_SETTINGS[:max_log_days], 
+        LOG_SETTINGS[:max_log_mb] * 1024 * 1024)
       # Terminate Log-Level from config and configure the Logger
       loglevel = case LOG_SETTINGS[:log_level].to_s().upcase
       when 'DEBUG' then Logger::DEBUG
@@ -28,12 +26,8 @@ module EPIC
       end
       @logger.level = loglevel
       duration = LOG_SETTINGS[:max_log_days] > 0 ? "#{LOG_SETTINGS[:max_log_days]} days" : "unlimited"
-      size = LOG_SETTINGS[:max_log_size] > 0 ? "#{LOG_SETTINGS[:max_log_size]} Megabyte" : "unlimited" 
+      size = LOG_SETTINGS[:max_log_mb] > 0 ? "#{LOG_SETTINGS[:max_log_mb]} Megabyte" : "unlimited" 
       self.info("Log-Settings - retention: #{duration} - Maximum size #{size}.")
-    end
-
-    def debug(message)
-      @logger.debug(message)
     end
 
     def debug_method(class_reference, caller_reference, args = "")
@@ -51,39 +45,19 @@ module EPIC
       self.debug("Calling: #{classname}.'#{methodname} with args: #{args} - by: #{caller_reference.first().split('/').last()}")
     end
 
-    def set_rack_environment(env)
-      @env = env
-    end
-
-    def set_rack_username(username)
-      @username = username
-    end
-
     def info_httpevent(message="", request_type="GET")
-      if request_type.upcase == @env['REQUEST_METHOD']
-        query_string = "with query: #{@env['QUERY_STRING']}" if @env['QUERY_STRING'].size() > 1
-        info_message = \
-        "#{@env['REQUEST_METHOD']} from #{@env['REMOTE_ADDR']} - #{@username} " + \
-        "on #{@env['PATH_INFO']} #{query_string}Return format: #{@env['HTTP_ACCEPT']}: >> #{message}."
+      request = Rackful::Request.current
+      if request && request.env['REQUEST_METHOD'] == request_type.upcase
+        env = request.env
+        query_string = "with query: #{env['QUERY_STRING']}" if env['QUERY_STRING'].size > 1
+        info_message =
+          "#{env['REQUEST_METHOD']} from #{env['REMOTE_USER']}@#{env['REMOTE_ADDR']} " +
+          "on #{env['PATH_INFO']} #{query_string}Return format: #{env['HTTP_ACCEPT']}: >> #{message}."
         self.info(info_message)
       end
     end
-
-    def info(message)
-      @logger.info(message)
-    end
-
-    def error(message)
-      @logger.error(message)
-    end
-
-    def fatal(message)
-      @logger.fatal(message)
-    end
-
-    def warn(message)
-      @logger.warn(message)
-    end
+    
+    def_delegators :@logger, :info, :error, :fatal, :warn, :debug
 
   end
 end

@@ -62,7 +62,6 @@ use Rack::Static,
 # This config also sends the environment to the logging in order to create Messages there
 use Rack::Config do
   |env|
-  LOGGER.set_rack_environment(env)
   env['HTTP_X_FORWARDED_SSL'] = 'on'
 end
 
@@ -88,13 +87,13 @@ use Rackful::RelativeLocation
 #end
 use Rack::Auth::Basic do
   |username, password|
-  LOGGER.set_rack_username(username)
   result = 
-  EPIC::USERS[username] && (
-    EPIC::USERS[username][:digest] == Digest::MD5.hexdigest(
-      [ username, EPIC::REALM, password ] * ':'
-    ).to_s
-  )
+    EPIC::USERS[username] && (
+      EPIC::USERS[username][:digest] == Digest::MD5.hexdigest(
+        [ username, EPIC::REALM, password ] * ':'
+      ).to_s
+    )
+  # TODO: I think the following 3 lines are redundant, because rack already logs this. --PvB
   unless result
   	LOGGER.warn("Unauthorized. #{username} provided wrong password/username.")
   end

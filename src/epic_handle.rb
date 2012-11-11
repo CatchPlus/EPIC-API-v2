@@ -36,6 +36,7 @@ module EPIC
     # The suffix of this Handle
     # @return [String]
     attr_reader :suffix
+
     # The entire handle, {#prefix} <tt>"/"</tt> {#suffix}
     # @return [String]
     def handle
@@ -47,37 +48,12 @@ module EPIC
     # @return [String]
     attr_reader :handle_encoded
 
-<<<<<<< HEAD
-class Handle < Resource
-
-
-  # The prefix of this Handle
-  # @return [String]
-  attr_reader :prefix
-
-  # The suffix of this Handle
-  # @return [String]
-  attr_reader :suffix
-
-  # The entire handle, {#prefix} <tt>"/"</tt> {#suffix}
-  # @return [String]
-  def handle; "#{prefix}/#{suffix}"; end
-
-  # The URI-encoded handle as it was received by the server.
-  # @return [String]
-  attr_reader :handle_encoded
-
-
-  def initialize path, handle_values = nil
-    super path
-    raise "Unexpected path: #{path}" \
-=======
     def initialize path, handle_values = nil
       super path
       LOGGER.debug_method(self, caller, [path, handle_values])
-      raise "Unexpected path: #{path}" \
->>>>>>> 8b100fff03469ae5a8fe6b685c09d39ceefaf5c6
       unless matches = %r{([\d]+(?:\.[^/]+)*)/([^/]+)\z}.match(path)
+        raise "Unexpected path: #{path}"
+      end
       @suffix = matches[2].to_path.unescape
       @prefix = matches[1].to_path.unescape
       @handle_encoded = matches[0]
@@ -90,10 +66,10 @@ class Handle < Resource
     # @return [ Array<HandleValue> ]
     def values dbrows = nil
       rows = (
-      dbrows || DB.instance.all_handle_values(self.handle)
+        dbrows || DB.instance.all_handle_values(self.handle)
       ).collect { |row| HandleValue.new row }
         if rows.size < 1
-           LOGGER.warn("Handle: #{self.handle} not found")
+          LOGGER.warn("Handle: #{self.handle} not found")
         end
       @values ||=  rows
     end
@@ -109,49 +85,61 @@ class Handle < Resource
       rescue
         raise Rackful::HTTP400BadRequest, $!.to_s
       end # begin
-      raise Rackful::HTTP400BadRequest, 'Array expected' \
       unless handle_values_in.kind_of? Array
+        raise Rackful::HTTP400BadRequest, 'Array expected'
+      end
       new_values = handle_values_in.collect do
         |handle_value_in|
         handle_value = HandleValue.new
-        handle_value.idx = handle_value_in[:idx].to_i \
         if handle_value_in.key? :idx
-        handle_value.type = handle_value_in[:type].to_s \
+          handle_value.idx = handle_value_in[:idx].to_i
+        end
         if handle_value_in.key? :type
-        handle_value.data = Base64.decode64( handle_value_in[:data].to_s ) \
+          handle_value.type = handle_value_in[:type].to_s
+        end
         if handle_value_in.key? :data
+          handle_value.data = Base64.decode64( handle_value_in[:data].to_s )
+        end
+        
         if handle_value_in.key?( :data ) &&
-        handle_value_in.key?( :parsed_data )
+           handle_value_in.key?( :parsed_data )
           data = handle_value.data
           parsed_data = handle_value.parsed_data
           handle_value.parsed_data = handle_value_in[:parsed_data]
           unless data == handle_value.data ||
-          parsed_data == handle_value.parsed_data
+                 parsed_data == handle_value.parsed_data
             raise Rackful::HTTP400BadRequest, 'Handle Value contains both <tt>data</tt> and <tt>parsed_data</tt>, and their contents are not semantically equal.'
           end # unless
         elsif handle_value_in.key?( :parsed_data )
           handle_value.parsed_data = handle_value_in[:parsed_data]
         end # if
-        handle_value.ttl_type = handle_value_in[:ttl_type].to_i \
         if handle_value_in.key? :ttl_type
-        handle_value.ttl = handle_value_in[:ttl].to_i \
-        if handle_value_in.key? :ttl
-        handle_value.refs = handle_value_in[:refs] \
-        if handle_value_in[:refs].kind_of?( Array ) &&
-        handle_value_in[:refs].all? do
-          |ref|
-          ref.kind_of?( Hash ) &&
-          ref[:idx].kind_of?( Integer ) &&
-          ref[:handle].kind_of?( String )
+          handle_value.ttl_type = handle_value_in[:ttl_type].to_i
         end
-        handle_value.admin_read = !!handle_value_in[:admin_read] \
+        if handle_value_in.key? :ttl
+          handle_value.ttl = handle_value_in[:ttl].to_i
+        end
+        if handle_value_in[:refs].kind_of?( Array ) &&
+            handle_value_in[:refs].all? do
+              |ref|
+              ref.kind_of?( Hash ) &&
+              ref[:idx].kind_of?( Integer ) &&
+              ref[:handle].kind_of?( String )
+            end
+          handle_value.refs = handle_value_in[:refs]
+        end
         if handle_value_in.key? :admin_read
-        handle_value.admin_write = !!handle_value_in[:admin_write] \
+          handle_value.admin_read = !!handle_value_in[:admin_read]
+        end
         if handle_value_in.key? :admin_write
-        handle_value.pub_read = !!handle_value_in[:pub_read] \
+          handle_value.admin_write = !!handle_value_in[:admin_write]
+        end
         if handle_value_in.key? :pub_read
-        handle_value.pub_write = !!handle_value_in[:pub_write] \
+          handle_value.pub_read = !!handle_value_in[:pub_read]
+        end
         if handle_value_in.key? :pub_write
+          handle_value.pub_write = !!handle_value_in[:pub_write]
+        end
         handle_value
       end # values = handle_values_in.collect do
       self.class.enforce_proper_indexes new_values
@@ -160,19 +148,27 @@ class Handle < Resource
       begin
         @values = nil
         if self.empty?
-          # @todo invoke profiles
+          Profile.profiles.each do
+            |profile|
+            profile.create( request, self.prefix, self.suffix, new_values )
+          end
           HS.create_handle(self.handle, new_values, request.env['REMOTE_USER'])
+          LOGGER.info_httpevent("Handle created", "PUT")
           raise Rackful::HTTP201Created, self.path
         else
-          # @todo invoke profiles
+          old_values = self.values
+          Profile.profiles.each do
+            |profile|
+            profile.update( request, self.prefix, self.suffix, old_values, new_values )
+          end
           HS.update_handle(self.handle, self.values, new_values, request.env['REMOTE_USER'])
           @values = nil
+          LOGGER.info_httpevent("Handle updated", "PUT")
           response.status = status_code(:no_content)
         end
       ensure
         self.unlock
       end
-      LOGGER.info_httpevent("Handle updated", "PUT")
     end
 
     # @see Rackful::Resource#do_Method

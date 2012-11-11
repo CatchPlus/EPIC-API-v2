@@ -35,6 +35,7 @@ require 'singleton'
 module EPIC
 
 # Make an Instance of the logger available through all modules.
+# @todo I'm not sure if this is the best way to do it. See {Rack::Request.logger}.
 LOGGER = Logging.instance()
 
 # Resource Factory for all our ReSTful resources.
