@@ -78,7 +78,7 @@ class Profile < Resource
   # @param handle [Handle]
   # @return [void]
   # @raise [Rackful::HTTPStatus] if the deletion cannot pass.
-  def delete( handle ); end
+  def delete( request, prefix, suffix, old_values ); end
 
 
   # A profile that uses UUIDs to guarantee the uniqueness of created Handles.

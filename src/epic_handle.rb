@@ -150,7 +150,9 @@ module EPIC
         if self.empty?
           Profile.profiles.each do
             |profile|
-            profile.create( request, self.prefix, self.suffix, new_values )
+            if tmp = profile.create( request, self.prefix, self.suffix, new_values )
+              new_values = tmp
+            end
           end
           HS.create_handle(self.handle, new_values, request.env['REMOTE_USER'])
           LOGGER.info_httpevent("Handle created", "PUT")
@@ -159,7 +161,9 @@ module EPIC
           old_values = self.values
           Profile.profiles.each do
             |profile|
-            profile.update( request, self.prefix, self.suffix, old_values, new_values )
+            if tmp = profile.update( request, self.prefix, self.suffix, old_values, new_values )
+              new_values = tmp
+            end
           end
           HS.update_handle(self.handle, self.values, new_values, request.env['REMOTE_USER'])
           @values = nil
@@ -172,8 +176,12 @@ module EPIC
     end
 
     # @see Rackful::Resource#do_Method
+    # @todo This documentation sucks!
     def destroy request, response
-      Profile.profiles.each { |p| p.delete self }
+      Profile.profiles.each do 
+        |profile|
+        profile.delete request, self.prefix, self.suffix, self.values
+      end
       HS.delete_handle self.handle, request.env['REMOTE_USER']
       @values = nil
       response.status = status_code(:no_content)
