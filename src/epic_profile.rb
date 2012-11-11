@@ -92,7 +92,7 @@ class Profile < Resource
     end
 
 
-  end # class UUID < Profile
+  end # class NoDelete < Profile
 
 
 end # class Profile

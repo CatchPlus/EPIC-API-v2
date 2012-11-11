@@ -43,7 +43,7 @@ class Handle < Resource
 
   # The entire handle, {#prefix} <tt>"/"</tt> {#suffix}
   # @return [String]
-  def handle; "#{prefix}/#{suffix}"
+  def handle; "#{prefix}/#{suffix}"; end
 
   # The URI-encoded handle as it was received by the server.
   # @return [String]
@@ -140,6 +140,7 @@ class Handle < Resource
       else
         # @todo invoke profiles
         HS.update_handle(self.handle, self.values, new_values, request.env['REMOTE_USER'])
+        @values = nil
         response.status = status_code(:no_content)
       end
     ensure
