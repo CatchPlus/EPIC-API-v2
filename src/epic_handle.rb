@@ -150,9 +150,9 @@ module EPIC
         if self.empty?
           Profile.profiles.each do
             |profile|
-            if tmp = profile.create( request, self.prefix, self.suffix, new_values )
-              new_values = tmp
-            end
+#            if tmp = profile.create( request, self.prefix, self.suffix, new_values )
+#              new_values = tmp
+#            end
           end
           HS.create_handle(self.handle, new_values, request.env['REMOTE_USER'])
           LOGGER.info_httpevent("Handle created", "PUT")
