@@ -149,7 +149,7 @@ module EPIC
         @values = nil
         if self.empty?
           Profile.profiles.each do
-            |profile|
+            |profile_name, profile|
             if tmp = profile.create( request, self.prefix, self.suffix, new_values )
               new_values = tmp
             end
@@ -160,7 +160,7 @@ module EPIC
         else
           old_values = self.values
           Profile.profiles.each do
-            |profile|
+            |profile_name, profile|
             if tmp = profile.update( request, self.prefix, self.suffix, old_values, new_values )
               new_values = tmp
             end
