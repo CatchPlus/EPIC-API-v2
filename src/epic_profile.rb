@@ -111,7 +111,7 @@ class Profile < Resource
       }
     end
     
-    def Profile.update( request, prefix, suffix, old_values, new_values )
+    def Profile.create( request, prefix, suffix, values )
 
 #        inst = USERS[request.env['REMOTE_USER']][:institute].upcase             # institute from users file
 
