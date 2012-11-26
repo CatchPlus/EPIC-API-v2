@@ -35,8 +35,8 @@ class Profile < Resource
   end
 
   
-  def Profile.inherited klass
-    profiles[klass.name.split('::').last.downcase] = klass
+  def Profile.inherited childclass
+    profiles[childclass.name.split('::').last.downcase] = childclass
   end
 
 
@@ -51,7 +51,7 @@ class Profile < Resource
   # @return [(HandleValue), nil] The (possibly modified) array of
   #   {HandleValue HandleValues} to put in the new {Handle}.
   # @raise [Rackful::HTTPStatus] if creation cannot pass.
-  def create( request, prefix, suffix, values )
+  def Profile.create( request, prefix, suffix, values )
     values
   end
 
@@ -69,7 +69,7 @@ class Profile < Resource
   # @return [(HandleValue), nil] The (possibly modified) array of
   #   {HandleValue HandleValues} to put in the new {Handle}.
   # @raise [Rackful::HTTPStatus] if the update cannot pass.
-  def update( request, prefix, suffix, old_values, new_values )
+  def Profile.update( request, prefix, suffix, old_values, new_values )
     new_values
   end
 
@@ -78,19 +78,22 @@ class Profile < Resource
   # @param handle [Handle]
   # @return [void]
   # @raise [Rackful::HTTPStatus] if the deletion cannot pass.
-  def delete( request, prefix, suffix, old_values ); end
+  def Profile.delete( request, prefix, suffix, old_values ); end
 
 
   # A profile that uses UUIDs to guarantee the uniqueness of created Handles.
   class NoDelete < Profile
-
 
     def to_rackful
       {
         'Description' => 'This profile disables the deletion of all pids that match some regular expression.',
       }
     end
-
+    
+    #Override Methods like this
+    #def Profile.update( request, prefix, suffix, old_values, new_values )
+    #  new_values
+    #end
 
   end # class NoDelete < Profile
 
