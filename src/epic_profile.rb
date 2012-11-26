@@ -23,20 +23,20 @@ class Profile < Resource
 
   # @api private
   # @return [Hash{ String(prefix) => Hash{ String(name) => Profile } }]
-  def Profile.profiles
+  def self.profiles
     @@profiles ||= {}
   end
 
 
   # @api private
   # @return [Hash{ String(name) => Profile }]
-  def Profile.[] name
-    profiles[name.to_s.downcase]
+  def self.[] name
+    self.profiles[name.to_s.downcase]
   end
 
   
-  def Profile.inherited childclass
-    profiles[childclass.name.split('::').last.downcase] = childclass
+  def self.inherited childclass
+    self.profiles[childclass.name.split('::').last.downcase] = childclass
   end
 
 
@@ -51,8 +51,8 @@ class Profile < Resource
   # @return [(HandleValue), nil] The (possibly modified) array of
   #   {HandleValue HandleValues} to put in the new {Handle}.
   # @raise [Rackful::HTTPStatus] if creation cannot pass.
-  def Profile.create( request, prefix, suffix, values )
-    values
+  def self.create( request, prefix, suffix, values )
+    nil
   end
 
 
@@ -69,8 +69,8 @@ class Profile < Resource
   # @return [(HandleValue), nil] The (possibly modified) array of
   #   {HandleValue HandleValues} to put in the new {Handle}.
   # @raise [Rackful::HTTPStatus] if the update cannot pass.
-  def Profile.update( request, prefix, suffix, old_values, new_values )
-    new_values
+  def self.update( request, prefix, suffix, old_values, new_values )
+    nil
   end
 
 
@@ -78,7 +78,12 @@ class Profile < Resource
   # @param handle [Handle]
   # @return [void]
   # @raise [Rackful::HTTPStatus] if the deletion cannot pass.
-  def Profile.delete( request, prefix, suffix, old_values ); end
+  def self.delete( request, prefix, suffix, old_values ); end
+
+  #Override Methods like this
+  #def self.update( request, prefix, suffix, old_values, new_values )
+  #  new_values
+  #end
 
 
   # A profile that uses UUIDs to guarantee the uniqueness of created Handles.
@@ -90,10 +95,11 @@ class Profile < Resource
       }
     end
     
-    #Override Methods like this
-    #def Profile.update( request, prefix, suffix, old_values, new_values )
-    #  new_values
-    #end
+    def self.delete( request, prefix, suffix, old_values )
+      if NO_DELETE.include? prefix
+        raise Rackful::HTTP403Forbidden, "PIDs with prefix #{prefix} cannot be deleted."
+      end
+    end
 
   end # class NoDelete < Profile
 
@@ -120,7 +126,7 @@ class Profile < Resource
     # @return [(HandleValue), nil] The (possibly modified) array of
     #   {HandleValue HandleValues} to put in the new {Handle}.
     # @raise [Rackful::HTTPStatus] if creation cannot pass.
-    def create( request, prefix, suffix, values )
+    def self.create( request, prefix, suffix, values )
       return nil unless GWDGPID_PREFIXES.include? prefix
       unless inst = USERS[request.env['REMOTE_USER']][:institute]
         raise Rackful::HTTP403Forbidden, "You don't have an institute code set."
@@ -146,7 +152,7 @@ class Profile < Resource
     # @return [(HandleValue), nil] The (possibly modified) array of
     #   {HandleValue HandleValues} to put in the new {Handle}.
     # @raise [Rackful::HTTPStatus] if the update cannot pass.
-    def update( request, prefix, suffix, old_values, new_values )
+    def self.update( request, prefix, suffix, old_values, new_values )
       return nil unless GWDGPID_PREFIXES.include? prefix
       unless inst = USERS[request.env['REMOTE_USER']][:institute]
         raise Rackful::HTTP403Forbidden, "You don't have an institute code set."
@@ -163,7 +169,7 @@ class Profile < Resource
     # @param handle [Handle]
     # @return [void]
     # @raise [Rackful::HTTPStatus] if the deletion cannot pass.
-    def delete( request, prefix, suffix, old_values )
+    def self.delete( request, prefix, suffix, old_values )
       return unless GWDGPID_PREFIXES.include? prefix
       unless inst = USERS[request.env['REMOTE_USER']][:institute]
         raise Rackful::HTTP403Forbidden, "You don't have an institute code set."
