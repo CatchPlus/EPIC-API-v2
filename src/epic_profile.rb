@@ -70,6 +70,11 @@ class Profile < Resource
   #   {HandleValue HandleValues} to put in the new {Handle}.
   # @raise [Rackful::HTTPStatus] if the update cannot pass.
   def Profile.update( request, prefix, suffix, old_values, new_values )
+
+#       raise HTTP403Forbidden, "The operation is not allowed for the institute code."
+#           unless (USERS[request.env['REMOTE_USER']][:institute].upcase != request.GET['inst'].upcase)
+
+
     new_values
   end
 
@@ -94,6 +99,63 @@ class Profile < Resource
     #def Profile.update( request, prefix, suffix, old_values, new_values )
     #  new_values
     #end
+
+  end # class NoDelete < Profile
+
+  # A profile that uses an internal (technical) type ('INST') to share a prefix between institutes.
+  class GWDGPID < Profile
+
+    def to_rackful
+      {
+        'Description' => 'This profile provides support for sharing a prefix between multiple institutes',
+      }
+    end
+    
+    def Profile.update( request, prefix, suffix, old_values, new_values )
+
+#        inst = USERS[request.env['REMOTE_USER']][:institute].upcase             # institute from users file
+
+   # Institute code is provided by the service and not as user input!
+    #@feature: multi-institute user: the user input can be a hint, but has to be proven.
+
+
+#    TODO:
+#    some sanity check: empty institute code, bad institute code
+
+#    unless USERS[request.env['REMOTE_USER']][:institute]
+#        raise Rackful::HTTP403Forbidden, "No institute code is configured for your user."
+#    end
+
+#       unless inst.length != 4
+#           raise HTTP400BadRequest, 'Invalid institute code is provided in the request.'
+#       end
+
+#    TODO:
+#    adding  :type = INST,  :parsed_data = inst  to  'values'
+
+#    TODO:
+#    some logging about the automatic changes made by the profile 
+#    LOGGER.debug('added INST type with value' + inst + 'to the handle' + handle)
+      values
+    end
+
+    def Profile.update( request, prefix, suffix, old_values, new_values )
+
+#        inst = USERS[request.env['REMOTE_USER']][:institute].upcase             # institute from users file
+
+# TODO:
+# ensure that the :type = INST has the value inst, otherwise forbidden
+
+#       raise HTTP403Forbidden, "The operation is not allowed for the institute code."
+#           unless (USERS[request.env['REMOTE_USER']][:institute].upcase != request.GET['inst'].upcase)
+
+#    TODO:
+#    some logging about the automatic changes made by the profile 
+#    LOGGER.debug('added' + :type + 'type with value' + :xxxx + 'to the handle' + handle)
+LOGGER.warn('i was in profile')
+
+      new_values
+    end
 
   end # class NoDelete < Profile
 
