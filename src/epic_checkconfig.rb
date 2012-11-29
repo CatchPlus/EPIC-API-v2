@@ -12,6 +12,7 @@ module EPIC
     # "ENTITY",KEY" => {check_method1,check_method2, ...}
     #
     @@entities = {
+      "REALM" => "not_empty,is_string",
       "USERS" => "not_empty,is_hash",
       "OPAQUE"=> "not_empty,is_string",
       "SEQUEL_CONNECTION_ARGS" => "is_defined",
