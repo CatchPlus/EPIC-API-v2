@@ -113,6 +113,11 @@ end
 require 'rackful/middleware/header_spoofing'
 use Rackful::HeaderSpoofing
 
+# Run a config check before starting up the webserver.
+# If Logcheck fails, then stop with an exception.
+# This prevents the server from crashing, if wrong config settings are applied while being productive.
+require "epic_checkconfig.rb"
+check_config = EPIC::CheckConfig.instance()
 
 # And finally, let's start the actual web service:
 # +epic.rb+ is the top level include file for the EPIC web service.
