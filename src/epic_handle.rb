@@ -151,6 +151,7 @@ module EPIC
           Profile.profiles.each do
             |profile_name, profile|
             if tmp = profile.create( request, self.prefix, self.suffix, new_values )
+              LOGGER.debug("Profile #{profile_name} enforced for Creating Handle.")
               new_values = tmp
             end
           end
@@ -162,6 +163,7 @@ module EPIC
           Profile.profiles.each do
             |profile_name, profile|
             if tmp = profile.update( request, self.prefix, self.suffix, old_values, new_values )
+              LOGGER.debug("Profile #{profile_name} enforced for Updating Handle.")
               new_values = tmp
             end
           end
@@ -178,8 +180,8 @@ module EPIC
     # @see Rackful::Resource#do_Method
     # @todo This documentation sucks!
     def destroy request, response
-      Profile.profiles.each do 
-        |profile|
+      Profile.profiles.each do |profile_name, profile|
+        LOGGER.debug("Profile #{profile_name} enforced for Deleting Handle.")
         profile.delete request, self.prefix, self.suffix, self.values
       end
       HS.delete_handle self.handle, request.env['REMOTE_USER']
