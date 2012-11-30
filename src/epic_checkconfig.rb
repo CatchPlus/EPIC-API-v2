@@ -4,6 +4,9 @@ module EPIC
   class CheckConfig
 
     include Singleton
+    
+    #    TODO:
+    #    adding  Sanity check for institutes
 
     # Specifiy entities for checking and test methods
     # if the entity is a hash, specify keys as follow: "ENTITY,KEYNAME"

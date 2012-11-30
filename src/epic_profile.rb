@@ -38,12 +38,17 @@ module EPIC
       # Only enable profiles that have been marked as active in the config
       profile_name = childclass.name.split('::').last.downcase
       
-      # Check if Profile is ind config
+      # Check if Profile is in config
       profile_found = false
       ENFORCED_PROFILES.each do |config_profile_name|
         if config_profile_name.upcase == profile_name.upcase
           self.profiles[profile_name] = childclass
           LOGGER.info("Profile activated: #{profile_name}.")
+          if profile_name == "nodelete"
+            NO_DELETE.each do |suffix|
+              LOGGER.info("Profile: nodelete protects Handles under the Suffix: #{suffix} from being deleted.")
+            end
+          end
           break
         end
       end
@@ -86,6 +91,22 @@ module EPIC
     # @return [void]
     # @raise [Rackful::HTTPStatus] if the deletion cannot pass.
     def self.delete( request, prefix, suffix, old_values ); end
+      
+    def debug_dump_values(values)
+      values.each do |bin_data|
+        puts "IDX: #{bin_data.idx()}"
+        puts "TYPE: #{bin_data.type()}"
+        puts "DATA: #{bin_data.data()}"
+        puts "TIMESTAMP: #{bin_data.timestamp()}"
+        puts "TTL_TYPE: #{bin_data.ttl_type()}"
+        puts "REFS: #{bin_data.refs()}"
+        puts "Admin-Read: #{bin_data.admin_read()}"
+        puts "Admin-Write: #{bin_data.admin_write()}"
+        puts "Pub-Read: #{bin_data.pub_read()}"
+        puts "Pub-Write: #{bin_data.pub_write()}"
+        puts "-------------"
+      end
+    end
       
     # Override Methods like this
     # def self.update( request, prefix, suffix, old_values, new_values )
@@ -134,23 +155,18 @@ module EPIC
         
         # We can trust in the existance of a Institute code in the config. Now we create local variables.
         username = request.env['REMOTE_USER']
-        insitute_code = USERS[request.env['REMOTE_USER']][:institute].upcase
+        institute_code = USERS[request.env['REMOTE_USER']][:institute].upcase
         
         # Sanity-Checks of the Institute code should be done in EPIC::CheckConfig class.
         # Hence, no sanity checks of the institute-Codes are applied here.
         
-        # Add institude code to the value to the value, that every handle has an INST type when this profile is enforced.
-        # pp values
-
-        #    TODO:
-        #    adding  :type = INST,  :parsed_data = inst  to  'values'
-
-        #    TODO:
-        #    some logging about the automatic changes made by the profile
-        #    LOGGER.debug('added INST type with value' + inst + 'to the hansdle' + handle)
+        # Add institude code to the value to the value, that every handle has an INST type when this profile this enforced.
+        self.enforce_inst_record(values, institute_code)
+        LOGGER.info("Enforcing GWDGID-Profile. Institute-Code #{institute_code} appended to Handle.")
         values
       end
 
+      # TODO: UPDATE-METHOD NOT FINISHED YET
       def self.update( request, prefix, suffix, old_values, new_values )
 
         #        inst = USERS[request.env['REMOTE_USER']][:institute].upcase             # institute from users file
@@ -168,6 +184,19 @@ module EPIC
 
         new_values
       end
+      
+    def self.enforce_inst_record values, inst_number
+      unless values.any? { |v| 'INST' === v.type }
+        idx = 2
+        idx += 1 while values.any? { |v| idx === v.idx }
+        inst_record = HandleValue.new
+        inst_record.idx = idx
+        inst_record.type = 'INST'
+        inst_record.parsed_data = inst_number
+        values << inst_record
+      end
+      values
+    end
 
     end # class NoDelete < Profile
 
