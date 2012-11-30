@@ -39,5 +39,7 @@ module EPIC
     # Define the number of days for retention. 0 means no limit.
     :max_log_days => 0
   }
+  
+  GWDGPID_PREFIXES = [ '12345' ]
 
 end
