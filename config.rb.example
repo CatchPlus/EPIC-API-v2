@@ -40,6 +40,13 @@ module EPIC
     :max_log_days => 0
   }
   
-  GWDGPID_PREFIXES = [ '12345' ]
-
+  # Mark special prefixes that cannot be deleted, if the policy "nodelete" is enforced
+  NO_DELETE = [ '12345' ]
+  
+  # Set all profiles that are enforced on this server
+  ENFORCED_PROFILES = [
+    "nodelete",
+    "gwdgpid"
+  ]
+  
 end
