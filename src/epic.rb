@@ -43,17 +43,10 @@ module EPIC
   class ResourceFactory
 
     include Singleton
+
     def initialize()
       LOGGER.info("EPIC API Server started.")
-      unless defined?(ENFORCED_PROFILES)
-        LOGGER.warn("No profiles specified in Config. EPIC API will run with default behaviour.")
-      else
-        profilenames = ""
-        ENFORCED_PROFILES.each do |profilename|
-          profilenames += profilename + " "
-        end
-        LOGGER.info("Enforcing profiles: #{profilenames}.")
-      end
+      LOGGER.warn("No profiles specified in Config. EPIC API will run with default behaviour.") unless defined?(ENFORCED_PROFILES)
     end
 
     # Can be called by tainted resources, to be removed from the cache.
