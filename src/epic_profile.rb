@@ -92,7 +92,7 @@ module EPIC
     # @raise [Rackful::HTTPStatus] if the deletion cannot pass.
     def self.delete( request, prefix, suffix, old_values ); end
       
-    def debug_dump_values(values)
+    def self.debug_dump_values(values)
       values.each do |bin_data|
         puts "IDX: #{bin_data.idx()}"
         puts "TYPE: #{bin_data.type()}"
@@ -146,47 +146,68 @@ module EPIC
       end
 
       def self.create( request, prefix, suffix, values )
+        self.checkUserEntry(request)
+        # We can trust in the existance of a Institute code in the config. Now we create local variables.
+        username = request.env['REMOTE_USER']
+        institute_code = USERS[request.env['REMOTE_USER']][:institute].upcase
+          
+        # Enforce the Inst-Recod with an own method
+        values = self.enforce_inst_record(values, institute_code)
+        # self.debug_dump_values(values)
+        values
+      end
+
+      def self.update( request, prefix, suffix, old_values, new_values )
+        self.checkUserEntry(request)
+        username = request.env['REMOTE_USER']
+        institute_code = USERS[request.env['REMOTE_USER']][:institute].upcase
+        # The PID is enforced in the new values
+        new_values = self.enforce_inst_record(new_values, institute_code)
+        # Check if the supplied Inst-Code stored for the user is identical to the Inst-Code of the handle-vaalue that is selected for update
+        inst_check_passed = false
+        old_values.each do |old_val|
+          # Find INST value in old_values
+          if old_val.type.upcase == 'INST'
+            # find INST value in the new_values
+            new_values.each do |new_val|
+              if new_val.type.upcase == 'INST'
+                # The Check is only passed if the INST-fields of the old_val and new_val are identical
+                if new_val.data.upcase == old_val.data.upcase
+                  inst_check_passed = true
+                  break
+                end
+              end
+            end
+          end
+        end
+        # React on failed inst_checks
+        unless inst_check_passed 
+          message = "Enforcing GWDGID-Profile. Handle update blocked, as the #{username} requested a handle with a missmatching Institute-Code"
+          LOGGER.info(message)
+          raise Rackful::HTTP403Forbidden, message
+        end
+        new_values
+      end
+   
+      private
+      
+      def self.checkUserEntry(request)
         # Check if a insitute code is available in the config
         if USERS[request.env['REMOTE_USER']][:institute].nil?
           message = "Enforcing GWDGID-Profile. No Insitute-Code set for user #{request.env['REMOTE_USER']}. Request blocked with Error 403 - Forbidden."
           LOGGER.warn(message)
           raise Rackful::HTTP403Forbidden, message
         end
-        
-        # We can trust in the existance of a Institute code in the config. Now we create local variables.
-        username = request.env['REMOTE_USER']
-        institute_code = USERS[request.env['REMOTE_USER']][:institute].upcase
-        
-        # Sanity-Checks of the Institute code should be done in EPIC::CheckConfig class.
-        # Hence, no sanity checks of the institute-Codes are applied here.
-        
-        # Add institude code to the value to the value, that every handle has an INST type when this profile this enforced.
-        self.enforce_inst_record(values, institute_code)
-        LOGGER.info("Enforcing GWDGID-Profile. Institute-Code #{institute_code} appended to Handle.")
-        values
       end
 
-      # TODO: UPDATE-METHOD NOT FINISHED YET
-      def self.update( request, prefix, suffix, old_values, new_values )
-
-        #        inst = USERS[request.env['REMOTE_USER']][:institute].upcase             # institute from users file
-
-        # TODO:
-        # ensure that the :type = INST has the value inst, otherwise forbidden
-
-        #       raise HTTP403Forbidden, "The operation is not allowed for the institute code."
-        #           unless (USERS[request.env['REMOTE_USER']][:institute].upcase != request.GET['inst'].upcase)
-
-        #    TODO:
-        #    some logging about the automatic changes made by the profile
-        #    LOGGER.debug('added' + :type + 'type with value' + :xxxx + 'to the handle' + handle)
-        LOGGER.warn('i was in profile')
-
-        new_values
-      end
-      
-    def self.enforce_inst_record values, inst_number
-      unless values.any? { |v| 'INST' === v.type }
+      def self.enforce_inst_record (values, inst_number)
+        # If the submitted a inst_record, then remove it.
+        if values.any? { |v| 'INST' === v.type.upcase }
+          newvalues = []
+          values.each { |value| newvalues << value unless value.type.upcase == 'INST' }
+          values = newvalues
+        end
+        # Now install an own INST-Record given ind inst_number in the handle-value set.
         idx = 2
         idx += 1 while values.any? { |v| idx === v.idx }
         inst_record = HandleValue.new
@@ -194,11 +215,12 @@ module EPIC
         inst_record.type = 'INST'
         inst_record.parsed_data = inst_number
         values << inst_record
+        LOGGER.info("Enforcing GWDGID-Profile. Institute-Code #{inst_number} appended to Handle.")
+        values
       end
-      values
-    end
+    
 
-    end # class NoDelete < Profile
+    end # class GWDGPID < Profile
 
   end # class Profile
 

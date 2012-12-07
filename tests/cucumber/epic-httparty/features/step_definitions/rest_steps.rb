@@ -40,7 +40,7 @@ Then /^the handle should include the key "([^\"]*)"$/ do |response|
 end
 
 Then /^the http-return-code must be "([^\"]*)"$/ do |status|
-  @last_request.code == status.to_i
+  raise "Expected HTTP-Status-Code was: #{status}. But I recieved #{@last_request.code}" unless @last_request.code == status.to_i 
 end
 
 And /^I ignore all authentication/ do
