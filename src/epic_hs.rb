@@ -260,7 +260,7 @@ class << self
                   userInfo[:index].to_s + ':' + userInfo[:handle]
                 ).gsub(/\W+/, '_')
               ),
-              nil
+              userInfo[:keycipher]
             )
           )
         end
