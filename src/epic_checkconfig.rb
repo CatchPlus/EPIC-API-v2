@@ -4,7 +4,7 @@ module EPIC
   class CheckConfig
 
     include Singleton
-    
+
     #    TODO:
     #    adding  Sanity check for institutes
 
@@ -25,6 +25,7 @@ module EPIC
       "LOG_SETTINGS[:log_path]" => "not_empty,is_string",
       "LOG_SETTINGS[:max_log_mb]" => "not_empty,is_positiv_int",
       "LOG_SETTINGS[:max_log_days]" => "not_empty,is_positiv_int"
+      # TODO: ENFORCE_PROFILES
     }
 
     def initialize()
@@ -45,21 +46,21 @@ module EPIC
           method_found = false
           self.private_methods.each do |method|
             if method.to_s.upcase === check.to_s.upcase
-              method_found = true 
+              method_found = true
               break
             end
           end
           unless method_found
             raise Exception.new( "CONFIG-CHECK: Check-Method \"#{check}\" not found. Check checking-instructions")
           end
-          
+
           # Run the Check
           #puts "" + check + "(EPIC::" + key_entity + ")"
           result = eval("" + check + "(EPIC::" + key_entity + ")")
           unless result
             raise Exception.new( "CONFIG-CHECK: Check \"#{check}\" for \"#{key_entity}\" failed. Check config and user file.")
           end
-          
+
         end
       end
     end
@@ -75,15 +76,15 @@ module EPIC
     def is_string(entity)
       entity.kind_of? String
     end
-    
+
     def is_defined(entity)
       entity.nil? != nil
     end
-    
+
     def is_positiv_int(entity)
       entity.is_a? Integer and entity > -1
     end
-    
+
     def is_directory(entity)
       puts entity
       File.directory?(entity)

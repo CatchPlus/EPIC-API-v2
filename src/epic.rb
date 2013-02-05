@@ -22,6 +22,7 @@ require 'epic_nas.rb'
 require 'epic_directory.rb'
 require 'epic_profile.rb'
 require 'epic_generator.rb'
+require 'epic_version.rb'
 require 'epic_logging.rb'
 require '../config.rb'
 require '../secrets/users.rb'
@@ -83,6 +84,7 @@ module EPIC
           'handles/',
           'profiles/',
           'generators/',
+          'version'
           #~ 'batches/'
         ]
         )
@@ -116,6 +118,11 @@ module EPIC
           LOGGER.info_httpevent("GET description of a profile", "GET")
           profile = Profile.profiles[segments[1]]
           profile && profile.new( path )
+        end
+      elsif 'version' === segments[0]
+        if 1 === n
+          LOGGER.info_httpevent("GET version", "GET")
+          Version.new path
         end
       end
     end

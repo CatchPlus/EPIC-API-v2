@@ -48,5 +48,10 @@ module EPIC
     "nodelete",
     "gwdgpid"
   ]
-  
+
+  # The version number of this release:
+  VERSION='2.3'
+  # And a link to more information about this version:
+  VERSION_URL='https://github.com/CatchPlus/EPIC-API-v2/issues?milestone=10&state=closed'
+
 end

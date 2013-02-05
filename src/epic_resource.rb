@@ -3,9 +3,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -78,8 +78,16 @@ EOS
     end
     retval += <<EOS
 <div class="row-fluid"><div align="right" class="span12"><em>
-Developed by <a href="http://www.sara.nl/">SARA</a> and <a href="http://www.gwdg.de/">GWDG</a><br/>
-Sponsored by <a href="http://www.catchplus.nl/">CATCH+</a> and <a href="http://www.eudat.eu/">EUDAT</a><br/>
+EPIC PID-Service version <a href="#{Rack::Utils::escape_html(EPIC::VERSION_URL)}">#{EPIC::VERSION}</a><br/>
+Developed by the <a href="http://pidconsortium.eu/">EPIC Consortium</a>:
+  <a href="http://www.csc.fi/">CSC</a>,
+  <a href="http://www.dkrz.de/">DKRZ</a>,
+  <a href="http://www.gwdg.de/">GWDG</a>, and
+  <a href="http://www.surfsara.nl/">SURFsara</a><br/>
+Sponsored by:
+  <a href="http://www.catchplus.nl/">CATCH+</a>,
+  <a href="http://de.dariah.eu/">DARIAH-DE</a> and
+  <a href="http://www.eudat.eu/">EUDAT</a><br/>
 Powered by <a href="http://github.com/pieterb/Rackful">Rackful</a>
 </em></div></div></div></body></html>
 EOS
