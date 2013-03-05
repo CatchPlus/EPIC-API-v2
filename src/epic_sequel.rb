@@ -45,13 +45,12 @@ class DB
 
 
   def initialize
-    @all_nas = nil
     @pool = []
   end
 
 
   def all_nas
-    @all_nas ||= self.pool[:nas].select(:na).collect { |row| row[:na] }
+    self.pool[:nas].select(:na).collect { |row| row[:na] }
   end
 
 
