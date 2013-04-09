@@ -3,9 +3,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -199,8 +199,8 @@ class HandleValue # < Resource
       # ref[:idx].to_s + ':' + ref[:handle]
     # end.join( "\t" )
   # end
-# 
-# 
+#
+#
   # def self.string2refs string
     # string.split("\t").collect do
       # |ref|
@@ -224,7 +224,7 @@ class HandleValue # < Resource
   # @return [Array, Hash, String, nil]
   # @todo check if the transcodings can also be done with {String#force_encoding}.
   def parsed_data
-    nicetype = type.gsub /\W+/, '_'
+    nicetype = type.gsub( /\W+/, '_' )
     if HS.respond_to? :"unpack_#{nicetype}"
       HS.send :"unpack_#{nicetype}", self.data
     else
@@ -244,7 +244,7 @@ class HandleValue # < Resource
 
 
   def parsed_data= p_data
-    nicetype = type.gsub /\W+/, '_'
+    nicetype = type.gsub( /\W+/, '_' )
     self.data =
     if HS.respond_to? :"pack_#{nicetype}"
       HS.send :"pack_#{nicetype}", p_data

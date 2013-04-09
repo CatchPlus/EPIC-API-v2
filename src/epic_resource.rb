@@ -77,9 +77,9 @@ EOS
       retval += serializer.resource.xhtml_end
     end
     retval += <<EOS
-<div class="row-fluid"><div align="right" class="span12"><em>
-EPIC PID-Service version <a href="#{Rack::Utils::escape_html(EPIC::VERSION_URL)}">#{EPIC::VERSION}</a><br/>
-Developed by the <a href="http://pidconsortium.eu/">EPIC Consortium</a>:
+<div class="row-fluid"><div align="right" class="span12"><em style="font-size: smaller;">
+<abbr class="initialism">EPIC</abbr> PID-Service version <a href="#{Rack::Utils::escape_html(EPIC::VERSION_URL)}">#{EPIC::VERSION}</a><br/>
+Developed by the <a href="http://pidconsortium.eu/"><abbr class="initialism">EPIC</abbr> Consortium</a>:
   <a href="http://www.csc.fi/">CSC</a>,
   <a href="http://www.dkrz.de/">DKRZ</a>,
   <a href="http://www.gwdg.de/">GWDG</a>, and

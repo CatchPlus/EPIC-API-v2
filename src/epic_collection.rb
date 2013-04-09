@@ -3,9 +3,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -58,12 +58,12 @@ class Collection < Resource
   def to_rackful
     self.recurse? ? Recursive.new(self) : self
   end
-  
-  
+
+
   def xhtml_start
     '<h1>Contents</h1>'
   end
-  
+
 
   def xhtml_help
     retval = <<EOS
@@ -119,7 +119,7 @@ EOS
         yield path, rf[path]
       end
     end
-    
+
     alias_method :each_pair, :each
 
   end # class Collection::Recursive
@@ -136,7 +136,7 @@ class StaticCollection < Collection
     @uris = uris.collect { |uri| (path + uri.to_s).to_path }
   end
 
-  def each &block; @uris.each &block; end
+  def each &block; @uris.each( &block ); end
 
 end # class StaticCollection
 
