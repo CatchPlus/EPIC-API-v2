@@ -90,7 +90,7 @@ Because collections can get very lange, they are rendered page by page.
 By default, you'll only see the first page with at maximum 1000 results.
 To modify this behaviour, use the following query parameters:
 <dl class="dl-horizontal">
-  <dt>limit</dt>
+  <dt>limit:</dt>
   <dd>the maximum number of items to return. The default is 1000. As a special
     case, if you specify <code>limit=0</code>, <em>all</em> items will be returned,
     without limit.
