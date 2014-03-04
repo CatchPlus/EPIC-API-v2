@@ -19,3 +19,7 @@ The latest version of the documentation can be downloaded (for offline browsing)
 
 *   [as a zipfile](https://github.com/CatchPlus/EPIC-API-v2/zipball/gh-pages)
 *   or [as a tarball](https://github.com/CatchPlus/EPIC-API-v2/tarball/gh-pages)
+
+Or you use the git command to get the complete tree
+
+* git clone git://github.com/CatchPlus/EPIC-API-v2.git
