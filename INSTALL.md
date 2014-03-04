@@ -40,17 +40,16 @@ Install RVM
 Source rvm commands (or logout/login)
     source .rvm/scripts/rvm
     
-Install jRuby
-
-    rvm install jruby-1.6.7.2
-    rvm use jruby-1.6.7.2
-
-
 NOTE: If you encounter a problem when installing RVM under Ubuntu please run following steps
 
     sudo apt-get --purge remove ruby-rvm
     sudo rm -rf /usr/share/ruby-rvm /etc/rvmrc /etc/profile.d/rvm.sh
 and then try installing RVM as mentioned above.
+
+Install jRuby
+
+    rvm install jruby-1.6.7.2
+    rvm use jruby-1.6.7.2
 
 Create a gemset
 
