@@ -37,7 +37,8 @@ Install RVM
     cd ~
     curl -L https://get.rvm.io | bash -s stable --without-gems="rvm rubygems-bundler"
 
-Source rvm commands (or logout/login)
+Source rvm commands (or logout/login) or
+
     source .rvm/scripts/rvm
     
 NOTE: If you encounter a problem when installing RVM under Ubuntu please run following steps
