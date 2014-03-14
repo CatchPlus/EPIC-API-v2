@@ -33,17 +33,25 @@ You can go to the [JRuby web site](http://jruby.org/) and download it from there
 The developers of this software prefer using the [Ruby Version Manager (RVM)](http://beginrescueend.com/) for managing multiple Ruby installations on a single machine, and for managing multiple gemsets. Perform the following actions NOT as the user root.
 
 Install RVM
+
     cd ~
     curl -L https://get.rvm.io | bash -s stable --without-gems="rvm rubygems-bundler"
 
-Source rvm commands (or logout/login)
-    source .rvm/scripts/rvm
+Source rvm commands (or logout/login) `source .rvm/scripts/rvm`
     
+NOTE: If you encounter a problem when installing RVM under Ubuntu please run following steps
+
+    sudo apt-get --purge remove ruby-rvm
+    sudo rm -rf /usr/share/ruby-rvm /etc/rvmrc /etc/profile.d/rvm.sh
+and then try installing RVM as mentioned above.
+
 Install jRuby
+
     rvm install jruby-1.6.7.2
     rvm use jruby-1.6.7.2
 
 Create a gemset
+
     rvm gemset create epic_prod
     rvm use 'jruby-1.6.7.2@epic_prod'
 
