@@ -291,7 +291,12 @@ class << self
       case response.responseCode
       when HDLLIB::ErrorResponse::RC_INSUFFICIENT_PERMISSIONS,
            HDLLIB::ErrorResponse::RC_INVALID_ADMIN
-        raise Rackful::HTTP403Forbidden
+###        Workaround on 18.03.2014:
+###        We face issues with RC_INVALID_ADMIN and RC_INSUFFICIENT_PERMISSIONS after
+###        creating new HD_ADMINs, therefore we just response the string, but don't
+###        raise any HTTP403Forbidden currently.
+###        raise Rackful::HTTP403Forbidden
+        raise response.to_string
       else
         raise response.to_string
       end
