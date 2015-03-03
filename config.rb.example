@@ -31,7 +31,7 @@ module EPIC
   
   LOG_SETTINGS = {
     # Supported Log-Levels are (DEBUG, ERROR, FATAL, INFO, WARN)
-    :log_level => 'debug',
+    :log_level => 'error',
     # Path to Log-File
     :log_path => '/tmp/epic_log.txt',
     # Define the maximum size of the log file in megabyte. 0 means no limit.
@@ -40,13 +40,21 @@ module EPIC
     :max_log_days => 0
   }
   
-  # Mark special prefixes that cannot be deleted, if the policy "nodelete" is enforced
+  # Mark special prefixes for which handles cannot be deleted, if the policy
+  # "nodelete" is enforced. this is a regular expression
   NO_DELETE = [ '12345' ]
   
-  # Set all profiles that are enforced on this server
+  # Set all profiles that are enforced on this server. There are 2 optional
+  # profiles which can be set:
+  # - "gwdgpid" ==> This profile provides support for sharing a prefix between
+  #   multiple institutes. The users.rb MUST have the "institute" filled in for
+  #   each institute using the same prefix. The  format of the institute code
+  #   is described in src/epic_profile.rb. 
+  # - "nodelete" ==> This profile disables the deletion of all pids that match
+  #   some regular expression. The "NO_DELETE" parameter has this info.
   ENFORCED_PROFILES = [
-    "nodelete",
-    "gwdgpid"
+    # "gwdgpid",
+    "nodelete"
   ]
 
   # The version number of this release:
