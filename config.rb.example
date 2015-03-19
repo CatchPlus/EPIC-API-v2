@@ -57,6 +57,10 @@ module EPIC
     "nodelete"
   ]
 
+  # Define the generated used to create suffixes. The default is 'uuid". An
+  # other method is "gwdgpid". It goes together with the profile "gwdgpid".
+  DEFAULT_GENERATOR = 'uuid'
+
   # The version number of this release:
   VERSION='2.3'
   # And a link to more information about this version:
